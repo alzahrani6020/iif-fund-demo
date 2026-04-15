@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "i18n-iso-countries": "^7.14.0",
-    "playwright": "^1.50.0",
+    "playwright": "^1.59.1",
     "world-countries": "^5.1.0",
     "eslint": "^8.57.0",
     "prettier": "^3.8.2"
