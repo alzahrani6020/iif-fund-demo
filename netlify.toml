@@ -39,6 +39,16 @@
   status = 200
 
 [[redirects]]
+  from = "/api/news"
+  to = "/.netlify/functions/news"
+  status = 200
+
+[[redirects]]
+  from = "/api/check-content"
+  to = "/.netlify/functions/check-content"
+  status = 200
+
+[[redirects]]
   from = "/diagnostics.json"
   to = "/.netlify/functions/diagnostics"
   status = 200

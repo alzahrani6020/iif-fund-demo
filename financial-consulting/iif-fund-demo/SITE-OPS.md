@@ -6,15 +6,15 @@
 |------|------|
 | `iif-app-base` | Optional manual base path for assets (usually empty; `index.html` computes base). |
 | `iif-searx-public-url` | Public SearXNG UI URL for the header link on GitHub Pages. |
-| `iif-searx-proxy-base` | HTTPS origin that serves **`/api/searx/search`** (Vercel serverless or Worker). Used by in-page **web analysis** fetch on non-localhost hosts. |
-| `iif-funcs-base` | External serverless/API base (existing integrations). |
+| `iif-searx-proxy-base` | HTTPS origin that serves **`/api/searx/search`** (production: **`https://iiffund.com`** via Netlify Functions; Vercel optional). Used by in-page **web analysis** fetch on non-localhost hosts. |
+| `iif-funcs-base` | API base for news and related calls (production: **`https://iiffund.com`** — paths under **`/api/*`** and **`/.netlify/functions/*`**). |
 | `iif-build` | Deployment fingerprint for support / debugging. |
 
-After changing hosts, update **`iif-searx-proxy-base`** to match your live proxy (e.g. `https://your-project.vercel.app`).
+After changing hosts, update **`iif-searx-proxy-base`** and **`iif-funcs-base`** to match your live API origin (default in repo: **`https://iiffund.com`**).
 
 ### موجز الأخبار `api/news.js`
 
-- يُنشر مع جذر مشروع Vercel نفسه (`financial-consulting/iif-fund-demo/api/news.js`). بعد أي تعديل على الخلاصات أو الترجمة، **أعد النشر** حتى يطابق `iif-funcs-base` النسخة الحالية.
+- المنطق في `financial-consulting/iif-fund-demo/api/news.js`؛ على **Netlify (جذر الريبو)** تُستدعى عبر **`netlify/functions/news.js`**. بعد أي تعديل على الخلاصات أو الترجمة، **أعد نشر Netlify** حتى تطابق النسخة الحالية ما يظهر عند **`iif-funcs-base`**.
 - محلياً على `127.0.0.1:3333` الواجهة تستدعي `/api/news` من `scripts/dev-server.js` (لا تعتمد على نشر قديم).
 - متغيرات اختيارية (Vercel / `.env`): `IIF_NEWS_CACHE_MS`, `IIF_TICKER_TRANSLATE_URL`, `IIF_TICKER_TRANSLATE_MAX` — راجع `.env.example`.
 - فحص الخلاصات: من جذر المستودع `npm run check:news-feeds`.

@@ -67,7 +67,7 @@ npm run e2e:dashboard # Playwright: فتح اللوحة من /admin-direct
 ## النشر
 
 - **Netlify:** الإعداد في `netlify.toml`؛ الطبقة المجانية: راجع `NETLIFY-FREE-TIER.md` و`[skip netlify]` في رسالة الـ commit عند تعديل التوثيق فقط.
-- **Vercel** (إنتاج الفريق الحالي: `iif-fund-dr-talal.vercel.app`): بعد `git push` تحقق من المصدر أن الملف يحتوي `iif-dashboard-fullpage-critical-head` — راجع قسم **هـ** في [قبل-النشر.md](./قبل-النشر.md) و [VERCEL-DEPLOY.md](./VERCEL-DEPLOY.md).
+- **الإنتاج الرسمي:** **`https://iiffund.com/`** (Netlify + نطاق مخصّص)؛ في `index.html` تُضبط **`iif-funcs-base`** و **`iif-searx-proxy-base`** على هذا النطاق. **Vercel** (`iif-fund-dr-talal.vercel.app`) يبقى معاينة/احتياط — راجع قسم **هـ** في [قبل-النشر.md](./قبل-النشر.md) و [VERCEL-DEPLOY.md](./VERCEL-DEPLOY.md).
 - لا تضف تعقيداً على Netlify بدون حاجة (لا دوال جذر إن لم تُستخدم).
 
 ## تفضيلات العمل

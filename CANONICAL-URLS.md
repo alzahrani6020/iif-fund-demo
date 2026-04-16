@@ -4,12 +4,16 @@
 
 ## الرابط الرسمي للجهات الخارجية
 
-**اختر منصة إنتاج واحدة كرابط «رسمي» في المراسلات** (الباقي يبقى احتياطاً أو معاينة):
+**الرابط الرسمي الحالي للمشاركة والمراسلات:** **`https://iiffund.com/`** — واجهة الصندوق: **`https://iiffund.com/financial-consulting/iif-fund-demo/`** (اختصار: **`https://iiffund.com/fund`**).
+
+في `index.html` تُضبط عناوين **`iif-funcs-base`** و **`iif-searx-proxy-base`** على **`https://iiffund.com`** حتى تمر طلبات API (الأخبار، SearXNG، إلخ) عبر **Netlify Functions** على نفس النطاق.
+
+**منصات إضافية** (احتياط أو معاينة):
 
 | إن كان الإنتاج الفعلي على… | الرابط المقترح للجهات |
 |----------------------------|-------------------------|
 | **GitHub Pages** | `https://alzahrani6020.github.io/iif-web/` |
-| **Netlify** | الرابط المعتمد لموقعك في الجدول أدناه (مثال تاريخي: `fluffy-meerkat-eff966.netlify.app`) |
+| **Netlify (اسم فرعي)** | مثال تاريخي: `fluffy-meerkat-eff966.netlify.app` — يُفضّل للجمهور استخدام **`iiffund.com`** |
 
 قبل إرسال رابط رسمي: [قائمة ما قبل الإصدار](docs/PRE-RELEASE-CHECKLIST.md).
 
@@ -46,8 +50,9 @@
 
 | المنصة | الرابط المعتمد |
 |--------|----------------|
-| **Vercel** (فريق `dr-talal`، مشروع `iif-fund`) | `https://iif-fund-dr-talal.vercel.app/index.html` — اللوحة: `…/index.html#dashboard` |
-| **Netlify** (موقع مربوط بالريبو، `fluffy-meerkat-eff966`) | `https://fluffy-meerkat-eff966.netlify.app/fund` (يحوّل إلى واجهة الصندوق) — أو مع هاش: `…/index.html#dashboard` حسب المسار المنشور |
+| **النطاق المخصّص (إنتاج)** | **`https://iiffund.com/`** — الصندوق: **`/financial-consulting/iif-fund-demo/`** أو **`/fund`** — اللوحة: **`/fund-admin`** أو معاملات الاستعلام كما في الأعلى |
+| **Vercel** (معاينة/احتياط، فريق `dr-talal`) | `https://iif-fund-dr-talal.vercel.app/index.html` — اللوحة: `…/index.html#dashboard` |
+| **Netlify** (اسم فرعي، مثال `fluffy-meerkat-eff966`) | `https://fluffy-meerkat-eff966.netlify.app/fund` — يُفضّل للجمهور **`iiffund.com`** |
 | **GitHub Pages** (سير عمل `Deploy GitHub Pages`) | `https://alzahrani6020.github.io/iif-web/` — واجهة الصندوق عند جذر الموقع المنشور (المصدر في الـ workflow: `financial-consulting/iif-fund-demo/`)؛ اللوحة: `…/index.html#dashboard` أو معاملات الاستعلام كما في الأعلى. **لا** توجد دوال `/api/*` على Pages (خلاف Netlify). **لا** يوجد **`/healthz`** JSON ثابت هناك (يُخدم محلياً أو عبر Netlify/Vercel حسب الإعداد). **localStorage** خاص بكل نطاق — صورة الملف على `localhost` لا تظهر تلقائياً على `github.io`؛ أعد رفع الصورة على النطاق الذي تستخدمه أو استخدم نفس الموقع دائماً. رابط **SearXNG** في الهيدر على Pages يوجّه إلى واجهة عامة (ميتا `iif-searx-public-url` في `index.html`) وليس خادمك المحلي. |
 
 ## ملاحظات

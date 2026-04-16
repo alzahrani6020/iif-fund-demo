@@ -2157,7 +2157,12 @@
           }
           b = ensureHttpsUrl(b);
           if (b) {
-            if (/vercel\.app$/i.test(b)) return '/api';
+            try {
+              var hostname = new URL(b).hostname.replace(/^www\./i, '') || '';
+              if (/\.vercel\.app$/i.test(hostname) || hostname === 'iiffund.com') return '/api';
+            } catch (eHost) {
+              if (/vercel\.app$/i.test(b)) return '/api';
+            }
             return '/.netlify/functions';
           }
           return '/api';

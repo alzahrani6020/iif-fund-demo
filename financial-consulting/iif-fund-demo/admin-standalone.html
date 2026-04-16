@@ -119,7 +119,7 @@
   <meta name="iif-build" content="dashboard-fullpage-v8-fix-main-close" />
   <meta name="description"
     content="صندوق الاستثمار الدولي (FII) — International Investment Fund — Financing for global prosperity. Registered in the EU Transparency Register. Licensed in France & USA. European & African Parliament recognition. Sovereign & institutional capital." />
-  <meta name="iif-funcs-base" content="https://iif-fund-dr-talal.vercel.app" />
+  <meta name="iif-funcs-base" content="https://iiffund.com" />
   <link rel="icon" href="assets/emblem.webp" type="image/webp" />
   <link rel="icon" href="assets/emblem.jpg" type="image/jpeg" />
   <link rel="apple-touch-icon" href="assets/emblem.jpg" />
@@ -9468,7 +9468,7 @@
     </div>
   </div>
 
-  <!-- تحقق النشر: افتح موقعك (مثل iif-fund-dr-talal.vercel.app أو نطاق Netlify) ثم Ctrl+U لعرض المصدر وابحث عن كلمة «تحقق-النشر» هنا — لا تبحث عن هذا في جوجل -->
+  <!-- تحقق النشر: افتح https://iiffund.com/ (أو نطاق المعاينة) ثم Ctrl+U لعرض المصدر وابحث عن كلمة «تحقق-النشر» هنا — لا تبحث عن هذا في جوجل -->
   <!-- تحقق-النشر-iif-dashboard-fullpage -->
   <!-- Dashboard: manage investment projects (visible when logged in) -->
   <!-- مهم: main.dashboard-main يُغلق بـ </main> ثم dashboard-page-shell ثم dashboard-overlay — إغلاق بـ </div> فقط يفسد DOM ويُظهر اللوحة كعمود. -->
@@ -13342,7 +13342,12 @@
           }
           b = ensureHttpsUrl(b);
           if (b) {
-            if (/vercel\.app$/i.test(b)) return '/api';
+            try {
+              var hostname = new URL(b).hostname.replace(/^www\./i, '') || '';
+              if (/\.vercel\.app$/i.test(hostname) || hostname === 'iiffund.com') return '/api';
+            } catch (eHost) {
+              if (/vercel\.app$/i.test(b)) return '/api';
+            }
             return '/.netlify/functions';
           }
           return '/api';

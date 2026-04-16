@@ -41,7 +41,7 @@
 ### ما هي «صفحة الأدمن» في هذا المشروع؟
 
 - **لا يوجد** ملف منفصل اسمه `admin` يعرض واجهة مختلفة عن الموقع. **لوحة الإدارة = لوحة التحكم** داخل نفس **`index.html`** (`#dashboard-overlay`).
-- **الرابط المعتمد لفتح اللوحة:** `index.html#dashboard` (على إنتاج Vercel الحالي: `https://iif-fund-dr-talal.vercel.app/index.html#dashboard`؛ على Netlify: `https://fluffy-meerkat-eff966.netlify.app/fund#dashboard`).
+- **الرابط المعتمد لفتح اللوحة:** على **`https://iiffund.com/`** استخدم **`/fund-admin`** أو معاملات الاستعلام كما في [CANONICAL-URLS.md](../../CANONICAL-URLS.md)؛ على Vercel (معاينة): `https://iif-fund-dr-talal.vercel.app/index.html#dashboard`.
 - أي روابط أخرى مثل معاملات `?iif_admin_embed=1` تعتبر **غير معتمدة** (قد تُترك لأسباب توافق/اختبار، لكن لا تُستخدم كرابط لوحة).
 
 ### نشر Vercel — رابط اللوحة (المعتمد)
@@ -64,20 +64,23 @@
 
 `<base>` في `index.html` يُضبط **تلقائياً** من مسار الصفحة (`#iif-document-base`) حتى تعمل روابط **`assets/`** (الشعار والصور) من جذر النطاق **أو** من مجلد فرعي دون اختفاء الشعار.
 
-**لوحة مباشرة (المعتمد على Vercel الحالي):**  
+**لوحة مباشرة (إنتاج رسمي):**  
+- **`https://iiffund.com/fund-admin`** (أو الصندوق + معاملات الاستعلام كما في CANONICAL-URLS)
+
+**لوحة على Vercel (معاينة):**  
 - `https://iif-fund-dr-talal.vercel.app/index.html#dashboard`
 
 **ملاحظة — اسم `iif-fund.vercel.app`:** قد يكون مربوطاً بمشروع Vercel آخر؛ الإنتاج المحدَّث من فريق **`dr-talal`** يظهر على **`iif-fund-dr-talal.vercel.app`**. لاستخدام الاسم القصير `iif-fund.vercel.app` انقل الـ alias من المشروع القديم في لوحة Vercel.
 
 **تنبيه — روابط معاينة أو حماية نشر:**  
-بعض نطاقات `*.vercel.app` قد تكون عليها **Deployment Protection** فيعيد الطلب **401**. استخدم دومين الإنتاج الذي يعيد **200** لـ `index.html` (مثل `iif-fund-dr-talal.vercel.app` بعد التحقق).
+بعض نطاقات `*.vercel.app` قد تكون عليها **Deployment Protection** فيعيد الطلب **401**. للمشاركة استخدم **`https://iiffund.com/`**؛ لمعاينة Vercel راجع إعدادات الحماية هناك.
 
 **لوحة التحكم بملء الشاشة (إخفاء هيدر الموقع):**  
 تُخفى واجهة الموقع العامة عبر CSS + دوال `IIF_hidePublicSiteChrome` / `IIF_restorePublicSiteChrome` في أوائل `<body>`. بعد كل تحديث على Vercel: **أعد النشر** ثم جرّب **تحديثاً قوياً** (Ctrl+F5) أو نافذة خاصة حتى لا يُخدم `index.html` من الكاش.
 
 **كيف تتأكد أن النشر يضم آخر التعديلات؟**  
 - **ليس** عبر البحث في Google أو Bing.  
-- افتح **رابط موقعك المنشور** (مثل `https://iif-fund-dr-talal.vercel.app/index.html` أو Netlify أعلاه) في المتصفح، ثم اضغط **Ctrl+U** (عرض المصدر / View Page Source)، وابحث داخل الصفحة عن النص: **`تحقق-النشر-iif-dashboard-fullpage`**.  
+- افتح **`https://iiffund.com/financial-consulting/iif-fund-demo/`** (أو رابط المعاينة على Vercel) في المتصفح، ثم اضغط **Ctrl+U** (عرض المصدر / View Page Source)، وابحث داخل الصفحة عن النص: **`تحقق-النشر-iif-dashboard-fullpage`**.  
 - إن **لم** يظهر، فإما الكاش أو أن **Root Directory** في Vercel لا يشير إلى مجلد `financial-consulting/iif-fund-demo`.
 
 ### ملخص التعديلات (لوحة ملء الشاشة / `#dashboard`)

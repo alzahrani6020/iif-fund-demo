@@ -6,10 +6,11 @@
 
 | المنصة | رابط الإنتاج الفعلي |
 |--------|---------------------|
-| **Vercel (فريق `dr-talal`، مشروع `iif-fund`)** | `https://iif-fund-dr-talal.vercel.app/index.html` |
-| **Netlify (موقع مربوط بالريبو)** | `https://fluffy-meerkat-eff966.netlify.app` |
+| **النطاق المخصّص (رسمي للمشاركة)** | **`https://iiffund.com/`** — الصندوق: **`/fund`** أو **`/financial-consulting/iif-fund-demo/`** |
+| **Vercel (فريق `dr-talal`، مشروع `iif-fund`)** | `https://iif-fund-dr-talal.vercel.app/index.html` (معاينة/احتياط) |
+| **Netlify (اسم فرعي، مثال تاريخي)** | `https://fluffy-meerkat-eff966.netlify.app` |
 
-**لوحة التحكم (المعتمد):** أضف `#dashboard` إلى `index.html` على أي من النطاقين أعلاه.
+**لوحة التحكم:** على **`iiffund.com`** استخدم **`/fund-admin`** أو معاملات الاستعلام كما في [CANONICAL-URLS.md](./CANONICAL-URLS.md)؛ على Vercel/نسخ أخرى يمكن **`#dashboard`** على `index.html`.
 
 ### عن `iif-fund.vercel.app`
 
