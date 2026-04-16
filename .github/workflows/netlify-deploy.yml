@@ -20,18 +20,28 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Netlify secrets
+      - name: Check Netlify secrets + token access
         id: netlify
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-          if [ -n "$NETLIFY_AUTH_TOKEN" ] && [ -n "$NETLIFY_SITE_ID" ]; then
-            echo "ok=true" >> "$GITHUB_OUTPUT"
-          else
+          if [ -z "$NETLIFY_AUTH_TOKEN" ] || [ -z "$NETLIFY_SITE_ID" ]; then
             echo "ok=false" >> "$GITHUB_OUTPUT"
             echo "::notice::Netlify secrets missing (NETLIFY_AUTH_TOKEN / NETLIFY_SITE_ID). Skipping deploy."
+            exit 0
           fi
+          # Validate the token can access the site (avoid red failures like JSONHTTPError: Forbidden)
+          code=$(curl -sS -o /dev/null -w "%{http_code}" \
+            -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" \
+            "https://api.netlify.com/api/v1/sites/$NETLIFY_SITE_ID" || true)
+          if [ "$code" = "200" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "ok=false" >> "$GITHUB_OUTPUT"
+          echo "::notice::Netlify token/site access check failed (HTTP $code). Fix NETLIFY_AUTH_TOKEN or NETLIFY_SITE_ID, or ensure the token belongs to the team that owns this site."
+          exit 0
 
       - uses: actions/checkout@v4
         if: steps.netlify.outputs.ok == 'true'

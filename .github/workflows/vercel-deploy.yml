@@ -23,19 +23,29 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Vercel secrets
+      - name: Check Vercel secrets + token validity
         id: vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: |
-          if [ -n "$VERCEL_TOKEN" ] && [ -n "$VERCEL_ORG_ID" ] && [ -n "$VERCEL_PROJECT_ID" ]; then
-            echo "ok=true" >> "$GITHUB_OUTPUT"
-          else
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
             echo "ok=false" >> "$GITHUB_OUTPUT"
             echo "::notice::Vercel secrets missing (VERCEL_TOKEN / VERCEL_ORG_ID / VERCEL_PROJECT_ID). Skipping deploy."
+            exit 0
           fi
+          # Validate token (avoid: "The token provided via --token is not valid")
+          code=$(curl -sS -o /dev/null -w "%{http_code}" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com/v2/user" || true)
+          if [ "$code" = "200" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "ok=false" >> "$GITHUB_OUTPUT"
+          echo "::notice::Vercel token check failed (HTTP $code). Regenerate VERCEL_TOKEN and ensure it matches the correct account/org."
+          exit 0
 
       - uses: actions/checkout@v4
         if: steps.vercel.outputs.ok == 'true'
