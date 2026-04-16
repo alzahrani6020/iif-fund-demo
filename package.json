@@ -19,6 +19,7 @@
     "install:git-hooks": "node scripts/install-git-hooks.js",
     "prepare": "node scripts/prepare-git-hooks.js",
     "verify:i18n-packs-sync": "git diff --exit-code HEAD -- financial-consulting/iif-fund-demo/i18n-service-packs-a.js financial-consulting/iif-fund-demo/i18n-service-packs-b.js financial-consulting/iif-fund-demo/i18n-service-packs-c.js financial-consulting/iif-fund-demo/i18n-service-packs-d.js financial-consulting/iif-fund-demo/i18n-service-packs-all.js",
+    "lint": "eslint scripts netlify financial-consulting/iif-fund-demo/api",
     "check:deploy": "node scripts/deploy-readiness.mjs",
     "build": "npm run build:gov-data && npm run i18n:packs",
     "build:github-pages": "npm run build && node scripts/prepare-github-pages-site.mjs",
@@ -46,16 +47,18 @@
     "node": ">=22"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
+    "globals": "^17.5.0",
     "i18n-iso-countries": "^7.14.0",
     "playwright": "^1.59.1",
-    "world-countries": "^5.1.0",
-    "eslint": "^10.2.0",
-    "prettier": "^3.8.2"
+    "prettier": "^3.8.2",
+    "world-countries": "^5.1.0"
   },
   "dependencies": {
-    "helmet": "^8.1.0",
     "compression": "^1.7.4",
+    "cors": "^2.8.5",
     "express-rate-limit": "^8.3.2",
-    "cors": "^2.8.5"
+    "helmet": "^8.1.0"
   }
 }

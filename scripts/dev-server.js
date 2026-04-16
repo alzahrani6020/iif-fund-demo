@@ -80,7 +80,7 @@ function getClientIp(req) {
   return ra || 'unknown';
 }
 
-function createRateLimiter({ windowMs, max, label }) {
+function createRateLimiter({ windowMs, max, label: _label }) {
   const hits = new Map();
   let lastCleanup = Date.now();
   function cleanup(now) {
@@ -399,7 +399,6 @@ function proxyOllama(req, res) {
 }
 
 function proxyTranslate(req, res) {
-  const u = new URL(req.url, 'http://127.0.0.1');
   if (req.method !== 'POST') {
     sendJson(res, 405, { ok: false, error: 'Method Not Allowed' }, { 'Access-Control-Allow-Origin': '*' });
     return;

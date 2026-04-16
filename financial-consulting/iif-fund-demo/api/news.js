@@ -44,13 +44,6 @@ function getFeeds(targetLang, targetCat, targetCountry) {
     { url: 'https://www.straitstimes.com/news/rss.xml', name: 'Straits Times' },
     { url: 'https://www.caixin.com/rss/all.xml', name: 'Caixin Global' }
   ];
-  const FEEDS_ASIAN = [
-    { url: 'https://www.straitstimes.com/news/rss.xml', name: 'Straits Times' },
-    { url: 'https://www.caixin.com/rss/all.xml', name: 'Caixin Global' },
-    { url: 'https://feeds.bbci.co.uk/news/world/asia/rss.xml', name: 'BBC Asia' },
-    { url: 'https://feeds.reuters.com/reuters/INbusinessNews', name: 'Reuters' },
-    { url: 'https://www.cnbc.com/id/10001147/device/rss/rss.html', name: 'CNBC' }
-  ];
   /* أسواق فقط — مصادر اقتصادية/مالية دون أخبار عامة (موقع اقتصادي) */
   /* رويترز أغلق كثيراً من خلاصات RSS العامة — نعتمد BBC آسيا + مصادر إقليمية تعمل */
   const FEEDS_ASIAN_MARKETS = [

@@ -32,6 +32,9 @@ jobs:
       - name: Verify (build + syntax + maintenance audit)
         run: npm run verify && node scripts/maintenance-full-audit.mjs
 
+      - name: ESLint (flat config)
+        run: npm run lint
+
       - name: i18n service packs — الملفات المُيدعة يجب أن تطابق pack-data (بعد build)
         run: npm run verify:i18n-packs-sync
 
