@@ -48,6 +48,7 @@ export class UIComponents {
       const host = String((typeof location !== 'undefined' && location.hostname) || '').toLowerCase();
       const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
       const isGhPages = host.endsWith('.github.io');
+      const isIifProd = host === 'iiffund.com' || host.endsWith('.iiffund.com');
       const searxMeta = document.querySelector('meta[name="iif-searx-public-url"]');
       const searxPublic = (searxMeta && searxMeta.getAttribute('content') || '').trim();
       document.querySelectorAll('[data-local-only="1"]').forEach((el) => {
@@ -62,10 +63,17 @@ export class UIComponents {
           el.setAttribute('rel', 'noopener noreferrer');
           return;
         }
+        if (isIifProd && searxPublic && /^https?:\/\//i.test(searxPublic)) {
+          el.style.display = 'inline-flex';
+          el.setAttribute('href', searxPublic);
+          el.setAttribute('target', '_blank');
+          el.setAttribute('rel', 'noopener noreferrer');
+          return;
+        }
         el.style.display = 'none';
       });
       document.querySelectorAll('[data-iif-google-search="1"]').forEach((el) => {
-        el.style.display = isLocal || isGhPages ? 'inline-flex' : 'none';
+        el.style.display = isLocal || isGhPages || isIifProd ? 'inline-flex' : 'none';
       });
     } catch (e) {
       // ignore

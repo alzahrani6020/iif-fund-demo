@@ -96,7 +96,7 @@
   <title>صندوق الاستثمار الدولي · International Investment Fund (IIF) · Paris</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0e18" />
-  <meta name="iif-build" content="dashboard-fullpage-v8-fix-main-close" />
+  <meta name="iif-build" content="dashboard-fullpage-v9-toolbar-search-visible-html" />
   <meta name="description"
     content="International Investment Fund (IIF), Paris — institutional project finance, sovereign & government-aligned capital, BOT coordination, feasibility studies, mediation & governance. EU Transparency Register; licensed in France & USA. For investors, governments, and partners seeking compliant global financing." />
   <meta name="keywords"
@@ -4811,6 +4811,11 @@
     .iif-search-result:hover {
       background: rgba(255, 255, 255, 0.06);
       color: var(--color-accent-gold-soft);
+    }
+
+    .iif-search-result--secondary {
+      opacity: 0.88;
+      font-size: 0.86rem;
     }
 
     /* Upload & project description section */
@@ -10186,15 +10191,14 @@
           </button>
           </div>
           <div id="iif-header-toolbar-links" class="iif-header-collapsible-target iif-header-toolbar-panel">
-          <!-- Local only: Search engine (SearXNG) -->
+          <!-- محرك بحث عام (SearXNG) — يطابق meta iif-searx-public-url؛ يظهر دون الاعتماد على كاش الـ JS -->
           <a
-            href="http://127.0.0.1:18080/"
+            href="https://searx.tiekoetter.com/"
             target="_blank"
             rel="noopener noreferrer"
-            data-local-only="1"
             data-i18n-title="iifSearxExternalHint"
-            class="site-header__auth-btn site-header__auth-btn--login"
-            style="display:none; text-decoration:none; background: rgba(29, 155, 240, 0.12); border-color: rgba(29, 155, 240, 0.55); font-size: 0.82rem;"
+            class="site-header__auth-btn site-header__auth-btn--login iif-header-toolbar-search-link"
+            style="display:inline-flex; align-items:center; text-decoration:none; background: rgba(29, 155, 240, 0.12); border-color: rgba(29, 155, 240, 0.55); font-size: 0.82rem;"
             title="SearXNG"
           >
             <span data-i18n="navSearchEngine">Search engine</span>
@@ -10203,10 +10207,9 @@
             href="https://www.google.com/"
             target="_blank"
             rel="noopener noreferrer"
-            data-iif-google-search="1"
             data-i18n-title="iifGoogleSearchHint"
-            class="site-header__auth-btn site-header__auth-btn--login"
-            style="display:none; text-decoration:none; background: rgba(66, 133, 244, 0.1); border-color: rgba(66, 133, 244, 0.5); font-size: 0.82rem;"
+            class="site-header__auth-btn site-header__auth-btn--login iif-header-toolbar-search-link"
+            style="display:inline-flex; align-items:center; text-decoration:none; background: rgba(66, 133, 244, 0.1); border-color: rgba(66, 133, 244, 0.5); font-size: 0.82rem;"
             title="Google"
           >
             <span data-i18n="navGoogleWebSearch">Google search</span>
@@ -11220,16 +11223,15 @@
             </div>
           </div>
           <div class="site-header__auth-btns">
-            <!-- Local only: Search engine (SearXNG) — same pattern as main site header -->
+            <!-- SearXNG — نفس الرابط العام كالهيدر الرئيسي -->
             <a
-              href="http://127.0.0.1:18080/"
+              href="https://searx.tiekoetter.com/"
               target="_blank"
               rel="noopener noreferrer"
-              data-local-only="1"
               data-i18n-title="iifSearxExternalHint"
               id="dashboard-searx-link"
               class="site-header__auth-btn site-header__auth-btn--login"
-              style="display:none; text-decoration:none; background: rgba(29, 155, 240, 0.12); border-color: rgba(29, 155, 240, 0.55); font-size: 0.82rem;"
+              style="display:inline-flex; align-items:center; text-decoration:none; background: rgba(29, 155, 240, 0.12); border-color: rgba(29, 155, 240, 0.55); font-size: 0.82rem;"
               title="SearXNG"
             >
               <span data-i18n="dashSearchEngine">Search engine</span>

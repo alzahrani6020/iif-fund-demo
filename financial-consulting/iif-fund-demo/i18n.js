@@ -11411,39 +11411,107 @@ window.IIF_I18N = (function() {
       input.addEventListener('focus', unlockRo, { once: true });
       input.addEventListener('pointerdown', unlockRo, { once: true });
     }
-    input.addEventListener('keyup', function() {
-      var q = (input.value || '').trim().toLowerCase();
-      if (q.length < 2) {
+
+    var MIN_QUERY_LEN = 3;
+    var MAX_RESULTS = 18;
+    /** كلمات شائعة جدًا: تُرفض كاستعلام مكوّن من كلمة واحدة فقط */
+    var STOP_SOLO = { the: 1, and: 1, for: 1, not: 1, you: 1, all: 1, any: 1, can: 1, our: 1, are: 1, was: 1, but: 1 };
+    var STOP_SOLO_AR = { 'في': 1, 'من': 1, 'إلى': 1, 'على': 1, 'عن': 1, 'مع': 1, 'كل': 1, 'ما': 1, 'أو': 1, 'لا': 1, 'هل': 1, 'هو': 1, 'تم': 1 };
+
+    function buildTokens(raw) {
+      var s = (raw || '').trim().toLowerCase();
+      if (s.length < MIN_QUERY_LEN) return [];
+      var parts = s.split(/\s+/).map(function (x) { return x.trim(); }).filter(function (x) { return x.length >= 2; });
+      return parts.length ? parts : [s];
+    }
+
+    function allTokensIn(fullText, tokens) {
+      var i;
+      for (i = 0; i < tokens.length; i++) {
+        if (fullText.indexOf(tokens[i]) < 0) return false;
+      }
+      return true;
+    }
+
+    function countTitleHits(titleText, tokens) {
+      var n = 0;
+      var i;
+      for (i = 0; i < tokens.length; i++) {
+        if (titleText.indexOf(tokens[i]) >= 0) n++;
+      }
+      return n;
+    }
+
+    input.addEventListener('keyup', function () {
+      var raw = (input.value || '').trim();
+      if (raw.length < MIN_QUERY_LEN) {
         wrap.classList.remove('has-results');
-        wrap.querySelectorAll('.iif-search-result').forEach(function(r) { r.remove(); });
+        wrap.querySelectorAll('.iif-search-result').forEach(function (r) { r.remove(); });
         return;
       }
-      wrap.querySelectorAll('.iif-search-result').forEach(function(r) { r.remove(); });
-      var sections = document.querySelectorAll('main section[id], .section[id]');
-      var count = 0;
-      sections.forEach(function(sec) {
-        var text = (sec.textContent || '').toLowerCase();
-        if (text.indexOf(q) >= 0) {
-          var id = sec.id;
-          var title = sec.querySelector('h2, .section__title');
-          var label = title ? title.textContent.trim().slice(0, 50) : id;
-          var a = document.createElement('a');
-          a.href = '#' + id;
-          a.className = 'iif-search-result';
-          a.textContent = label;
-          a.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (typeof window.IIF_scrollIntoViewClearHeader === 'function') {
-              window.IIF_scrollIntoViewClearHeader(sec, { behavior: 'smooth' });
-            } else {
-              sec.scrollIntoView({ behavior: 'smooth' });
-            }
-            wrap.classList.remove('has-results');
-            input.value = '';
-          });
-          wrap.appendChild(a);
-          count++;
+      var tokens = buildTokens(raw);
+      if (!tokens.length) {
+        wrap.classList.remove('has-results');
+        wrap.querySelectorAll('.iif-search-result').forEach(function (r) { r.remove(); });
+        return;
+      }
+      if (tokens.length === 1) {
+        var solo = tokens[0];
+        if (STOP_SOLO[solo] || STOP_SOLO_AR[solo]) {
+          wrap.classList.remove('has-results');
+          wrap.querySelectorAll('.iif-search-result').forEach(function (r) { r.remove(); });
+          return;
         }
+      }
+
+      wrap.querySelectorAll('.iif-search-result').forEach(function (r) { r.remove(); });
+      var sections = document.querySelectorAll('main section[id], .section[id]');
+      var scored = [];
+      var isAr = typeof document !== 'undefined' && document.documentElement && document.documentElement.getAttribute('data-lang') === 'ar';
+
+      sections.forEach(function (sec) {
+        var title = sec.querySelector('h2, .section__title');
+        var titleText = title ? (title.textContent || '').trim().toLowerCase() : '';
+        var fullText = (sec.textContent || '').toLowerCase();
+        if (!allTokensIn(fullText, tokens)) return;
+        var th = countTitleHits(titleText, tokens);
+        var score = th * 1000 + tokens.length;
+        var label = title ? title.textContent.trim().slice(0, 72) : sec.id;
+        scored.push({ sec: sec, score: score, label: label, secondary: th === 0 });
+      });
+
+      scored.sort(function (a, b) {
+        return b.score - a.score;
+      });
+      if (scored.length > MAX_RESULTS) scored = scored.slice(0, MAX_RESULTS);
+
+      var count = 0;
+      scored.forEach(function (item) {
+        var sec = item.sec;
+        var a = document.createElement('a');
+        a.href = '#' + sec.id;
+        a.className = 'iif-search-result' + (item.secondary ? ' iif-search-result--secondary' : '');
+        a.textContent = item.label;
+        if (item.secondary) {
+          a.setAttribute(
+            'title',
+            isAr
+              ? 'التطابق في نص القسم وليس في عنوانه فقط — راجع المحتوى بعد الانتقال'
+              : 'Match in section body, not in title — review content after jump'
+          );
+        }
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (typeof window.IIF_scrollIntoViewClearHeader === 'function') {
+            window.IIF_scrollIntoViewClearHeader(sec, { behavior: 'smooth' });
+          } else {
+            sec.scrollIntoView({ behavior: 'smooth' });
+          }
+          wrap.classList.remove('has-results');
+          input.value = '';
+        });
+        wrap.appendChild(a);
+        count++;
       });
       wrap.classList.toggle('has-results', count > 0);
     });
