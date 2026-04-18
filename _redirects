@@ -1,0 +1,2 @@
+# يفرض عرض web-search.html على /search حتى لا يطغى عليه أي ملف قديم أو كاش (Netlify: 200!)
+/search   /financial-consulting/iif-fund-demo/web-search.html   200!
