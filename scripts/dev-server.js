@@ -557,6 +557,8 @@ function serveStatic(req, res) {
   }
   /** اختصارات مثل netlify.toml — للتطوير المحلي */
   const shortPaths = {
+    '/search': '/financial-consulting/iif-fund-demo/web-search.html',
+    '/web-search': '/financial-consulting/iif-fund-demo/web-search.html',
     '/fund': '/financial-consulting/iif-fund-demo/index.html',
     '/gov': '/financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html',
     '/admin': '/financial-consulting/iif-fund-demo/admin.html',

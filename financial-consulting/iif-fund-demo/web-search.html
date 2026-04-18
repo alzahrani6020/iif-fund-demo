@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0e18" />
+  <meta name="iif-searx-public-url" content="https://searx.tiekoetter.com/" />
+  <meta name="iif-searx-proxy-base" content="" />
+  <meta name="iif-app-base" content="/financial-consulting/iif-fund-demo/" />
+  <base id="iif-document-base" href="/financial-consulting/iif-fund-demo/" />
+  <title>بحث الويب — International Investment Fund</title>
+  <meta name="description" content="بحث ويب موحّد عبر SearXNG — نتائج من عدة مصادر في واجهة واحدة." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" />
+  <link rel="preconnect" href="https://fluffy-meerkat-eff966.netlify.app" crossorigin />
+  <style>
+    :root {
+      --bg: #0a0e18;
+      --surface: rgba(15, 20, 32, 0.96);
+      --border: rgba(201, 162, 39, 0.28);
+      --gold: #c9a227;
+      --text: #e8edf5;
+      --muted: #94a3b8;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, "Segoe UI", Tahoma, Arial, sans-serif;
+      background: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(201, 162, 39, 0.08), transparent 50%), var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .iif-ws-wrap { max-width: 52rem; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
+    .iif-ws-top {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;
+      justify-content: space-between; margin-bottom: 1.25rem;
+    }
+    .iif-ws-brand { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; color: var(--text); }
+    .iif-ws-brand img { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; }
+    .iif-ws-h1 { font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem; color: #f1f5f9; }
+    .iif-ws-sub { margin: 0; font-size: 0.82rem; color: var(--muted); max-width: 36rem; }
+    .iif-ws-form {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0 1.25rem;
+      padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .iif-ws-form input[type="search"] {
+      flex: 1 1 14rem; min-width: 0;
+      padding: 0.65rem 0.9rem; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.25); color: var(--text); font-size: 1rem;
+    }
+    .iif-ws-form input:focus { outline: 2px solid rgba(201, 162, 39, 0.45); border-color: rgba(201, 162, 39, 0.5); }
+    .iif-ws-form button {
+      padding: 0.65rem 1.25rem; border-radius: 999px; border: 1px solid rgba(201, 162, 39, 0.55);
+      background: linear-gradient(180deg, rgba(201, 162, 39, 0.22), rgba(201, 162, 39, 0.08));
+      color: #f5e7b6; font-weight: 600; cursor: pointer; font-size: 0.95rem;
+    }
+    .iif-ws-form button:hover { filter: brightness(1.08); }
+    .iif-ws-form button:disabled { opacity: 0.55; cursor: not-allowed; }
+    .iif-ws-status { min-height: 1.5rem; font-size: 0.88rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .iif-ws-status.iif-ws-err { color: #fca5a5; }
+    .iif-ws-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .iif-ws-item {
+      padding: 1rem 1.1rem; background: var(--surface); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius); transition: border-color 0.15s ease;
+    }
+    .iif-ws-item:hover { border-color: rgba(201, 162, 39, 0.25); }
+    .iif-ws-item h2 { margin: 0 0 0.35rem; font-size: 1.05rem; font-weight: 600; line-height: 1.35; }
+    .iif-ws-item h2 a { color: var(--gold); text-decoration: none; }
+    .iif-ws-item h2 a:hover { text-decoration: underline; }
+    .iif-ws-url {
+      font-size: 0.78rem; color: #7cb87c; word-break: break-all; margin: 0 0 0.45rem;
+      font-family: ui-monospace, monospace;
+    }
+    .iif-ws-snippet { margin: 0; font-size: 0.9rem; color: #cbd5e1; }
+    .iif-ws-engine {
+      margin: 0.5rem 0 0; font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .iif-ws-fallback { margin-top: 1rem; padding: 1rem; border: 1px dashed rgba(201, 162, 39, 0.35); border-radius: var(--radius); font-size: 0.9rem; color: var(--muted); }
+    .iif-ws-fallback a { color: var(--gold); }
+    html[dir="ltr"] .iif-ws-wrap { text-align: left; }
+    .iif-ws-lang { display: inline-flex; gap: 0.35rem; align-items: center; font-size: 0.82rem; }
+    .iif-ws-lang a { color: var(--muted); text-decoration: none; }
+    .iif-ws-lang a[aria-current="true"] { color: var(--gold); font-weight: 600; }
+  </style>
+  <script>
+    (function () {
+      try {
+        var p = new URLSearchParams(window.location.search || '');
+        var l = (p.get('lang') || '').trim().toLowerCase();
+        var html = document.documentElement;
+        if (l === 'en') {
+          html.setAttribute('lang', 'en');
+          html.setAttribute('dir', 'ltr');
+          html.setAttribute('data-lang', 'en');
+        } else {
+          html.setAttribute('lang', 'ar');
+          html.setAttribute('dir', 'rtl');
+          html.setAttribute('data-lang', 'ar');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div class="iif-ws-wrap">
+    <div class="iif-ws-top">
+      <a class="iif-ws-brand" href="index.html" id="iif-ws-home">
+        <img src="assets/emblem.jpg" width="44" height="44" alt="" decoding="async" />
+        <span data-iif-ws="homeLabel">الرئيسية</span>
+      </a>
+      <div class="iif-ws-lang" aria-label="Language">
+        <a href="?lang=ar" id="iif-ws-lang-ar" aria-current="true">العربية</a>
+        <span aria-hidden="true">·</span>
+        <a href="?lang=en" id="iif-ws-lang-en">English</a>
+      </div>
+    </div>
+    <h1 class="iif-ws-h1" data-iif-ws="title">بحث الويب</h1>
+    <p class="iif-ws-sub" data-iif-ws="subtitle">
+      نتائج مجمّعة من عدة محركات عبر SearXNG — واجهة واحدة بلا تشتيت. اكتب عبارة واضحة (عدة كلمات) لنتائج أدق.
+    </p>
+    <form class="iif-ws-form" id="iif-ws-form" role="search" autocomplete="off">
+      <label class="iif-sr-only" for="iif-ws-q" data-iif-ws="qLabel">استعلام البحث</label>
+      <input type="search" id="iif-ws-q" name="q" enterkeyhint="search" inputmode="search" maxlength="500" placeholder="…" />
+      <button type="submit" id="iif-ws-submit" data-iif-ws="searchBtn">بحث</button>
+    </form>
+    <div class="iif-ws-status" id="iif-ws-status" aria-live="polite"></div>
+    <div class="iif-ws-list" id="iif-ws-list"></div>
+    <div class="iif-ws-fallback" id="iif-ws-fallback" hidden></div>
+  </div>
+  <style>
+    .iif-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+  </style>
+  <script>
+(function () {
+  var STR = {
+    ar: {
+      homeLabel: 'الرئيسية',
+      title: 'بحث الويب',
+      subtitle: 'نتائج مجمّعة من عدة محركات عبر SearXNG — واجهة واحدة بلا تشتيت. اكتب عبارة واضحة (عدة كلمات) لنتائج أدق.',
+      qLabel: 'استعلام البحث',
+      searchBtn: 'بحث',
+      placeholder: 'اكتب عبارة البحث…',
+      loading: 'جاري البحث…',
+      empty: 'لا توجد نتائج لهذا الاستعلام. جرّب صياغة أخرى أو كلمات أكثر تحديدًا.',
+      short: 'أدخل ثلاثة أحرف على الأقل.',
+      errNet: 'تعذّر الاتصال بخدمة البحث.',
+      errHttp: 'خطأ من الخادم.',
+      openExternal: 'فتح البحث على SearX العام',
+      shown: 'عرض',
+      resultsUnit: 'نتيجة'
+    },
+    en: {
+      homeLabel: 'Home',
+      title: 'Web search',
+      subtitle: 'Aggregated results from multiple engines via SearXNG — one focused view. Use a clear phrase (several words) for better relevance.',
+      qLabel: 'Search query',
+      searchBtn: 'Search',
+      placeholder: 'Type your search…',
+      loading: 'Searching…',
+      empty: 'No results. Try different wording or a more specific phrase.',
+      short: 'Enter at least 3 characters.',
+      errNet: 'Could not reach the search service.',
+      errHttp: 'Server error.',
+      openExternal: 'Open public SearX search',
+      shown: '',
+      resultsUnit: 'results shown'
+    }
+  };
+
+  function lang() {
+    return document.documentElement.getAttribute('data-lang') === 'en' ? 'en' : 'ar';
+  }
+  function t(key) {
+    return (STR[lang()] && STR[lang()][key]) || (STR.en[key] || key);
+  }
+
+  function applyI18n() {
+    var L = lang();
+    document.querySelectorAll('[data-iif-ws]').forEach(function (el) {
+      var k = el.getAttribute('data-iif-ws');
+      if (k && STR[L] && STR[L][k]) el.textContent = STR[L][k];
+    });
+    var q = document.getElementById('iif-ws-q');
+    if (q) q.placeholder = t('placeholder');
+    var ar = document.getElementById('iif-ws-lang-ar');
+    var en = document.getElementById('iif-ws-lang-en');
+    if (ar && en) {
+      ar.setAttribute('aria-current', L === 'ar' ? 'true' : 'false');
+      en.setAttribute('aria-current', L === 'en' ? 'true' : 'false');
+    }
+    document.title = (L === 'ar' ? 'بحث الويب' : 'Web search') + ' — IIF';
+    updateLangLinks();
+  }
+
+  function updateLangLinks() {
+    var q = (document.getElementById('iif-ws-q') && document.getElementById('iif-ws-q').value)
+      ? document.getElementById('iif-ws-q').value.trim() : '';
+    var ar = document.getElementById('iif-ws-lang-ar');
+    var en = document.getElementById('iif-ws-lang-en');
+    if (!ar || !en) return;
+    ar.href = '?lang=ar' + (q ? '&q=' + encodeURIComponent(q) : '');
+    en.href = '?lang=en' + (q ? '&q=' + encodeURIComponent(q) : '');
+  }
+
+  function resolveSearxSearchUrl(paramsStr) {
+    var origin = typeof location !== 'undefined' ? location.origin : '';
+    try {
+      var m = document.querySelector('meta[name="iif-searx-proxy-base"]');
+      var base = m && m.getAttribute('content');
+      base = base ? String(base).trim().replace(/\/$/, '') : '';
+      if (base && /^https?:\/\//i.test(base)) {
+        return base + '/api/searx/search?' + paramsStr;
+      }
+    } catch (e) {}
+    return origin + '/api/searx/search?' + paramsStr;
+  }
+
+  function publicSearxSearchUrl(query) {
+    var meta = document.querySelector('meta[name="iif-searx-public-url"]');
+    var u = (meta && meta.getAttribute('content') || 'https://searx.tiekoetter.com/').trim();
+    if (!/\/$/.test(u)) u += '/';
+    return u + 'search?q=' + encodeURIComponent(query);
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s == null ? '' : String(s);
+    return d.innerHTML;
+  }
+
+  function safeHttpUrl(u) {
+    var s = String(u || '').trim();
+    if (!/^https?:\/\//i.test(s)) return '#';
+    return s;
+  }
+
+  var listEl = document.getElementById('iif-ws-list');
+  var statusEl = document.getElementById('iif-ws-status');
+  var fallbackEl = document.getElementById('iif-ws-fallback');
+  var form = document.getElementById('iif-ws-form');
+  var input = document.getElementById('iif-ws-q');
+  var submitBtn = document.getElementById('iif-ws-submit');
+
+  function setStatus(msg, isErr) {
+    statusEl.textContent = msg || '';
+    statusEl.classList.toggle('iif-ws-err', !!isErr);
+  }
+
+  function renderResults(rows) {
+    listEl.innerHTML = '';
+    rows.forEach(function (row) {
+      var title = row.title || '';
+      var url = safeHttpUrl(row.url);
+      var content = (row.content || '').slice(0, 380);
+      var engine = row.engine || '';
+      var art = document.createElement('article');
+      art.className = 'iif-ws-item';
+      art.innerHTML =
+        '<h2><a href="' + escapeHtml(url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(title) + '</a></h2>' +
+        '<p class="iif-ws-url">' + escapeHtml(row.url || '') + '</p>' +
+        (content ? '<p class="iif-ws-snippet">' + escapeHtml(content) + '</p>' : '') +
+        (engine ? '<p class="iif-ws-engine">' + escapeHtml(engine) + '</p>' : '');
+      listEl.appendChild(art);
+    });
+  }
+
+  async function runSearch(rawQ) {
+    var q = (rawQ || '').trim();
+    fallbackEl.hidden = true;
+    fallbackEl.innerHTML = '';
+    if (q.length < 3) {
+      setStatus(t('short'), true);
+      listEl.innerHTML = '';
+      return;
+    }
+    setStatus(t('loading'), false);
+    submitBtn.disabled = true;
+    var langCode = lang() === 'ar' ? 'ar' : 'en';
+    var paramsStr = new URLSearchParams({ q: q, format: 'json', language: langCode, categories: 'general' }).toString();
+    var url = resolveSearxSearchUrl(paramsStr);
+    try {
+      var r = await fetch(url, { method: 'GET', cache: 'no-store', mode: 'cors' });
+      if (!r.ok) {
+        throw new Error(t('errHttp') + ' ' + r.status);
+      }
+      var data;
+      try {
+        data = await r.json();
+      } catch (eJson) {
+        throw new Error('invalid_json');
+      }
+      if (data && data.ok === false && data.error) {
+        throw new Error(String(data.error));
+      }
+      var results = (data && Array.isArray(data.results)) ? data.results : [];
+      results = results.slice(0, 22).map(function (x) {
+        return {
+          title: x.title || '',
+          url: x.url || '',
+          content: (x.content || '').replace(/\s+/g, ' ').trim(),
+          engine: x.engine || ''
+        };
+      });
+      if (!results.length) {
+        setStatus(t('empty'), false);
+        listEl.innerHTML = '';
+      } else {
+        var n = results.length;
+        var st =
+          lang() === 'ar'
+            ? t('shown') + ' ' + n + ' ' + t('resultsUnit')
+            : n + ' ' + t('resultsUnit');
+        setStatus(st, false);
+        renderResults(results);
+      }
+    } catch (e) {
+      listEl.innerHTML = '';
+      setStatus(t('errNet'), true);
+      fallbackEl.hidden = false;
+      fallbackEl.innerHTML =
+        '<p>' + escapeHtml(t('errNet')) + '</p>' +
+        '<p><a href="' + escapeHtml(publicSearxSearchUrl(q)) + '" target="_blank" rel="noopener">' + escapeHtml(t('openExternal')) + '</a></p>';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  }
+
+  function syncQueryFromUrl() {
+    var p = new URLSearchParams(window.location.search || '');
+    var q = (p.get('q') || '').trim();
+    if (input) input.value = q;
+    updateLangLinks();
+    if (q.length >= 3) runSearch(q);
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var q = (input && input.value) ? input.value.trim() : '';
+    var p = new URLSearchParams(window.location.search || '');
+    var langParam = (p.get('lang') || '').trim().toLowerCase();
+    var next = new URLSearchParams();
+    if (q) next.set('q', q);
+    if (langParam === 'en' || langParam === 'ar') next.set('lang', langParam);
+    var qs = next.toString();
+    if (history.replaceState) {
+      var path = location.pathname || '/';
+      history.replaceState(null, '', path + (qs ? '?' + qs : ''));
+    }
+    runSearch(q);
+  });
+
+  if (input) {
+    input.addEventListener('input', updateLangLinks);
+  }
+
+  applyI18n();
+  syncQueryFromUrl();
+
+  window.addEventListener('popstate', function () {
+    applyI18n();
+    syncQueryFromUrl();
+  });
+})();
+  </script>
+</body>
+</html>

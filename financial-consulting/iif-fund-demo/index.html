@@ -13,7 +13,10 @@
   <!-- على GitHub Pages: رابط واجهة SearXNG عامة (فارغ = إخفاء الرابط خارج localhost). غيّر الرابط إن رغبت. -->
   <meta name="iif-searx-public-url" content="https://searx.tiekoetter.com/" />
   <!-- قاعدة بروكسي SearXNG (Vercel / Worker) لتحليل الويب من GitHub Pages — يجب أن يوفّر /api/searx/search -->
-  <meta name="iif-searx-proxy-base" content="https://iiffund.com" />
+  <!-- فارغ = استخدام origin الحالي لـ /api/searx (يعمل على *.netlify.app عند تعطل iiffund.com) -->
+  <meta name="iif-searx-proxy-base" content="" />
+  <!-- رابط صفحة بحث الويب على Netlify (HTTPS يعمل) — حدّثه من لوحة Netlify إن تغيّر الاسم -->
+  <meta name="iif-web-search-url" content="https://fluffy-meerkat-eff966.netlify.app/search" />
   <base id="iif-document-base" href="/" />
   <script>
     (function () {
@@ -10193,9 +10196,7 @@
           <div id="iif-header-toolbar-links" class="iif-header-collapsible-target iif-header-toolbar-panel">
           <!-- محرك بحث عام (SearXNG) — يطابق meta iif-searx-public-url؛ يظهر دون الاعتماد على كاش الـ JS -->
           <a
-            href="https://searx.tiekoetter.com/"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="https://fluffy-meerkat-eff966.netlify.app/search"
             data-i18n-title="iifSearxExternalHint"
             class="site-header__auth-btn site-header__auth-btn--login iif-header-toolbar-search-link"
             style="display:inline-flex; align-items:center; text-decoration:none; background: rgba(29, 155, 240, 0.12); border-color: rgba(29, 155, 240, 0.55); font-size: 0.82rem;"
@@ -11225,9 +11226,7 @@
           <div class="site-header__auth-btns">
             <!-- SearXNG — نفس الرابط العام كالهيدر الرئيسي -->
             <a
-              href="https://searx.tiekoetter.com/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="https://fluffy-meerkat-eff966.netlify.app/search"
               data-i18n-title="iifSearxExternalHint"
               id="dashboard-searx-link"
               class="site-header__auth-btn site-header__auth-btn--login"
