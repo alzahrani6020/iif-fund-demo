@@ -43,6 +43,7 @@
   from = "/api/searx/*"
   to = "/.netlify/functions/iif-searx-proxy/:splat"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/api/news"

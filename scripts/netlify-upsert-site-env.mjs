@@ -25,6 +25,15 @@ const triggerBuild = String(process.env.IIF_NETLIFY_TRIGGER_BUILD || "").trim() 
 const searxValue = String(process.env.SEARXNG_URL_VALUE || "https://searx.tiekoetter.com").trim();
 const translateValue = String(process.env.IIF_TRANSLATE_URL_VALUE || "").trim();
 
+/** رؤوس HTTP (مثل Authorization) لا تقبل إلا ASCII — الأحرف العربية تسبب خطأ ByteString في Node. */
+function isAsciiOnly(s) {
+  if (!s) return true;
+  for (let i = 0; i < s.length; i++) {
+    if (s.charCodeAt(i) > 127) return false;
+  }
+  return true;
+}
+
 function authHeaders() {
   return {
     Authorization: `Bearer ${token}`,
@@ -147,6 +156,30 @@ async function main() {
     console.log("      مثال (PowerShell):");
     console.log('        $env:NETLIFY_AUTH_TOKEN="..." ; $env:NETLIFY_SITE_ID="..." ; node scripts/netlify-upsert-site-env.mjs');
     process.exit(0);
+  }
+
+  if (!isAsciiOnly(token)) {
+    console.error(
+      "FAIL  NETLIFY_AUTH_TOKEN يحتوي على أحرف غير ASCII (مثل العربية).\n" +
+        "      الصِق الرمز الحقيقي من Netlify (User settings → Applications → Personal access tokens).\n" +
+        "      لا تستخدم النص التوضيحي «رمز_الوصول_الشخصي» — استبدله بالرمز الفعلي (يُشبه nfp_... أو حروف/أرقام إنجليزية)."
+    );
+    process.exit(1);
+  }
+  if (!isAsciiOnly(siteId)) {
+    console.error(
+      "FAIL  NETLIFY_SITE_ID يجب أن يكون المعرف الحقيقي للموقع (UUID/حروف إنجليزية وأرقام وشرطات فقط).\n" +
+        "      لا تستخدم «معرّف_الموقع» بالعربية — انسخ Site ID من Netlify → Site configuration → Site details."
+    );
+    process.exit(1);
+  }
+  if (translateValue && !isAsciiOnly(translateValue)) {
+    console.error("FAIL  IIF_TRANSLATE_URL_VALUE يجب أن يكون عنوان https://... باللاتينية فقط (ASCII).");
+    process.exit(1);
+  }
+  if (!isAsciiOnly(searxValue)) {
+    console.error("FAIL  SEARXNG_URL_VALUE يجب أن يكون عنوان https://... باللاتينية فقط.");
+    process.exit(1);
   }
 
   const site = await getSite();

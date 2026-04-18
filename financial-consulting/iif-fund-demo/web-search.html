@@ -665,14 +665,25 @@
       var item = scored[i];
       var drop =
         tokens.length >= 3 &&
-        best >= 8 &&
+        best >= 12 &&
         item.score <= 0 &&
         out.length + (scored.length - i - 1) >= minKeep;
       if (!drop) out.push(item.row);
     }
+    if (!out.length && rows.length) {
+      return rows.slice();
+    }
     return out.length >= minKeep ? out : scored.map(function (x) {
       return x.row;
     });
+  }
+
+  function safeRankAndFilterSearchResults(rows, qOriginal, qSearched) {
+    try {
+      return rankAndFilterSearchResults(rows, qOriginal, qSearched);
+    } catch (eRank) {
+      return rows && rows.length ? rows.slice() : rows;
+    }
   }
 
   var listEl = document.getElementById('iif-ws-list');
@@ -759,7 +770,7 @@
     }
     params.set('language', searxLang);
     params.set('categories', 'general');
-    params.set('count', '40');
+    params.set('count', '28');
     var safeEl = document.getElementById('iif-ws-safe');
     var timeEl = document.getElementById('iif-ws-time');
     params.set('safesearch', safeEl && safeEl.value !== '' ? safeEl.value : '1');
@@ -769,6 +780,13 @@
     var url = resolveSearxSearchUrl(paramsStr);
     try {
       var r = await fetch(url, { method: 'GET', cache: 'no-store', mode: 'cors' });
+      if (!r.ok && paramsStr.indexOf('engines=') >= 0) {
+        var pRetry = new URLSearchParams(paramsStr);
+        pRetry.delete('engines');
+        paramsStr = pRetry.toString();
+        url = resolveSearxSearchUrl(paramsStr);
+        r = await fetch(url, { method: 'GET', cache: 'no-store', mode: 'cors' });
+      }
       if (!r.ok) {
         throw new Error(t('errHttp') + ' ' + r.status);
       }
@@ -782,7 +800,7 @@
         throw new Error(String(data.error));
       }
       var results = (data && Array.isArray(data.results)) ? data.results : [];
-      results = results.slice(0, 40).map(function (x) {
+      results = results.slice(0, 32).map(function (x) {
         return {
           title: x.title || '',
           url: x.url || '',
@@ -790,7 +808,7 @@
           engine: x.engine || ''
         };
       });
-      results = rankAndFilterSearchResults(results, q, qSend).slice(0, 22);
+      results = safeRankAndFilterSearchResults(results, q, qSend).slice(0, 22);
       var resultTranslateNote = '';
       if (shouldTranslate && targetUi && targetUi !== 'eng_Latn' && results.length) {
         try {

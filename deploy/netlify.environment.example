@@ -1,9 +1,17 @@
-# انسخ القيم إلى Netlify: Site settings → Environment variables → Add variable
+# انسخ الأسماء إلى Netlify: Site settings → Environment variables
+# احتفظ بنسخة آمنة من القيم خارج المستودع (مدير كلمات مرور / لوحة فريق).
 # لا ترفع هذا الملف بأسرار حقيقية إلى مستودع عام.
 
+# --- بحث (SearXNG عبر دالة Netlify) ---
+# إن لم تُضبط، يُقرأ الافتراضي من netlify.toml (tiekoetter) في كثير من النشرات.
 SEARXNG_URL=https://search.example.com
 IIF_SEARX_TIMEOUT_MS=15000
 
-# اختياري — مترجم
-# IIF_TRANSLATE_URL=https://translator.example.com
-# IIF_TRANSLATE_TIMEOUT_MS=180000
+# --- ترجمة (مترجمكم NLLB على /translate) ---
+# إن لم تُضبط، تستخدم الدالة LibreTranslate الاحتياطي (مثيلات عامة — للاختبار فقط).
+IIF_TRANSLATE_URL=https://translator.example.com
+IIF_TRANSLATE_TIMEOUT_MS=180000
+
+# اختياري — مثيل LibreTranslate عند الاعتماد على الاحتياطي فقط
+# IIF_TRANSLATE_LIBRE_URL=https://libretranslate.de
+# IIF_TRANSLATE_LIBRE_API_KEY=

@@ -1,0 +1,35 @@
+# فحص موقع منشور بعد النشر — تشغيل يدوي فقط (لا يعطل CI على كل push).
+# أدخل عنوان الموقع الكامل، مثال: https://fluffy-meerkat-eff966.netlify.app
+name: Smoke live site
+
+on:
+  workflow_dispatch:
+    inputs:
+      site_url:
+        description: "Base URL (https://....netlify.app)"
+        required: true
+        type: string
+
+concurrency:
+  group: smoke-live-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: Install (scripts only)
+        run: npm ci --no-audit --fund=false
+
+      - name: Run smoke-live-site.mjs
+        env:
+          PROXY_BASE: ${{ inputs.site_url }}
+          IIF_SMOKE_LIVE_MS: "35000"
+        run: node scripts/smoke-live-site.mjs

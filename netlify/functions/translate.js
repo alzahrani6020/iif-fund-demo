@@ -35,10 +35,56 @@ function guessSourceLibre(text) {
   return /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/.test(String(text || "")) ? "ar" : "en";
 }
 
+function libreFallbackBases() {
+  const envBase = String(process.env.IIF_TRANSLATE_LIBRE_URL || "").trim().replace(/\/$/, "");
+  const defaults = ["https://libretranslate.de", "https://de.libretranslate.com"];
+  const seen = new Set();
+  const out = [];
+  if (envBase) {
+    seen.add(envBase);
+    out.push(envBase);
+  }
+  for (const b of defaults) {
+    if (!seen.has(b)) {
+      seen.add(b);
+      out.push(b);
+    }
+  }
+  return out;
+}
+
 /**
- * ترجمة عبر مثيل LibreTranslate عام (احتياطي عند غياب IIF_TRANSLATE_URL).
- * يمكن تغيير المثيل عبر IIF_TRANSLATE_LIBRE_URL و IIF_TRANSLATE_LIBRE_API_KEY.
+ * ترجمة عبر LibreTranslate (احتياطي). عدة مثيلات + إرجاع النص الأصلي عند الفشل حتى لا يتعطل الواجه.
  */
+async function translateOneLibre(text, source, target, apiKey, bases, perTryMs) {
+  if (!String(text || "").trim()) return text;
+  if (source === target) return text;
+  const payload = { q: text, source, target, format: "text" };
+  if (apiKey) payload.api_key = apiKey;
+  for (const base of bases) {
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), perTryMs);
+    try {
+      const res = await fetch(`${base}/translate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8", Accept: "application/json" },
+        body: JSON.stringify(payload),
+        signal: ctrl.signal,
+      });
+      const j = await res.json().catch(() => ({}));
+      if (res.ok) {
+        const out = j.translatedText != null ? j.translatedText : j.translated_text;
+        if (typeof out === "string" && out.length) return out;
+      }
+    } catch {
+      /* جرّب المثيل التالي */
+    } finally {
+      clearTimeout(tid);
+    }
+  }
+  return text;
+}
+
 async function translateLibreFallback(bodyStr) {
   const req = JSON.parse(bodyStr);
   if (!req || typeof req.target_lang !== "string" || !req.target_lang.trim()) {
@@ -48,37 +94,16 @@ async function translateLibreFallback(bodyStr) {
   const explicitSrc = req.source_lang ? toLibreCode(req.source_lang) : null;
   const items = Array.isArray(req.text) ? req.text.map((x) => String(x)) : [String(req.text)];
 
-  const base = String(process.env.IIF_TRANSLATE_LIBRE_URL || "https://libretranslate.de").trim().replace(/\/$/, "");
   const apiKey = String(process.env.IIF_TRANSLATE_LIBRE_API_KEY || "").trim();
   const timeoutMs = Number(process.env.IIF_TRANSLATE_TIMEOUT_MS || 120000);
+  const perTryMs = Math.min(45000, Math.max(8000, timeoutMs));
+  const bases = libreFallbackBases();
 
   const results = [];
   for (let i = 0; i < items.length; i++) {
     const text = items[i];
     const source = explicitSrc || guessSourceLibre(text);
-    const payload = { q: text, source, target, format: "text" };
-    if (apiKey) payload.api_key = apiKey;
-
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), timeoutMs);
-    let res;
-    try {
-      res = await fetch(`${base}/translate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json; charset=utf-8", Accept: "application/json" },
-        body: JSON.stringify(payload),
-        signal: ctrl.signal,
-      });
-    } finally {
-      clearTimeout(t);
-    }
-
-    const j = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      throw new Error(j.error || j.message || `LibreTranslate HTTP ${res.status}`);
-    }
-    const out = j.translatedText != null ? j.translatedText : j.translated_text;
-    results.push(typeof out === "string" ? out : String(out || ""));
+    results.push(await translateOneLibre(text, source, target, apiKey, bases, perTryMs));
   }
 
   const single = !Array.isArray(req.text);
