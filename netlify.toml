@@ -14,7 +14,10 @@
   NODE_VERSION = "22"
   NODE_ENV = "production"
   CI = "true"
-  # بروكسي الدالة netlify/functions/searx.js — يمكن تجاوزه من لوحة Netlify لاحقاً
+  # بروكسي الدالة netlify/functions/iif-searx-proxy.js — يمكن تجاوزه من لوحة Netlify لاحقاً
+  # ملاحظة Netlify: قيم [build.environment] لا تُتاح تلقائياً لدوال Lambda وقت التشغيل؛
+  # لضبط SearXNG للدوال أضف SEARXNG_URL من واجهة Netlify/CLI/API بنطاق يشمل Functions.
+  # الدالة iif-searx-proxy.js تستخدم افتراضياً https://searx.tiekoetter.com إذا لم يُضبط SEARXNG_URL.
   SEARXNG_URL = "https://searx.tiekoetter.com"
   # الترجمة: إن لم تُضبط IIF_TRANSLATE_URL (مترجم NLLB الذاتي) تستخدم الدالة LibreTranslate الاحتياطي (انظر netlify/functions/translate.js)
 
@@ -38,7 +41,7 @@
 
 [[redirects]]
   from = "/api/searx/*"
-  to = "/.netlify/functions/searx/:splat"
+  to = "/.netlify/functions/iif-searx-proxy/:splat"
   status = 200
 
 [[redirects]]
