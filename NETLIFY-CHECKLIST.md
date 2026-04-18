@@ -56,6 +56,12 @@
 - افتح الرابط `https://<اسم-موقعك>.netlify.app`
 - جرّب: `/` ، واجهة الصندوق، المنصة الحكومية
 - روابط مختصرة (إن وُجدت في `netlify.toml`): `/fund` ، `/gov`
+- **بعد النشر (من جهازك):** احفظ نسخة احتياطية من **Environment variables** في مكان آمن؛ ثم (PowerShell)  
+  `$env:PROXY_BASE="https://<اسم-موقعك>.netlify.app"; npm run smoke:live`  
+  يتحقق من صفحة البحث الموحّدة و`/api/searx`؛ فشل الترجمة يظهر تحذيراً فقط حتى لا يُبلغ عن «تعطل» الموقع بالكامل.
+- **فحص سريع من المتصفح:** `https://<اسم-موقعك>.netlify.app/healthz` — JSON يوضح اتصال SearX ومترجمكم (إن وُجد `IIF_TRANSLATE_URL`) دون إيقاف الموقع.
+- **من GitHub:** Actions → **Smoke live site** (تشغيل يدوي) — الصق رابط الموقع عند الطلب.
+- **ضبط المتغيرات من الطرفية (اختياري):** مع `NETLIFY_AUTH_TOKEN` و`NETLIFY_SITE_ID` — `npm run netlify:env:sync` (لا تُخزَّن الرموز في Git؛ راجع `deploy/README.md`).
 
 ## 6) الملفات المرجعية في المشروع
 
@@ -65,6 +71,7 @@
 | `netlify.toml` | أمر البناء، النشر، التوجيهات، الرؤوس |
 | `NETLIFY-UI-SETTINGS.md` | نسخ ولصق لحقول الواجهة |
 | `دليل-المبتدئ-النشر.md` | شرح مبسّط للمبتدئين |
+| `scripts/smoke-live-site.mjs` | فحص خفيف بعد النشر (`npm run smoke:live` مع `PROXY_BASE`) |
 
 ## 7) الطبقة المجانية — عدم إهدار البناء
 

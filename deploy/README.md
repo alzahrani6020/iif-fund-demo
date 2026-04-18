@@ -22,6 +22,36 @@ Optional:
 
 - `IIF_SEARX_TIMEOUT_MS` (default 15000)
 - `IIF_TRANSLATE_TIMEOUT_MS` (default 180000)
+- `IIF_TRANSLATE_LIBRE_URL` / `IIF_TRANSLATE_LIBRE_API_KEY` — only used when `IIF_TRANSLATE_URL` is **unset** (LibreTranslate fallback in `netlify/functions/translate.js`)
+
+### Keeping the live site healthy (no code deploy required)
+
+- **DNS / TLS:** Custom domains must point at Netlify and finish HTTPS provisioning; mixed DNS breaks only that hostname, not the whole Netlify project.
+- **Backup env vars:** Export a private copy of Site → Environment variables (names + values) whenever you change production; see [`deploy/netlify.environment.example`](./netlify.environment.example) as a checklist of names.
+- **Smoke after deploy (local):**
+
+```bash
+# PowerShell
+$env:PROXY_BASE="https://YOUR_SITE.netlify.app"; npm run smoke:live
+$env:PROXY_BASE="https://YOUR_SITE.netlify.app"; npm run verify:proxy
+```
+
+`smoke:live` fails only if the unified search page or SearX proxy is broken; translate issues are **warnings** so a partial outage does not block the check.
+
+**GitHub Actions (manual):** workflow **Smoke live site** — paste your `https://….netlify.app` URL when prompted; no extra secrets required for that check.
+
+### Sync Netlify site env vars (SearXNG + optional translator API)
+
+From a trusted machine (never commit tokens), with a Netlify personal access token that can manage the site:
+
+```powershell
+$env:NETLIFY_AUTH_TOKEN="YOUR_PAT"
+$env:NETLIFY_SITE_ID="YOUR_SITE_UUID"
+# optional: $env:IIF_TRANSLATE_URL_VALUE="https://your-translator.example.com"
+npm run netlify:env:sync
+```
+
+This upserts **`SEARXNG_URL`** (defaults to `https://searx.tiekoetter.com`) and **`IIF_TRANSLATE_URL`** only if `IIF_TRANSLATE_URL_VALUE` is set. Use `$env:IIF_NETLIFY_ENV_DRY="1"` first to print the plan without changes. Netlify usually needs a **new deploy** for Functions to read new values (`IIF_NETLIFY_TRIGGER_BUILD=1` triggers one).
 
 ## VPS: SearXNG (Docker)
 
