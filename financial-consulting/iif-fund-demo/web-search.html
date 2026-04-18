@@ -6,6 +6,8 @@
   <meta name="theme-color" content="#0a0e18" />
   <meta name="iif-searx-public-url" content="https://searx.tiekoetter.com/" />
   <meta name="iif-searx-proxy-base" content="" />
+  <!-- محركات إضافية لتحسين التنويع (افصل بفاصلة؛ اترك فارغاً لافتراضي المثيل) -->
+  <meta name="iif-searx-engines" content="google,bing" />
   <meta name="iif-app-base" content="/financial-consulting/iif-fund-demo/" />
   <base id="iif-document-base" href="/financial-consulting/iif-fund-demo/" />
   <title>بحث الويب (واجهة موحّدة) — IIF</title>
@@ -41,8 +43,33 @@
     .iif-ws-h1 { font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem; color: #f1f5f9; }
     .iif-ws-sub { margin: 0; font-size: 0.82rem; color: var(--muted); max-width: 36rem; }
     .iif-ws-form {
-      display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0 1.25rem;
+      display: flex; flex-direction: column; gap: 0.75rem; margin: 1rem 0 1.25rem;
       padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .iif-ws-form__row {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+    }
+    .iif-ws-form__opts {
+      display: flex; flex-wrap: wrap; gap: 0.65rem 1rem; align-items: center;
+      font-size: 0.84rem; color: var(--muted);
+      padding-top: 0.15rem; border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .iif-ws-form__opts label { display: inline-flex; align-items: center; gap: 0.35rem; }
+    .iif-ws-form__opts select {
+      padding: 0.35rem 0.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.3); color: var(--text); font-size: 0.85rem; max-width: 11rem;
+    }
+    .iif-ws-form__opts .iif-ws-snips {
+      display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer;
+      font-size: 0.82rem; color: var(--muted);
+    }
+    .iif-ws-form__opts .iif-ws-snips input { width: auto; margin: 0; accent-color: var(--gold); }
+    .iif-ws-meta {
+      margin: 0 0 0.5rem; font-size: 0.75rem; color: var(--muted); word-break: break-word;
+    }
+    .iif-ws-meta .pill {
+      display: inline-block; margin-inline-end: 0.35rem; padding: 0.1rem 0.45rem; border-radius: 999px;
+      border: 1px solid rgba(201, 162, 39, 0.35); font-family: ui-monospace, monospace; font-size: 0.72rem;
     }
     .iif-ws-form input[type="search"] {
       flex: 1 1 14rem; min-width: 0;
@@ -118,13 +145,34 @@
     <p class="iif-ws-banner" style="margin:0 0 0.5rem;font-size:0.78rem;color:#64748b;">واجهة موحّدة v2 — إن ظهرت عبارة «+ ترجمة» أو لوحة معقّدة فالنشر قديم؛ جرّب Ctrl+F5 أو انتظر انتهاء النشر.</p>
     <h1 class="iif-ws-h1" data-iif-ws="title">بحث الويب</h1>
     <p class="iif-ws-sub" data-iif-ws="subtitle">
-      نتائج مجمّعة من عدة محركات عبر SearXNG — واجهة واحدة بلا تشتيت. اكتب عبارة واضحة (عدة كلمات) لنتائج أدق.
+      اكتب بلغتك: نترجم الاستعلام للمحركات عند الحاجة، ثم نعرض النتائج بلغتك (عند توفر خدمة الترجمة ووضع «تلقائي»).
+    </p>
+    <p class="iif-ws-sub" style="font-size:0.8rem;margin-top:-0.35rem" data-iif-ws="hintQuery">
+      نصيحة: للاستعلامات العربية جرّب صياغة مثل «مكتب دراسة جدوى» أو «شركة دراسات جدوى اقتصادية» مع ذكر البلد إن رغبت.
     </p>
     <form class="iif-ws-form" id="iif-ws-form" role="search" autocomplete="off">
-      <label class="iif-sr-only" for="iif-ws-q" data-iif-ws="qLabel">استعلام البحث</label>
-      <input type="search" id="iif-ws-q" name="q" enterkeyhint="search" inputmode="search" maxlength="500" placeholder="…" />
-      <button type="submit" id="iif-ws-submit" data-iif-ws="searchBtn">بحث</button>
+      <div class="iif-ws-form__row">
+        <label class="iif-sr-only" for="iif-ws-q" data-iif-ws="qLabel">استعلام البحث</label>
+        <input type="search" id="iif-ws-q" name="q" enterkeyhint="search" inputmode="search" maxlength="500" placeholder="…" />
+        <button type="submit" id="iif-ws-submit" data-iif-ws="searchBtn">بحث</button>
+      </div>
+      <div class="iif-ws-form__opts" aria-label="Filters">
+        <label for="iif-ws-translate-mode"><span data-iif-ws="translateLabel">الترجمة</span>
+          <select id="iif-ws-translate-mode" name="translate"></select>
+        </label>
+        <label class="iif-ws-snips" for="iif-ws-translate-snips">
+          <input type="checkbox" id="iif-ws-translate-snips" />
+          <span data-iif-ws="translateSnippets">ترجمة الملخصات</span>
+        </label>
+        <label for="iif-ws-safe"><span data-iif-ws="safeLabel">تصفية المحتوى</span>
+          <select id="iif-ws-safe" name="safesearch"></select>
+        </label>
+        <label for="iif-ws-time"><span data-iif-ws="timeLabel">الفترة</span>
+          <select id="iif-ws-time" name="time_range"></select>
+        </label>
+      </div>
     </form>
+    <p class="iif-ws-meta" id="iif-ws-badges" hidden></p>
     <div class="iif-ws-status" id="iif-ws-status" aria-live="polite"></div>
     <div class="iif-ws-list" id="iif-ws-list"></div>
     <div class="iif-ws-fallback" id="iif-ws-fallback" hidden></div>
@@ -138,7 +186,7 @@
     ar: {
       homeLabel: 'الرئيسية',
       title: 'بحث الويب',
-      subtitle: 'نتائج مجمّعة من عدة محركات عبر SearXNG — واجهة واحدة بلا تشتيت. اكتب عبارة واضحة (عدة كلمات) لنتائج أدق.',
+      subtitle: 'اكتب بلغتك: نترجم الاستعلام للمحركات عند الحاجة، ثم نعرض النتائج بلغتك (عند توفر خدمة الترجمة ووضع «تلقائي»).',
       qLabel: 'استعلام البحث',
       searchBtn: 'بحث',
       placeholder: 'اكتب عبارة البحث…',
@@ -149,12 +197,33 @@
       errHttp: 'خطأ من الخادم.',
       openExternal: 'فتح البحث على SearX العام',
       shown: 'عرض',
-      resultsUnit: 'نتيجة'
+      resultsUnit: 'نتيجة',
+      hintQuery: 'نصيحة: للاستعلامات العربية جرّب صياغة مثل «مكتب دراسة جدوى» أو «شركة دراسات جدوى اقتصادية» مع ذكر البلد إن رغبت.',
+      safeLabel: 'تصفية المحتوى',
+      timeLabel: 'الفترة',
+      safeOff: 'بدون تصفية قوية',
+      safeModerate: 'معتدل (مُفضّل)',
+      safeStrict: 'صارم',
+      timeAny: 'أي وقت',
+      timeDay: 'آخر 24 ساعة',
+      timeWeek: 'الأسبوع الماضي',
+      timeMonth: 'الشهر الماضي',
+      timeYear: 'السنة الماضية',
+      translateLabel: 'الترجمة',
+      translateAuto: 'تلقائي (مثل التصميم الأصلي)',
+      translateOff: 'إيقاف',
+      translateSnippets: 'ترجمة الملخصات',
+      translatingQuery: 'ترجمة الاستعلام للمحركات…',
+      translatingResults: 'ترجمة العناوين والملخصات…',
+      translateFailQuery: 'تعذّرت ترجمة الاستعلام — نبحث بالنص الأصلي.',
+      translateFailResults: 'تعذّرت ترجمة بعض النتائج — المعروض كما أعادها المحرك.',
+      badgeInput: 'إدخال',
+      badgeSent: 'إرسال'
     },
     en: {
       homeLabel: 'Home',
       title: 'Web search',
-      subtitle: 'Aggregated results from multiple engines via SearXNG — one focused view. Use a clear phrase (several words) for better relevance.',
+      subtitle: 'Type in your language: we translate the query for engines when needed, then show results in your language (when translation is available and mode is Auto).',
       qLabel: 'Search query',
       searchBtn: 'Search',
       placeholder: 'Type your search…',
@@ -165,7 +234,28 @@
       errHttp: 'Server error.',
       openExternal: 'Open public SearX search',
       shown: '',
-      resultsUnit: 'results shown'
+      resultsUnit: 'results shown',
+      hintQuery: 'Tip: for Arabic queries try phrases like «feasibility study consultant» or «دراسة جدوى» plus a country or city.',
+      safeLabel: 'Safe search',
+      timeLabel: 'Time range',
+      safeOff: 'Off',
+      safeModerate: 'Moderate (default)',
+      safeStrict: 'Strict',
+      timeAny: 'Any time',
+      timeDay: 'Past day',
+      timeWeek: 'Past week',
+      timeMonth: 'Past month',
+      timeYear: 'Past year',
+      translateLabel: 'Translation',
+      translateAuto: 'Auto (original design)',
+      translateOff: 'Off',
+      translateSnippets: 'Translate snippets',
+      translatingQuery: 'Translating query for engines…',
+      translatingResults: 'Translating titles and snippets…',
+      translateFailQuery: 'Could not translate query — searching raw text.',
+      translateFailResults: 'Could not translate some results — showing engine text.',
+      badgeInput: 'input',
+      badgeSent: 'sent'
     }
   };
 
@@ -174,6 +264,177 @@
   }
   function t(key) {
     return (STR[lang()] && STR[lang()][key]) || (STR.en[key] || key);
+  }
+
+  function populateFilters() {
+    var safe = document.getElementById('iif-ws-safe');
+    var time = document.getElementById('iif-ws-time');
+    if (!safe || !time) return;
+    var curS = safe.value;
+    var curT = time.value;
+    safe.innerHTML = '';
+    [['1', 'safeModerate'], ['0', 'safeOff'], ['2', 'safeStrict']].forEach(function (x) {
+      var o = document.createElement('option');
+      o.value = x[0];
+      o.textContent = t(x[1]);
+      safe.appendChild(o);
+    });
+    safe.value = ['0', '1', '2'].indexOf(curS) >= 0 ? curS : '1';
+    time.innerHTML = '';
+    [['', 'timeAny'], ['day', 'timeDay'], ['week', 'timeWeek'], ['month', 'timeMonth'], ['year', 'timeYear']].forEach(function (x) {
+      var o = document.createElement('option');
+      o.value = x[0];
+      o.textContent = t(x[1]);
+      time.appendChild(o);
+    });
+    if (curT === 'day' || curT === 'week' || curT === 'month' || curT === 'year') time.value = curT;
+    else time.value = '';
+  }
+
+  function readEnginesMeta() {
+    try {
+      var m = document.querySelector('meta[name="iif-searx-engines"]');
+      return m && m.getAttribute('content') ? String(m.getAttribute('content')).trim() : '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function appendEngineParams(params, raw) {
+    if (!raw) return;
+    var parts = String(raw)
+      .split(/[,\s]+/)
+      .map(function (s) {
+        return s.trim();
+      })
+      .filter(Boolean);
+    if (parts.length) params.set('engines', parts.join(','));
+  }
+
+  function resolveTranslateUrl() {
+    var origin = typeof location !== 'undefined' ? location.origin : '';
+    return origin + '/api/translate';
+  }
+
+  function looksArabic(s) {
+    return /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/.test(String(s || ''));
+  }
+
+  async function translate(text, target_lang, source_lang) {
+    var body = { text: text, target_lang: target_lang };
+    if (source_lang) body.source_lang = source_lang;
+    var r = await fetch(resolveTranslateUrl(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      cache: 'no-store',
+      mode: 'cors'
+    });
+    var j = await r.json().catch(function () {
+      return {};
+    });
+    if (!r.ok || !j.ok) throw new Error((j && j.error) || 'translate failed');
+    return j.result;
+  }
+
+  async function translateMany(texts, target_lang, source_lang) {
+    var r = await fetch(resolveTranslateUrl(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: texts, target_lang: target_lang, source_lang: source_lang }),
+      cache: 'no-store',
+      mode: 'cors'
+    });
+    var j = await r.json().catch(function () {
+      return {};
+    });
+    if (!r.ok || !j.ok) throw new Error((j && j.error) || 'translate failed');
+    return Array.isArray(j.result) ? j.result : texts.map(function () {
+      return String(j.result || '');
+    });
+  }
+
+  function chunk(arr, n) {
+    var out = [];
+    for (var i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+    return out;
+  }
+
+  async function translateIntoResults(rows, targetUi, doSnips, maxItems) {
+    if (!targetUi || targetUi === 'eng_Latn') return;
+    var limit = Math.max(1, Math.min(22, maxItems || 12));
+    var take = rows.slice(0, limit);
+    var maxSnippetChars = 260;
+    var titles = take.map(function (r) {
+      return String(r.title || '');
+    });
+    var snips = doSnips
+      ? take.map(function (r) {
+          return String(r.content || '').slice(0, maxSnippetChars);
+        })
+      : [];
+    var titleChunks = chunk(titles, 4);
+    var snipChunks = doSnips ? chunk(snips, 4) : [];
+    var maxSteps = Math.max(titleChunks.length, snipChunks.length);
+    for (var step = 0; step < maxSteps; step++) {
+      var tasks = [];
+      if (titleChunks[step]) tasks.push(translateMany(titleChunks[step], targetUi));
+      else tasks.push(Promise.resolve(null));
+      if (doSnips && snipChunks[step]) tasks.push(translateMany(snipChunks[step], targetUi));
+      else tasks.push(Promise.resolve(null));
+      var out = await Promise.all(tasks);
+      var tOut = out[0];
+      var sOut = out[1];
+      var baseIdx = step * 4;
+      if (Array.isArray(tOut)) {
+        for (var i = 0; i < tOut.length; i++) {
+          var idx = baseIdx + i;
+          if (take[idx] && tOut[i]) take[idx].title = tOut[i];
+        }
+      }
+      if (doSnips && Array.isArray(sOut)) {
+        for (var j = 0; j < sOut.length; j++) {
+          var jdx = baseIdx + j;
+          if (take[jdx] && sOut[j]) take[jdx].content = sOut[j];
+        }
+      }
+    }
+  }
+
+  function populateTranslateSelect() {
+    var sel = document.getElementById('iif-ws-translate-mode');
+    if (!sel) return;
+    var v = sel.value;
+    sel.innerHTML = '';
+    [['auto', 'translateAuto'], ['off', 'translateOff']].forEach(function (x) {
+      var o = document.createElement('option');
+      o.value = x[0];
+      o.textContent = t(x[1]);
+      sel.appendChild(o);
+    });
+    sel.value = v === 'off' ? 'off' : 'auto';
+  }
+
+  function updateTranslateSnipsDisabled() {
+    var m = document.getElementById('iif-ws-translate-mode');
+    var c = document.getElementById('iif-ws-translate-snips');
+    if (c && m) c.disabled = m.value === 'off';
+  }
+
+  function setBadges(obj) {
+    var el = document.getElementById('iif-ws-badges');
+    if (!el) return;
+    var parts = [];
+    if (obj.queryLang) parts.push('<span class="pill">' + escapeHtml(t('badgeInput')) + '=' + escapeHtml(obj.queryLang) + '</span>');
+    if (obj.sentHint) parts.push('<span class="pill">' + escapeHtml(t('badgeSent')) + '=' + escapeHtml(obj.sentHint) + '</span>');
+    if (obj.translatedPipeline) parts.push('<span class="pill">t=' + escapeHtml(obj.translatedPipeline) + '</span>');
+    if (!parts.length) {
+      el.hidden = true;
+      el.innerHTML = '';
+      return;
+    }
+    el.hidden = false;
+    el.innerHTML = parts.join(' ');
   }
 
   function applyI18n() {
@@ -191,6 +452,9 @@
       en.setAttribute('aria-current', L === 'en' ? 'true' : 'false');
     }
     document.title = (L === 'ar' ? 'بحث الويب' : 'Web search') + ' — IIF';
+    populateFilters();
+    populateTranslateSelect();
+    updateTranslateSnipsDisabled();
     updateLangLinks();
   }
 
@@ -236,6 +500,181 @@
     return s;
   }
 
+  var AR_STOP = {
+    في: 1,
+    من: 1,
+    إلى: 1,
+    على: 1,
+    عن: 1,
+    مع: 1,
+    أن: 1,
+    إن: 1,
+    ما: 1,
+    لا: 1,
+    قد: 1,
+    كان: 1,
+    هذا: 1,
+    هذه: 1,
+    ذلك: 1,
+    التي: 1,
+    الذي: 1,
+    أو: 1,
+    كل: 1,
+    بعد: 1,
+    قبل: 1,
+    إذا: 1,
+    هل: 1,
+    كيف: 1
+  };
+  var EN_STOP = {
+    the: 1,
+    a: 1,
+    an: 1,
+    is: 1,
+    are: 1,
+    was: 1,
+    were: 1,
+    and: 1,
+    or: 1,
+    but: 1,
+    in: 1,
+    on: 1,
+    at: 1,
+    to: 1,
+    for: 1,
+    of: 1,
+    as: 1,
+    by: 1,
+    with: 1,
+    from: 1,
+    that: 1,
+    this: 1,
+    not: 1,
+    be: 1,
+    have: 1,
+    has: 1,
+    will: 1,
+    can: 1,
+    how: 1,
+    what: 1,
+    when: 1,
+    who: 1,
+    site: 1,
+    web: 1,
+    www: 1
+  };
+
+  function buildRelevanceTokens(qOriginal, qSearched) {
+    var set = {};
+    function addFrom(s) {
+      if (!s) return;
+      var str = String(s).trim();
+      var ar = str.match(/[\u0600-\u06FF]{2,}/g);
+      if (ar) {
+        ar.forEach(function (w) {
+          if (!AR_STOP[w]) set[w] = 1;
+        });
+      }
+      var en = str.toLowerCase().match(/[a-z]{3,}/g);
+      if (en) {
+        en.forEach(function (w) {
+          if (!EN_STOP[w]) set[w] = 1;
+        });
+      }
+    }
+    addFrom(qOriginal);
+    if (qSearched && String(qSearched).trim() !== String(qOriginal).trim()) {
+      addFrom(qSearched);
+    }
+    return Object.keys(set);
+  }
+
+  function relevanceScore(row, tokens, qOriginal, qSearched) {
+    var title = String(row.title || '');
+    var content = String(row.content || '');
+    var url = String(row.url || '');
+    var score = 0;
+    for (var ti = 0; ti < tokens.length; ti++) {
+      var tok = tokens[ti];
+      if (tok.length < 2) continue;
+      if (/[\u0600-\u06FF]/.test(tok)) {
+        if (title.indexOf(tok) >= 0) score += 6;
+        else if (content.indexOf(tok) >= 0) score += 2;
+        else if (url.indexOf(tok) >= 0) score += 0.5;
+      } else {
+        var k = tok.toLowerCase();
+        var tl = title.toLowerCase();
+        var cl = content.toLowerCase();
+        var ul = url.toLowerCase();
+        if (tl.indexOf(k) >= 0) score += 5;
+        else if (cl.indexOf(k) >= 0) score += 2;
+        else if (ul.indexOf(k) >= 0) score += 0.5;
+      }
+    }
+    var qo = String(qOriginal || '').trim();
+    if (qo.length >= 4 && title.indexOf(qo) >= 0) score += 12;
+    if (qo.length >= 4 && content.indexOf(qo) >= 0) score += 4;
+    var qs = String(qSearched || '').trim();
+    if (qs && qs !== qo && qs.length >= 4) {
+      var qsl = qs.toLowerCase();
+      if (title.toLowerCase().indexOf(qsl) >= 0) score += 8;
+      if (content.toLowerCase().indexOf(qsl) >= 0) score += 3;
+    }
+    try {
+      var u = new URL(url);
+      var path = (u.pathname || '/').replace(/\/+$/, '') || '/';
+      var h = u.hostname.replace(/^www\./, '').toLowerCase();
+      if (path === '/' && tokens.length >= 2) {
+        if (
+          h === 'google.com' ||
+          h === 'bing.com' ||
+          h.endsWith('.google.com') ||
+          /^m\.bing\.com$/.test(h)
+        ) {
+          score -= 22;
+        }
+        if (h === 'facebook.com' || h === 'twitter.com' || h === 'x.com' || h === 'instagram.com' || h === 'tiktok.com') {
+          score -= 14;
+        }
+        if ((h === 'aljazeera.net' || h === 'wikipedia.org' || h.endsWith('.wikipedia.org')) && tokens.length >= 3) {
+          score -= 8;
+        }
+      }
+    } catch (e1) {}
+    return score;
+  }
+
+  function rankAndFilterSearchResults(rows, qOriginal, qSearched) {
+    if (!rows || !rows.length) return rows;
+    var tokens = buildRelevanceTokens(qOriginal, qSearched);
+    if (!tokens.length) return rows.slice();
+    var scored = rows.map(function (row) {
+      return {
+        row: row,
+        score: relevanceScore(row, tokens, qOriginal, qSearched)
+      };
+    });
+    scored.sort(function (a, b) {
+      return b.score - a.score;
+    });
+    var best = scored[0].score;
+    var minKeep = Math.min(rows.length, Math.max(3, Math.ceil(rows.length * 0.25)));
+    var out = [];
+    var i;
+    for (i = 0; i < scored.length; i++) {
+      var item = scored[i];
+      var drop =
+        tokens.length >= 3 &&
+        best >= 8 &&
+        item.score <= 0 &&
+        out.length + (scored.length - i - 1) >= minKeep;
+      if (!drop) out.push(item.row);
+    }
+    return out.length >= minKeep ? out : scored.map(function (x) {
+      return x.row;
+    });
+  }
+
   var listEl = document.getElementById('iif-ws-list');
   var statusEl = document.getElementById('iif-ws-status');
   var fallbackEl = document.getElementById('iif-ws-fallback');
@@ -270,6 +709,7 @@
     var q = (rawQ || '').trim();
     fallbackEl.hidden = true;
     fallbackEl.innerHTML = '';
+    setBadges({});
     if (q.length < 3) {
       setStatus(t('short'), true);
       listEl.innerHTML = '';
@@ -277,8 +717,55 @@
     }
     setStatus(t('loading'), false);
     submitBtn.disabled = true;
-    var langCode = lang() === 'ar' ? 'ar' : 'en';
-    var paramsStr = new URLSearchParams({ q: q, format: 'json', language: langCode, categories: 'general' }).toString();
+    var modeEl = document.getElementById('iif-ws-translate-mode');
+    var translateMode = modeEl && modeEl.value === 'off' ? 'off' : 'auto';
+    var shouldTranslate = translateMode !== 'off';
+    var inputLang = looksArabic(q) ? 'arb_Arab' : 'eng_Latn';
+    var targetUi = inputLang;
+    var qSend = q;
+    var sentHint = 'raw';
+    var translatedPipeline = 'off';
+    if (shouldTranslate && inputLang !== 'eng_Latn') {
+      setStatus(t('translatingQuery'), false);
+      try {
+        qSend = await translate(q, 'eng_Latn', inputLang);
+        sentHint = 'en';
+        translatedPipeline = 'on';
+      } catch (eQ) {
+        qSend = q;
+        sentHint = 'raw';
+        translatedPipeline = 'partial';
+        setStatus(t('translateFailQuery'), false);
+      }
+    } else if (translateMode === 'off') {
+      translatedPipeline = 'off';
+    } else {
+      translatedPipeline = 'raw';
+    }
+    setBadges({
+      queryLang: inputLang,
+      sentHint: sentHint,
+      translatedPipeline: translatedPipeline
+    });
+    setStatus(t('loading'), false);
+    var params = new URLSearchParams();
+    params.set('q', qSend);
+    params.set('format', 'json');
+    var searxLang;
+    if (shouldTranslate) {
+      searxLang = 'en';
+    } else {
+      searxLang = inputLang === 'arb_Arab' ? 'ar' : 'en';
+    }
+    params.set('language', searxLang);
+    params.set('categories', 'general');
+    params.set('count', '40');
+    var safeEl = document.getElementById('iif-ws-safe');
+    var timeEl = document.getElementById('iif-ws-time');
+    params.set('safesearch', safeEl && safeEl.value !== '' ? safeEl.value : '1');
+    if (timeEl && timeEl.value) params.set('time_range', timeEl.value);
+    appendEngineParams(params, readEnginesMeta());
+    var paramsStr = params.toString();
     var url = resolveSearxSearchUrl(paramsStr);
     try {
       var r = await fetch(url, { method: 'GET', cache: 'no-store', mode: 'cors' });
@@ -295,7 +782,7 @@
         throw new Error(String(data.error));
       }
       var results = (data && Array.isArray(data.results)) ? data.results : [];
-      results = results.slice(0, 22).map(function (x) {
+      results = results.slice(0, 40).map(function (x) {
         return {
           title: x.title || '',
           url: x.url || '',
@@ -303,6 +790,17 @@
           engine: x.engine || ''
         };
       });
+      results = rankAndFilterSearchResults(results, q, qSend).slice(0, 22);
+      var resultTranslateNote = '';
+      if (shouldTranslate && targetUi && targetUi !== 'eng_Latn' && results.length) {
+        try {
+          setStatus(t('translatingResults'), false);
+          var doSnips = !!(document.getElementById('iif-ws-translate-snips') && document.getElementById('iif-ws-translate-snips').checked);
+          await translateIntoResults(results, targetUi, doSnips, 12);
+        } catch (eR) {
+          resultTranslateNote = ' — ' + t('translateFailResults');
+        }
+      }
       if (!results.length) {
         setStatus(t('empty'), false);
         listEl.innerHTML = '';
@@ -312,7 +810,7 @@
           lang() === 'ar'
             ? t('shown') + ' ' + n + ' ' + t('resultsUnit')
             : n + ' ' + t('resultsUnit');
-        setStatus(st, false);
+        setStatus(st + resultTranslateNote, false);
         renderResults(results);
       }
     } catch (e) {
@@ -354,6 +852,8 @@
   if (input) {
     input.addEventListener('input', updateLangLinks);
   }
+  var trModeEl = document.getElementById('iif-ws-translate-mode');
+  if (trModeEl) trModeEl.addEventListener('change', updateTranslateSnipsDisabled);
 
   applyI18n();
   syncQueryFromUrl();

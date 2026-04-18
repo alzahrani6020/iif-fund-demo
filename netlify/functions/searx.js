@@ -32,14 +32,9 @@ exports.handler = async function handler(event) {
     return json(405, { ok: false, error: "Method Not Allowed" });
   }
 
-  const upstreamRaw = String(process.env.SEARXNG_URL || "").trim();
-  if (!upstreamRaw) {
-    return json(501, {
-      ok: false,
-      error: "SearXNG is not configured for hosting.",
-      howToFix: "Set Netlify env var SEARXNG_URL to your hosted searxng base URL (e.g. https://searx.example.com).",
-    });
-  }
+  const DEFAULT_UPSTREAM = "https://searx.tiekoetter.com";
+  const envRaw = process.env.SEARXNG_URL != null ? String(process.env.SEARXNG_URL).trim() : "";
+  const upstreamRaw = envRaw || DEFAULT_UPSTREAM;
 
   let upstream;
   try {

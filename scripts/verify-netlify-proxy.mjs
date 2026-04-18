@@ -1,6 +1,6 @@
 /**
  * يتحقق من أن موقع Netlify (أو أي نشر يوفّر /api/searx) يمرّر الطلبات للمحرك.
- * يتطلب ضبط SEARXNG_URL في لوحة Netlify وإعادة نشر.
+ * إن ظهر 501 فالمتغير غير متاح للدالة؛ راجع `netlify.toml` ولوحة Netlify. الدالة تستخدم tiekoetter افتراضياً عند غياب القيمة.
  *
  * الاستخدام:
  *   set PROXY_BASE=https://yoursite.netlify.app

@@ -14,6 +14,9 @@
   NODE_VERSION = "22"
   NODE_ENV = "production"
   CI = "true"
+  # بروكسي الدالة netlify/functions/searx.js — يمكن تجاوزه من لوحة Netlify لاحقاً
+  SEARXNG_URL = "https://searx.tiekoetter.com"
+  # الترجمة: إن لم تُضبط IIF_TRANSLATE_URL (مترجم NLLB الذاتي) تستخدم الدالة LibreTranslate الاحتياطي (انظر netlify/functions/translate.js)
 
 [functions]
   directory = "netlify/functions"
