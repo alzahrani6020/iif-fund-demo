@@ -30,3 +30,11 @@ netlify-deploy-log*.txt
 netlify-help.txt
 netlify-step*.txt
 _git_run_log.txt
+
+# ملفات تجريبية من جلسات Netlify/CLI (لا تُرفع)
+argv.js
+run-build.cjs
+run-npx.cjs
+run-user.cmd
+user-run.ps1
+netlify-api-list.txt
