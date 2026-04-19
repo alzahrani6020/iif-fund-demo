@@ -2,6 +2,11 @@
 # احتفظ بنسخة آمنة من القيم خارج المستودع (مدير كلمات مرور / لوحة فريق).
 # لا ترفع هذا الملف بأسرار حقيقية إلى مستودع عام.
 
+# --- تشغيل نشر يدوي من الطرفية (محلي فقط، لا تضفها لموقع Netlify) ---
+# أنشئ Build hook: Site → Build & deploy → Build hooks
+# ثم على جهازك: $env:NETLIFY_BUILD_HOOK_URL="https://api.netlify.com/build_hooks/..." ; npm run netlify:build:trigger
+# NETLIFY_BUILD_CLEAR_CACHE=1  (اختياري) يضيف ?clear_cache=true
+
 # --- بحث (SearXNG عبر دالة Netlify) ---
 # إن لم تُضبط، يُقرأ الافتراضي من netlify.toml (tiekoetter) في كثير من النشرات.
 SEARXNG_URL=https://search.example.com
