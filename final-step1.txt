@@ -1,9 +1,0 @@
-﻿node.exe :  ┬╗   Error: Project not found. Please rerun "netlify link" and make sure that your project has CI 
-configured.
-At line:1 char:1
-+ & "C:\Users\vip\AppData\Local\fnm_multishells\37516_1776549540911/nod ...
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: ( ┬╗   Error: Pr... CI configured.:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
- 
-EXIT_CODE=0

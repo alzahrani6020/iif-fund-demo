@@ -22,3 +22,18 @@ engines/searxng/data/*
 .minimax/
 test-results/
 playwright-report/
+
+# سجلات/مخرجات عرضية من الطرفية أو أدوات (لا تُرفع)
+cmdout.txt
+final-step*.txt
+netlify-deploy-log*.txt
+netlify-help.txt
+netlify-step*.txt
+_git_run_log.txt
+# iif-fund-demo: ignore CLI logs
+cmdout.txt
+final-step*.txt
+netlify-deploy-log*.txt
+netlify-help.txt
+netlify-step*.txt
+_git_run_log.txt
