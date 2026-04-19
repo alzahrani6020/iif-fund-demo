@@ -14,13 +14,13 @@ function json(statusCode, obj, headers = {}) {
   };
 }
 
-/** مسار SearXNG على المثيل العام (مثل /search) — يدعم طلبات /api/searx/* ومسار الدالة الداخلي */
+/** مسار SearXNG على المثيل (مثل /search) — يدعم /api/searx/* ومسار /.netlify/functions/searx */
 function upstreamPathSuffix(event) {
   const p = String(event.path || "").split("?")[0];
   if (p.startsWith("/api/searx")) {
     return p.slice("/api/searx".length) || "/";
   }
-  const markers = ["/.netlify/functions/iif-searx-proxy", "/.netlify/functions/searx"];
+  const markers = ["/.netlify/functions/searx", "/.netlify/functions/iif-searx-proxy"];
   for (const m of markers) {
     const i = p.indexOf(m);
     if (i >= 0) {
@@ -93,7 +93,7 @@ exports.handler = async function handler(event) {
               "Cache-Control": "no-store",
               "Access-Control-Allow-Origin": "*",
               "X-IIF-Searx-Upstream": upstream.origin,
-              "X-IIF-Searx-Proxy": "iif-searx-proxy-v3",
+              "X-IIF-Searx-Proxy": "searx-v4-tiekoetter-default",
             },
             body: out.toString("utf8"),
           });
