@@ -1,6 +1,9 @@
 const http = require("http");
 const https = require("https");
 
+const PROXY_TAG = "searx-v5-multi-upstream";
+const DEFAULT_UPSTREAM = "https://searx.tiekoetter.com";
+
 function json(statusCode, obj, headers = {}) {
   return {
     statusCode,
@@ -30,6 +33,108 @@ function upstreamPathSuffix(event) {
   return "/";
 }
 
+function parseUpstreamList(envRaw) {
+  const raw = envRaw != null ? String(envRaw).trim() : "";
+  if (!raw) return [new URL(DEFAULT_UPSTREAM)];
+  const pieces = raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const urls = [];
+  for (const p of pieces) {
+    try {
+      urls.push(new URL(p));
+    } catch {
+      /* skip invalid */
+    }
+  }
+  return urls.length ? urls : [new URL(DEFAULT_UPSTREAM)];
+}
+
+function wantsJsonFormat(rawQuery) {
+  const q = rawQuery != null ? String(rawQuery) : "";
+  return /(?:^|&)format=json(?:&|$)/.test(q);
+}
+
+function isEmptyJsonResults(body) {
+  try {
+    const j = JSON.parse(body);
+    return Boolean(j && Array.isArray(j.results) && j.results.length === 0);
+  } catch {
+    return false;
+  }
+}
+
+function shouldRetryHttp(res) {
+  if (res.error) return true;
+  const c = Number(res.statusCode) || 0;
+  return c === 429 || c === 502 || c === 503 || c === 504;
+}
+
+function shouldRetryEmptyResults(res, rawQuery) {
+  if (String(process.env.IIF_SEARX_RETRY_EMPTY || "").trim() !== "1") return false;
+  const c = Number(res.statusCode) || 0;
+  if (c !== 200 || res.error) return false;
+  if (!wantsJsonFormat(rawQuery)) return false;
+  return isEmptyJsonResults(res.body);
+}
+
+function requestUpstream(upstream, pathAndQuery, method, timeoutMs) {
+  const isHttps = upstream.protocol === "https:";
+  const mod = isHttps ? https : http;
+  const port = Number(upstream.port) || (isHttps ? 443 : 80);
+  return new Promise((resolve) => {
+    const preq = mod.request(
+      {
+        hostname: upstream.hostname,
+        port,
+        path: pathAndQuery,
+        method,
+        headers: {
+          "User-Agent": "iif-fund-demo-netlify-searx/1.0",
+          Accept: "*/*",
+          Host: upstream.hostname,
+        },
+        timeout: timeoutMs,
+      },
+      (pres) => {
+        const chunks = [];
+        pres.on("data", (c) => chunks.push(c));
+        pres.on("end", () => {
+          const body = Buffer.concat(chunks).toString("utf8");
+          resolve({
+            statusCode: pres.statusCode || 200,
+            headers: pres.headers || {},
+            body,
+            upstreamOrigin: upstream.origin,
+            error: "",
+          });
+        });
+      }
+    );
+    preq.on("timeout", () => {
+      preq.destroy();
+      resolve({
+        statusCode: 504,
+        headers: {},
+        body: "",
+        upstreamOrigin: upstream.origin,
+        error: "timeout",
+      });
+    });
+    preq.on("error", (e) => {
+      resolve({
+        statusCode: 502,
+        headers: {},
+        body: "",
+        upstreamOrigin: upstream.origin,
+        error: e && e.message ? e.message : "socket_error",
+      });
+    });
+    preq.end();
+  });
+}
+
 exports.handler = async function handler(event) {
   if (event.httpMethod === "OPTIONS") {
     return {
@@ -48,63 +153,45 @@ exports.handler = async function handler(event) {
     return json(405, { ok: false, error: "Method Not Allowed" });
   }
 
-  const DEFAULT_UPSTREAM = "https://searx.tiekoetter.com";
-  const envRaw = process.env.SEARXNG_URL != null ? String(process.env.SEARXNG_URL).trim() : "";
-  const upstreamRaw = envRaw || DEFAULT_UPSTREAM;
-
-  let upstream;
-  try {
-    upstream = new URL(upstreamRaw);
-  } catch {
-    return json(500, { ok: false, error: "Invalid SEARXNG_URL" });
-  }
-
+  const upstreams = parseUpstreamList(process.env.SEARXNG_URL);
   const suffix = upstreamPathSuffix(event);
   const qs = event.rawQuery ? "?" + event.rawQuery : "";
-
-  const isHttps = upstream.protocol === "https:";
-  const mod = isHttps ? https : http;
-  const port = Number(upstream.port) || (isHttps ? 443 : 80);
+  const pathAndQuery = suffix + qs;
   const timeoutMs = Number(process.env.IIF_SEARX_TIMEOUT_MS || 15000);
 
-  return await new Promise((resolve) => {
-    const preq = mod.request(
-      {
-        hostname: upstream.hostname,
-        port,
-        path: suffix + qs,
-        method: event.httpMethod,
-        headers: {
-          "User-Agent": "iif-fund-demo-netlify-searx/1.0",
-          Accept: event.headers && event.headers.accept ? event.headers.accept : "*/*",
-          Host: upstream.hostname,
-        },
-        timeout: timeoutMs,
-      },
-      (pres) => {
-        const chunks = [];
-        pres.on("data", (c) => chunks.push(c));
-        pres.on("end", () => {
-          const out = Buffer.concat(chunks);
-          resolve({
-            statusCode: pres.statusCode || 200,
-            headers: {
-              "Content-Type": String(pres.headers["content-type"] || "text/plain; charset=utf-8"),
-              "Cache-Control": "no-store",
-              "Access-Control-Allow-Origin": "*",
-              "X-IIF-Searx-Upstream": upstream.origin,
-              "X-IIF-Searx-Proxy": "searx-v4-tiekoetter-default",
-            },
-            body: out.toString("utf8"),
-          });
-        });
-      }
-    );
-    preq.on("timeout", () => {
-      preq.destroy();
-      resolve(json(504, { ok: false, error: "SearX timeout" }, { "X-IIF-Searx-Upstream": upstream.origin }));
-    });
-    preq.on("error", (e) => resolve(json(502, { ok: false, error: e.message }, { "X-IIF-Searx-Upstream": upstream.origin })));
-    preq.end();
-  });
+  let last = null;
+  for (let i = 0; i < upstreams.length; i++) {
+    const u = upstreams[i];
+    last = await requestUpstream(u, pathAndQuery, event.httpMethod, timeoutMs);
+
+    const more = i < upstreams.length - 1;
+    const retryHttp = more && shouldRetryHttp(last);
+    const retryEmpty = more && shouldRetryEmptyResults(last, event.rawQuery);
+    if (!retryHttp && !retryEmpty) break;
+  }
+
+  if (!last) {
+    return json(502, { ok: false, error: "No upstream configured" });
+  }
+
+  if (last.error === "timeout") {
+    return json(504, { ok: false, error: "SearX timeout" }, { "X-IIF-Searx-Upstream": last.upstreamOrigin, "X-IIF-Searx-Proxy": PROXY_TAG });
+  }
+  if (last.error && last.statusCode === 502 && !last.body) {
+    return json(502, { ok: false, error: last.error }, { "X-IIF-Searx-Upstream": last.upstreamOrigin, "X-IIF-Searx-Proxy": PROXY_TAG });
+  }
+
+  const ct = String(last.headers["content-type"] || "text/plain; charset=utf-8");
+  return {
+    statusCode: last.statusCode,
+    headers: {
+      "Content-Type": ct,
+      "Cache-Control": "no-store",
+      "Access-Control-Allow-Origin": "*",
+      "X-IIF-Searx-Upstream": last.upstreamOrigin,
+      "X-IIF-Searx-Proxy": PROXY_TAG,
+      "X-IIF-Searx-Upstream-Count": String(upstreams.length),
+    },
+    body: last.body,
+  };
 };

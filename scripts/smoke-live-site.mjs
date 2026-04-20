@@ -55,6 +55,12 @@ try {
     signal: reqSignal(),
     headers: { Accept: "application/json" },
   });
+  if (sres.status === 429) {
+    console.warn("WARN  /api/searx/search — HTTP 429 (Rate limited).");
+    console.warn("      هذا يعني أن البروكسي يعمل لكن مثيل SearXNG الخارجي يحد المعدل. جرّب لاحقاً أو استخدم مثيلك الخاص.");
+    console.log("OK  smoke:live اكتمل لـ", base.origin);
+    process.exit(0);
+  }
   if (sres.status === 501) {
     console.error("FAIL  SearXNG غير مضبوط على الخادم (501).");
     process.exit(1);

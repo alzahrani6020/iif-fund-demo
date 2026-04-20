@@ -6,11 +6,22 @@
 # أنشئ Build hook: Site → Build & deploy → Build hooks
 # ثم على جهازك: $env:NETLIFY_BUILD_HOOK_URL="https://api.netlify.com/build_hooks/..." ; npm run netlify:build:trigger
 # NETLIFY_BUILD_CLEAR_CACHE=1  (اختياري) يضيف ?clear_cache=true
+#
+# بديل إذا كان الموقع غير مربوط بـ Git (build hook قد يرجع 200 بدون بناء):
+# NETLIFY_SITE_ID=4d4c58f4-8834-4567-afa9-849abc535ea4
+# NETLIFY_AUTH_TOKEN=...   (محلياً فقط؛ أو نفّذ netlify login)
+# NETLIFY_BUILD_BRANCH=main
+# NETLIFY_BUILD_TITLE=manual-build
+# NETLIFY_BUILD_ZIP=C:\path\to\site.zip   (اختياري؛ وإلا يستخدم git archive)
 
 # --- بحث (SearXNG عبر دالة Netlify) ---
 # إن لم تُضبط، يُقرأ الافتراضي من netlify.toml (tiekoetter) في كثير من النشرات.
+# عدة مثيلات (فاصلة إنجليزية): إعادة محاولة تلقائية عند 429 أو 502/503/504 أو انقطاع.
+# SEARXNG_URL=https://searx.tiekoetter.com,https://search.example.com
 SEARXNG_URL=https://search.example.com
 IIF_SEARX_TIMEOUT_MS=15000
+# اختياري: إن كان format=json و results فارغة، جرّب المثيل التالي في القائمة (يزيد زمن الاستجابة).
+# IIF_SEARX_RETRY_EMPTY=1
 
 # --- ترجمة (مترجمكم NLLB على /translate) ---
 # إن لم تُضبط، تستخدم الدالة LibreTranslate الاحتياطي (مثيلات عامة — للاختبار فقط).

@@ -17,7 +17,7 @@
   # بروكسي الدالة netlify/functions/searx.js — يمكن تجاوزه من لوحة Netlify لاحقاً
   # ملاحظة Netlify: قيم [build.environment] لا تُتاح تلقائياً لدوال Lambda وقت التشغيل؛
   # لضبط SearXNG للدوال أضف SEARXNG_URL من واجهة Netlify/CLI/API بنطاق يشمل Functions.
-  # الدالة searx.js تستخدم افتراضياً https://searx.tiekoetter.com إذا لم يُضبط SEARXNG_URL.
+  # الدالة searx.js: افتراضياً https://searx.tiekoetter.com؛ يمكن عدة مثيلات مفصولة بفاصلة لإعادة المحاولة عند 429/5xx.
   SEARXNG_URL = "https://searx.tiekoetter.com"
   # الترجمة: إن لم تُضبط IIF_TRANSLATE_URL (مترجم NLLB الذاتي) تستخدم الدالة LibreTranslate الاحتياطي (انظر netlify/functions/translate.js)
 
