@@ -14,6 +14,8 @@
 # NETLIFY_BUILD_TITLE=manual-build
 # NETLIFY_BUILD_ZIP=C:\path\to\site.zip   (اختياري؛ وإلا يستخدم git archive)
 
+# مسار الإنتاج الكامل (نطاق VPS + Netlify): npm run searxng:path
+#
 # --- بحث (SearXNG عبر دالة Netlify) ---
 # إن لم تُضبط، يُقرأ الافتراضي من netlify.toml (tiekoetter) في كثير من النشرات.
 # عدة مثيلات (فاصلة إنجليزية): إعادة محاولة تلقائية عند 429 أو 502/503/504 أو انقطاع.

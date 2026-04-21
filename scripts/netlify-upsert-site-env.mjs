@@ -8,6 +8,7 @@
  *
  * اختياري:
  *   SEARXNG_URL_VALUE           (افتراضي: https://searx.tiekoetter.com)
+ *   IIF_SEARX_CACHE_MS_VALUE    — اختياري، مثل 120000 (تخزين مؤقت في دالة searx؛ 0 لتعطيل)
  *   IIF_TRANSLATE_URL_VALUE     — إن وُجد يُضاف/يُحدَّث؛ إن تُرك فارغاً لا يُمسّ المفتاح الحالي
  *   IIF_NETLIFY_ENV_DRY=1       — طباعة فقط بدون تعديل
  *   IIF_NETLIFY_TRIGGER_BUILD=1 — بعد النجاح يطلب build جديداً (يستهلك دقائق بناء)
@@ -23,6 +24,7 @@ const dry = String(process.env.IIF_NETLIFY_ENV_DRY || "").trim() === "1";
 const triggerBuild = String(process.env.IIF_NETLIFY_TRIGGER_BUILD || "").trim() === "1";
 
 const searxValue = String(process.env.SEARXNG_URL_VALUE || "https://searx.tiekoetter.com").trim();
+const cacheMsValue = String(process.env.IIF_SEARX_CACHE_MS_VALUE || "").trim();
 const translateValue = String(process.env.IIF_TRANSLATE_URL_VALUE || "").trim();
 
 /** رؤوس HTTP (مثل Authorization) لا تقبل إلا ASCII — الأحرف العربية تسبب خطأ ByteString في Node. */
@@ -181,12 +183,19 @@ async function main() {
     console.error("FAIL  SEARXNG_URL_VALUE يجب أن يكون عنوان https://... باللاتينية فقط.");
     process.exit(1);
   }
+  if (cacheMsValue && (!isAsciiOnly(cacheMsValue) || !/^\d+$/.test(cacheMsValue))) {
+    console.error("FAIL  IIF_SEARX_CACHE_MS_VALUE يجب أرقام ASCII فقط (مثل 120000 أو 0).");
+    process.exit(1);
+  }
 
   const site = await getSite();
   const account = await resolveAccount(site);
   console.log("Site:", site.name || siteId, "| account:", account, dry ? "(DRY RUN)" : "");
 
   const plan = [{ key: "SEARXNG_URL", value: searxValue }];
+  if (cacheMsValue) {
+    plan.push({ key: "IIF_SEARX_CACHE_MS", value: cacheMsValue });
+  }
   if (translateValue) {
     plan.push({ key: "IIF_TRANSLATE_URL", value: translateValue });
   }
