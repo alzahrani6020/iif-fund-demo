@@ -1,8 +1,13 @@
 const http = require("http");
 const https = require("https");
 
-const PROXY_TAG = "searx-v6-accept-lang";
+const PROXY_TAG = "searx-v7-json-cache";
 const DEFAULT_UPSTREAM = "https://searx.tiekoetter.com";
+
+/** تخزين مؤقت في الذاكرة (لكل عملية Lambda) يقلّل تكرار الطلبات إلى المثيل العام ويخفّف 429 */
+const __searxCache = new Map();
+const CACHE_TTL_MS = Math.max(0, Number(process.env.IIF_SEARX_CACHE_MS ?? 120000));
+const CACHE_MAX = Math.min(500, Math.max(10, Number(process.env.IIF_SEARX_CACHE_MAX ?? 100)));
 
 function json(statusCode, obj, headers = {}) {
   return {
@@ -15,6 +20,33 @@ function json(statusCode, obj, headers = {}) {
     },
     body: JSON.stringify(obj, null, 2),
   };
+}
+
+function cacheKey(method, pathAndQuery) {
+  return String(method || "GET").toUpperCase() + "\n" + pathAndQuery;
+}
+
+function cacheGet(method, pathAndQuery) {
+  if (CACHE_TTL_MS <= 0) return null;
+  const k = cacheKey(method, pathAndQuery);
+  const row = __searxCache.get(k);
+  if (!row) return null;
+  if (Date.now() > row.exp) {
+    __searxCache.delete(k);
+    return null;
+  }
+  return row.payload;
+}
+
+function cacheSet(method, pathAndQuery, payload) {
+  if (CACHE_TTL_MS <= 0) return;
+  const k = cacheKey(method, pathAndQuery);
+  __searxCache.set(k, { exp: Date.now() + CACHE_TTL_MS, payload });
+  while (__searxCache.size > CACHE_MAX) {
+    const first = __searxCache.keys().next().value;
+    if (first === undefined) break;
+    __searxCache.delete(first);
+  }
 }
 
 /** مسار SearXNG على المثيل (مثل /search) — يدعم /api/searx/* ومسار /.netlify/functions/searx */
@@ -174,6 +206,24 @@ exports.handler = async function handler(event) {
   const pathAndQuery = suffix + qs;
   const timeoutMs = Number(process.env.IIF_SEARX_TIMEOUT_MS || 15000);
 
+  if (event.httpMethod === "GET" && wantsJsonFormat(event.rawQuery)) {
+    const hit = cacheGet("GET", pathAndQuery);
+    if (hit) {
+      return {
+        statusCode: hit.statusCode,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Cache-Control": "no-store",
+          "Access-Control-Allow-Origin": "*",
+          "X-IIF-Searx-Upstream": hit.upstreamOrigin || "",
+          "X-IIF-Searx-Proxy": PROXY_TAG,
+          "X-IIF-Searx-Cache": "hit",
+        },
+        body: hit.body,
+      };
+    }
+  }
+
   let last = null;
   for (let i = 0; i < upstreams.length; i++) {
     const u = upstreams[i];
@@ -196,16 +246,37 @@ exports.handler = async function handler(event) {
     return json(502, { ok: false, error: last.error }, { "X-IIF-Searx-Upstream": last.upstreamOrigin, "X-IIF-Searx-Proxy": PROXY_TAG });
   }
 
+  if (
+    event.httpMethod === "GET" &&
+    wantsJsonFormat(event.rawQuery) &&
+    Number(last.statusCode) === 200 &&
+    !last.error &&
+    last.body &&
+    last.body.trim().startsWith("{")
+  ) {
+    try {
+      JSON.parse(last.body);
+      cacheSet("GET", pathAndQuery, {
+        statusCode: 200,
+        body: last.body,
+        upstreamOrigin: last.upstreamOrigin,
+      });
+    } catch {
+      /* لا تخزّن إن لم يكن JSON صالحاً */
+    }
+  }
+
   const ct = String(last.headers["content-type"] || "text/plain; charset=utf-8");
   return {
     statusCode: last.statusCode,
     headers: {
-      "Content-Type": ct,
+      "Content-Type": wantsJsonFormat(event.rawQuery) && Number(last.statusCode) === 200 ? "application/json; charset=utf-8" : ct,
       "Cache-Control": "no-store",
       "Access-Control-Allow-Origin": "*",
       "X-IIF-Searx-Upstream": last.upstreamOrigin,
       "X-IIF-Searx-Proxy": PROXY_TAG,
       "X-IIF-Searx-Upstream-Count": String(upstreams.length),
+      "X-IIF-Searx-Cache": "miss",
     },
     body: last.body,
   };
