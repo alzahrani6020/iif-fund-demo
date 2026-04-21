@@ -11793,7 +11793,18 @@
         async function fetchSearxPack(query) {
           var q = (query || '').trim();
           if (!q) return { ok: true, results: [] };
-          var paramsStr = new URLSearchParams({ q: q, format: 'json', language: 'en', categories: 'general' }).toString();
+          var searxUiLang = 'en';
+          try {
+            var k = (window.IIF_CONFIG && window.IIF_CONFIG.langStorageKey) || 'iif-lang';
+            var st = typeof localStorage !== 'undefined' ? localStorage.getItem(k) : '';
+            if (st) searxUiLang = String(st).replace(/_/g, '-').split('-')[0].toLowerCase();
+            else if (document.documentElement && document.documentElement.lang)
+              searxUiLang = String(document.documentElement.lang).split('-')[0].toLowerCase();
+            else if (typeof navigator !== 'undefined' && navigator.language)
+              searxUiLang = String(navigator.language).split('-')[0].toLowerCase();
+          } catch (eLang) { searxUiLang = 'en'; }
+          if (!searxUiLang || searxUiLang.length < 2) searxUiLang = 'en';
+          var paramsStr = new URLSearchParams({ q: q, format: 'json', language: searxUiLang, categories: 'general' }).toString();
           var url = iifResolveSearxPackUrl(paramsStr);
           var r;
           try {
@@ -11815,7 +11826,7 @@
           if (data && data.error === 'rate_limited') {
             return { ok: false, results: [], error: 'rate_limited' };
           }
-          var results = (data && Array.isArray(data.results)) ? data.results.slice(0, 6).map(function (x) {
+          var results = (data && Array.isArray(data.results)) ? data.results.slice(0, 10).map(function (x) {
             return { title: x.title || '', url: x.url || '', engine: x.engine || '', content: (x.content || '').slice(0, 400) };
           }) : [];
           return { ok: true, results: results };
