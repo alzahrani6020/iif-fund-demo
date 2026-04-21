@@ -11790,9 +11790,7 @@
           return (typeof location !== 'undefined' ? location.origin : '') + '/api/searx/search?' + paramsStr;
         }
 
-        async function fetchSearxPack(query) {
-          var q = (query || '').trim();
-          if (!q) return { ok: true, results: [] };
+        function iifSearxUiLang() {
           var searxUiLang = 'en';
           try {
             var k = (window.IIF_CONFIG && window.IIF_CONFIG.langStorageKey) || 'iif-lang';
@@ -11804,7 +11802,15 @@
               searxUiLang = String(navigator.language).split('-')[0].toLowerCase();
           } catch (eLang) { searxUiLang = 'en'; }
           if (!searxUiLang || searxUiLang.length < 2) searxUiLang = 'en';
-          var paramsStr = new URLSearchParams({ q: q, format: 'json', language: searxUiLang, categories: 'general' }).toString();
+          return searxUiLang;
+        }
+
+        async function fetchSearxPackOnce(query, categories) {
+          var q = (query || '').trim();
+          if (!q) return { ok: true, results: [], empty: true };
+          var searxUiLang = iifSearxUiLang();
+          var cat = categories || 'general';
+          var paramsStr = new URLSearchParams({ q: q, format: 'json', language: searxUiLang, categories: cat }).toString();
           var url = iifResolveSearxPackUrl(paramsStr);
           var r;
           try {
@@ -11826,10 +11832,39 @@
           if (data && data.error === 'rate_limited') {
             return { ok: false, results: [], error: 'rate_limited' };
           }
-          var results = (data && Array.isArray(data.results)) ? data.results.slice(0, 10).map(function (x) {
+          var results = (data && Array.isArray(data.results)) ? data.results.slice(0, 12).map(function (x) {
             return { title: x.title || '', url: x.url || '', engine: x.engine || '', content: (x.content || '').slice(0, 400) };
           }) : [];
-          return { ok: true, results: results };
+          return { ok: true, results: results, empty: results.length === 0 };
+        }
+
+        async function fetchSearxPack(query) {
+          var q = (query || '').trim();
+          if (!q) return { ok: true, results: [] };
+          var first = await fetchSearxPackOnce(q, 'general');
+          if (!first.ok) return first;
+          if (first.results && first.results.length > 0) return { ok: true, results: first.results };
+          var second = await fetchSearxPackOnce(q, 'news');
+          if (!second.ok) return second;
+          if (second.results && second.results.length > 0) return { ok: true, results: second.results };
+          return { ok: true, results: [] };
+        }
+
+        function buildDashboardSearxQuery(item, countryName) {
+          var chunks = [];
+          if (item && item.title) chunks.push(String(item.title).trim().slice(0, 220));
+          if (countryName) chunks.push(String(countryName).trim());
+          var raw = (item && item.projectText) ? String(item.projectText) : '';
+          var compact = raw.replace(/\s+/g, ' ').trim();
+          if (compact.length > 30) chunks.push(compact.slice(0, 360));
+          if (item && item.kind) chunks.push(String(item.kind));
+          if (item && item.subType) chunks.push(String(item.subType));
+          chunks.push('economic outlook');
+          chunks.push('risk');
+          chunks.push('investment news');
+          var q = chunks.filter(Boolean).join(' ');
+          if (q.length > 480) q = q.slice(0, 480);
+          return q;
         }
 
         async function ollamaJson(model, system, user) {
@@ -11874,7 +11909,7 @@
             cca3 = await getCountryCca3(countryName);
             wb = await fetchWorldBank(cca3);
           }
-          var webQuery = [item.title, countryName, 'economic outlook', 'risk'].filter(Boolean).join(' ');
+          var webQuery = buildDashboardSearxQuery(item, countryName);
           var searx = await fetchSearxPack(webQuery);
           try {
             if (searx && searx.error === 'rate_limited') {

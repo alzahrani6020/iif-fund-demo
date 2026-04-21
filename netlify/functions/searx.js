@@ -1,7 +1,7 @@
 const http = require("http");
 const https = require("https");
 
-const PROXY_TAG = "searx-v5-multi-upstream";
+const PROXY_TAG = "searx-v6-accept-lang";
 const DEFAULT_UPSTREAM = "https://searx.tiekoetter.com";
 
 function json(statusCode, obj, headers = {}) {
@@ -79,10 +79,29 @@ function shouldRetryEmptyResults(res, rawQuery) {
   return isEmptyJsonResults(res.body);
 }
 
-function requestUpstream(upstream, pathAndQuery, method, timeoutMs) {
+function clientHeader(event, name) {
+  if (!event || !event.headers) return "";
+  const h = event.headers;
+  const lower = name.toLowerCase();
+  if (h[name] != null && String(h[name]).trim()) return String(h[name]).trim();
+  for (const k of Object.keys(h)) {
+    if (k && k.toLowerCase() === lower) return String(h[k]).trim();
+  }
+  return "";
+}
+
+function requestUpstream(upstream, pathAndQuery, method, timeoutMs, event) {
   const isHttps = upstream.protocol === "https:";
   const mod = isHttps ? https : http;
   const port = Number(upstream.port) || (isHttps ? 443 : 80);
+  const accept = clientHeader(event, "accept") || "*/*";
+  const acceptLang = clientHeader(event, "accept-language");
+  const hdr = {
+    "User-Agent": "iif-fund-demo-netlify-searx/1.0",
+    Accept: accept,
+    Host: upstream.hostname,
+  };
+  if (acceptLang) hdr["Accept-Language"] = acceptLang;
   return new Promise((resolve) => {
     const preq = mod.request(
       {
@@ -90,11 +109,7 @@ function requestUpstream(upstream, pathAndQuery, method, timeoutMs) {
         port,
         path: pathAndQuery,
         method,
-        headers: {
-          "User-Agent": "iif-fund-demo-netlify-searx/1.0",
-          Accept: "*/*",
-          Host: upstream.hostname,
-        },
+        headers: hdr,
         timeout: timeoutMs,
       },
       (pres) => {
@@ -162,7 +177,7 @@ exports.handler = async function handler(event) {
   let last = null;
   for (let i = 0; i < upstreams.length; i++) {
     const u = upstreams[i];
-    last = await requestUpstream(u, pathAndQuery, event.httpMethod, timeoutMs);
+    last = await requestUpstream(u, pathAndQuery, event.httpMethod, timeoutMs, event);
 
     const more = i < upstreams.length - 1;
     const retryHttp = more && shouldRetryHttp(last);

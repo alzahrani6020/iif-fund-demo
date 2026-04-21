@@ -22,6 +22,7 @@ SEARXNG_URL=https://search.example.com
 IIF_SEARX_TIMEOUT_MS=15000
 # اختياري: إن كان format=json و results فارغة، جرّب المثيل التالي في القائمة (يزيد زمن الاستجابة).
 # IIF_SEARX_RETRY_EMPTY=1
+# الدالة تمرّر Accept-Language من المتصفح إلى SearXNG لتحسين الملاءمة (لا يحتاج متغيراً إضافياً).
 
 # --- ترجمة (مترجمكم NLLB على /translate) ---
 # إن لم تُضبط، تستخدم الدالة LibreTranslate الاحتياطي (مثيلات عامة — للاختبار فقط).
