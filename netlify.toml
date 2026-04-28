@@ -60,10 +60,47 @@
   to = "/.netlify/functions/diagnostics"
   status = 200
 
-# ثقة الذهبية — عند ربط الدومين thiqqah.live بنفس موقع Netlify: الجذر يوجّه إلى مجلد النشر حتى تبقى مسارات assets/* صحيحة (تحت /thiqqah-site/).
-# عدّل الاسم إذا كان الدومين مختلفاً. استخدم 302 حتى النقل النهائي ثم يمكن ترقية إلى 301.
+# ثقة الذهبية — عند ربط الدومين thiqqah.live في Netlify (Domain management): الجذر يعرض /thiqqah-site/index.html حتى تبقى مسارات assets/* تحت /thiqqah-site/.
+# صيغ متعددة: Netlify يطابق حسب المخطط والمسار؛ بدون http/https الكامل قد يفوت الطلبات الافتراضية.
+# يجب إضافة thiqqah.live و www في لوحة Netlify يدوياً — الملف هنا لا يستطيع ربط الدومين بالحساب.
+[[redirects]]
+  from = "http://thiqqah.live"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
 [[redirects]]
   from = "https://thiqqah.live/"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live"
   to = "/thiqqah-site/index.html"
   status = 302
   force = true
