@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ترويسة — مكتب ثقة الذهبية للخدمات العامة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1f2e;
+      --muted: #5c6578;
+      --gold: #b8860b;
+      --gold-light: #e8d5a3;
+      --border: #c9b896;
+      --paper: #fdfcfa;
+      --accent-bar: linear-gradient(90deg, #0f172a 0%, #1e3a5f 35%, #b8860b 100%);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", Georgia, serif;
+      background: #e8e6e3;
+      color: var(--ink);
+      line-height: 1.75;
+      font-size: 13pt;
+    }
+
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 12mm auto;
+      background: var(--paper);
+      box-shadow: 0 8px 40px rgba(0,0,0,.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sheet::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--border);
+      pointer-events: none;
+      margin: 10mm;
+    }
+
+    .sheet-inner {
+      padding: 18mm 22mm 20mm;
+      min-height: 277mm;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .head-accent {
+      height: 4px;
+      background: var(--accent-bar);
+      border-radius: 2px;
+      margin-bottom: 12mm;
+    }
+
+    .header-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6mm 10mm;
+      align-items: start;
+      margin-bottom: 8mm;
+      padding-bottom: 8mm;
+      border-bottom: 3px double var(--gold-light);
+    }
+
+    .brand-block h1 {
+      font-family: "Amiri", "Noto Naskh Arabic", serif;
+      font-size: 20pt;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 0.02em;
+      margin-bottom: 2mm;
+      line-height: 1.35;
+    }
+
+    .brand-block .tagline {
+      font-size: 11pt;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .contact-block {
+      grid-column: 1 / -1;
+      text-align: right;
+      font-size: 10.5pt;
+      color: var(--muted);
+      line-height: 1.75;
+      direction: rtl;
+      unicode-bidi: embed;
+    }
+
+    .contact-block strong { color: var(--ink); }
+
+    .contact-block a {
+      color: #1e3a5f;
+      text-decoration: none;
+    }
+
+    .contact-block a:hover { text-decoration: underline; }
+
+    .qr-block {
+      text-decoration: none;
+      color: var(--muted);
+      text-align: center;
+      flex-shrink: 0;
+      grid-row: 1 / 2;
+      grid-column: 2;
+    }
+
+    .qr-block img {
+      width: 28mm;
+      height: 28mm;
+      display: block;
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      background: #fff;
+      object-fit: contain;
+    }
+
+    .qr-block .qr-hint {
+      font-size: 8pt;
+      margin-top: 2mm;
+      color: var(--muted);
+      max-width: 32mm;
+    }
+
+    .qr-block .qr-url {
+      font-size: 9pt;
+      margin-top: 1mm;
+      direction: ltr;
+      unicode-bidi: embed;
+      font-family: system-ui, "Segoe UI", sans-serif;
+      color: var(--ink);
+    }
+
+    .brand-block { grid-column: 1; grid-row: 1; }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4mm;
+      font-size: 10.5pt;
+      color: var(--muted);
+      margin-bottom: 8mm;
+    }
+
+    .meta-row span { border-bottom: 1px dotted var(--border); padding-bottom: 1mm; min-width: 45mm; }
+
+    .body-area {
+      flex: 1;
+      padding-top: 2mm;
+    }
+
+    .body-area p {
+      margin-bottom: 0.5em;
+      min-height: 1.4em;
+    }
+
+    .body-area .lorem {
+      color: #9ca3af;
+      font-style: italic;
+      font-size: 11pt;
+    }
+
+    .closing {
+      margin-top: 12mm;
+    }
+
+    .closing .sig-line {
+      margin-top: 14mm;
+      width: 55mm;
+      border-top: 1px solid var(--ink);
+      padding-top: 2mm;
+      font-size: 10.5pt;
+    }
+
+    .footer-bar {
+      margin-top: auto;
+      padding-top: 6mm;
+      font-size: 9pt;
+      color: var(--muted);
+      text-align: center;
+      border-top: 1px solid var(--gold-light);
+      line-height: 1.6;
+    }
+
+    .hint-screen {
+      max-width: 210mm;
+      margin: 0 auto 8mm;
+      padding: 10px 16px;
+      background: #1e293b;
+      color: #e2e8f0;
+      font-family: system-ui, sans-serif;
+      font-size: 13px;
+      direction: rtl;
+      border-radius: 8px;
+      line-height: 1.5;
+    }
+
+    .hint-screen code { background: #334155; padding: 1px 6px; border-radius: 4px; }
+
+    @media print {
+      body { background: white; }
+      .hint-screen { display: none !important; }
+      .sheet {
+        margin: 0;
+        box-shadow: none;
+        width: 210mm;
+        min-height: 297mm;
+      }
+      .sheet::before { margin: 8mm; }
+      .contact-block a { color: inherit; }
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hint-screen">
+    <strong>QR:</strong> يُحمَّل من الإنترنت عند فتح الملف — افتح الصفحة وأنت متصل ثم اطبع (Ctrl+P) أو احفظ PDF حتى يظهر الرمز في المطبوعة.<br>
+    <strong>Word:</strong> ملف ← فتح ← هذا الملف، ثم احفظ بصيغة .docx إن رغبت.
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-inner">
+      <div class="head-accent" aria-hidden="true"></div>
+
+      <header class="header-grid">
+        <div class="brand-block">
+          <h1>مكتب ثقة الذهبية للخدمات العامة</h1>
+          <p class="tagline">تأسيس الأعمال، التراخيص، والخدمات العامة والمتابعة أمام الجهات ذات العلاقة</p>
+        </div>
+
+        <a class="qr-block" href="https://thiqqah.live/" target="_blank" rel="noopener noreferrer" title="الموقع الإلكتروني — ثقة الذهبية"
+           aria-label="فتح الموقع thiqqah.live">
+          <!-- رمز QR لعنوان الموقع (يتطلب اتصالاً عند أول تحميل للصورة) -->
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&amp;margin=8&amp;data=https%3A%2F%2Fthiqqah.live%2F"
+            width="200"
+            height="200"
+            alt="رمز QR يفتح الموقع https://thiqqah.live">
+          <span class="qr-hint">مسح للوصول للموقع</span>
+          <span class="qr-url">thiqqah.live</span>
+        </a>
+
+        <div class="contact-block">
+          <span><strong>العنوان:</strong> جدة — منطقة مكة المكرمة — المملكة العربية السعودية</span><br>
+          <span><strong>الجوال / واتساب:</strong> <a href="tel:+966567566616" dir="ltr">+966 56 756 6616</a></span><br>
+          <span><strong>الموقع الإلكتروني:</strong> <a href="https://thiqqah.live/" dir="ltr">https://thiqqah.live</a></span><br>
+          <span><strong>البريد:</strong> <a href="mailto:info@thiqqah.live" dir="ltr">info@thiqqah.live</a></span><br>
+          <span><strong>السجل التجاري:</strong> 4030506321</span>
+        </div>
+      </header>
+
+      <div class="meta-row">
+        <span contenteditable="true">التاريخ: &nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;هـ</span>
+        <span contenteditable="true">المرجع: —</span>
+        <span contenteditable="true">الموضوع: —</span>
+      </div>
+
+      <section class="body-area">
+        <p contenteditable="true"><strong>السادة / المحترمون،</strong></p>
+        <p class="lorem" contenteditable="true">
+          (نص الخطاب أو العقد — استبدل هذا السطر وفق الحاجة.)
+        </p>
+        <p contenteditable="true">&nbsp;</p>
+        <p contenteditable="true">&nbsp;</p>
+        <p contenteditable="true">&nbsp;</p>
+
+        <div class="closing">
+          <p contenteditable="true">وتفضلوا بقبول فائق الاحترام والتقدير،</p>
+          <div class="sig-line" contenteditable="true">الاسم — المسمى الوظيفي — مكتب ثقة الذهبية للخدمات العامة</div>
+        </div>
+      </section>
+
+      <footer class="footer-bar">
+        مكتب ثقة الذهبية للخدمات العامة — السجل التجاري: 4030506321 —
+        <span dir="ltr">thiqqah.live</span> —
+        <span dir="ltr">info@thiqqah.live</span>
+      </footer>
+    </div>
+  </div>
+
+</body>
+</html>
