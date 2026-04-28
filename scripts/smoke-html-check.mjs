@@ -41,8 +41,13 @@ async function main() {
         'assets/emblem.jpg',
         'id="dashboard-overlay"',
         'iif-dashboard-fullpage-critical-head',
-        'dashboard-fullpage-v8-fix-main-close',
-        'data-iif-build="v8-fix-main-close"',
+        // Build marker (versioned). Accept any dashboard-fullpage marker.
+        'meta name="iif-build" content="dashboard-fullpage-',
+        // Dashboard root marker (stable)
+        'data-iif-dashboard-root="true"',
+        // Close / back-to-site control (stable)
+        'id="dashboard-close"',
+        // Deployment verification marker (stable comment)
         'تحقق-النشر-iif-dashboard-fullpage',
       ],
       label: 'واجهة الصندوق (index)',

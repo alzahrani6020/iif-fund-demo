@@ -7,6 +7,63 @@ export class AuthManager {
     this.token = null;
   }
 
+  persistLegacySession(user, token) {
+    // Keep SPA modules + legacy index.html logic in sync.
+    try {
+      const email = (user?.email || '').trim().toLowerCase();
+      if (!email) return;
+      localStorage.setItem('iif-logged-in', '1');
+      localStorage.setItem('iif-user-email', email);
+      if (user?.name) localStorage.setItem('iif-user-name', String(user.name));
+      if ((user?.role || '').toLowerCase() === 'admin') localStorage.setItem('iif-is-admin', '1');
+      else localStorage.removeItem('iif-is-admin');
+    } catch (e) {
+      // ignore
+    }
+    // Also store a copy in the StorageManager keys the Router expects.
+    try {
+      if (user) this.storage.set('user', user, { ttl: 0 });
+      if (token) this.storage.set('token', token, { ttl: 0 });
+    } catch (e2) {
+      // ignore
+    }
+  }
+
+  seedDashboardForNewUser(user) {
+    // Create a visible "you registered" notification + activity so the dashboard isn't empty.
+    try {
+      const now = new Date();
+      const stamp = now.toISOString();
+      const name = user?.name || user?.email || 'New Member';
+
+      const notifications = this.storage.get('dashboard-notifications', []);
+      notifications.unshift({
+        id: Date.now(),
+        type: 'success',
+        title: 'Welcome',
+        message: `Account created for ${name}`,
+        time: 'just now',
+        read: false,
+        createdAt: stamp
+      });
+      this.storage.set('dashboard-notifications', notifications, { ttl: 0 });
+
+      const activities = this.storage.get('dashboard-activities', []);
+      activities.unshift({
+        id: Date.now() + 1,
+        type: 'client',
+        title: 'New Client Registered',
+        description: `${name} joined`,
+        time: 'just now',
+        icon: '👤',
+        createdAt: stamp
+      });
+      this.storage.set('dashboard-activities', activities, { ttl: 0 });
+    } catch (e) {
+      // ignore
+    }
+  }
+
   async init() {
     // Check for existing session
     await this.checkExistingSession();
@@ -75,6 +132,7 @@ export class AuthManager {
         // Store session (persist across browser restarts)
         this.storage.set('user', user, { ttl: 0 });
         this.storage.set('token', token, { ttl: 0 });
+        this.persistLegacySession(user, token);
         
         // Update state
         this.currentUser = user;
@@ -118,6 +176,8 @@ export class AuthManager {
         // Store session (persist across browser restarts)
         this.storage.set('user', user, { ttl: 0 });
         this.storage.set('token', token, { ttl: 0 });
+        this.persistLegacySession(user, token);
+        this.seedDashboardForNewUser(user);
         
         // Update state
         this.currentUser = user;

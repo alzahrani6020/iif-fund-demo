@@ -19,6 +19,7 @@
     "install:git-hooks": "node scripts/install-git-hooks.js",
     "prepare": "node scripts/prepare-git-hooks.js",
     "verify:i18n-packs-sync": "git diff --exit-code HEAD -- financial-consulting/iif-fund-demo/i18n-service-packs-a.js financial-consulting/iif-fund-demo/i18n-service-packs-b.js financial-consulting/iif-fund-demo/i18n-service-packs-c.js financial-consulting/iif-fund-demo/i18n-service-packs-d.js financial-consulting/iif-fund-demo/i18n-service-packs-all.js",
+    "verify:thiqqah-i18n": "python scripts/verify-thiqqah-i18n.py && python scripts/find-missing-page-ar.py",
     "lint": "eslint scripts netlify financial-consulting/iif-fund-demo/api",
     "check:deploy": "node scripts/deploy-readiness.mjs",
     "build": "npm run build:gov-data && npm run i18n:packs",

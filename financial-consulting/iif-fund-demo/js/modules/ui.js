@@ -224,6 +224,26 @@ export class UIComponents {
       }
     });
 
+    // Dashboard "back to site" / close buttons
+    document.addEventListener('click', (e) => {
+      const t = e.target;
+      const closeBtn = t && (t.id === 'dashboard-close' ? t : t.closest && t.closest('#dashboard-close'));
+      const auxClose = t && t.closest && t.closest('[data-dashboard-close-aux="true"]');
+      if (!closeBtn && !auxClose) return;
+
+      e.preventDefault();
+      try {
+        // Prefer SPA router if available
+        if (window.app && window.app.router && typeof window.app.router.navigate === 'function') {
+          window.app.router.navigate('/', { replace: false });
+          return;
+        }
+      } catch (err) { /* ignore */ }
+
+      // Fallback: hard navigation
+      try { window.location.href = '/'; } catch (e2) { }
+    });
+
     // Search functionality
     document.addEventListener('input', (e) => {
       if (e.target.id === 'iif-search') {
@@ -960,6 +980,9 @@ updateUserInterface(user) {
   const authBtns = document.getElementById('header-auth-btns');
   const userCard = document.getElementById('header-user-card');
   const userNav = document.getElementById('site-nav-user');
+  const navDashboard = document.getElementById('nav-dashboard');
+  const navUserDashboard = document.getElementById('nav-user-dashboard');
+  const navLogout = document.getElementById('nav-logout');
 
   if (user) {
     // Show user card, hide auth buttons
@@ -972,11 +995,41 @@ updateUserInterface(user) {
       if (userMeta) userMeta.textContent = user.role || 'Member';
     }
     if (userNav) userNav.style.display = 'block';
+
+    // Make dashboard/profile/logout visible and point to SPA routes.
+    if (navDashboard) {
+      navDashboard.style.display = 'inline-flex';
+      navDashboard.setAttribute('href', '/dashboard');
+    }
+    if (navUserDashboard) {
+      navUserDashboard.style.display = 'inline-flex';
+      navUserDashboard.setAttribute('href', '/dashboard');
+    }
+    if (navLogout) {
+      navLogout.style.display = 'inline-flex';
+      // Ensure logout works even if the host page is legacy.
+      navLogout.onclick = (e) => {
+        e.preventDefault();
+        try {
+          if (window.app && window.app.auth && typeof window.app.auth.logout === 'function') {
+            window.app.auth.logout();
+          } else {
+            document.dispatchEvent(new CustomEvent('logout'));
+          }
+        } catch (err) {
+          document.dispatchEvent(new CustomEvent('logout'));
+        }
+      };
+    }
   } else {
     // Show auth buttons, hide user card
     if (authBtns) authBtns.style.display = 'flex';
     if (userCard) userCard.style.display = 'none';
     if (userNav) userNav.style.display = 'none';
+
+    if (navDashboard) navDashboard.style.display = 'none';
+    if (navUserDashboard) navUserDashboard.style.display = 'none';
+    if (navLogout) navLogout.style.display = 'none';
   }
 }
 

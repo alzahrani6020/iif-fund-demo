@@ -1,0 +1,33 @@
+# فحص ترجمة موقع ثقة (thiqqah-site): مفاتيح فريدة + تغطية النص العربي في body
+name: Thiqqah site i18n
+
+on:
+  push:
+    paths:
+      - "thiqqah-site/**"
+      - "scripts/verify-thiqqah-i18n.py"
+      - "scripts/find-missing-page-ar.py"
+      - ".github/workflows/thiqqah-site-i18n.yml"
+  pull_request:
+    paths:
+      - "thiqqah-site/**"
+      - "scripts/verify-thiqqah-i18n.py"
+      - "scripts/find-missing-page-ar.py"
+      - ".github/workflows/thiqqah-site-i18n.yml"
+  workflow_dispatch:
+
+jobs:
+  verify-thiqqah-i18n:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Translations — لا مفاتيح مكررة، ووجود بيانات SEO المشتركة
+        run: python scripts/verify-thiqqah-i18n.py
+
+      - name: Body Arabic — كل أسطر الواجهة لها ترجمة في القاموس
+        run: python scripts/find-missing-page-ar.py
