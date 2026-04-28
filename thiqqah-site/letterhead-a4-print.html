@@ -106,13 +106,36 @@
 
     .contact-block a:hover { text-decoration: underline; }
 
+    /* عمود الشعار + QR (يعمل مع المسار النسبي عند فتح الملف من مجلد thiqqah-site/) */
+    .marks-col {
+      grid-row: 1;
+      grid-column: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 3mm;
+    }
+
+    .letterhead-logo {
+      width: 26mm;
+      height: auto;
+      max-height: 24mm;
+      object-fit: contain;
+      display: block;
+      border: 1px solid var(--gold-light);
+      border-radius: 4px;
+      padding: 2mm;
+      background: #fff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
     .qr-block {
       text-decoration: none;
       color: var(--muted);
       text-align: center;
       flex-shrink: 0;
-      grid-row: 1 / 2;
-      grid-column: 2;
     }
 
     .qr-block img {
@@ -230,7 +253,8 @@
 <body>
 
   <div class="hint-screen">
-    <strong>QR:</strong> يُحمَّل من الإنترنت عند فتح الملف — افتح الصفحة وأنت متصل ثم اطبع (Ctrl+P) أو احفظ PDF حتى يظهر الرمز في المطبوعة.<br>
+    <strong>الشعار:</strong> ملف محلي <code>assets/thiqqah-logo.png</code> — افتح الـ HTML من داخل مجلد <code>thiqqah-site</code> حتى يظهر الشعار.<br>
+    <strong>QR:</strong> يُحمَّل من الإنترنت — اتصل بالشبكة ثم اطبع (Ctrl+P) أو احفظ PDF.<br>
     <strong>Word:</strong> ملف ← فتح ← هذا الملف، ثم احفظ بصيغة .docx إن رغبت.
   </div>
 
@@ -244,17 +268,24 @@
           <p class="tagline">تأسيس الأعمال، التراخيص، والخدمات العامة والمتابعة أمام الجهات ذات العلاقة</p>
         </div>
 
-        <a class="qr-block" href="https://thiqqah.live/" target="_blank" rel="noopener noreferrer" title="الموقع الإلكتروني — ثقة الذهبية"
-           aria-label="فتح الموقع thiqqah.live">
-          <!-- رمز QR لعنوان الموقع (يتطلب اتصالاً عند أول تحميل للصورة) -->
+        <div class="marks-col">
           <img
-            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&amp;margin=8&amp;data=https%3A%2F%2Fthiqqah.live%2F"
-            width="200"
-            height="200"
-            alt="رمز QR يفتح الموقع https://thiqqah.live">
-          <span class="qr-hint">مسح للوصول للموقع</span>
-          <span class="qr-url">thiqqah.live</span>
-        </a>
+            class="letterhead-logo"
+            src="assets/thiqqah-logo.png"
+            width="256"
+            height="256"
+            alt="شعار مكتب ثقة الذهبية للخدمات العامة">
+          <a class="qr-block" href="https://thiqqah.live/" target="_blank" rel="noopener noreferrer" title="الموقع الإلكتروني — ثقة الذهبية"
+             aria-label="فتح الموقع thiqqah.live">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&amp;margin=8&amp;data=https%3A%2F%2Fthiqqah.live%2F"
+              width="200"
+              height="200"
+              alt="رمز QR يفتح الموقع https://thiqqah.live">
+            <span class="qr-hint">مسح للوصول للموقع</span>
+            <span class="qr-url">thiqqah.live</span>
+          </a>
+        </div>
 
         <div class="contact-block">
           <span><strong>العنوان:</strong> جدة — منطقة مكة المكرمة — المملكة العربية السعودية</span><br>
