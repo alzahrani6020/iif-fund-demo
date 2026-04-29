@@ -1,8 +1,33 @@
 # موقع Netlify منفصل لـ `thiqqah.live` (ثقة فقط)
 
-**من الجهاز:** نفّذ مرتين **`RUN-NETLIFY-THIQQAH-STANDALONE.cmd`** (جذر المشروع) أو من الطرفية: **`npm run netlify:thiqqah:setup`** — يفتح Netlify والتذكير بالإعدادات (لا يستبدل تسجيل الدخول).
+**واقع الإنتاج:** فصل الدومينات لا يظهر للزوار من تعديل الكود وحده — **`thiqqah.live` يجب أن يشير إلى نشرة Netlify تُنشأ من مجلد `thiqqah-site`** وأن يُزال من أي موقع Netlify آخر. ما في الريبو (`thiqqah-site/netlify.toml` وإلخ) يجهّز ذلك؛ **الخطوة الحاسمة على لوحة Netlify + DNS**.
+
+**أسرع طريق (يضبط Base directory تلقائياً):**  
+[Deploy Thiqqah from GitHub — base = `thiqqah-site`](https://app.netlify.com/start/deploy?repository=https://github.com/alzahrani6020/iif-web&base=thiqqah-site)
+
+بعد الموافقة على GitHub، راجع أن **Publish directory** = `.` (يُستمد عادة من `thiqqah-site/netlify.toml`) ثم ثبّت الدومين كما في الأسفل.
+
+**من الجهاز:** **`RUN-NETLIFY-THIQQAH-STANDALONE.cmd`** أو **`npm run netlify:thiqqah:setup`** — يفتح رابط النشر أعلاه وقائمة الفريق (لا يستبدل تسجيل الدخول).
 
 الهدف: **`iiffund.com`** يبقى للصندوق والمشروع الكامل، و **`thiqqah.live`** يفتح **موقع ثقة فقط** — بدون خلط وبدون تحويل إلى دومين آخر.
+
+## 0) تشخيص «عجز الفصل» (قبل تعديل الكود مرة أخرى)
+
+من جذر المشروع:
+
+```bash
+npm run verify:thiqqah:live-domain
+```
+
+**أنماط نتيجة فعلية (مثال تم التحقق منه على الإنترنت):**
+
+| المسار | إن كان الوضع خاطئاً |
+|--------|----------------------|
+| `/` | **200** بحجم صغير جداً (~9.5 KB) = ملف **`index.html` البوابة** في الجذر، وليس ثقة. |
+| `/thiqqah-site/index.html` | **404** = النشرة المرتبطة بالدومين **لا تحتوي** مجلد `thiqqah-site`، لذلك لا يمكن لتوجيهات `netlify.toml` أن «تُصلح» العرض بوجود الملف. |
+| `/financial-consulting/iif-fund-demo/index.html` | **200** بحجم كبير (~700KB+) = واجهة الصندوف **ما زالت ضمن نفس النشرة** |
+
+هذا لا يعني خطأً في الريبو وحده؛ يعني أن **`thiqqah.live` في Netlify مربوط بموقع/نشر لا يطابق «نشر الجذر الكامل» الذي يضم `thiqqah-site`**، أو أن النشر قديم. الحل هو **موقع Netlify مستقل لـ `thiqqah-site`** (الأقسام 1–3 أدناه) ونقل الدومين إليه، وليس حذف المشروع بالكامل من Netlify.
 
 ## 1) إنشاء موقع جديد على Netlify
 

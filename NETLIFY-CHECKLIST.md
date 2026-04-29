@@ -77,3 +77,16 @@
 ## 7) الطبقة المجانية — عدم إهدار البناء
 
 راجع **[NETLIFY-FREE-TIER.md](./NETLIFY-FREE-TIER.md)** (تعطيل معاينات PR إن لم تُستخدم، و`[skip netlify]` في رسالة الـ commit عند تعديل التوثيق فقط).
+
+## 8) إذا ظهر `ERR_SSL_PROTOCOL_ERROR` على `iiffund.com`
+
+هذا **ليس** عطلاً في ملفات الريبو؛ يعني أن المتصفح لم يكمل **HTTPS (TLS)** مع الخادم الذي يستقبل الدومين.
+
+| الخطوة | ماذا تفعل |
+|--------|-----------|
+| 1 | في **Netlify** → الموقع الذي يظهر عنده **`iiffund.com`** في **Domain management** → **HTTPS** — تحقق من الشهادة (Let's Encrypt) وجرّب **Renew** إن وُجد. |
+| 2 | في **مسجّل الدومين** — طابق سجلات **A** و **CNAME** (لـ `www`) **حرفياً** مع ما يعرضه Netlify؛ احذف أي **URL forwarding** قديم يتعارض مع الإشارة لـ Netlify. |
+| 3 | بعد نقل الدومين لاستضافة أخرى (مثل App Hosting) | فعّل **شهادة HTTPS** على الوجهة الجديدة أولاً، أو أعد DNS إلى Netlify حتى تكتمل الشهادة. |
+| 4 | من الطرفية (جذر المشروع) | `npm run verify:iiffund:https` — إن نجح هنا وفشل في المتصفح، جرّب **شبكة/جهازاً آخراً** أو عطّل **VPN / فحص HTTPS في مضاد الفيروسات** مؤقتاً. |
+
+**ثقة على الإنترنت** (بعد إصلاح الدومين): `https://iiffund.com/thiqqah-site/index.html` من نشر الجذر الكامل؛ وللفصل الكامل عن الصندوق اتبع **[NETLIFY-THIQQAH-STANDALONE.md](./NETLIFY-THIQQAH-STANDALONE.md)** لـ `thiqqah.live`.

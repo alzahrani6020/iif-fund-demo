@@ -60,8 +60,10 @@
   to = "/.netlify/functions/diagnostics"
   status = 200
 
-# ثقة الذهبية — عند ربط الدومين thiqqah.live في Netlify (Domain management): الجذر يعرض /thiqqah-site/index.html حتى تبقى مسارات assets/* تحت /thiqqah-site/.
-# صيغ متعددة: Netlify يطابق حسب المخطط والمسار؛ بدون http/https الكامل قد يفوت الطلبات الافتراضية.
+# ثقة الذهبية — عند ربط الدومين thiqqah.live على **نفس** موقع نشر الجذر الكامل:
+#   الجذر ومسارات الصندوق على مضيفي thiqqah يُوجَّهون إلى /thiqqah-site/index.html.
+# تحقق من الإنتاج: npm run verify:thiqqah:live-domain — إن كان /thiqqah-site/index.html = 404 على الدومين،
+# فالتوجيهات هنا لا تكفي؛ إما النشر لا يتضمن المجلد أو الدومين على موقع Netlify آخر (انظر NETLIFY-THIQQAH-STANDALONE.md).
 # يجب إضافة thiqqah.live و www في لوحة Netlify يدوياً — الملف هنا لا يستطيع ربط الدومين بالحساب.
 [[redirects]]
   from = "http://thiqqah.live"
