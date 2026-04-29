@@ -38,3 +38,6 @@ run-npx.cjs
 run-user.cmd
 user-run.ps1
 netlify-api-list.txt
+
+# ملفات قفل مؤقتة من Microsoft Office (~$filename.docx)
+~$*
