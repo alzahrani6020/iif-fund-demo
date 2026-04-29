@@ -41,3 +41,9 @@ netlify-api-list.txt
 
 # ملفات قفل مؤقتة من Microsoft Office (~$filename.docx)
 ~$*
+
+# مخرجات محلية كبيرة (عروض PPTX جاهزة) — السكربتات تحت scripts/ppt/
+exports/
+
+# نتيجة فك/اختبار QR مؤقتة
+qr_decode_result.txt

@@ -6,7 +6,7 @@
   <title>ترويسة مطبوعة — مكتب ثقة الذهبية</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
   <style>
     /* ألوان متوافقة مع thiqqah-site (index.html) */
     :root {
@@ -20,6 +20,7 @@
       --paper: #fffaf0;
       --sand: #f2eadb;
       --line: rgba(18, 36, 58, 0.12);
+      --header-pad-logo: 38mm;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,7 +32,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ——— شاشة مساعدة (لا تُطبع) ——— */
+    /* للوثائق الإنجليزية: غيّر <html lang="en" dir="ltr"> */
     .hint-screen {
       max-width: 210mm;
       margin: 8mm auto;
@@ -46,25 +47,32 @@
       border: 1px solid rgba(189, 145, 68, 0.35);
     }
 
+    html[lang="en"] .hint-screen {
+      direction: ltr;
+    }
+
     .hint-screen code {
       background: rgba(7, 63, 58, 0.55);
       padding: 2px 6px;
       border-radius: 4px;
     }
 
-    /* ——— صفحة A4 ——— */
     .sheet {
       width: 210mm;
       min-height: 297mm;
       margin: 0 auto 12mm;
       background:
-        radial-gradient(ellipse 120% 80% at 50% 0%, rgba(239, 216, 156, 0.14), transparent 52%),
+        radial-gradient(ellipse 90% 40% at 50% 12%, rgba(239, 216, 156, 0.1), transparent 55%),
         var(--paper);
       position: relative;
-      box-shadow: 0 24px 64px rgba(18, 36, 58, 0.12);
-      border: 1px solid rgba(189, 145, 68, 0.35);
-      outline: 3px double var(--green);
-      outline-offset: -8mm;
+      border-radius: 5mm;
+      overflow: hidden;
+      border: 1px solid var(--gold);
+      box-shadow:
+        0 0 0 1px var(--green),
+        0 0 0 3px #fffaf0,
+        0 0 0 5px var(--green),
+        0 16px 40px rgba(18, 36, 58, 0.08);
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -72,263 +80,334 @@
     .sheet-inner {
       position: relative;
       min-height: 297mm;
-      padding: 12mm 14mm 34mm 14mm;
+      padding: 11mm 13mm 15mm 13mm;
       z-index: 1;
     }
 
-    /* زوايا زخرفية ذهبية — لمسة فخامة */
     .sheet-inner > .corner-ornament {
       position: absolute;
       width: 11mm;
       height: 11mm;
       pointer-events: none;
       z-index: 2;
-      opacity: 0.65;
-      border-color: var(--gold);
+      opacity: 0.9;
+      border-color: var(--green);
     }
 
     .corner-ornament.tr {
-      top: 5mm;
-      right: 5mm;
-      border-top: 2px solid;
-      border-right: 2px solid;
-      border-radius: 0 6px 0 0;
+      top: 5.5mm;
+      right: 5.5mm;
+      border-top: 2.5px solid;
+      border-right: 2.5px solid;
+      border-radius: 0 10px 0 0;
+    }
+
+    html[lang="en"] .corner-ornament.tr {
+      right: auto;
+      left: 5.5mm;
+      border-right: none;
+      border-left: 2.5px solid;
+      border-radius: 10px 0 0 0;
     }
 
     .corner-ornament.bl {
-      bottom: 26mm;
-      left: 5mm;
-      border-bottom: 2px solid;
-      border-left: 2px solid;
-      border-radius: 0 0 0 6px;
+      bottom: 11mm;
+      left: 5.5mm;
+      border-bottom: 2.5px solid;
+      border-left: 2.5px solid;
+      border-radius: 0 0 0 10px;
     }
 
-    /* علامة مائية: شعار كبير وخافت في قلب الورقة */
+    html[lang="en"] .corner-ornament.bl {
+      left: auto;
+      right: 5.5mm;
+      border-left: none;
+      border-right: 2.5px solid;
+      border-radius: 0 0 10px 0;
+    }
+
+    /* علامة مائية — ضعف الحجم السابق تقريباً، في منتصف الصفحة */
     .watermark {
       position: absolute;
       left: 50%;
-      top: 52%;
-      transform: translate(-50%, -50%) rotate(-14deg);
-      width: 72%;
-      max-width: 118mm;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-8deg);
+      width: 124%;
+      max-width: 200mm;
       aspect-ratio: 1;
-      background: url("assets/thiqqah-logo.png") center / contain no-repeat;
-      opacity: 0.055;
+      background: url("assets/thiqqah-logo-emblem.png") center / contain no-repeat;
+      opacity: 0.068;
       pointer-events: none;
       z-index: 0;
-      filter: grayscale(0.15);
+      filter: contrast(1.02);
+      mix-blend-mode: multiply;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
 
-    /* شريط علوي دقيق */
     .top-rule {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--green), var(--emerald) 42%, var(--gold) 100%);
-      opacity: 0.95;
+      height: 5px;
+      background: linear-gradient(90deg, var(--green), var(--emerald) 38%, var(--gold) 100%);
       z-index: 2;
     }
 
-    /*
-      الهوية: أقصى اليمين = الشعار، ثم النص يتمدد يساراً.
-      row-reverse + flex-start = حافة الشعار ملاصقة ليمين المحتوى.
-    */
+    /* ترويسة: شعار في أقصى الركن + عمودان (عربي يمين / إنجليزي يسار في وضع RTL) */
     .brand-ribbon {
       position: relative;
       z-index: 2;
-      display: flex;
-      flex-direction: row-reverse;
-      align-items: center;
-      justify-content: flex-start;
-      align-self: stretch;
-      gap: 3.5mm 5mm;
-      padding: 0 0 2mm 0;
+      min-height: 28mm;
+      padding: 0 0 2.8mm 0;
       margin-bottom: 2.5mm;
-      border-bottom: 1px double rgba(189, 145, 68, 0.6);
-      box-shadow: 0 5px 18px rgba(7, 63, 58, 0.05);
-      min-height: 0;
+      border-bottom: 3px double var(--green);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, transparent 100%);
+    }
+
+    .brand-logo-corner {
+      position: absolute;
+      top: -0.5mm;
+      right: -2mm;
+      z-index: 3;
+    }
+
+    html[lang="en"] .brand-logo-corner {
+      right: auto;
+      left: -2mm;
     }
 
     .brand-logo-wrap {
-      flex-shrink: 0;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-      padding: 1.4mm;
-      background: linear-gradient(155deg, #ffffff 0%, var(--sand) 55%, #fff 100%);
+      position: relative;
+      padding: 1.5mm 1.2mm;
+      background: #fff;
       border-radius: 10px;
-      border: 1px solid rgba(189, 145, 68, 0.65);
-      box-shadow:
-        0 0 0 1px rgba(7, 63, 58, 0.1),
-        0 8px 22px rgba(18, 36, 58, 0.12),
-        inset 0 1px 1px rgba(255, 255, 255, 0.9);
+      border: 2px solid var(--green);
+      box-shadow: 0 2px 8px rgba(18, 36, 58, 0.1);
     }
 
+    /* تمديد أفقي بثلث عرض الشعار (±33%) مع إبقاء الارتفاع */
     .brand-logo-xl {
-      width: 22mm;
-      height: 22mm;
+      position: relative;
+      z-index: 1;
+      width: calc(23mm * 4 / 3);
+      height: 23mm;
+      max-width: none;
       object-fit: contain;
       display: block;
-      border-radius: 7px;
+      border-radius: 6px;
+      filter:
+        contrast(1.16)
+        saturate(1.2)
+        drop-shadow(0 1px 0 rgba(255, 255, 255, 1))
+        drop-shadow(0 0 2px rgba(189, 145, 68, 0.35));
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
 
-    .brand-words {
-      flex: 1;
-      text-align: right;
+    .brand-text-columns {
+      display: flex;
+      flex-direction: row;
+      direction: ltr; /* إنجليزي يسارًا، عربي يمينًا حتى مع html dir=rtl */
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 4mm 5mm;
+      padding-inline-end: var(--header-pad-logo);
+      padding-inline-start: 1mm;
+      padding-top: 0.5mm;
+      min-height: 25mm;
+    }
+
+    html[lang="en"] .brand-text-columns {
+      padding-inline-start: var(--header-pad-logo);
+      padding-inline-end: 1mm;
+    }
+
+    .brand-block--ar {
+      flex: 1 1 0;
       min-width: 0;
-      padding-left: 2mm;
-      padding-right: 1mm;
+      direction: rtl;
+      text-align: justify;
+      text-align-last: right;
+      text-justify: inter-word;
+      hyphens: manual;
     }
 
-    .brand-words .name {
+    .brand-block--en {
+      flex: 0 1 42%;
+      min-width: 0;
+      text-align: justify;
+      text-align-last: left;
+      text-justify: inter-word;
+      direction: ltr;
+      font-family: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+      padding-top: 0.8mm;
+      border-right: 2px solid var(--green);
+      padding-right: 4mm;
+      margin-right: 1mm;
+    }
+
+    .brand-block--ar .name {
       font-family: "Aref Ruqaa", "Noto Naskh Arabic", serif;
-      font-size: 14pt;
+      font-size: 13.8pt;
       font-weight: 700;
-      line-height: 1.35;
+      line-height: 1.38;
       color: var(--green);
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.95);
-      letter-spacing: 0.08em;
-      word-spacing: 0.18em;
-      font-feature-settings: "kern" 1;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.96);
+      letter-spacing: 0.06em;
+      word-spacing: 0.12em;
+      font-feature-settings: "kern" 1, "liga" 1;
     }
 
-    .brand-words .name span.gold {
+    .brand-block--ar .name span.gold {
       color: var(--ink);
-      font-weight: 700;
     }
 
-    .brand-words .cr {
-      margin-top: 1.2mm;
-      font-family: "Noto Naskh Arabic", serif;
-      font-size: 9.5pt;
+    .brand-block--ar .cr {
+      margin-top: 1.1mm;
+      font-size: 9.4pt;
       font-weight: 600;
       color: var(--muted);
-      letter-spacing: 0.1em;
-      word-spacing: 0.08em;
+      letter-spacing: 0.08em;
+      word-spacing: 0.06em;
+      line-height: 1.45;
     }
 
-    .brand-words .cr strong {
+    .brand-block--ar .cr strong {
       color: var(--ink);
-      font-weight: 700;
     }
 
-    .brand-words .city {
-      margin-top: 1mm;
-      font-size: 8.5pt;
+    .brand-block--ar .city {
+      margin-top: 0.9mm;
+      font-size: 8.4pt;
       color: var(--muted);
       font-weight: 500;
-      letter-spacing: 0.07em;
-      word-spacing: 0.1em;
+      letter-spacing: 0.06em;
+      word-spacing: 0.08em;
+      line-height: 1.45;
     }
 
-    /* مساحة كتابة — فارغة بالكامل (لا نصوص جاهزة) */
+    .brand-block--en .name-en {
+      font-size: 10.8pt;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--green);
+      letter-spacing: 0.035em;
+      text-transform: uppercase;
+      font-variant: small-caps;
+    }
+
+    .brand-block--en .tagline-en {
+      margin-top: 1.1mm;
+      font-size: 8.2pt;
+      color: var(--muted);
+      font-style: italic;
+      letter-spacing: 0.03em;
+    }
+
     .writing-surface {
       position: relative;
       z-index: 1;
-      min-height: 168mm;
+      min-height: 192mm;
       margin-top: 2mm;
-      margin-bottom: 34mm;
-      border-radius: 2px;
-      /* خلفية شبه بيضاء فقط لتمييز المساحة على الشاشة؛ عند الطباعة شفافة تقريباً */
-      background: rgba(255, 250, 240, 0.35);
+      margin-bottom: 16mm;
+      border-radius: 3mm;
+      background: rgba(255, 250, 240, 0.32);
+      border: 1px dashed rgba(7, 63, 58, 0.12);
     }
 
     @media print {
       .writing-surface {
         background: transparent;
+        border: none;
       }
     }
 
-    /* تذييل: QR أقصى اليسار سفلياً + خط + تواصل */
     .footer-zone {
       position: absolute;
-      left: 8mm;
-      right: 12mm;
-      bottom: 6mm;
+      left: 9mm;
+      right: 9mm;
+      bottom: 4.5mm;
       z-index: 2;
     }
 
-    .corner-bl {
-      position: absolute;
-      left: 0;
-      bottom: 17mm;
-      text-align: center;
-      transform: translateX(-2mm);
+    .footer-rule {
+      width: 100%;
+      padding-top: 2mm;
+      border-top: 2px solid var(--gold);
+      box-shadow: 0 -1px 0 0 var(--green);
     }
 
-    .corner-bl a {
+    /* سطر واحد: تواصل + QR — ترتيب مرن: LTR تواصل يسار / RTL QR أقصى يمين */
+    .footer-line {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 4mm;
+      flex-wrap: nowrap;
+      padding: 1.4mm 0 0.6mm;
+    }
+
+    .footer-contacts-inline {
+      flex: 1 1 auto;
+      order: 1;
+      min-width: 0;
+      text-align: justify;
+      text-align-last: center;
+      text-justify: distribute;
+      font-family: "Noto Naskh Arabic", "Segoe UI", system-ui, sans-serif;
+      font-size: 8.1pt;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.03em;
+      direction: rtl;
+      line-height: 1.35;
+    }
+
+    html[dir="rtl"] .footer-contacts-inline {
+      order: 2;
+    }
+
+    html[lang="en"] .footer-contacts-inline {
+      direction: ltr;
+      text-align-last: center;
+    }
+
+    .footer-contacts-inline a {
+      color: var(--green-2);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .footer-contacts-inline .dot {
+      margin: 0 0.45em;
+      color: var(--gold);
+      opacity: 0.9;
+    }
+
+    .footer-qr-inline {
+      flex: 0 0 auto;
+      order: 2;
+      display: flex;
+      align-items: center;
       text-decoration: none;
       color: inherit;
     }
 
-    .corner-bl img {
-      width: 19mm;
-      height: 19mm;
+    html[dir="rtl"] .footer-qr-inline {
+      order: 1;
+    }
+
+    .footer-qr-inline img {
+      width: 11mm;
+      height: 11mm;
       display: block;
-      border-radius: 5px;
-      border: 1.5px solid var(--gold);
+      border-radius: 4px;
+      border: 2px solid var(--green);
       background: #fff;
-      box-shadow:
-        0 0 0 1px rgba(7, 63, 58, 0.08),
-        0 5px 14px rgba(18, 36, 58, 0.11);
-    }
-
-    .corner-bl .qr-note {
-      font-size: 6.5pt;
-      color: var(--muted);
-      margin-top: 1.5mm;
-      max-width: 28mm;
-      line-height: 1.3;
-      font-family: "Noto Naskh Arabic", serif;
-    }
-
-    .corner-bl .qr-url {
-      font-size: 7.5pt;
-      direction: ltr;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      color: var(--green-2);
-      font-weight: 600;
-      margin-top: 0.5mm;
-    }
-
-    .footer-rule {
-      padding-top: 3mm;
-      background:
-        linear-gradient(
-          90deg,
-          transparent 0%,
-          rgba(7, 63, 58, 0.35) 12%,
-          var(--gold) 50%,
-          rgba(7, 63, 58, 0.35) 88%,
-          transparent 100%
-        ) 0 0 / 100% 2px no-repeat,
-        linear-gradient(180deg, rgba(239, 216, 156, 0.16), transparent 92%);
-    }
-
-    .footer-contacts {
-      text-align: center;
-      font-family: "Noto Naskh Arabic", serif;
-      font-size: 8.5pt;
-      font-weight: 600;
-      padding-top: 2mm;
-      color: var(--green);
-      letter-spacing: 0.04em;
-    }
-
-    .footer-contacts a {
-      color: var(--green-2);
-      text-decoration: none;
-    }
-
-    .footer-contacts .dot {
-      margin: 0 0.6em;
-      color: var(--gold);
-      opacity: 0.9;
+      box-shadow: 0 1px 4px rgba(18, 36, 58, 0.07);
     }
 
     @media print {
@@ -336,14 +415,22 @@
       .hint-screen { display: none !important; }
       .sheet {
         margin: 0;
-        box-shadow: none;
-        outline: none;
-        border: none;
+        border-radius: 4mm;
+        overflow: hidden;
+        border: 1pt solid var(--gold);
+        box-shadow:
+          0 0 0 1pt #fffaf0,
+          0 0 0 3pt var(--green),
+          0 0 0 4pt var(--gold);
       }
       .sheet-inner {
-        padding: 12mm 14mm 34mm;
+        padding: 11mm 13mm 15mm;
       }
-      .footer-contacts a { color: var(--green-2); }
+      .footer-contacts-inline a { color: var(--green-2); }
+      .watermark {
+        opacity: 0.06;
+        mix-blend-mode: multiply;
+      }
     }
 
     @page {
@@ -355,8 +442,12 @@
 <body>
 
   <div class="hint-screen">
-    للطباعة: <strong>Ctrl+P</strong> — ورق A4، وفعّل <strong>طباعة الخلفيات</strong> لظهور الإطار والعلامة المائية والظلال بدقة.<br>
-    افتح الملف من مجلد <code>thiqqah-site</code> ليظهر الشعار والعلامة المائية. لملء الصفحة بالكتابة استخدم Word: <code>letterhead-thiqqah.docx</code> (أعد توليده بالسكربت إن لزم).
+    <strong>تشغيل سريع:</strong> من جذر المجلد شغّل <code>RUN-LETTERHEAD.cmd</code> (يولّد الـ docx ويفتح هذه الصفحة والـ Word).
+    <br>
+    للطباعة: <strong>Ctrl+P</strong> — A4، وفعّل <strong>طباعة الخلفيات</strong>. للأرشفة: «حفظ كـ PDF». للإنجليزية: <code>&lt;html lang="en" dir="ltr"&gt;</code>.
+    <br>
+    <code>pip install -r scripts/letterhead/requirements-letterhead.txt</code>
+    — مع <strong>pywin32</strong> و<strong>Microsoft Word</strong> تُضاف العلامة المائية تلقائياً بعد كل توليد.
   </div>
 
   <div class="sheet">
@@ -366,48 +457,53 @@
     <div class="sheet-inner">
       <span class="corner-ornament tr" aria-hidden="true"></span>
       <span class="corner-ornament bl" aria-hidden="true"></span>
+
       <header class="brand-ribbon">
-        <div class="brand-logo-wrap">
-          <img
-            class="brand-logo-xl"
-            src="assets/thiqqah-logo.png"
-            alt="شعار مكتب ثقة الذهبية للخدمات العامة"
-            width="280"
-            height="280">
+        <div class="brand-logo-corner">
+          <div class="brand-logo-wrap">
+            <img
+              class="brand-logo-xl"
+              src="assets/thiqqah-logo-emblem.png"
+              alt="شعار مكتب ثقة الذهبية للخدمات العامة"
+              width="280"
+              height="280">
+          </div>
         </div>
-        <div class="brand-words">
-          <h1 class="name">
-            مكتب <span class="gold">ثقة الذهبية</span><br>للخدمات العامة
-          </h1>
-          <p class="cr"><strong>السجل التجاري:</strong> 4030506321</p>
-          <p class="city">جدة — منطقة مكة المكرمة — المملكة العربية السعودية</p>
+
+        <div class="brand-text-columns">
+          <div class="brand-block--en" lang="en" dir="ltr">
+            <p class="name-en">Al-Thiqqah Al-Dhahabiyah<br>General Services Office</p>
+            <p class="tagline-en">Commercial Registration No. 4030506321 &middot; Kingdom of Saudi Arabia</p>
+          </div>
+          <div class="brand-block--ar" lang="ar">
+            <h1 class="name">
+              مكتب <span class="gold">ثقة الذهبية</span><br>للخدمات العامة
+            </h1>
+            <p class="cr"><strong>السجل التجاري:</strong> 4030506321</p>
+            <p class="city">جدة — منطقة مكة المكرمة — المملكة العربية السعودية</p>
+          </div>
         </div>
       </header>
 
-      <!-- مساحة كتابة حرة: بدون أي فقرات أو توجيهات -->
       <div class="writing-surface" role="region" aria-label="مساحة كتابة فارغة للخطابات والعقود"></div>
 
       <div class="footer-zone">
-        <div class="corner-bl">
-          <a href="https://thiqqah.live/" target="_blank" rel="noopener" aria-label="QR الموقع الإلكتروني">
-            <img
-              src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&amp;margin=5&amp;data=https%3A%2F%2Fthiqqah.live%2F"
-              width="160"
-              height="160"
-              alt="QR - thiqqah.live">
-            <span class="qr-note">مسح للموقع الرسمي</span>
-            <span class="qr-url">thiqqah.live</span>
-          </a>
-        </div>
-
-        <div class="footer-rule">
-          <div class="footer-contacts">
+        <div class="footer-rule"></div>
+        <div class="footer-line">
+          <div class="footer-contacts-inline">
             <a href="https://thiqqah.live/" dir="ltr">thiqqah.live</a>
             <span class="dot">·</span>
             <a href="mailto:info@thiqqah.live" dir="ltr">info@thiqqah.live</a>
             <span class="dot">·</span>
             <a href="tel:+966567566616" dir="ltr">+966 56 756 6616</a>
           </div>
+          <a class="footer-qr-inline" href="https://thiqqah.live/" target="_blank" rel="noopener" aria-label="QR الموقع الإلكتروني">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=128x128&amp;margin=4&amp;data=https%3A%2F%2Fthiqqah.live%2F"
+              width="128"
+              height="128"
+              alt="QR">
+          </a>
         </div>
       </div>
     </div>
