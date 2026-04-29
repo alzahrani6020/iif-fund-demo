@@ -33,6 +33,7 @@
     "smoke:live": "node scripts/smoke-live-site.mjs",
     "netlify:env:sync": "node scripts/netlify-upsert-site-env.mjs",
     "netlify:build:trigger": "node scripts/trigger-netlify-build.cjs",
+    "netlify:thiqqah:setup": "node scripts/open-netlify-thiqqah-setup.cjs",
     "searxng:path": "node scripts/searxng-production-path.mjs",
     "verify:stack": "npm run verify && npm run verify:searx",
     "qa:iif-fund": "node scripts/smoke-html-check.mjs",
