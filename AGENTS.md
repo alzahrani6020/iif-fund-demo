@@ -19,6 +19,7 @@
 | `scripts/dev-server.js` | خادم التطوير (`3333`) + بروكسي `/api/searx` → SearXNG على `18080` |
 | `engines/searxng/` | **Tor + SearXNG** (Docker) — `npm start` → `/api/searx`؛ محركات `.onion` عبر حاوية `tor` |
 | [CANONICAL-URLS.md](./CANONICAL-URLS.md) | روابط **إنتاج** Vercel وNetlify المعتمدة (مرجع واحد) |
+| `thiqqah-site/` | موقع **ثقة الذهبية**؛ نشر Netlify مستقل: [NETLIFY-THIQQAH-STANDALONE.md](./NETLIFY-THIQQAH-STANDALONE.md) و`RUN-NETLIFY-THIQQAH-STANDALONE.cmd` / `npm run netlify:thiqqah:setup` |
 | [قائمة-تحقق-قبل-الدمج.md](./قائمة-تحقق-قبل-الدمج.md) | تجنّب أخطاء وازدواجية؛ انسجام الجهاز والمنصات والمساعد؛ **قسم 7:** وقاية واستعادة عند خلل في الكود أو الجهاز أو المنصات |
 
 ## الأوامر (من جذر المشروع)
@@ -67,6 +68,7 @@ npm run e2e:dashboard # Playwright: فتح اللوحة من /admin-direct
 ## النشر
 
 - **Netlify:** الإعداد في `netlify.toml`؛ الطبقة المجانية: راجع `NETLIFY-FREE-TIER.md` و`[skip netlify]` في رسالة الـ commit عند تعديل التوثيق فقط.
+- **`thiqqah.live` (موقع ثقة منفصل):** [NETLIFY-THIQQAH-STANDALONE.md](./NETLIFY-THIQQAH-STANDALONE.md) — `npm run netlify:thiqqah:setup` أو `RUN-NETLIFY-THIQQAH-STANDALONE.cmd` يفتح الاستيراد؛ ربط الدومين يدوي بحسابك.
 - **الإنتاج الرسمي:** **`https://iiffund.com/`** (Netlify + نطاق مخصّص)؛ في `index.html` تُضبط **`iif-funcs-base`** و **`iif-searx-proxy-base`** على هذا النطاق. **Vercel** (`iif-fund-dr-talal.vercel.app`) يبقى معاينة/احتياط — راجع قسم **هـ** في [قبل-النشر.md](./قبل-النشر.md) و [VERCEL-DEPLOY.md](./VERCEL-DEPLOY.md).
 - لا تضف تعقيداً على Netlify بدون حاجة (لا دوال جذر إن لم تُستخدم).
 
