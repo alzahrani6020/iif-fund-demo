@@ -88,11 +88,11 @@ def main() -> None:
     sect.footer_distance = Cm(0.85)
     add_page_border(sect)
 
-    # ——— رأس: أقصى يمين الشعار (كبير) ثم النص ———
+    # ——— رأس مدمج: شعار يمين + نص (حجم أصغر ≈ نصف المساحة السابقة) ———
     header = sect.header
     ht = header.add_table(1, 2, Cm(17.0))
-    ht.columns[0].width = Cm(10.5)
-    ht.columns[1].width = Cm(6.5)
+    ht.columns[0].width = Cm(11.8)
+    ht.columns[1].width = Cm(5.2)
     c_text, c_logo = ht.rows[0].cells[0], ht.rows[0].cells[1]
     c_text.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
     c_logo.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
@@ -100,20 +100,22 @@ def main() -> None:
     c_logo.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.RIGHT
     set_paragraph_rtl(c_logo.paragraphs[0])
     c_logo.paragraphs[0].paragraph_format.space_after = Pt(0)
-    c_logo.paragraphs[0].add_run().add_picture(str(LOGO_PATH), width=Cm(3.65))
+    c_logo.paragraphs[0].add_run().add_picture(str(LOGO_PATH), width=Cm(2.35))
 
     p1 = c_text.paragraphs[0]
     format_ar_paragraph(p1)
+    p1.paragraph_format.space_after = Pt(1)
     r1 = p1.add_run("مكتب ثقة الذهبية\nللخدمات العامة")
     r1.bold = True
-    r1.font.size = Pt(16)
+    r1.font.size = Pt(13)
     r1.font.name = "Arial"
     r1.font.color.rgb = CLR_GREEN
 
     p2 = c_text.add_paragraph()
     format_ar_paragraph(p2)
+    p2.paragraph_format.space_after = Pt(1)
     r2 = p2.add_run("السجل التجاري: 4030506321")
-    r2.font.size = Pt(10)
+    r2.font.size = Pt(9)
     r2.font.name = "Arial"
     r2.bold = True
     r2.font.color.rgb = CLR_INK
@@ -156,7 +158,7 @@ def main() -> None:
     pq = f_qr.paragraphs[0]
     pq.alignment = WD_ALIGN_PARAGRAPH.LEFT
     pq.paragraph_format.space_after = Pt(2)
-    pq.add_run().add_picture(io.BytesIO(qr_png_bytes(SITE_URL)), width=Cm(2.4))
+    pq.add_run().add_picture(io.BytesIO(qr_png_bytes(SITE_URL)), width=Cm(2.05))
 
     pc = f_qr.add_paragraph()
     pc.alignment = WD_ALIGN_PARAGRAPH.LEFT

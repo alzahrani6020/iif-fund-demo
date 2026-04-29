@@ -57,7 +57,9 @@
       width: 210mm;
       min-height: 297mm;
       margin: 0 auto 12mm;
-      background: var(--paper);
+      background:
+        radial-gradient(ellipse 120% 80% at 50% 0%, rgba(239, 216, 156, 0.14), transparent 52%),
+        var(--paper);
       position: relative;
       box-shadow: 0 24px 64px rgba(18, 36, 58, 0.12);
       border: 1px solid rgba(189, 145, 68, 0.35);
@@ -70,8 +72,35 @@
     .sheet-inner {
       position: relative;
       min-height: 297mm;
-      padding: 14mm 16mm 36mm 16mm;
+      padding: 12mm 14mm 34mm 14mm;
       z-index: 1;
+    }
+
+    /* زوايا زخرفية ذهبية — لمسة فخامة */
+    .sheet-inner > .corner-ornament {
+      position: absolute;
+      width: 11mm;
+      height: 11mm;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.65;
+      border-color: var(--gold);
+    }
+
+    .corner-ornament.tr {
+      top: 5mm;
+      right: 5mm;
+      border-top: 2px solid;
+      border-right: 2px solid;
+      border-radius: 0 6px 0 0;
+    }
+
+    .corner-ornament.bl {
+      bottom: 26mm;
+      left: 5mm;
+      border-bottom: 2px solid;
+      border-left: 2px solid;
+      border-radius: 0 0 0 6px;
     }
 
     /* علامة مائية: شعار كبير وخافت في قلب الورقة */
@@ -104,57 +133,68 @@
       z-index: 2;
     }
 
-    /* الهوية: أقصى اليمين الشعار ثم النص (row-reverse) */
+    /*
+      الهوية: أقصى اليمين = الشعار، ثم النص يتمدد يساراً.
+      row-reverse + flex-start = حافة الشعار ملاصقة ليمين المحتوى.
+    */
     .brand-ribbon {
       position: relative;
       z-index: 2;
       display: flex;
       flex-direction: row-reverse;
       align-items: center;
-      justify-content: flex-end;
-      gap: 5mm;
-      padding-bottom: 5mm;
-      margin-bottom: 4mm;
-      border-bottom: 2px solid rgba(189, 145, 68, 0.45);
-      box-shadow: 0 10px 28px rgba(7, 63, 58, 0.06);
+      justify-content: flex-start;
+      align-self: stretch;
+      gap: 3.5mm 5mm;
+      padding: 0 0 2mm 0;
+      margin-bottom: 2.5mm;
+      border-bottom: 1px double rgba(189, 145, 68, 0.6);
+      box-shadow: 0 5px 18px rgba(7, 63, 58, 0.05);
+      min-height: 0;
     }
 
     .brand-logo-wrap {
       flex-shrink: 0;
-      padding: 2.5mm;
-      background: linear-gradient(145deg, #ffffff 0%, var(--sand) 100%);
-      border-radius: 14px;
-      border: 2px solid rgba(189, 145, 68, 0.55);
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      padding: 1.4mm;
+      background: linear-gradient(155deg, #ffffff 0%, var(--sand) 55%, #fff 100%);
+      border-radius: 10px;
+      border: 1px solid rgba(189, 145, 68, 0.65);
       box-shadow:
-        0 0 0 1px rgba(7, 63, 58, 0.12),
-        0 14px 32px rgba(18, 36, 58, 0.14),
-        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+        0 0 0 1px rgba(7, 63, 58, 0.1),
+        0 8px 22px rgba(18, 36, 58, 0.12),
+        inset 0 1px 1px rgba(255, 255, 255, 0.9);
     }
 
     .brand-logo-xl {
-      width: 34mm;
-      height: 34mm;
+      width: 22mm;
+      height: 22mm;
       object-fit: contain;
       display: block;
-      border-radius: 10px;
+      border-radius: 7px;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
 
     .brand-words {
+      flex: 1;
       text-align: right;
       min-width: 0;
       padding-left: 2mm;
+      padding-right: 1mm;
     }
 
     .brand-words .name {
       font-family: "Aref Ruqaa", "Noto Naskh Arabic", serif;
-      font-size: 17.5pt;
+      font-size: 14pt;
       font-weight: 700;
-      line-height: 1.28;
+      line-height: 1.35;
       color: var(--green);
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-      letter-spacing: 0.02em;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.95);
+      letter-spacing: 0.08em;
+      word-spacing: 0.18em;
+      font-feature-settings: "kern" 1;
     }
 
     .brand-words .name span.gold {
@@ -163,12 +203,13 @@
     }
 
     .brand-words .cr {
-      margin-top: 2.5mm;
+      margin-top: 1.2mm;
       font-family: "Noto Naskh Arabic", serif;
-      font-size: 10.5pt;
+      font-size: 9.5pt;
       font-weight: 600;
       color: var(--muted);
-      letter-spacing: 0.03em;
+      letter-spacing: 0.1em;
+      word-spacing: 0.08em;
     }
 
     .brand-words .cr strong {
@@ -177,10 +218,12 @@
     }
 
     .brand-words .city {
-      margin-top: 1.5mm;
-      font-size: 9pt;
+      margin-top: 1mm;
+      font-size: 8.5pt;
       color: var(--muted);
       font-weight: 500;
+      letter-spacing: 0.07em;
+      word-spacing: 0.1em;
     }
 
     /* مساحة كتابة — فارغة بالكامل (لا نصوص جاهزة) */
@@ -201,20 +244,21 @@
       }
     }
 
-    /* تذييل: QR يسار سفلي + خط + تواصل */
+    /* تذييل: QR أقصى اليسار سفلياً + خط + تواصل */
     .footer-zone {
       position: absolute;
-      left: 12mm;
+      left: 8mm;
       right: 12mm;
-      bottom: 7mm;
+      bottom: 6mm;
       z-index: 2;
     }
 
     .corner-bl {
       position: absolute;
       left: 0;
-      bottom: 18mm;
+      bottom: 17mm;
       text-align: center;
+      transform: translateX(-2mm);
     }
 
     .corner-bl a {
@@ -223,13 +267,15 @@
     }
 
     .corner-bl img {
-      width: 23mm;
-      height: 23mm;
+      width: 19mm;
+      height: 19mm;
       display: block;
-      border-radius: 6px;
-      border: 2px solid var(--gold);
+      border-radius: 5px;
+      border: 1.5px solid var(--gold);
       background: #fff;
-      box-shadow: 0 6px 16px rgba(18, 36, 58, 0.1);
+      box-shadow:
+        0 0 0 1px rgba(7, 63, 58, 0.08),
+        0 5px 14px rgba(18, 36, 58, 0.11);
     }
 
     .corner-bl .qr-note {
@@ -252,17 +298,26 @@
 
     .footer-rule {
       padding-top: 3mm;
-      border-top: 2px solid var(--gold);
-      background: linear-gradient(90deg, transparent, rgba(239, 216, 156, 0.22), transparent);
+      background:
+        linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(7, 63, 58, 0.35) 12%,
+          var(--gold) 50%,
+          rgba(7, 63, 58, 0.35) 88%,
+          transparent 100%
+        ) 0 0 / 100% 2px no-repeat,
+        linear-gradient(180deg, rgba(239, 216, 156, 0.16), transparent 92%);
     }
 
     .footer-contacts {
       text-align: center;
       font-family: "Noto Naskh Arabic", serif;
-      font-size: 9pt;
+      font-size: 8.5pt;
       font-weight: 600;
-      padding-top: 2.5mm;
+      padding-top: 2mm;
       color: var(--green);
+      letter-spacing: 0.04em;
     }
 
     .footer-contacts a {
@@ -309,6 +364,8 @@
     <div class="watermark" aria-hidden="true" role="presentation"></div>
 
     <div class="sheet-inner">
+      <span class="corner-ornament tr" aria-hidden="true"></span>
+      <span class="corner-ornament bl" aria-hidden="true"></span>
       <header class="brand-ribbon">
         <div class="brand-logo-wrap">
           <img
@@ -334,9 +391,9 @@
         <div class="corner-bl">
           <a href="https://thiqqah.live/" target="_blank" rel="noopener" aria-label="QR الموقع الإلكتروني">
             <img
-              src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&amp;margin=6&amp;data=https%3A%2F%2Fthiqqah.live%2F"
-              width="220"
-              height="220"
+              src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&amp;margin=5&amp;data=https%3A%2F%2Fthiqqah.live%2F"
+              width="160"
+              height="160"
               alt="QR - thiqqah.live">
             <span class="qr-note">مسح للموقع الرسمي</span>
             <span class="qr-url">thiqqah.live</span>
