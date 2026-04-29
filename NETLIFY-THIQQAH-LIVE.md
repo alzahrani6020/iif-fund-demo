@@ -1,5 +1,17 @@
 # ربط الدومين الأساسي لموقع ثقة الذهبية (thiqqah.live) على Netlify
 
+## الدومين يفتح «الصندوق» بينما `https://iiffund.com/thiqqah-site/` يعمل ← الحل
+
+هذا يعني أن **`thiqqah.live` مربوط في Netlify بموقع نشر لا يطابق موقع `iiffund.com`** (غالباً **`fluffy-meerkat-eff966`** منفصل عن إنتاج **`iiffund.com`**). الكود في المستودع صحيح؛ المطلوب **توحيد الدومين مع موقع الإنتاج الذي يظهر فيه `iiffund.com`**.
+
+1. [Netlify](https://app.netlify.com) → حدّد الموقع الذي في **Domain management** يظهر عنده **`iiffund.com`** (النشر الكامل).
+2. على **نفس هذا الموقع**: **Add domain** → **`thiqqah.live`** + **`www.thiqqah.live`** → أكمل **Verify** و **HTTPS**.
+3. على أي **موقع Netlify آخر** كان **`thiqqah.live`** مضافاً عليه سابقاً: **احذف** الدومين من **Domain management** هناك حتى لا يبقى تعارض.
+4. في **مسجّل الدومين** (Name.com وغيره): طبّق سجلات **DNS** التي يعرضها Netlify **للموقع الذي يخدم `iiffund.com`** — قد يتغيّر **CNAME** لـ `www` (لم يعد بالضرورة `fluffy-meerkat-eff966.netlify.app`؛ انسخ القيمة من اللوحة).
+5. بعد النشر: `https://thiqqah.live/thiqqah-site/index.html` يجب أن يعطي **200** مثل `iiffund.com`، و`https://thiqqah.live/` يُوجَّه لموقع ثقة **على نفس الدومين** (حسب `netlify.toml` والبوابة في جذر `index.html`).
+
+---
+
 ## تشخيص سريع (404 من Netlify رغم صحة DNS)
 
 إذا كان **DNS** يشير فعلاً إلى Netlify (مثلاً سجل **A** للجذر إلى `75.2.60.5` وسجل **CNAME** لـ `www` نحو **`….netlify.app`**) لكن المتصفح أو `curl` يعيد **404** ونصاً مثل `Not Found` مع ترويسة `Server: Netlify`، فالخلل شائعاً **ليس في المستودع** بل في الخطوة الناقصة التالية:
