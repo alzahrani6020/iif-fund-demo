@@ -26,6 +26,19 @@
     <!-- لا تستخدم meta refresh إلى مسار فرعي ثابت: على Vercel غالباً يُنشر مجلد iif-fund-demo كجذر فيصبح المسار الطويل 404 -->
     <script>
       (function () {
+        /* دومين ثقة: نفس النشر يعرض index.html الجذر للصندوق؛ Netlify قد يخدم الملف قبل توجيهات المضيف — نوجّه هنا فوراً */
+        try {
+          var thHost = (location.hostname || '').toLowerCase();
+          if (thHost === 'thiqqah.live' || thHost === 'www.thiqqah.live') {
+            var thPath = location.pathname || '/';
+            if (thPath.indexOf('/thiqqah-site/') !== 0) {
+              var thDest = '/thiqqah-site/index.html' + (location.search || '');
+              if (location.replace) location.replace(thDest);
+              else location.href = thDest;
+              return;
+            }
+          }
+        } catch (eTh) { }
         /** مطابقة netlify.toml + vercel.json + اختصارات التطوير المحلي — توجيه كامل حسب المسار */
         function siteBase() {
           try {

@@ -111,6 +111,272 @@
   status = 302
   force = true
 
+# نفس النشر يخدم الصندوق وثقة؛ على مضيفي thiqqah.live فقط نوجّه مسارات IIF/الاختصارات إلى موقع ثقة
+# (أي طلب تحت /thiqqah-site/* يبقى كما هو — ملفات ثابتة)
+[[redirects]]
+  from = "http://thiqqah.live/financial-consulting/*"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/financial-consulting/*"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/financial-consulting/*"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/financial-consulting/*"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/fund"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/fund"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/fund"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/fund"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/fund-admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/fund-admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/fund-admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/fund-admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/panel"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/panel"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/panel"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/panel"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/dashboard"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/dashboard"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/dashboard"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/dashboard"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/cp"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/cp"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/cp"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/cp"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/gov"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/gov"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/gov"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/gov"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/web-search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/web-search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/web-search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/web-search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/news-sources"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/news-sources"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/news-sources"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/news-sources"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
 [[redirects]]
   from = "/"
   to = "/financial-consulting/iif-fund-demo/index.html"
