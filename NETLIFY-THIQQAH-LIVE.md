@@ -1,14 +1,26 @@
 # ربط الدومين الأساسي لموقع ثقة الذهبية (thiqqah.live) على Netlify
 
-## الدومين يفتح «الصندوق» بينما `https://iiffund.com/thiqqah-site/` يعمل ← الحل
+## الطريقة الموصى بها: موقع Netlify مستقل لثقة (دومينان مستقلان بالكامل)
 
-هذا يعني أن **`thiqqah.live` مربوط في Netlify بموقع نشر لا يطابق موقع `iiffund.com`** (غالباً **`fluffy-meerkat-eff966`** منفصل عن إنتاج **`iiffund.com`**). الكود في المستودع صحيح؛ المطلوب **توحيد الدومين مع موقع الإنتاج الذي يظهر فيه `iiffund.com`**.
+لتعمل **`thiqqah.live`** و **`iiffund.com`** دون خلط ودون تحويل إلى دومين آخر، اتبع **`NETLIFY-THIQQAH-STANDALONE.md`** خطوة بخطوة:
+
+- موقع Netlify **جديد** + نفس الريبو + **Base directory:** `thiqqah-site` + **Publish directory:** `.`
+- الدومين **`thiqqah.live`** يُربط **بهذا الموقع فقط**؛ يُحذف من أي موقع آخر كان يستخدمه.
+- الملف **`thiqqah-site/netlify.toml`** يضبط النشر والترويسات الأمنية لهذا الموقع فقط.
+
+بهذا يكون جذر `https://thiqqah.live/` هو **`thiqqah-site/index.html`** مباشرة (لا بوابة صندوق ولا مسار `/thiqqah-site/` في الرابط).
+
+---
+
+## بديل (موقع واحد): إن أردت إبقاء الدومينين على نفس موقع `iiffund.com`
+
+هذا يعني أن **`thiqqah.live` مربوط في Netlify بموقع نشر لا يطابق موقع `iiffund.com`** (غالباً **`fluffy-meerkat-eff966`** منفصل عن إنتاج **`iiffund.com`**). الكود في المستودع يساعد بالتوجيه؛ لكن لاستقلال أوضح يُفضَّل **`NETLIFY-THIQQAH-STANDALONE.md`** أعلاه.
 
 1. [Netlify](https://app.netlify.com) → حدّد الموقع الذي في **Domain management** يظهر عنده **`iiffund.com`** (النشر الكامل).
 2. على **نفس هذا الموقع**: **Add domain** → **`thiqqah.live`** + **`www.thiqqah.live`** → أكمل **Verify** و **HTTPS**.
 3. على أي **موقع Netlify آخر** كان **`thiqqah.live`** مضافاً عليه سابقاً: **احذف** الدومين من **Domain management** هناك حتى لا يبقى تعارض.
 4. في **مسجّل الدومين** (Name.com وغيره): طبّق سجلات **DNS** التي يعرضها Netlify **للموقع الذي يخدم `iiffund.com`** — قد يتغيّر **CNAME** لـ `www` (لم يعد بالضرورة `fluffy-meerkat-eff966.netlify.app`؛ انسخ القيمة من اللوحة).
-5. بعد النشر: `https://thiqqah.live/thiqqah-site/index.html` يجب أن يعطي **200** مثل `iiffund.com`، و`https://thiqqah.live/` يُوجَّه لموقع ثقة **على نفس الدومين** (حسب `netlify.toml` والبوابة في جذر `index.html`).
+5. بعد النشر: `https://thiqqah.live/thiqqah-site/index.html` يجب أن يعطي **200** مثل `iiffund.com`، و`https://thiqqah.live/` يُوجَّه لموقع ثقة **على نفس الدومين** (حسب `netlify.toml` في الجذر).
 
 ---
 
@@ -44,12 +56,15 @@
 | `/thiqqah-site/index.html` | الصفحة الكاملة |
 | `/thiqqah` أو `/thiqqah/` | اختصار (302 → نفس الصفحة) |
 
-### تحقق حاسم: هل نشر Netlify يضمّن `thiqqah-site`؟
+### تحقق حاسم: نشران مختلفان
 
-افتح في المتصفح (أو `curl -I`) **`https://اسم-موقعك.netlify.app/thiqqah-site/index.html`** و **`https://iiffund.com/thiqqah-site/index.html`**.
+**أ) موقع ثقة مستقل (`NETLIFY-THIQQAH-STANDALONE.md`):**  
+افتح **`https://اسم-الموقع-الثاني.netlify.app/`** — يجب أن تظهر **صفحة ثقة** مباشرة (بدون `/thiqqah-site/` في المسار).
 
-- إن كان **الأول 404** والثاني **200**، فـ **`thiqqah.live` غالباً مربوط بموقع Netlify مختلف** عن الموقع الذي يخدم **`iiffund.com`** (نشر أقدم أو إعداد لوحة منشور مختلف). الحل الأنظف: في Netlify أنقل أو أضف **`thiqqah.live`** إلى **نفس الموقع** الذي يظهر فيه **`iiffund.com`** ضمن **Domain management**، ثم اضبط DNS كما تطلب اللوحة.  
-- **`index.html` في جذر المشروع** يحتوي احتياطاً: على مضيفي `thiqqah.live` يتحقق من وجود `/thiqqah-site/index.html` وإن ردّ الخادم بغير نجاح يُوجّه إلى **`https://iiffund.com/thiqqah-site/index.html`** حتى يعمل الموقع فوراً ريثما يتوحّد الدومين على النشر الصحيح.
+**ب) موقع واحد مع `iiffund.com`:**  
+افتح **`https://اسم-موقعك.netlify.app/thiqqah-site/index.html`** و **`https://iiffund.com/thiqqah-site/index.html`**. إن كان **الأول 404** والثاني **200**، فـ **`thiqqah.live` غالباً مربوط بموقع Netlify مختلف**. إما تربطه بموقع `iiffund.com` أو تستخدم **الموقع المستقل (أ)**.
+
+- **لم يعد** `index.html` الجذر يحوّل دومين ثقة إلى `iiffund.com`؛ الفصل يكون عبر **موقع Netlify مستقل** أو عبر التوجيهات في `netlify.toml` الجذر عند إبقاء الدومينين على نشر واحد.
 
 ## خيار موصى به: نفس موقع Netlify + دومين إضافي
 

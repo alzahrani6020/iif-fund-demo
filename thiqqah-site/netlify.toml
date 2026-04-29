@@ -1,0 +1,23 @@
+# موقع ثقة الذهبية — نشر مستقل عن مشروع الصندوق (نفس الريبو، موقع Netlify ثانٍ).
+#
+# في لوحة Netlify لهذا الموقع:
+#   Repository: نفس مستودع iif-web
+#   Base directory: thiqqah-site
+#   Build command: (اتركه فارغاً أو سيتم استخدام command أدناه)
+#   Publish directory: .  (نقطة، نسبياً إلى Base directory)
+#
+# اربط الدومين thiqqah.live + www هنا فقط. لا تضفهما على موقع iiffund.com إن أردت فصلاً كاملاً،
+# أو أبقهما هنا فقط واحذفهما من أي موقع آخر.
+
+[build]
+  publish = "."
+  command = "true"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    Cross-Origin-Opener-Policy = "same-origin"

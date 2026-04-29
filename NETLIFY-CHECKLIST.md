@@ -6,6 +6,7 @@
 
 - **فريق dr-talal:** [app.netlify.com/teams/dr-talal/projects](https://app.netlify.com/teams/dr-talal/projects)  
   من هنا تضيف مواقع، تربط GitHub، وترى عمليات النشر.  
+- **موقع ثقة منفصل (`thiqqah.live`):** [NETLIFY-THIQQAH-STANDALONE.md](./NETLIFY-THIQQAH-STANDALONE.md) — موقع Netlify ثانٍ، Base directory = `thiqqah-site`.
 - هذا **ليس** رابط الموقع العام للزوار — رابط الزوار يكون مثل `https://اسم-الموقع.netlify.app` بعد إنشاء الموقع.
 
 ### موقع المشروع المربوط حالياً (مثال من إعدادك)

@@ -26,34 +26,10 @@
     <!-- لا تستخدم meta refresh إلى مسار فرعي ثابت: على Vercel غالباً يُنشر مجلد iif-fund-demo كجذر فيصبح المسار الطويل 404 -->
     <script>
       (function () {
-        /* دومين ثقة: إن كان النشر الحالي لا يضم مجلد thiqqah-site (موقع Netlify آخر عن iiffund.com) نستخدم iiffund.com كاحتياط */
-        try {
-          var thHost = (location.hostname || '').toLowerCase();
-          if (thHost === 'thiqqah.live' || thHost === 'www.thiqqah.live') {
-            var thPath = location.pathname || '/';
-            if (thPath.indexOf('/thiqqah-site/') !== 0) {
-              var thQ = location.search || '';
-              var thLocal = '/thiqqah-site/index.html' + thQ;
-              var thFallback = 'https://iiffund.com/thiqqah-site/index.html' + thQ;
-              function thGo(u) {
-                if (location.replace) location.replace(u);
-                else location.href = u;
-              }
-              if (!window.fetch) {
-                thGo(thLocal);
-                return;
-              }
-              fetch(thLocal, { method: 'HEAD', cache: 'no-store' })
-                .then(function (r) {
-                  thGo(r.ok ? thLocal : thFallback);
-                })
-                .catch(function () {
-                  thGo(thFallback);
-                });
-              return;
-            }
-          }
-        } catch (eTh) { }
+        /*
+          دومين ثقة (thiqqah.live): يُنشر كموقع Netlify منفصل — انظر NETLIFY-THIQQAH-STANDALONE.md
+          و thiqqah-site/netlify.toml (Base directory = thiqqah-site). لا توجيه هنا إلى دومين آخر.
+        */
         /** مطابقة netlify.toml + vercel.json + اختصارات التطوير المحلي — توجيه كامل حسب المسار */
         function siteBase() {
           try {
