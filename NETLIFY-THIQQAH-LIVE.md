@@ -32,6 +32,13 @@
 | `/thiqqah-site/index.html` | الصفحة الكاملة |
 | `/thiqqah` أو `/thiqqah/` | اختصار (302 → نفس الصفحة) |
 
+### تحقق حاسم: هل نشر Netlify يضمّن `thiqqah-site`؟
+
+افتح في المتصفح (أو `curl -I`) **`https://اسم-موقعك.netlify.app/thiqqah-site/index.html`** و **`https://iiffund.com/thiqqah-site/index.html`**.
+
+- إن كان **الأول 404** والثاني **200**، فـ **`thiqqah.live` غالباً مربوط بموقع Netlify مختلف** عن الموقع الذي يخدم **`iiffund.com`** (نشر أقدم أو إعداد لوحة منشور مختلف). الحل الأنظف: في Netlify أنقل أو أضف **`thiqqah.live`** إلى **نفس الموقع** الذي يظهر فيه **`iiffund.com`** ضمن **Domain management**، ثم اضبط DNS كما تطلب اللوحة.  
+- **`index.html` في جذر المشروع** يحتوي احتياطاً: على مضيفي `thiqqah.live` يتحقق من وجود `/thiqqah-site/index.html` وإن ردّ الخادم بغير نجاح يُوجّه إلى **`https://iiffund.com/thiqqah-site/index.html`** حتى يعمل الموقع فوراً ريثما يتوحّد الدومين على النشر الصحيح.
+
 ## خيار موصى به: نفس موقع Netlify + دومين إضافي
 
 إذا كان الإنتاج الحالي على **`iiffund.com`** من نفس الريبو:
