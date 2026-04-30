@@ -57,6 +57,11 @@
       border-radius: 4px;
     }
 
+    .hint-screen--warn {
+      border-color: #b84848;
+      background: #3a1c1c;
+    }
+
     .sheet {
       width: 210mm;
       min-height: 297mm;
@@ -441,13 +446,10 @@
 </head>
 <body>
 
-  <div class="hint-screen">
-    <strong>تشغيل سريع:</strong> من جذر المجلد شغّل <code>RUN-LETTERHEAD.cmd</code> (يولّد الـ docx ويفتح هذه الصفحة والـ Word).
+  <div class="hint-screen" id="letterhead-hint">
+    <strong>مصدر واحد بدون تكرار:</strong> عدّل <code>thiqqah-site/thiqqah-brand.json</code> ثم من جذر المشروع نفّذ <code>RUN-LETTERHEAD.cmd</code> مرة واحدة — يحدّث <strong>Word</strong> و<strong>هذه الصفحة</strong> و<strong>رمز QR</strong> معاً.
     <br>
-    للطباعة: <strong>Ctrl+P</strong> — A4، وفعّل <strong>طباعة الخلفيات</strong>. للأرشفة: «حفظ كـ PDF». للإنجليزية: <code>&lt;html lang="en" dir="ltr"&gt;</code>.
-    <br>
-    <code>pip install -r scripts/letterhead/requirements-letterhead.txt</code>
-    — مع <strong>pywin32</strong> و<strong>Microsoft Word</strong> تُضاف العلامة المائية تلقائياً بعد كل توليد.
+    للطباعة: <strong>Ctrl+P</strong> — A4 و<strong>طباعة الخلفيات</strong>. للإنجليزية غيّر <code>&lt;html lang="en" dir="ltr"&gt;</code>. بايثون (اختياري): <code>pip install -r scripts/letterhead/requirements-letterhead.txt</code> — مع pywin32 وWord تُدرج العلامة المائية تلقائياً.
   </div>
 
   <div class="sheet">
@@ -462,6 +464,7 @@
         <div class="brand-logo-corner">
           <div class="brand-logo-wrap">
             <img
+              id="letterhead-logo"
               class="brand-logo-xl"
               src="assets/thiqqah-logo-emblem.png"
               alt="شعار مكتب ثقة الذهبية للخدمات العامة"
@@ -472,15 +475,16 @@
 
         <div class="brand-text-columns">
           <div class="brand-block--en" lang="en" dir="ltr">
-            <p class="name-en">Al-Thiqqah Al-Dhahabiyah<br>General Services Office</p>
-            <p class="tagline-en">Commercial Registration No. 4030506321 &middot; Kingdom of Saudi Arabia</p>
+            <p class="name-en"><span id="brand-en-l1"></span><br><span id="brand-en-l2"></span></p>
+            <p class="tagline-en" id="brand-en-tagline"></p>
           </div>
           <div class="brand-block--ar" lang="ar">
             <h1 class="name">
-              مكتب <span class="gold">ثقة الذهبية</span><br>للخدمات العامة
+              <span id="brand-ar-before"></span><span class="gold" id="brand-ar-gold"></span><br>
+              <span id="brand-ar-line2"></span>
             </h1>
-            <p class="cr"><strong>السجل التجاري:</strong> 4030506321</p>
-            <p class="city">جدة — منطقة مكة المكرمة — المملكة العربية السعودية</p>
+            <p class="cr"><strong>السجل التجاري:</strong> <span id="brand-cr"></span></p>
+            <p class="city" id="brand-city"></p>
           </div>
         </div>
       </header>
@@ -491,23 +495,60 @@
         <div class="footer-rule"></div>
         <div class="footer-line">
           <div class="footer-contacts-inline">
-            <a href="https://thiqqah.live/" dir="ltr">thiqqah.live</a>
+            <a id="footer-site" href="https://thiqqah.live/" dir="ltr"></a>
             <span class="dot">·</span>
-            <a href="mailto:info@thiqqah.live" dir="ltr">info@thiqqah.live</a>
+            <a id="footer-email" href="mailto:info@thiqqah.live" dir="ltr"></a>
             <span class="dot">·</span>
-            <a href="tel:+966567566616" dir="ltr">+966 56 756 6616</a>
+            <a id="footer-phone" href="tel:+966567566616" dir="ltr"></a>
           </div>
-          <a class="footer-qr-inline" href="https://thiqqah.live/" target="_blank" rel="noopener" aria-label="QR الموقع الإلكتروني">
+          <a class="footer-qr-inline" id="footer-qr-link" href="https://thiqqah.live/" target="_blank" rel="noopener" aria-label="QR الموقع الإلكتروني">
             <img
-              src="https://api.qrserver.com/v1/create-qr-code/?size=128x128&amp;margin=4&amp;data=https%3A%2F%2Fthiqqah.live%2F"
+              id="letterhead-qr"
+              src="assets/letterhead-qr.png"
               width="128"
               height="128"
-              alt="QR">
+              alt="رمز استجابة سريعة لموقع ثقة">
           </a>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="thiqqah-brand.embed.js"></script>
+  <script>
+    (function () {
+      var b = window.__THIQQAH_BRAND;
+      var hint = document.getElementById("letterhead-hint");
+      if (!b) {
+        if (hint) hint.classList.add("hint-screen--warn");
+        return;
+      }
+      var cr = b.commercialRegistration;
+      document.getElementById("brand-ar-before").textContent = b.nameAr.beforeGold;
+      document.getElementById("brand-ar-gold").textContent = b.nameAr.gold;
+      document.getElementById("brand-ar-line2").textContent = b.nameAr.line2;
+      document.getElementById("brand-cr").textContent = cr;
+      document.getElementById("brand-city").textContent = b.cityLineAr;
+      document.getElementById("brand-en-l1").textContent = b.nameEn.line1;
+      document.getElementById("brand-en-l2").textContent = b.nameEn.line2;
+      document.getElementById("brand-en-tagline").textContent =
+        b.taglineEnTemplate.replace("{cr}", cr);
+      var logo = document.getElementById("letterhead-logo");
+      if (logo) logo.src = b.logoRelativePath;
+      var site = document.getElementById("footer-site");
+      site.textContent = b.displayUrl;
+      site.href = b.siteUrl;
+      var em = document.getElementById("footer-email");
+      em.textContent = b.email;
+      em.href = "mailto:" + b.email;
+      var ph = document.getElementById("footer-phone");
+      ph.textContent = b.phoneDisplay;
+      ph.href = "tel:" + String(b.phoneE164).replace(/\s+/g, "");
+      var qrA = document.getElementById("footer-qr-link");
+      if (qrA) qrA.href = b.siteUrl;
+      var qrImg = document.getElementById("letterhead-qr");
+      if (qrImg) qrImg.src = b.qrImageRelativePath;
+    })();
+  </script>
 </body>
 </html>

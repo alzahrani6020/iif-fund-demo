@@ -3,10 +3,14 @@
 Build letterhead-thiqqah.docx — 3-column header (EN | AR | logo), footer QR line.
 Creates letterhead-watermark-print.png with Pillow. On Windows + Word + pywin32, embeds
 that image as a centered behind-text watermark after save.
+
+مصدر البيانات الوحيد: thiqqah-site/thiqqah-brand.json
+يولّد أيضاً: thiqqah-brand.embed.js + assets/letterhead-qr.png (للصفحة المطبوعة).
 """
 from __future__ import annotations
 
 import io
+import json
 from pathlib import Path
 
 import qrcode
@@ -18,23 +22,63 @@ from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 
 REPO = Path(__file__).resolve().parents[2]
-# شعار مقصوص: الشكل الهندسي فقط (ملف PNG الأصلي يحوي نصاً بصرياً ناقص حرف «ث» في «ثقة»).
-LOGO_PATH = REPO / "thiqqah-site" / "assets" / "thiqqah-logo-emblem.png"
-FALLBACK_LOGO = REPO / "thiqqah-site" / "assets" / "thiqqah-logo.png"
-WM_OUT = REPO / "thiqqah-site" / "assets" / "letterhead-watermark-print.png"
+BRAND_JSON = REPO / "thiqqah-site" / "thiqqah-brand.json"
+EMBED_JS_OUT = REPO / "thiqqah-site" / "thiqqah-brand.embed.js"
 OUT_PATH = REPO / "thiqqah-site" / "letterhead-thiqqah.docx"
-SITE_URL = "https://thiqqah.live/"
 
 CLR_INK = RGBColor(0x12, 0x24, 0x3A)
 CLR_GREEN = RGBColor(0x07, 0x3F, 0x3A)
 CLR_GREEN2 = RGBColor(0x0A, 0x66, 0x5D)
 CLR_MUTED = RGBColor(0x5F, 0x6D, 0x7F)
 
-EN_BLOCK = (
-    "Al-Thiqqah Al-Dhahabiyah\n"
-    "General Services Office\n"
-    "Commercial Registration No. 4030506321 · Kingdom of Saudi Arabia"
-)
+
+def load_brand() -> dict:
+    if not BRAND_JSON.is_file():
+        raise FileNotFoundError(f"ضع بيانات الهوية في: {BRAND_JSON}")
+    data = json.loads(BRAND_JSON.read_text(encoding="utf-8"))
+    for key in (
+        "siteUrl",
+        "displayUrl",
+        "email",
+        "phoneE164",
+        "phoneDisplay",
+        "commercialRegistration",
+        "cityLineAr",
+        "nameAr",
+        "nameEn",
+        "taglineEnTemplate",
+        "logoRelativePath",
+        "watermarkRelativePath",
+        "qrImageRelativePath",
+    ):
+        if key not in data:
+            raise KeyError(f"thiqqah-brand.json ناقص المفتاح: {key}")
+    return data
+
+
+def write_embed_js(brand: dict) -> None:
+    lines = [
+        "// تُولَّد تلقائياً — لا تعدّل يدوياً.",
+        "// المصدر الوحيد: thiqqah-brand.json ← ثم شغّل RUN-LETTERHEAD.cmd",
+        "window.__THIQQAH_BRAND = ",
+        json.dumps(brand, ensure_ascii=False, indent=2),
+        ";\n",
+    ]
+    EMBED_JS_OUT.write_text("\n".join(lines), encoding="utf-8")
+    print("Wrote:", EMBED_JS_OUT)
+
+
+def write_qr_png(url: str, dest: Path) -> None:
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(qr_png_bytes(url))
+    print("Wrote:", dest)
+
+
+def en_block_from_brand(brand: dict) -> str:
+    cr = brand["commercialRegistration"]
+    tag = brand["taglineEnTemplate"].replace("{cr}", cr)
+    ne = brand["nameEn"]
+    return f"{ne['line1']}\n{ne['line2']}\n{tag}"
 
 
 def set_paragraph_rtl(paragraph) -> None:
@@ -183,11 +227,23 @@ def embed_watermark_word_com(docx_path: Path, png_path: Path) -> bool:
 
 
 def main() -> None:
-    logo = LOGO_PATH if LOGO_PATH.is_file() else FALLBACK_LOGO
-    if not logo.is_file():
-        raise FileNotFoundError(f"الشعار غير موجود: {LOGO_PATH} أو {FALLBACK_LOGO}")
+    brand = load_brand()
+    write_embed_js(brand)
+    site_root = REPO / "thiqqah-site"
+    qr_rel = Path(brand["qrImageRelativePath"])
+    write_qr_png(brand["siteUrl"], site_root / qr_rel)
 
-    has_wm_png = write_soft_watermark_png(LOGO_PATH, WM_OUT)
+    logo_primary = site_root / Path(brand["logoRelativePath"])
+    fallback_logo = site_root / "assets" / "thiqqah-logo.png"
+    logo = logo_primary if logo_primary.is_file() else fallback_logo
+    if not logo.is_file():
+        raise FileNotFoundError(f"الشعار غير موجود: {logo_primary} أو {fallback_logo}")
+
+    wm_src = site_root / Path(brand["watermarkRelativePath"])
+    if not wm_src.is_file():
+        wm_src = logo_primary if logo_primary.is_file() else logo
+    WM_OUT = site_root / "assets" / "letterhead-watermark-print.png"
+    has_wm_png = write_soft_watermark_png(wm_src, WM_OUT)
     if has_wm_png:
         print("Watermark PNG:", WM_OUT)
 
@@ -220,7 +276,7 @@ def main() -> None:
     p_en = c_en.paragraphs[0]
     p_en.alignment = WD_ALIGN_PARAGRAPH.LEFT
     p_en.paragraph_format.space_after = Pt(0)
-    r_en = p_en.add_run(EN_BLOCK)
+    r_en = p_en.add_run(en_block_from_brand(brand))
     r_en.font.size = Pt(8.5)
     r_en.font.name = "Times New Roman"
     r_en.font.color.rgb = CLR_GREEN2
@@ -230,7 +286,8 @@ def main() -> None:
     p1 = c_ar.paragraphs[0]
     format_ar_paragraph(p1, align=WD_ALIGN_PARAGRAPH.JUSTIFY)
     p1.paragraph_format.space_after = Pt(1)
-    r1 = p1.add_run("مكتب ثقة الذهبية\nللخدمات العامة")
+    nar = brand["nameAr"]
+    r1 = p1.add_run(f"{nar['beforeGold']}{nar['gold']}\n{nar['line2']}")
     r1.bold = True
     r1.font.size = Pt(13)
     r1.font.name = "Arial"
@@ -240,7 +297,7 @@ def main() -> None:
     p2 = c_ar.add_paragraph()
     format_ar_paragraph(p2, align=WD_ALIGN_PARAGRAPH.JUSTIFY)
     p2.paragraph_format.space_after = Pt(1)
-    r2 = p2.add_run("السجل التجاري: 4030506321")
+    r2 = p2.add_run(f"السجل التجاري: {brand['commercialRegistration']}")
     r2.font.size = Pt(9)
     r2.font.name = "Arial"
     r2.bold = True
@@ -249,7 +306,7 @@ def main() -> None:
 
     p3 = c_ar.add_paragraph()
     format_ar_paragraph(p3, align=WD_ALIGN_PARAGRAPH.JUSTIFY)
-    r3 = p3.add_run("جدة — منطقة مكة المكرمة — المملكة العربية السعودية")
+    r3 = p3.add_run(brand["cityLineAr"])
     r3.font.size = Pt(8.5)
     r3.font.name = "Arial"
     r3.font.color.rgb = CLR_MUTED
@@ -303,11 +360,11 @@ def main() -> None:
     fp.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     fp.paragraph_format.space_after = Pt(0)
     for txt, bold in [
-        ("thiqqah.live", True),
+        (brand["displayUrl"], True),
         ("   ·   ", False),
-        ("info@thiqqah.live", True),
+        (brand["email"], True),
         ("   ·   ", False),
-        ("+966 56 756 6616", True),
+        (brand["phoneDisplay"], True),
     ]:
         rr = fp.add_run(txt)
         rr.font.size = Pt(8.5)
@@ -318,7 +375,7 @@ def main() -> None:
     pq = c_qr.paragraphs[0]
     pq.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     pq.paragraph_format.space_after = Pt(0)
-    pq.add_run().add_picture(io.BytesIO(qr_png_bytes(SITE_URL)), width=Cm(1.45))
+    pq.add_run().add_picture(io.BytesIO(qr_png_bytes(brand["siteUrl"])), width=Cm(1.45))
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     saved: Path = OUT_PATH
