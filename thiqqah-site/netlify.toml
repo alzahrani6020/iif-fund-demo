@@ -13,8 +13,10 @@
 # عداد زيارات خاص (لا يُعرض في الصفحة — أنت فقط من يقرأه):
 #   1) Netlify → Site configuration → Environment variables:
 #        VISITOR_STATS_SECRET = نص عشوائي طويل (احفظه في مدير كلمات مرور)
-#   2) بعد النشر افتح (في المتصفح خاص بك فقط):
-#        https://thiqqah.live/.netlify/functions/visitor-stats?key=نفس_السر
+#   2) اختر للسر حروف إنجليزية وأرقام فقط (أسهل في الرابط من العربية)
+#   3) بعد النشر افتح في المتصفح (لا تنشر الرابط):
+#        https://thiqqah.live/.netlify/functions/visitor-stats?key=قيمة_السر_الحقيقية
+#      للـ JSON فقط: أضف &format=json
 #   التخزين: Netlify Blobs عبر الدالتين visitor-hit / visitor-stats
 
 [build]
