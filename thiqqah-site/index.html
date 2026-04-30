@@ -465,16 +465,19 @@
 
     /* بعد .datetime حتى لا تُلغى ألوان الشريط الداكن */
     .datetime.datetime--topbar {
-      color: #142a20;
-      background: linear-gradient(180deg, #fff8e7, #e9d9a4);
-      border: 1px solid rgba(255, 255, 255, .65);
-      box-shadow: 0 3px 14px rgba(0, 0, 0, .28);
+      color: #0a1c18;
+      background: linear-gradient(180deg, #fffef8, #f0e2bb);
+      border: 1px solid rgba(212, 175, 95, 0.55);
+      box-shadow:
+        0 3px 14px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
       font-size: 13px;
       font-weight: 800;
       padding: 7px 16px;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
       white-space: nowrap;
-      text-shadow: none;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
     }
 
     .brand small {
