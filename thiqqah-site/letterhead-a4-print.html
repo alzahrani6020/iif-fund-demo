@@ -95,16 +95,16 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -50%) rotate(-8deg);
-      width: 124%;
-      max-width: 200mm;
+      /* حجم أصغر من عرض الحاوية حتى لا يُقصّ بسبب overflow:hidden على .sheet والدوران */
+      transform: translate(-50%, -50%) rotate(-4deg);
+      width: min(128mm, 68%);
       aspect-ratio: 1;
+      max-width: 100%;
       background: url("assets/thiqqah-logo-emblem.png") center / contain no-repeat;
-      opacity: 0.072;
+      opacity: 0.082;
       pointer-events: none;
       z-index: 0;
       filter: contrast(1.02);
-      /* normal أوضح على الشاشة والطباعة من multiply مع الخلفيات الفاتحة */
       mix-blend-mode: normal;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
