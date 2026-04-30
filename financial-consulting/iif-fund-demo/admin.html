@@ -2,6 +2,18 @@
 <html lang="en" dir="ltr" data-lang="en">
   <head>
     <meta charset="utf-8" />
+    <script>
+      try {
+        var h = (location.hostname || "").toLowerCase();
+        var ih = h === "iiffund.com" || h === "www.iiffund.com";
+        var p = (location.pathname || "").replace(/\/+$/, "") || "/";
+        if (ih && p === "/admin") {
+          var el = document.createElement("base");
+          el.href = "/financial-consulting/iif-fund-demo/";
+          document.head.insertBefore(el, document.head.firstChild);
+        }
+      } catch (e) {}
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-i18n="metaSiteTitle">International Investment Fund · IIF · Paris</title>
     <meta name="robots" content="noindex,nofollow" />

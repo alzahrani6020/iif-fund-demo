@@ -37,13 +37,28 @@
         var path = location.pathname || '/';
         var baseHref = '/';
         var host = location.hostname || '';
+        var hostLower = String(host || '').toLowerCase();
         var port = String(location.port || '');
         var isLocal = host === '127.0.0.1' || host === 'localhost' || host === '[::1]';
+        var isIiffundProd =
+          hostLower === 'iiffund.com' || hostLower === 'www.iiffund.com';
         /**
-         * scripts/dev-server.js يقدّم / و /index.html من financial-consulting/iif-fund-demo/index.html
-         * بينما pathname يبقى / — فيجب جذر المشروع وليس جذر النطاق حتى تُحمّل assets/emblem.jpg
+         * Netlify: إعادة كتابة 200 من / إلى هذا الملف مع بقاء عنوان iiffund.com/ نظيفاً —
+         * يجب أن يبقى base المجلد الفعلي وإلا تُطلب الأصول من /assets/ وتفشل.
          */
-        if (
+        var pathNorm = String(path || '/').replace(/\/+$/, '');
+        if (pathNorm === '') pathNorm = '/';
+        var iiffundFundShort =
+          pathNorm === '/' ||
+          pathNorm === '/index.html' ||
+          pathNorm === '/fund' ||
+          pathNorm === '/fund-admin' ||
+          pathNorm === '/panel' ||
+          pathNorm === '/dashboard' ||
+          pathNorm === '/cp';
+        if (isIiffundProd && iiffundFundShort) {
+          baseHref = '/financial-consulting/iif-fund-demo/';
+        } else if (
           isLocal &&
           port === '3333' &&
           (path === '/' ||
@@ -109,17 +124,17 @@
   <meta property="og:title" content="International Investment Fund · IIF · Paris" />
   <meta property="og:description"
     content="International Investment Fund (IIF), Paris — institutional project finance, sovereign & government capital, BOT coordination, feasibility studies, mediation & governance. EU Transparency Register; licensed France & USA." />
-  <meta property="og:url" content="https://iiffund.com/financial-consulting/iif-fund-demo/" />
+  <meta property="og:url" content="https://iiffund.com/" />
   <meta property="og:image" content="https://iiffund.com/financial-consulting/iif-fund-demo/assets/emblem.jpg" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="International Investment Fund · IIF · Paris" />
   <meta name="twitter:description"
     content="Institutional project finance, sovereign capital, BOT & feasibility. EU Transparency Register; licensed France & USA. Investors & governments." />
-  <meta name="twitter:url" content="https://iiffund.com/financial-consulting/iif-fund-demo/" />
+  <meta name="twitter:url" content="https://iiffund.com/" />
   <meta name="twitter:image" content="https://iiffund.com/financial-consulting/iif-fund-demo/assets/emblem.jpg" />
   <!-- عند النشر: عنوان GitHub Pages (يُستخدم لـ hreflang و SEO) -->
-  <link rel="canonical" href="https://iiffund.com/financial-consulting/iif-fund-demo/" />
+  <link rel="canonical" href="https://iiffund.com/" />
   <meta name="iif-funcs-base" content="https://iiffund.com" />
   <script type="application/ld+json">
   {

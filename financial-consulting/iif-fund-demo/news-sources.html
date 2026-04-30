@@ -2,6 +2,17 @@
 <html lang="en" data-iif-leaf-static="1">
 <head>
   <meta charset="utf-8" />
+  <script>
+    try {
+      var h = (location.hostname || "").toLowerCase();
+      var ih = h === "iiffund.com" || h === "www.iiffund.com";
+      if (ih && /^\/news-sources\/?$/.test(location.pathname || "")) {
+        var b = document.createElement("base");
+        b.href = "/financial-consulting/iif-fund-demo/";
+        document.head.insertBefore(b, document.head.firstChild);
+      }
+    } catch (e) {}
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="robots" content="index,follow" />
   <title>News sources · International Investment Fund</title>

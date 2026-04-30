@@ -384,6 +384,14 @@
   from = "/"
   to = "/financial-consulting/iif-fund-demo/index.html"
   status = 200
+  # بدون force يُقدَّم index.html البوابة في الجذر فيغلب هذا السطر — فيبقى الشريط يتحول للمسار الطويل.
+  force = true
+
+[[redirects]]
+  from = "/index.html"
+  to = "/financial-consulting/iif-fund-demo/index.html"
+  status = 200
+  force = true
 
 # مسار المجلد بدون index.html (يظهر 404 على بعض الاستضافات/الروابط)
 [[redirects]]
@@ -404,90 +412,208 @@
   force = true
 
 [[redirects]]
+  from = "/search/"
+  to = "/financial-consulting/iif-fund-demo/web-search.html"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/web-search"
   to = "/financial-consulting/iif-fund-demo/web-search.html"
-  status = 302
+  status = 200
   force = true
 
 [[redirects]]
   from = "/fund"
   to = "/financial-consulting/iif-fund-demo/index.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/fund/"
+  to = "/financial-consulting/iif-fund-demo/index.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/fund-admin"
   to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/fund-admin/"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/panel"
   to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/panel/"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/dashboard"
   to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/dashboard/"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/cp"
   to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/cp/"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/admin"
   to = "/financial-consulting/iif-fund-demo/admin.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/admin/"
+  to = "/financial-consulting/iif-fund-demo/admin.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/gov"
   to = "/financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/gov/"
+  to = "/financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/legal"
   to = "/legal/index.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/legal/"
+  to = "/legal/index.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/privacy"
   to = "/legal/privacy.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/privacy/"
+  to = "/legal/privacy.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/disclaimer"
   to = "/legal/disclaimer.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/disclaimer/"
+  to = "/legal/disclaimer.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/contact"
   to = "/legal/contact.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/contact/"
+  to = "/legal/contact.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/executive"
   to = "/executive-brief.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/executive/"
+  to = "/executive-brief.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/brief"
   to = "/executive-brief.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/brief/"
+  to = "/executive-brief.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/sovereign"
   to = "/sovereign-standards.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sovereign/"
+  to = "/sovereign-standards.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/charter"
   to = "/sovereign-standards.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/charter/"
+  to = "/sovereign-standards.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/news-sources"
   to = "/financial-consulting/iif-fund-demo/news-sources.html"
-  status = 302
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/news-sources/"
+  to = "/financial-consulting/iif-fund-demo/news-sources.html"
+  status = 200
+  force = true
 
 # موقع ثقة الذهبية — مسارات قصيرة للاستعداد لربط الدومين الأساسي (thiqqah.live أو مسار على iiffund.com)
 [[redirects]]

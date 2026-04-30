@@ -2,6 +2,17 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <script>
+        try {
+            var h = (location.hostname || "").toLowerCase();
+            var ih = h === "iiffund.com" || h === "www.iiffund.com";
+            if (ih && /^\/gov\/?$/.test(location.pathname || "")) {
+                var b = document.createElement("base");
+                b.href = "/financial-consulting/government-search/";
+                document.head.insertBefore(b, document.head.firstChild);
+            }
+        } catch (e) {}
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="color-scheme" content="light">
     <meta name="description" content="فهرس مرجعي للجهات الحكومية والمؤسسات — استعلام محلي متعدد الدول؛ واجهة مؤسسية لبيئات الحكم والبحث الرسمي.">
