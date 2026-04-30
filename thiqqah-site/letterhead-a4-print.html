@@ -87,8 +87,28 @@
       min-height: 297mm;
       padding: 11mm 13mm 15mm 13mm;
       z-index: 1;
+      /* عزل تراكب الطبقات حتى لا يختفي النص/الشعار بسبب mix-blend على العلامة المائية */
+      isolation: isolate;
     }
 
+    .sheet-inner > .watermark {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-8deg);
+      width: 124%;
+      max-width: 200mm;
+      aspect-ratio: 1;
+      background: url("assets/thiqqah-logo-emblem.png") center / contain no-repeat;
+      opacity: 0.072;
+      pointer-events: none;
+      z-index: 0;
+      filter: contrast(1.02);
+      /* normal أوضح على الشاشة والطباعة من multiply مع الخلفيات الفاتحة */
+      mix-blend-mode: normal;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
     .sheet-inner > .corner-ornament {
       position: absolute;
       width: 11mm;
@@ -131,25 +151,6 @@
       border-radius: 0 0 10px 0;
     }
 
-    /* علامة مائية — ضعف الحجم السابق تقريباً، في منتصف الصفحة */
-    .watermark {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%) rotate(-8deg);
-      width: 124%;
-      max-width: 200mm;
-      aspect-ratio: 1;
-      background: url("assets/thiqqah-logo-emblem.png") center / contain no-repeat;
-      opacity: 0.068;
-      pointer-events: none;
-      z-index: 0;
-      filter: contrast(1.02);
-      mix-blend-mode: multiply;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-
     .top-rule {
       position: absolute;
       top: 0;
@@ -163,12 +164,12 @@
     /* ترويسة: شعار في أقصى الركن + عمودان (عربي يمين / إنجليزي يسار في وضع RTL) */
     .brand-ribbon {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       min-height: 28mm;
       padding: 0 0 2.8mm 0;
       margin-bottom: 2.5mm;
       border-bottom: 3px double var(--green);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, transparent 100%);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 250, 240, 0.15) 100%);
     }
 
     .brand-logo-corner {
@@ -335,7 +336,7 @@
       left: 9mm;
       right: 9mm;
       bottom: 4.5mm;
-      z-index: 2;
+      z-index: 4;
     }
 
     .footer-rule {
@@ -432,9 +433,10 @@
         padding: 11mm 13mm 15mm;
       }
       .footer-contacts-inline a { color: var(--green-2); }
-      .watermark {
-        opacity: 0.06;
-        mix-blend-mode: multiply;
+      .watermark,
+      .sheet-inner > .watermark {
+        opacity: 0.07;
+        mix-blend-mode: normal;
       }
     }
 
@@ -454,9 +456,9 @@
 
   <div class="sheet">
     <div class="top-rule" aria-hidden="true"></div>
-    <div class="watermark" aria-hidden="true" role="presentation"></div>
 
     <div class="sheet-inner">
+      <div class="watermark" aria-hidden="true" role="presentation"></div>
       <span class="corner-ornament tr" aria-hidden="true"></span>
       <span class="corner-ornament bl" aria-hidden="true"></span>
 
