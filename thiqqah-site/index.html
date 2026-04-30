@@ -251,12 +251,6 @@
       flex-wrap: wrap;
     }
 
-    .datetime--topbar {
-      color: rgba(255, 255, 255, .94);
-      background: rgba(255, 255, 255, .14);
-      border-color: rgba(255, 255, 255, .28);
-    }
-
     .topbar-links,
     .nav-links,
     .actions {
@@ -282,9 +276,10 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
       font-weight: 800;
       color: var(--green);
+      z-index: 1;
     }
 
     .brand-mark {
@@ -299,21 +294,28 @@
     }
 
     .brand-logo {
-      width: 96px;
-      height: 96px;
-      object-fit: cover;
-      object-position: 50% 18%;
-      border: 3px solid rgba(184, 147, 71, .48);
-      border-radius: 28px;
-      box-shadow: 0 14px 30px rgba(16, 32, 51, .14);
+      width: 118px;
+      height: 118px;
+      object-fit: contain;
+      object-position: center;
+      padding: 10px;
+      box-sizing: border-box;
+      background: linear-gradient(165deg, #fffef9, #f3ead8);
+      border: 3px solid rgba(201, 162, 39, .72);
+      border-radius: 26px;
+      box-shadow:
+        0 12px 32px rgba(7, 63, 58, .2),
+        0 0 0 1px rgba(255, 255, 255, .75) inset;
+      flex-shrink: 0;
     }
 
     .brand-meta {
       display: grid;
-      gap: 4px;
+      gap: 5px;
       font-family: var(--display-font);
-      font-size: 22px;
+      font-size: 23px;
       line-height: 1.2;
+      max-width: min(320px, 46vw);
     }
 
     .datetime {
@@ -328,6 +330,20 @@
       font-size: 12px;
       font-weight: 700;
       direction: ltr;
+    }
+
+    /* بعد .datetime حتى لا تُلغى ألوان الشريط الداكن */
+    .datetime.datetime--topbar {
+      color: #142a20;
+      background: linear-gradient(180deg, #fff8e7, #e9d9a4);
+      border: 1px solid rgba(255, 255, 255, .65);
+      box-shadow: 0 3px 14px rgba(0, 0, 0, .28);
+      font-size: 13px;
+      font-weight: 800;
+      padding: 7px 16px;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      text-shadow: none;
     }
 
     .brand small {
@@ -1962,9 +1978,10 @@
       }
 
       .brand-logo {
-        width: 66px;
-        height: 66px;
-        border-radius: 18px;
+        width: 78px;
+        height: 78px;
+        padding: 7px;
+        border-radius: 20px;
       }
 
       .brand-meta {
@@ -1978,6 +1995,11 @@
       .datetime {
         font-size: 10px;
         padding: 2px 8px;
+      }
+
+      .datetime.datetime--topbar {
+        font-size: 11px;
+        padding: 5px 11px;
       }
 
       .hero-card {
@@ -2043,7 +2065,7 @@
       <div class="container">
         <div class="topbar-start">
           <span>السجل التجاري: 4030506321</span>
-          <time class="datetime datetime--topbar" id="site-datetime" datetime="" aria-label="التوقيت المحلي"></time>
+          <time class="datetime datetime--topbar" id="site-datetime" datetime="" aria-label="التاريخ والوقت المحلي"></time>
         </div>
         <div class="topbar-links">
           <a href="#faq">الأسئلة الشائعة</a>
@@ -2055,7 +2077,7 @@
     <nav class="navbar" aria-label="التنقل الرئيسي">
       <div class="container">
         <a class="brand" href="#">
-          <img class="brand-logo" src="assets/thiqqah-logo-emblem.png" alt="شعار مكتب ثقة الذهبية" width="96" height="96" decoding="async">
+          <img class="brand-logo" src="assets/thiqqah-logo-emblem.png" alt="شعار مكتب ثقة الذهبية" width="118" height="118" decoding="async">
           <span class="brand-meta">
             ثقة الذهبية
             <small>للخدمات العامة وتأسيس الأعمال</small>
