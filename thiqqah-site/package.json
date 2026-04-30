@@ -1,0 +1,9 @@
+{
+  "name": "thiqqah-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "موقع ثقة الذهبية — دالة عدّاد الزيارات تستخدم @netlify/blobs",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.1"
+  }
+}
