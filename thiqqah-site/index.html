@@ -244,6 +244,19 @@
       padding: 9px 0;
     }
 
+    .topbar-start {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .datetime--topbar {
+      color: rgba(255, 255, 255, .94);
+      background: rgba(255, 255, 255, .14);
+      border-color: rgba(255, 255, 255, .28);
+    }
+
     .topbar-links,
     .nav-links,
     .actions {
@@ -2028,7 +2041,10 @@
   <header>
     <div class="topbar">
       <div class="container">
-        <span>السجل التجاري: 4030506321</span>
+        <div class="topbar-start">
+          <span>السجل التجاري: 4030506321</span>
+          <time class="datetime datetime--topbar" id="site-datetime" datetime="" aria-label="التوقيت المحلي"></time>
+        </div>
         <div class="topbar-links">
           <a href="#faq">الأسئلة الشائعة</a>
           <a href="#contact">تواصل معنا</a>
@@ -2043,7 +2059,6 @@
           <span class="brand-meta">
             ثقة الذهبية
             <small>للخدمات العامة وتأسيس الأعمال</small>
-            <time class="datetime" id="site-datetime" datetime=""></time>
           </span>
         </a>
         <button class="mobile-menu" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="main-menu">☰</button>
