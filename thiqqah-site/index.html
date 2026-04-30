@@ -5675,20 +5675,6 @@
         }
       }
     } catch (e) {}
-
-    /* عدّاد زيارات خلفي: مرة واحدة لكل جلسة متصفح — لا واجهة للزائر */
-    (function logVisitOncePerSession() {
-      try {
-        if (!window.sessionStorage) return;
-        if (sessionStorage.getItem("thiqqah-visit-logged") === "1") return;
-        sessionStorage.setItem("thiqqah-visit-logged", "1");
-        fetch("/.netlify/functions/visitor-hit", {
-          method: "POST",
-          credentials: "same-origin",
-          headers: { Accept: "application/json" },
-        }).catch(function () {});
-      } catch (e) {}
-    })();
   </script>
 </body>
 </html>

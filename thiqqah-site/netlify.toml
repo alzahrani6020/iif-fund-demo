@@ -9,33 +9,14 @@
 # اربط الدومين thiqqah.live + www هنا فقط. لا تضفهما على موقع iiffund.com إن أردت فصلاً كاملاً،
 # أو أبقهما هنا فقط واحذفهما من أي موقع آخر.
 # إكمال الربط من الجهاز: npm run netlify:thiqqah:complete
-#
-# عداد زيارات خاص (لا يُعرض في الصفحة — أنت فقط من يقرأه):
-#   1) Netlify → Site configuration → Environment variables:
-#        VISITOR_STATS_SECRET = نص عشوائي طويل (احفظه في مدير كلمات مرور)
-#   2) اختر للسر حروف إنجليزية وأرقام فقط (أسهل في الرابط من العربية)
-#   3) بعد النشر افتح في المتصفح (لا تنشر الرابط):
-#        https://thiqqah.live/.netlify/functions/visitor-stats?key=قيمة_السر_الحقيقية
-#      للـ JSON فقط: أضف &format=json
-#   التخزين: Netlify Blobs عبر الدالتين visitor-hit / visitor-stats
 
 [build]
   publish = "."
-  command = "npm ci"
+  command = "true"
 
 # مجلد دوال فارغ داخل thiqqah-site فقط (Netlify يتطلب مساراً صالحاً أحياناً ولا يقبل مسح الحقول في صفحة أول نشر).
 [functions]
   directory = "netlify/functions"
-
-[[headers]]
-  for = "/.netlify/functions/visitor-stats"
-  [headers.values]
-    Cache-Control = "no-store"
-
-[[headers]]
-  for = "/.netlify/functions/visitor-hit"
-  [headers.values]
-    Cache-Control = "no-store"
 
 [[headers]]
   for = "/*"
