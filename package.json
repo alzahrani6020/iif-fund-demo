@@ -38,6 +38,7 @@
     "netlify:build:trigger": "node scripts/trigger-netlify-build.cjs",
     "netlify:thiqqah:setup": "node scripts/open-netlify-thiqqah-setup.cjs",
     "netlify:thiqqah:complete": "node scripts/netlify-thiqqah-complete-guide.cjs",
+    "letterhead:thiqqah": "python scripts/letterhead/build_thiqqah_letterhead_docx.py",
     "searxng:path": "node scripts/searxng-production-path.mjs",
     "verify:stack": "npm run verify && npm run verify:searx",
     "qa:iif-fund": "node scripts/smoke-html-check.mjs",

@@ -447,9 +447,9 @@
 <body>
 
   <div class="hint-screen" id="letterhead-hint">
-    <strong>مصدر واحد بدون تكرار:</strong> عدّل <code>thiqqah-site/thiqqah-brand.json</code> ثم من جذر المشروع نفّذ <code>RUN-LETTERHEAD.cmd</code> مرة واحدة — يحدّث <strong>Word</strong> و<strong>هذه الصفحة</strong> و<strong>رمز QR</strong> معاً.
+    <strong>معاينة فقط:</strong> بيانات الرأس والتذييل تُحمّل من <code>thiqqah-brand.embed.js</code> (مُولَّد من <code>thiqqah-brand.json</code>). لا تُطبع هذا المربع.
     <br>
-    للطباعة: <strong>Ctrl+P</strong> — A4 و<strong>طباعة الخلفيات</strong>. للإنجليزية غيّر <code>&lt;html lang="en" dir="ltr"&gt;</code>. بايثون (اختياري): <code>pip install -r scripts/letterhead/requirements-letterhead.txt</code> — مع pywin32 وWord تُدرج العلامة المائية تلقائياً.
+    للطباعة: <strong>Ctrl+P</strong> — A4 و<strong>طباعة الخلفيات</strong>. للإنجليزية غيّر وسم <code>html</code> إلى <code>lang=&quot;en&quot; dir=&quot;ltr&quot;</code>.
   </div>
 
   <div class="sheet">

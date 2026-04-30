@@ -3,7 +3,7 @@ setlocal
 set ROOT=%~dp0
 cd /d "%ROOT%"
 
-python scripts\letterhead\build_thiqqah_letterhead_docx.py
+call npm run letterhead:thiqqah
 if errorlevel 1 (
   echo Build failed.
   pause
