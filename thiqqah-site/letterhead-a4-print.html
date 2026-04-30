@@ -91,19 +91,28 @@
       isolation: isolate;
     }
 
-    .sheet-inner > .watermark {
+    /* فتحة وسط الصفحة بين الرأس والتذييل — توسيط العلامة بدون قص من حواف الورقة */
+    .watermark-slot {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 40mm;
+      bottom: 22mm;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .watermark-slot .watermark {
       position: absolute;
       left: 50%;
       top: 50%;
-      /* حجم أصغر من عرض الحاوية حتى لا يُقصّ بسبب overflow:hidden على .sheet والدوران */
-      transform: translate(-50%, -50%) rotate(-4deg);
-      width: min(128mm, 68%);
+      transform: translate(-50%, -50%) rotate(-3deg);
+      width: min(118mm, 72%);
+      max-width: calc(100% - 6mm);
       aspect-ratio: 1;
-      max-width: 100%;
+      margin: 0;
       background: url("assets/thiqqah-logo-emblem.png") center / contain no-repeat;
-      opacity: 0.082;
-      pointer-events: none;
-      z-index: 0;
+      opacity: 0.088;
       filter: contrast(1.02);
       mix-blend-mode: normal;
       -webkit-print-color-adjust: exact;
@@ -353,7 +362,7 @@
       align-items: center;
       justify-content: center;
       gap: 4mm;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       padding: 1.4mm 0 0.6mm;
     }
 
@@ -379,6 +388,12 @@
     html[lang="en"] .footer-contacts-inline {
       direction: ltr;
       text-align-last: center;
+    }
+
+    .footer-contacts-inline .footer-name-ar {
+      font-weight: 700;
+      color: var(--ink);
+      white-space: normal;
     }
 
     .footer-contacts-inline a {
@@ -433,9 +448,8 @@
         padding: 11mm 13mm 15mm;
       }
       .footer-contacts-inline a { color: var(--green-2); }
-      .watermark,
-      .sheet-inner > .watermark {
-        opacity: 0.07;
+      .watermark-slot .watermark {
+        opacity: 0.075;
         mix-blend-mode: normal;
       }
     }
@@ -458,7 +472,9 @@
     <div class="top-rule" aria-hidden="true"></div>
 
     <div class="sheet-inner">
-      <div class="watermark" aria-hidden="true" role="presentation"></div>
+      <div class="watermark-slot" aria-hidden="true">
+        <div class="watermark" role="presentation"></div>
+      </div>
       <span class="corner-ornament tr" aria-hidden="true"></span>
       <span class="corner-ornament bl" aria-hidden="true"></span>
 
@@ -498,6 +514,8 @@ Kingdom of Saudi Arabia</p>
         <div class="footer-rule"></div>
         <div class="footer-line">
           <div class="footer-contacts-inline">
+            <span class="footer-name-ar" id="footer-name-ar">مكتب ثقة الذهبية للخدمات العامة</span>
+            <span class="dot">·</span>
             <a id="footer-site" href="https://thiqqah.live/" dir="ltr">thiqqah.live</a>
             <span class="dot">·</span>
             <a id="footer-email" href="mailto:info@thiqqah.live" dir="ltr">info@thiqqah.live</a>
@@ -539,6 +557,14 @@ Kingdom of Saudi Arabia</p>
         b.taglineEnTemplate.replace("{cr}", cr);
       var logo = document.getElementById("letterhead-logo");
       if (logo) logo.src = b.logoRelativePath;
+      var nar = b.nameAr;
+      var footerFullName =
+        String(nar.beforeGold || "").trim() +
+        String(nar.gold || "") +
+        " " +
+        String(nar.line2 || "").trim();
+      var fn = document.getElementById("footer-name-ar");
+      if (fn) fn.textContent = footerFullName.trim();
       var site = document.getElementById("footer-site");
       site.textContent = b.displayUrl;
       site.href = b.siteUrl;

@@ -85,6 +85,11 @@ def en_block_from_brand(brand: dict) -> str:
     return f"{ne['line1']}\n{ne['line2']}\n{ne['line3']}\n{tag}"
 
 
+def footer_ar_line_name(brand: dict) -> str:
+    nar = brand["nameAr"]
+    return f"{nar['beforeGold'].strip()}{nar['gold']} {nar['line2'].strip()}"
+
+
 def set_paragraph_rtl(paragraph) -> None:
     p = paragraph._p
     p_pr = p.get_or_add_pPr()
@@ -361,9 +366,11 @@ def main() -> None:
     c_qr.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
 
     fp = c_line.paragraphs[0]
-    fp.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    fp.alignment = WD_ALIGN_PARAGRAPH.CENTER
     fp.paragraph_format.space_after = Pt(0)
     for txt, bold in [
+        (footer_ar_line_name(brand), True),
+        ("   ·   ", False),
         (brand["displayUrl"], True),
         ("   ·   ", False),
         (brand["email"], True),
