@@ -22,8 +22,10 @@
       --line: rgba(18, 36, 58, 0.12);
       --header-pad-logo: 44mm;
       /* العلامة المائية: ارفع القيمة إن بقيت باهتة (مثلاً 0.18–0.22) */
-      --watermark-opacity: 0.16;
-      --watermark-opacity-print: 0.13;
+      --watermark-opacity: 0.17;
+      --watermark-opacity-print: 0.14;
+      --watermark-max-w: 118mm;
+      --watermark-max-h: 155mm;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -94,38 +96,33 @@
       isolation: isolate;
     }
 
-    /* فتحة وسط الصفحة بين الرأس والتذييل — توسيط العلامة بدون قص من حواف الورقة */
-    .watermark-slot {
+    /* منتصف الورقة هندسياً: طبقة على كامل .sheet تحت المحتوى */
+    .sheet-page-center-watermark {
       position: absolute;
-      left: 2mm;
-      right: 2mm;
-      top: 38mm;
-      bottom: 26mm;
+      inset: 0;
       z-index: 0;
       pointer-events: none;
-      overflow: visible;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* الحل: img + object-fit:contain + z-index تحت المحتوى + opacity معتدلة + طباعة الخلفيات */
-    .watermark-slot .watermark {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+    .sheet-page-center-watermark .watermark {
       display: block;
-      max-width: min(110mm, 60%);
-      max-height: min(118mm, 76%);
+      max-width: var(--watermark-max-w);
+      max-height: var(--watermark-max-h);
       width: auto;
       height: auto;
       object-fit: contain;
       object-position: center;
       margin: 0;
       opacity: var(--watermark-opacity);
-      filter: contrast(1.08) brightness(0.92);
+      filter: contrast(1.1) brightness(0.88);
       mix-blend-mode: normal;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
+
     .sheet-inner > .corner-ornament {
       position: absolute;
       width: 11mm;
@@ -461,10 +458,10 @@
       .footer-contacts-inline .footer-name-ar {
         color: var(--green-2);
       }
-      .watermark-slot .watermark {
+      .sheet-page-center-watermark .watermark {
         opacity: var(--watermark-opacity-print);
         mix-blend-mode: normal;
-        filter: contrast(1.1) brightness(0.9);
+        filter: contrast(1.12) brightness(0.86);
       }
     }
 
@@ -479,23 +476,24 @@
   <div class="hint-screen" id="letterhead-hint">
     <strong>معاينة فقط:</strong> بيانات الرأس والتذييل تُحمّل من <code>thiqqah-brand.embed.js</code> (مُولَّد من <code>thiqqah-brand.json</code>). لا تُطبع هذا المربع.
     <br>
-    للطباعة: <strong>Ctrl+P</strong> — A4 و<strong>تفعيل «رسومات الخلفية»</strong> وإلا تختفي العلامة المائية. للشفافية عدّل <code>--watermark-opacity</code> في أعلى ملف الـ CSS. للإنجليزية غيّر وسم <code>html</code> إلى <code>lang=&quot;en&quot; dir=&quot;ltr&quot;</code>.
+    للطباعة: <strong>Ctrl+P</strong> — A4 و<strong>تفعيل «رسومات الخلفية»</strong>. حجم الشعار: <code>--watermark-max-w</code> و<code>--watermark-max-h</code>، الشفافية: <code>--watermark-opacity</code>. للإنجليزية غيّر وسم <code>html</code> إلى <code>lang=&quot;en&quot; dir=&quot;ltr&quot;</code>.
   </div>
 
   <div class="sheet">
     <div class="top-rule" aria-hidden="true"></div>
 
+    <div class="sheet-page-center-watermark" aria-hidden="true">
+      <img
+        class="watermark"
+        id="letterhead-watermark"
+        src="assets/thiqqah-logo-emblem.png"
+        alt=""
+        width="400"
+        height="400"
+        decoding="async">
+    </div>
+
     <div class="sheet-inner">
-      <div class="watermark-slot" aria-hidden="true">
-        <img
-          class="watermark"
-          id="letterhead-watermark"
-          src="assets/thiqqah-logo-emblem.png"
-          alt=""
-          width="400"
-          height="400"
-          decoding="async">
-      </div>
       <span class="corner-ornament tr" aria-hidden="true"></span>
       <span class="corner-ornament bl" aria-hidden="true"></span>
 
