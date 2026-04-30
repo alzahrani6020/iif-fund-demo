@@ -21,6 +21,9 @@
       --sand: #f2eadb;
       --line: rgba(18, 36, 58, 0.12);
       --header-pad-logo: 44mm;
+      /* العلامة المائية: ارفع القيمة إن بقيت باهتة (مثلاً 0.18–0.22) */
+      --watermark-opacity: 0.16;
+      --watermark-opacity-print: 0.13;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -103,22 +106,22 @@
       overflow: visible;
     }
 
-    /* صورة وليست background — contain يضمن ظهور الشعار كاملاً دون قص */
+    /* الحل: img + object-fit:contain + z-index تحت المحتوى + opacity معتدلة + طباعة الخلفيات */
     .watermark-slot .watermark {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
       display: block;
-      max-width: min(102mm, 56%);
-      max-height: min(112mm, 72%);
+      max-width: min(110mm, 60%);
+      max-height: min(118mm, 76%);
       width: auto;
       height: auto;
       object-fit: contain;
       object-position: center;
       margin: 0;
-      opacity: 0.092;
-      filter: contrast(1.05);
+      opacity: var(--watermark-opacity);
+      filter: contrast(1.08) brightness(0.92);
       mix-blend-mode: normal;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
@@ -459,8 +462,9 @@
         color: var(--green-2);
       }
       .watermark-slot .watermark {
-        opacity: 0.075;
+        opacity: var(--watermark-opacity-print);
         mix-blend-mode: normal;
+        filter: contrast(1.1) brightness(0.9);
       }
     }
 
@@ -475,7 +479,7 @@
   <div class="hint-screen" id="letterhead-hint">
     <strong>معاينة فقط:</strong> بيانات الرأس والتذييل تُحمّل من <code>thiqqah-brand.embed.js</code> (مُولَّد من <code>thiqqah-brand.json</code>). لا تُطبع هذا المربع.
     <br>
-    للطباعة: <strong>Ctrl+P</strong> — A4 و<strong>طباعة الخلفيات</strong>. للإنجليزية غيّر وسم <code>html</code> إلى <code>lang=&quot;en&quot; dir=&quot;ltr&quot;</code>.
+    للطباعة: <strong>Ctrl+P</strong> — A4 و<strong>تفعيل «رسومات الخلفية»</strong> وإلا تختفي العلامة المائية. للشفافية عدّل <code>--watermark-opacity</code> في أعلى ملف الـ CSS. للإنجليزية غيّر وسم <code>html</code> إلى <code>lang=&quot;en&quot; dir=&quot;ltr&quot;</code>.
   </div>
 
   <div class="sheet">
