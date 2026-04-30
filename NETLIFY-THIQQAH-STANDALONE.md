@@ -1,5 +1,7 @@
 # موقع Netlify منفصل لـ `thiqqah.live` (ثقة فقط)
 
+**اختصار لدومينين:** [DOMINI-IIFFUND-THIQQAH.md](./DOMINI-IIFFUND-THIQQAH.md) — جدول `iiffund.com` + `thiqqah.live` و **`npm run verify:production-domains`**.
+
 **واقع الإنتاج:** فصل الدومينات لا يظهر للزوار من تعديل الكود وحده — **`thiqqah.live` يجب أن يشير إلى نشرة Netlify تُنشأ من مجلد `thiqqah-site`** وأن يُزال من أي موقع Netlify آخر. ما في الريبو (`thiqqah-site/netlify.toml` وإلخ) يجهّز ذلك؛ **الخطوة الحاسمة على لوحة Netlify + DNS**.
 
 **أسرع طريق (يضبط Base directory تلقائياً):**  

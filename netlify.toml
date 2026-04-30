@@ -1,4 +1,5 @@
 # Netlify — نشر الموقع الثابت من جذر المستودع (اختياري؛ عند تجاوز الحدود استخدم GitHub Pages).
+# وضعان لدومينين نظيفين في الشريط: انظر DOMINI-IIFFUND-THIQQAH.md (موقع جذر = iiffund.com، موقع thiqqah-site = thiqqah.live).
 # في واجهة Netlify: اترك Build command و Publish فارغين إن أمكن (يُقرأ من هنا).
 # قائمة تحقق: NETLIFY-CHECKLIST.md
 # صفحة 404: ضع ملف 404.html في الجذر — Netlify يخدمه تلقائياً للمسارات غير الموجودة.

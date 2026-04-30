@@ -22,6 +22,7 @@
     "verify:thiqqah-i18n": "python scripts/verify-thiqqah-i18n.py && python scripts/find-missing-page-ar.py",
     "verify:thiqqah:live-domain": "node scripts/verify-thiqqah-live-domain.mjs",
     "verify:iiffund:https": "node scripts/verify-iiffund-https.mjs",
+    "verify:production-domains": "node scripts/verify-production-domains.mjs",
     "lint": "eslint scripts netlify financial-consulting/iif-fund-demo/api",
     "check:deploy": "node scripts/deploy-readiness.mjs",
     "build": "npm run build:gov-data && npm run i18n:packs",
