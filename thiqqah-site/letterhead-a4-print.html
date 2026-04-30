@@ -24,8 +24,8 @@
       /* العلامة المائية: ارفع القيمة إن بقيت باهتة (مثلاً 0.18–0.22) */
       --watermark-opacity: 0.17;
       --watermark-opacity-print: 0.14;
-      --watermark-max-w: 118mm;
-      --watermark-max-h: 155mm;
+      --watermark-max-w: 115mm;
+      --watermark-max-h: 148mm;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -96,21 +96,25 @@
       isolation: isolate;
     }
 
-    /* منتصف الورقة هندسياً: طبقة على كامل .sheet تحت المحتوى */
+    /* منتصف الورقة: بدون flex على الصورة (كان يسبب min-height: auto وقصّ النصف السفلي عند overflow:hidden) */
     .sheet-page-center-watermark {
       position: absolute;
-      inset: 0;
+      left: 8mm;
+      right: 8mm;
+      top: 8mm;
+      bottom: 8mm;
       z-index: 0;
       pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .sheet-page-center-watermark .watermark {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
       display: block;
-      max-width: var(--watermark-max-w);
-      max-height: var(--watermark-max-h);
+      max-width: min(var(--watermark-max-w), 100%);
+      max-height: min(var(--watermark-max-h), 100%);
       width: auto;
       height: auto;
       object-fit: contain;
@@ -488,8 +492,6 @@
         id="letterhead-watermark"
         src="assets/thiqqah-logo-emblem.png"
         alt=""
-        width="400"
-        height="400"
         decoding="async">
     </div>
 
