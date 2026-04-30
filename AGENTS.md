@@ -68,7 +68,7 @@ npm run e2e:dashboard # Playwright: فتح اللوحة من /admin-direct
 ## النشر
 
 - **Netlify:** الإعداد في `netlify.toml`؛ الطبقة المجانية: راجع `NETLIFY-FREE-TIER.md` و`[skip netlify]` في رسالة الـ commit عند تعديل التوثيق فقط.
-- **`thiqqah.live` (موقع ثقة منفصل):** [NETLIFY-THIQQAH-STANDALONE.md](./NETLIFY-THIQQAH-STANDALONE.md) — `npm run netlify:thiqqah:setup` أو `RUN-NETLIFY-THIQQAH-STANDALONE.cmd` يفتح الاستيراد؛ **`npm run verify:thiqqah:live-domain`** يتحقق من الإنتاج (404 على `/thiqqah-site/` يعني نشرة/ربط خاطئ). ربط الدومين يدوي بحسابك.
+- **`thiqqah.live` (موقع ثقة منفصل):** [NETLIFY-THIQQAH-STANDALONE.md](./NETLIFY-THIQQAH-STANDALONE.md) — **`npm run netlify:thiqqah:complete`** يفتح النشر ويعرض فحص الدومين؛ أو `npm run netlify:thiqqah:setup`؛ **`npm run verify:thiqqah:live-domain`** يتحقق من الإنتاج (404 على `/thiqqah-site/` يعني نشرة/ربط خاطئ). ربط الدومين يدوي بحسابك.
 - **`ERR_SSL_PROTOCOL_ERROR` على `iiffund.com`:** ليس خطأ كود — راجع **قسم 8** في [NETLIFY-CHECKLIST.md](./NETLIFY-CHECKLIST.md)؛ **`npm run verify:iiffund:https`** فحص سريع من الطرفية.
 - **الإنتاج الرسمي:** **`https://iiffund.com/`** (Netlify + نطاق مخصّص)؛ في `index.html` تُضبط **`iif-funcs-base`** و **`iif-searx-proxy-base`** على هذا النطاق. **Vercel** (`iif-fund-dr-talal.vercel.app`) يبقى معاينة/احتياط — راجع قسم **هـ** في [قبل-النشر.md](./قبل-النشر.md) و [VERCEL-DEPLOY.md](./VERCEL-DEPLOY.md).
 - لا تضف تعقيداً على Netlify بدون حاجة (لا دوال جذر إن لم تُستخدم).

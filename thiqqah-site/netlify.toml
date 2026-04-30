@@ -8,6 +8,7 @@
 #
 # اربط الدومين thiqqah.live + www هنا فقط. لا تضفهما على موقع iiffund.com إن أردت فصلاً كاملاً،
 # أو أبقهما هنا فقط واحذفهما من أي موقع آخر.
+# إكمال الربط من الجهاز: npm run netlify:thiqqah:complete
 
 [build]
   publish = "."
