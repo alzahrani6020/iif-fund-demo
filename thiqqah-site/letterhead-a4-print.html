@@ -21,9 +21,10 @@
       --sand: #f2eadb;
       --line: rgba(18, 36, 58, 0.12);
       --header-pad-logo: 44mm;
-      /* العلامة المائية: شفافية فقط (الحجم من contain داخل صندوق الطبقة) */
+      /* العلامة المائية: شفافية + عرض الشعار كنسبة من الصندوق (أصغر = أقل قص عند الحواف) */
       --watermark-opacity: 0.17;
       --watermark-opacity-print: 0.14;
+      --watermark-bg-width-pct: 30%;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -111,7 +112,8 @@
       background-image: url("assets/thiqqah-logo-emblem.png");
       background-repeat: no-repeat;
       background-position: center center;
-      background-size: contain;
+      /* أصغر من contain النسبي لتفادي لمس الحواف المقصوصة بسبب overflow على الورقة */
+      background-size: var(--watermark-bg-width-pct) auto;
       background-origin: padding-box;
       opacity: var(--watermark-opacity);
       filter: contrast(1.1) brightness(0.88);
@@ -462,6 +464,7 @@
       .sheet-inner-watermark {
         opacity: var(--watermark-opacity-print);
         filter: contrast(1.12) brightness(0.86);
+        --watermark-bg-width-pct: 28%;
       }
     }
 
@@ -476,7 +479,7 @@
   <div class="hint-screen" id="letterhead-hint">
     <strong>معاينة فقط:</strong> بيانات الرأس والتذييل تُحمّل من <code>thiqqah-brand.embed.js</code> (مُولَّد من <code>thiqqah-brand.json</code>). لا تُطبع هذا المربع.
     <br>
-    للطباعة: <strong>Ctrl+P</strong> — A4 و<strong>تفعيل «رسومات الخلفية»</strong>. الشفافية: <code>--watermark-opacity</code>. للإنجليزية غيّر وسم <code>html</code> إلى <code>lang=&quot;en&quot; dir=&quot;ltr&quot;</code>.
+    للطباعة: <strong>Ctrl+P</strong> — A4 و<strong>تفعيل «رسومات الخلفية»</strong>. حجم الشعار المائي: <code>--watermark-bg-width-pct</code> (مثلاً 24–32). الشفافية: <code>--watermark-opacity</code>. للإنجليزية غيّر <code>html</code> إلى <code>lang=&quot;en&quot; dir=&quot;ltr&quot;</code>.
   </div>
 
   <div class="sheet">
