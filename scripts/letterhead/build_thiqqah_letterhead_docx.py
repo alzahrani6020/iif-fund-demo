@@ -53,6 +53,10 @@ def load_brand() -> dict:
     ):
         if key not in data:
             raise KeyError(f"thiqqah-brand.json ناقص المفتاح: {key}")
+    ne = data["nameEn"]
+    for nk in ("line1", "line2", "line3"):
+        if nk not in ne:
+            raise KeyError(f"thiqqah-brand.json nameEn ناقص: {nk}")
     return data
 
 
@@ -78,7 +82,7 @@ def en_block_from_brand(brand: dict) -> str:
     cr = brand["commercialRegistration"]
     tag = brand["taglineEnTemplate"].replace("{cr}", cr)
     ne = brand["nameEn"]
-    return f"{ne['line1']}\n{ne['line2']}\n{tag}"
+    return f"{ne['line1']}\n{ne['line2']}\n{ne['line3']}\n{tag}"
 
 
 def set_paragraph_rtl(paragraph) -> None:
@@ -317,7 +321,7 @@ def main() -> None:
     pl.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     set_paragraph_rtl(pl)
     pl.paragraph_format.space_after = Pt(0)
-    pl.add_run().add_picture(str(logo), width=Cm(2.35 * 4 / 3))
+    pl.add_run().add_picture(str(logo), width=Cm(3.35))
 
     rule = header.add_table(1, 1, Cm(17.0))
     rc = rule.rows[0].cells[0]

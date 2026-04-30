@@ -15,11 +15,12 @@ window.__THIQQAH_BRAND =
     "line2": "للخدمات العامة"
   },
   "nameEn": {
-    "line1": "Al-Thiqqah Al-Dhahabiyah",
-    "line2": "General Services Office"
+    "line1": "Al-Thiqqah",
+    "line2": "Al-Dhahabiyah",
+    "line3": "General Services Office"
   },
-  "taglineEnTemplate": "Commercial Registration No. {cr} · Kingdom of Saudi Arabia",
-  "logoRelativePath": "assets/thiqqah-logo-emblem.png",
+  "taglineEnTemplate": "Commercial Registration No. {cr}\nKingdom of Saudi Arabia",
+  "logoRelativePath": "assets/thiqqah-logo-full.png",
   "watermarkRelativePath": "assets/thiqqah-logo-emblem.png",
   "qrImageRelativePath": "assets/letterhead-qr.png"
 }

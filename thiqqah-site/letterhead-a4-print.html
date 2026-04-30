@@ -20,7 +20,7 @@
       --paper: #fffaf0;
       --sand: #f2eadb;
       --line: rgba(18, 36, 58, 0.12);
-      --header-pad-logo: 38mm;
+      --header-pad-logo: 44mm;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -192,12 +192,13 @@
       box-shadow: 0 2px 8px rgba(18, 36, 58, 0.1);
     }
 
-    /* تمديد أفقي بثلث عرض الشعار (±33%) مع إبقاء الارتفاع */
+    /* شعار كامل (لوحة): عرض أكبرمع حد أقصى للارتفاع */
     .brand-logo-xl {
       position: relative;
       z-index: 1;
-      width: calc(23mm * 4 / 3);
-      height: 23mm;
+      width: 40mm;
+      height: auto;
+      max-height: 26mm;
       max-width: none;
       object-fit: contain;
       display: block;
@@ -242,9 +243,8 @@
     .brand-block--en {
       flex: 0 1 42%;
       min-width: 0;
-      text-align: justify;
+      text-align: left;
       text-align-last: left;
-      text-justify: inter-word;
       direction: ltr;
       font-family: "Cormorant Garamond", "Times New Roman", Georgia, serif;
       padding-top: 0.8mm;
@@ -294,13 +294,13 @@
     }
 
     .brand-block--en .name-en {
-      font-size: 10.8pt;
+      font-size: 10.2pt;
       font-weight: 600;
-      line-height: 1.3;
+      line-height: 1.28;
       color: var(--green);
-      letter-spacing: 0.035em;
+      letter-spacing: 0.028em;
       text-transform: uppercase;
-      font-variant: small-caps;
+      font-variant: normal;
     }
 
     .brand-block--en .tagline-en {
@@ -309,6 +309,7 @@
       color: var(--muted);
       font-style: italic;
       letter-spacing: 0.03em;
+      white-space: pre-line;
     }
 
     .writing-surface {
@@ -359,9 +360,8 @@
       flex: 1 1 auto;
       order: 1;
       min-width: 0;
-      text-align: justify;
+      text-align: center;
       text-align-last: center;
-      text-justify: distribute;
       font-family: "Noto Naskh Arabic", "Segoe UI", system-ui, sans-serif;
       font-size: 8.1pt;
       font-weight: 600;
@@ -466,7 +466,7 @@
             <img
               id="letterhead-logo"
               class="brand-logo-xl"
-              src="assets/thiqqah-logo-emblem.png"
+              src="assets/thiqqah-logo-full.png"
               alt="شعار مكتب ثقة الذهبية للخدمات العامة"
               width="280"
               height="280">
@@ -475,16 +475,17 @@
 
         <div class="brand-text-columns">
           <div class="brand-block--en" lang="en" dir="ltr">
-            <p class="name-en"><span id="brand-en-l1"></span><br><span id="brand-en-l2"></span></p>
-            <p class="tagline-en" id="brand-en-tagline"></p>
+            <p class="name-en"><span id="brand-en-l1">Al-Thiqqah</span><br><span id="brand-en-l2">Al-Dhahabiyah</span><br><span id="brand-en-l3">General Services Office</span></p>
+            <p class="tagline-en" id="brand-en-tagline">Commercial Registration No. 4030506321
+Kingdom of Saudi Arabia</p>
           </div>
           <div class="brand-block--ar" lang="ar">
             <h1 class="name">
-              <span id="brand-ar-before"></span><span class="gold" id="brand-ar-gold"></span><br>
-              <span id="brand-ar-line2"></span>
+              <span id="brand-ar-before">مكتب </span><span class="gold" id="brand-ar-gold">ثقة الذهبية</span><br>
+              <span id="brand-ar-line2">للخدمات العامة</span>
             </h1>
-            <p class="cr"><strong>السجل التجاري:</strong> <span id="brand-cr"></span></p>
-            <p class="city" id="brand-city"></p>
+            <p class="cr"><strong>السجل التجاري:</strong> <span id="brand-cr">4030506321</span></p>
+            <p class="city" id="brand-city">جدة — منطقة مكة المكرمة — المملكة العربية السعودية</p>
           </div>
         </div>
       </header>
@@ -495,11 +496,11 @@
         <div class="footer-rule"></div>
         <div class="footer-line">
           <div class="footer-contacts-inline">
-            <a id="footer-site" href="https://thiqqah.live/" dir="ltr"></a>
+            <a id="footer-site" href="https://thiqqah.live/" dir="ltr">thiqqah.live</a>
             <span class="dot">·</span>
-            <a id="footer-email" href="mailto:info@thiqqah.live" dir="ltr"></a>
+            <a id="footer-email" href="mailto:info@thiqqah.live" dir="ltr">info@thiqqah.live</a>
             <span class="dot">·</span>
-            <a id="footer-phone" href="tel:+966567566616" dir="ltr"></a>
+            <a id="footer-phone" href="tel:+966567566616" dir="ltr">+966 56 756 6616</a>
           </div>
           <a class="footer-qr-inline" id="footer-qr-link" href="https://thiqqah.live/" target="_blank" rel="noopener" aria-label="QR الموقع الإلكتروني">
             <img
@@ -531,6 +532,7 @@
       document.getElementById("brand-city").textContent = b.cityLineAr;
       document.getElementById("brand-en-l1").textContent = b.nameEn.line1;
       document.getElementById("brand-en-l2").textContent = b.nameEn.line2;
+      document.getElementById("brand-en-l3").textContent = b.nameEn.line3;
       document.getElementById("brand-en-tagline").textContent =
         b.taglineEnTemplate.replace("{cr}", cr);
       var logo = document.getElementById("letterhead-logo");
