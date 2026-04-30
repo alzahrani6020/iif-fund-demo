@@ -90,20 +90,18 @@
       min-height: 297mm;
       padding: 11mm 13mm 15mm 13mm;
       z-index: 1;
-      /* عزل تراكب الطبقات حتى لا يختفي النص/الشعار بسبب mix-blend على العلامة المائية */
-      isolation: isolate;
     }
 
     /*
-      علامة مائية = div واحد + background (ليس img).
-      contain + center يضمان ظهور ملف PNG كاملاً بدون قص — المتصفحات كعرض img + translate كانت تفسد التوسيط/القص.
+      العلامة داخل نفس .sheet-inner تحت كل الطبقات (ليس شقيقاً خلفه مع isolation):
+      وإلا يظهر الشعار فقط عبر المناطق شبه الشفافة — فيبدو «شريطاً» ومقصوصاً.
     */
-    .sheet-page-center-watermark {
+    .sheet-inner-watermark {
       position: absolute;
-      left: 8mm;
-      right: 8mm;
-      top: 8mm;
-      bottom: 8mm;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
       z-index: 0;
       pointer-events: none;
       background-image: url("assets/thiqqah-logo-emblem.png");
@@ -122,7 +120,7 @@
       width: 11mm;
       height: 11mm;
       pointer-events: none;
-      z-index: 2;
+      z-index: 5;
       opacity: 0.9;
       border-color: var(--green);
     }
@@ -452,7 +450,7 @@
       .footer-contacts-inline .footer-name-ar {
         color: var(--green-2);
       }
-      .sheet-page-center-watermark {
+      .sheet-inner-watermark {
         opacity: var(--watermark-opacity-print);
         filter: contrast(1.12) brightness(0.86);
       }
@@ -475,9 +473,8 @@
   <div class="sheet">
     <div class="top-rule" aria-hidden="true"></div>
 
-    <div class="sheet-page-center-watermark" id="letterhead-watermark" aria-hidden="true"></div>
-
     <div class="sheet-inner">
+      <div class="sheet-inner-watermark" id="letterhead-watermark" aria-hidden="true"></div>
       <span class="corner-ornament tr" aria-hidden="true"></span>
       <span class="corner-ornament bl" aria-hidden="true"></span>
 
