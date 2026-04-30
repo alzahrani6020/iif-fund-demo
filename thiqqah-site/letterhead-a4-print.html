@@ -67,8 +67,11 @@
 
     .sheet {
       width: 210mm;
+      height: 297mm;
       min-height: 297mm;
       margin: 0 auto 12mm;
+      display: flex;
+      flex-direction: column;
       background:
         radial-gradient(ellipse 90% 40% at 50% 12%, rgba(239, 216, 156, 0.1), transparent 55%),
         var(--paper);
@@ -87,9 +90,12 @@
 
     .sheet-inner {
       position: relative;
-      min-height: 297mm;
+      flex: 1 1 auto;
+      min-height: 0;
+      width: 100%;
       padding: 11mm 13mm 15mm 13mm;
       z-index: 1;
+      box-sizing: border-box;
     }
 
     /*
@@ -98,16 +104,15 @@
     */
     .sheet-inner-watermark {
       position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
+      inset: 0;
+      box-sizing: border-box;
       z-index: 0;
       pointer-events: none;
       background-image: url("assets/thiqqah-logo-emblem.png");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: contain;
+      background-origin: padding-box;
       opacity: var(--watermark-opacity);
       filter: contrast(1.1) brightness(0.88);
       mix-blend-mode: normal;
@@ -435,6 +440,10 @@
       .hint-screen { display: none !important; }
       .sheet {
         margin: 0;
+        height: 297mm;
+        min-height: 297mm;
+        display: flex;
+        flex-direction: column;
         border-radius: 4mm;
         overflow: hidden;
         border: 1pt solid var(--gold);
