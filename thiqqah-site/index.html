@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ثقة الذهبية مكتب خدمات عامة في السعودية لتأسيس الشركات، التراخيص البلدية والبناء، مراجعة الجهات الحكومية ومدن، إدارة الأملاك والمشاريع، خدمات الأفراد، وتأشيرات السفر.">
-  <meta name="keywords" content="تأسيس شركة في السعودية, تأسيس شركة في جدة, مكتب خدمات عامة في جدة, تراخيص بلدية, تراخيص بناء, مراجعة الجهات الحكومية, مراجعة مدن, مدن الصناعية, إدارة الأملاك, إدارة المشاريع, خدمات المستثمر الأجنبي, تأشيرات السفر للخارج, مراجعة السفارات والقنصليات, علامات تجارية">
+  <meta name="description" content="ثقة الذهبية مكتب خدمات عامة في السعودية لتأسيس الشركات، التراخيص البلدية والبناء، متابعة الجهات الحكومية ومدن الصناعية، إدارة الأملاك والمشاريع، خدمات الأفراد، وتأشيرات السفر.">
+  <meta name="keywords" content="تأسيس شركة في السعودية, تأسيس شركة في جدة, مكتب خدمات عامة في جدة, تراخيص بلدية, تراخيص بناء, متابعة الجهات الحكومية, متابعة مدن الصناعية, إدارة الأملاك, إدارة المشاريع, خدمات المستثمر الأجنبي, تأشيرات السفر للخارج, متابعة السفارات والقنصليات, علامات تجارية">
   <title>ثقة الذهبية | تأسيس شركات وخدمات عامة في السعودية</title>
   <script>
     window.__thiqqahDocumentMeta = {
       ar: {
         title: "ثقة الذهبية | تأسيس شركات وخدمات عامة في السعودية",
         description:
-          "ثقة الذهبية مكتب خدمات عامة في السعودية لتأسيس الشركات، التراخيص البلدية والبناء، مراجعة الجهات الحكومية ومدن، إدارة الأملاك والمشاريع، خدمات الأفراد، وتأشيرات السفر.",
+          "ثقة الذهبية مكتب خدمات عامة في السعودية لتأسيس الشركات، التراخيص البلدية والبناء، متابعة الجهات الحكومية ومدن الصناعية، إدارة الأملاك والمشاريع، خدمات الأفراد، وتأشيرات السفر.",
         keywords:
-          "تأسيس شركة في السعودية, تأسيس شركة في جدة, مكتب خدمات عامة في جدة, تراخيص بلدية, تراخيص بناء, مراجعة الجهات الحكومية, مراجعة مدن, مدن الصناعية, إدارة الأملاك, إدارة المشاريع, خدمات المستثمر الأجنبي, تأشيرات السفر للخارج, مراجعة السفارات والقنصليات, علامات تجارية",
+          "تأسيس شركة في السعودية, تأسيس شركة في جدة, مكتب خدمات عامة في جدة, تراخيص بلدية, تراخيص بناء, متابعة الجهات الحكومية, متابعة مدن الصناعية, إدارة الأملاك, إدارة المشاريع, خدمات المستثمر الأجنبي, تأشيرات السفر للخارج, متابعة السفارات والقنصليات, علامات تجارية",
       },
       en: {
         title: "Thiqah Golden | Company Formation and Public Services in Saudi Arabia",
         description:
-          "Thiqah Golden provides public services in Saudi Arabia including company formation, municipal and construction licenses, government and MODON review, property and project management, individual services, and travel visas.",
+          "Thiqah Golden provides public services in Saudi Arabia including company formation, municipal and construction licenses, government and MODON liaison, property and project management, individual services, and travel visas.",
         keywords:
-          "company formation Saudi Arabia, company formation Jeddah, public services office Jeddah, municipal licenses, construction permits, government entity review, MODON review, industrial cities, property management, project management, foreign investor services, travel visas, embassy and consulate review, trademarks",
+          "company formation Saudi Arabia, company formation Jeddah, public services office Jeddah, municipal licenses, construction permits, government authority follow-up, MODON industrial cities, industrial cities, property management, project management, foreign investor services, travel visas, embassy and consulate liaison, trademarks",
       },
     };
     (function () {
@@ -208,6 +208,13 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 96px;
+    }
+
+    @media (max-width: 640px) {
+      html {
+        scroll-padding-top: 76px;
+      }
     }
 
     body {
@@ -254,6 +261,113 @@
       padding: 9px 0;
     }
 
+    .announcement-bar {
+      position: relative;
+      z-index: 21;
+      /* أغمق وأبرد قليلاً من الـ topbar ليُقرأ كشريط رسالة وليس تكرار الهيدر */
+      background: linear-gradient(
+        100deg,
+        #020c0b 0%,
+        #072823 34%,
+        #0d4339 58%,
+        #041612 100%
+      );
+      color: var(--gold-bright);
+      border-bottom: 1px solid rgba(184, 134, 60, 0.38);
+      border-bottom: 1px solid color-mix(in srgb, var(--gold) 42%, transparent);
+      font-size: clamp(12.75px, 0.78rem + 0.28vw, 13.5px);
+      font-weight: 600;
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+      box-shadow:
+        inset 0 1px 0 rgba(242, 228, 196, 0.18),
+        0 6px 22px rgba(0, 0, 0, 0.2);
+    }
+
+    .announcement-bar__viewport {
+      overflow: hidden;
+      padding: clamp(7px, 1.1vw, 10px) 0;
+      -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        #000 12px,
+        #000 calc(100% - 12px),
+        transparent 100%
+      );
+      mask-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        #000 12px,
+        #000 calc(100% - 12px),
+        transparent 100%
+      );
+    }
+
+    .announcement-bar__content {
+      display: flex;
+      width: max-content;
+      animation: announcement-marquee 46s linear infinite;
+    }
+
+    .announcement-bar__group {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      gap: 0 1.1rem;
+      padding-inline: 1.75rem;
+      white-space: nowrap;
+    }
+
+    .announcement-bar__item {
+      color: #f3ead6;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.42);
+    }
+
+    .announcement-bar__dot {
+      color: rgba(232, 198, 106, 0.78);
+      color: color-mix(in srgb, var(--gold-bright) 78%, transparent);
+      font-weight: 800;
+      user-select: none;
+    }
+
+    @keyframes announcement-marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .announcement-bar__content {
+        animation: none;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 6px;
+        white-space: normal;
+        text-align: center;
+      }
+
+      .announcement-bar__group {
+        white-space: normal;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-inline: 12px;
+      }
+
+      .announcement-bar__group[aria-hidden="true"] {
+        display: none;
+      }
+
+      .announcement-bar__viewport {
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+    }
+
     .topbar-start {
       display: flex;
       align-items: center;
@@ -274,10 +388,19 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: linear-gradient(180deg, rgba(255, 252, 246, 0.97), rgba(255, 246, 234, 0.9));
+      isolation: isolate;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 252, 246, 0.94) 0%,
+        rgba(255, 249, 240, 0.82) 55%,
+        rgba(255, 244, 232, 0.76) 100%
+      );
       border-bottom: 1px solid var(--line-gold);
-      backdrop-filter: blur(22px) saturate(1.15);
-      box-shadow: 0 10px 40px rgba(15, 30, 48, 0.045);
+      -webkit-backdrop-filter: blur(26px) saturate(1.12);
+      backdrop-filter: blur(26px) saturate(1.12);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.72) inset,
+        0 12px 44px rgba(15, 30, 48, 0.055);
     }
 
     .navbar .container {
@@ -760,18 +883,47 @@
 
     .hero-card {
       position: relative;
+      isolation: isolate;
       min-height: 520px;
       padding: 18px;
       overflow: hidden;
+      /* هيكل زجاجي: يظهر تلطيف الخلفية الدافئة خلف البطاقة */
       background:
-        radial-gradient(ellipse 90% 55% at 90% 10%, rgba(232, 198, 106, 0.18), transparent 45%),
-        linear-gradient(152deg, rgba(5, 40, 36, 0.99) 0%, rgba(8, 70, 62, 0.95) 45%, rgba(9, 92, 84, 0.88) 100%);
-      border: 1px solid rgba(212, 175, 95, 0.42);
+        radial-gradient(ellipse 95% 70% at 92% 6%, rgba(232, 198, 106, 0.2), transparent 46%),
+        linear-gradient(
+          180deg,
+          transparent 0%,
+          transparent 52%,
+          rgba(3, 22, 19, 0.38) 100%
+        ),
+        linear-gradient(
+          152deg,
+          rgba(5, 40, 36, 0.52) 0%,
+          rgba(8, 70, 62, 0.4) 46%,
+          rgba(9, 92, 84, 0.44) 100%
+        );
+      border: 1px solid rgba(255, 255, 255, 0.26);
       border-radius: 40px;
       box-shadow:
-        0 36px 100px rgba(15, 30, 48, 0.22),
-        0 0 0 1px rgba(255, 255, 255, 0.06) inset,
-        0 0 48px rgba(184, 134, 60, 0.12);
+        0 36px 100px rgba(15, 30, 48, 0.2),
+        0 0 0 1px rgba(184, 134, 60, 0.28) inset,
+        inset 0 1px 0 rgba(255, 255, 255, 0.42),
+        0 0 52px rgba(184, 134, 60, 0.12);
+      -webkit-backdrop-filter: blur(22px) saturate(1.18);
+      backdrop-filter: blur(22px) saturate(1.18);
+    }
+
+    @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+      .hero-card {
+        background:
+          radial-gradient(ellipse 90% 55% at 90% 10%, rgba(232, 198, 106, 0.18), transparent 45%),
+          linear-gradient(152deg, rgba(5, 40, 36, 0.97) 0%, rgba(8, 70, 62, 0.93) 45%, rgba(9, 92, 84, 0.88) 100%);
+        border: 1px solid rgba(212, 175, 95, 0.42);
+        box-shadow:
+          0 36px 100px rgba(15, 30, 48, 0.22),
+          0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+          0 0 48px rgba(184, 134, 60, 0.12);
+      }
     }
 
     .hero-card::before {
@@ -779,9 +931,17 @@
       position: absolute;
       inset: 18px;
       pointer-events: none;
-      border: 1px solid rgba(255, 255, 255, 0.28);
       border-radius: 32px;
-      box-shadow: inset 0 0 40px rgba(232, 198, 106, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.03) 38%,
+        transparent 62%
+      );
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        inset 0 0 52px rgba(232, 198, 106, 0.05);
     }
 
     .hero-visual {
@@ -798,11 +958,13 @@
       position: relative;
       min-height: 330px;
       overflow: hidden;
-      background: linear-gradient(180deg, #ffffff, #faf8f4);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 248, 244, 0.88));
       border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.55);
       box-shadow:
-        0 22px 60px rgba(16, 32, 51, 0.22),
-        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+        0 22px 60px rgba(16, 32, 51, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.65) inset,
+        inset 0 0 0 1px rgba(184, 134, 60, 0.08);
     }
 
     .visual-image img {
@@ -931,10 +1093,11 @@
       margin: 16px 0 0;
       padding: 0 8px;
       text-align: center;
-      color: rgba(255, 250, 240, .92);
+      color: rgba(255, 250, 240, 0.96);
       font-size: 15px;
       font-weight: 800;
-      letter-spacing: .03em;
+      letter-spacing: 0.03em;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45), 0 0 20px rgba(3, 22, 19, 0.35);
     }
 
     .pick-path {
@@ -1023,6 +1186,44 @@
       max-width: min(38rem, 100%);
       margin: 0;
       color: var(--muted);
+    }
+
+    .section-head-aside {
+      max-width: min(38rem, 100%);
+    }
+
+    .section-head-aside > p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    .owner-exp-highlights {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 9px;
+    }
+
+    .owner-exp-highlights li {
+      position: relative;
+      padding-inline-start: 1.1rem;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .owner-exp-highlights li::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: 0;
+      top: 0.55em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold-bright);
+      opacity: 0.85;
     }
 
     .section-kicker {
@@ -1285,6 +1486,15 @@
       margin-bottom: 6px;
       color: var(--green);
       font-size: 24px;
+    }
+
+    .tag-card-hint {
+      margin: 12px 0 0;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(18, 36, 58, 0.12);
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--muted);
     }
 
     .service-card ul.service-list {
@@ -2241,6 +2451,32 @@
   </style>
 </head>
 <body>
+  <div class="announcement-bar" role="region" aria-label="معلومات سريعة للزوار">
+    <div class="announcement-bar__viewport">
+      <div class="announcement-bar__content">
+        <div class="announcement-bar__group">
+          <span class="announcement-bar__item">تأسيس شركات وتراخيص ومتابعة جهات حكومية في السعودية</span>
+          <span class="announcement-bar__dot" aria-hidden="true">•</span>
+          <span class="announcement-bar__item">نستجيب لطلبات الموقع خلال يوم عمل في أغلب الأوقات</span>
+          <span class="announcement-bar__dot" aria-hidden="true">•</span>
+          <span class="announcement-bar__item">اطلب الخدمة عبر واتساب أو نموذج الطلب في الموقع</span>
+          <span class="announcement-bar__dot" aria-hidden="true">•</span>
+          <span class="announcement-bar__item">جدة ومنطقة مكة المكرمة — خدمات للأفراد والمنشآت</span>
+          <span class="announcement-bar__dot" aria-hidden="true">•</span>
+        </div>
+        <div class="announcement-bar__group" aria-hidden="true">
+          <span class="announcement-bar__item">تأسيس شركات وتراخيص ومتابعة جهات حكومية في السعودية</span>
+          <span class="announcement-bar__dot" aria-hidden="true">•</span>
+          <span class="announcement-bar__item">نستجيب لطلبات الموقع خلال يوم عمل في أغلب الأوقات</span>
+          <span class="announcement-bar__dot" aria-hidden="true">•</span>
+          <span class="announcement-bar__item">اطلب الخدمة عبر واتساب أو نموذج الطلب في الموقع</span>
+          <span class="announcement-bar__dot" aria-hidden="true">•</span>
+          <span class="announcement-bar__item">جدة ومنطقة مكة المكرمة — خدمات للأفراد والمنشآت</span>
+          <span class="announcement-bar__dot" aria-hidden="true">•</span>
+        </div>
+      </div>
+    </div>
+  </div>
   <header>
     <div class="topbar">
       <div class="container">
@@ -2277,7 +2513,7 @@
           <a href="#packages">الباقات</a>
           <a href="#sectors">القطاعات</a>
           <a href="#about">من نحن</a>
-          <a href="#portfolio">سابقة الأعمال</a>
+          <a href="#portfolio">خبرات المالك</a>
           <a href="#media">صور المشاريع</a>
           <a href="#process">آلية العمل</a>
           <a href="#documents">المتطلبات</a>
@@ -2317,9 +2553,9 @@
                 <source srcset="assets/modern-building.webp" type="image/webp">
                 <img src="assets/modern-building.jpg" alt="مبنى حديث يعكس تأسيس الأعمال والتطوير" fetchpriority="high" decoding="async">
               </picture>
-              <span class="visual-badge">تأسيس، تراخيص، مراجعات</span>
+              <span class="visual-badge">تأسيس، تراخيص، متابعة</span>
             </div>
-            <p class="hero-panel-summary">تأسيس شركات · تراخيص · مراجعات جهات</p>
+            <p class="hero-panel-summary">تأسيس شركات · تراخيص · متابعة جهات</p>
           </div>
         </div>
       </div>
@@ -2348,7 +2584,7 @@
           </div>
           <div class="stat-card">
             <strong>20+</strong>
-            <span>جهة مراجعة وتمويل وتنظيم</span>
+            <span>جهات تمويل وتنظيم ومتابعة</span>
           </div>
           <div class="stat-card">
             <strong>3</strong>
@@ -2379,7 +2615,7 @@
             <span>بلدية، بناء، نشاط، بيئة، صناعة وسياحة وفتح نشاط.</span>
           </a>
           <a class="pick-path-card" href="#request">
-            <strong>مراجعات الجهات</strong>
+            <strong>متابعة الجهات</strong>
             <span>وزارات، بنوك، تمويل، محاكم، مرافق، وجهات تنظيمية.</span>
           </a>
         </div>
@@ -2475,8 +2711,8 @@
             <p>تراخيص بلدية، تراخيص بناء، إضافة أدوار وملاحق، تراخيص بيئة، نشاط تجاري، هدم وإزالة، وتراخيص صناعية وسياحية.</p>
           </article>
           <article class="tag-card">
-            <h3>مراجعة الجهات الحكومية</h3>
-            <p>مراجعة الوزارات، مدن الصناعية، المحاكم، المرور، الجوازات، الأحوال المدنية، الأمانات، البلديات، والبنوك نيابة عن العميل.</p>
+            <h3>متابعة الجهات الحكومية</h3>
+            <p>متابعة المعاملات لدى الوزارات، مدن الصناعية، المحاكم، المرور، الجوازات، الأحوال المدنية، الأمانات، البلديات، والبنوك نيابة عن العميل.</p>
           </article>
           <article class="tag-card">
             <h3>إدارة الأملاك والمشاريع</h3>
@@ -2488,11 +2724,11 @@
           </article>
           <article class="tag-card">
             <h3>تأشيرات السفر والتعليم بالخارج</h3>
-            <p>تأشيرات السفر للخارج، مراجعة السفارات والقنصليات، تنسيق متطلبات التعليم في الخارج، وترتيب المستندات.</p>
+            <p>تأشيرات السفر للخارج، متابعة السفارات والقنصليات، تنسيق متطلبات التعليم في الخارج، وترتيب المستندات.</p>
           </article>
           <article class="tag-card">
             <h3>العلامات التجارية والتسويق</h3>
-            <p>مراجعة العلامات التجارية، تأسيس العلامة التجارية، التسويق للغير، وتنظيم المتطلبات والمخاطبات.</p>
+            <p>متابعة ملفات العلامات التجارية، تأسيس العلامة التجارية، التسويق للغير، وتنظيم المتطلبات والمخاطبات.</p>
           </article>
           <article class="tag-card">
             <h3>خدمات الأفراد والجمعيات</h3>
@@ -2519,7 +2755,7 @@
           <button class="service-tab is-active" type="button" data-service-filter="all">الكل</button>
           <button class="service-tab" type="button" data-service-filter="popular">الأكثر طلبا</button>
           <button class="service-tab" type="button" data-service-filter="business">الأعمال والتراخيص</button>
-          <button class="service-tab" type="button" data-service-filter="review">المراجعات والجهات</button>
+          <button class="service-tab" type="button" data-service-filter="authority">الجهات والمتابعة</button>
           <button class="service-tab" type="button" data-service-filter="finance">المالية والمطالبات</button>
           <button class="service-tab" type="button" data-service-filter="social">الأفراد والجمعيات</button>
           <button class="service-tab" type="button" data-service-filter="travel">السفر والتعليم</button>
@@ -2561,9 +2797,9 @@
           <article class="service-card">
             <span class="icon">03</span>
             <h3>الخدمات العامة</h3>
-            <p>مراجعات وتمثيل نظامي أمام الجهات ذات العلاقة نيابة عن الغير.</p>
+            <p>متابعة وتمثيل نظامي أمام الجهات ذات العلاقة نيابة عن الغير.</p>
             <ul class="service-list compact">
-              <li>مراجعة البنوك</li>
+              <li>التنسيق مع البنوك</li>
               <li>الصندوق الصناعي</li>
               <li>الصندوق السياحي</li>
               <li>الصندوق الزراعي</li>
@@ -2599,7 +2835,7 @@
           <article class="service-card">
             <span class="icon">06</span>
             <h3>خدمات الامتثال</h3>
-            <p>مراجعة أولية للبيانات والالتزامات لتقليل التعثر أثناء الإجراءات.</p>
+            <p>تدقيق أولي للبيانات والالتزامات لتقليل التعثر أثناء الإجراءات.</p>
             <ul class="service-list">
               <li>قوائم تحقق مخصصة</li>
               <li>توصيات تشغيلية</li>
@@ -2653,9 +2889,9 @@
           <article class="service-card">
             <span class="icon">09</span>
             <h3>خدمات الأفراد</h3>
-            <p>نقدم جميع الخدمات المناسبة للأفراد ومراجعات الجهات التي تتطلب متابعة وتنظيم معاملات.</p>
+            <p>نقدم جميع الخدمات المناسبة للأفراد ومتابعة الجهات التي تتطلب تنظيم معاملات.</p>
             <ul class="service-list">
-              <li>مراجعات الجهات الحكومية</li>
+              <li>متابعة الجهات الحكومية</li>
               <li>المعاملات العدلية والإدارية</li>
               <li>متابعة الطلبات الشخصية</li>
               <li>تنسيق المستندات والمتطلبات</li>
@@ -2686,7 +2922,7 @@
           <article class="service-card">
             <span class="icon">12</span>
             <h3>إدارة ملفات المنشأة</h3>
-            <p>تنظيم ملفات المنشأة التشغيلية والإدارية حتى تكون جاهزة للمراجعة والمتابعة.</p>
+            <p>تنظيم ملفات المنشأة التشغيلية والإدارية حتى تكون جاهزة للتدقيق والمتابعة.</p>
             <ul class="service-list">
               <li>أرشفة المستندات</li>
               <li>ترتيب بيانات الرخص والسجلات</li>
@@ -2720,7 +2956,7 @@
           <article class="service-card">
             <span class="icon">15</span>
             <h3>خدمات المرافق والتشغيل</h3>
-            <p>مراجعة الجهات الخدمية والتشغيلية التي تحتاجها المنشآت والأفراد لاستمرار الخدمة.</p>
+            <p>متابعة الجهات الخدمية والتشغيلية التي تحتاجها المنشآت والأفراد لاستمرار الخدمة.</p>
             <ul class="service-list">
               <li>شركة الكهرباء</li>
               <li>مصلحة المياه</li>
@@ -2742,7 +2978,7 @@
           <article class="service-card">
             <span class="icon">17</span>
             <h3>خدمات القطاعات الصحية والحج</h3>
-            <p>ترتيب المتطلبات والمراجعات المرتبطة بقطاعات الصحة والحج والجهات ذات العلاقة.</p>
+            <p>ترتيب المتطلبات المرتبطة بقطاعات الصحة والحج والجهات ذات العلاقة.</p>
             <ul class="service-list">
               <li>وزارة الصحة</li>
               <li>وزارة الحج</li>
@@ -2755,7 +2991,7 @@
             <h3>العلامات التجارية والتسويق</h3>
             <p>متابعة ملفات العلامات التجارية وخدمات التسويق للغير بما يخدم نشاط المنشأة.</p>
             <ul class="service-list">
-              <li>مراجعة العلامات التجارية</li>
+              <li>متابعة ملفات العلامات التجارية</li>
               <li>تأسيس العلامات التجارية</li>
               <li>التسويق للغير</li>
               <li>تنسيق المتطلبات والمخاطبات</li>
@@ -2775,7 +3011,7 @@
           <article class="service-card">
             <span class="icon">20</span>
             <h3>النقل والمواصلات</h3>
-            <p>مراجعة الجهات المرتبطة بالنقل والمواصلات والتصاريح التشغيلية ذات العلاقة.</p>
+            <p>متابعة الجهات المرتبطة بالنقل والمواصلات والتصاريح التشغيلية ذات العلاقة.</p>
             <ul class="service-list">
               <li>وزارة النقل والخدمات اللوجستية</li>
               <li>وزارة المواصلات</li>
@@ -2786,7 +3022,7 @@
           <article class="service-card">
             <span class="icon">28</span>
             <h3>الإعلام والترفيه والفعاليات</h3>
-            <p>مراجعة الجهات المرتبطة بالإعلام والترفيه وتنظيم الفعاليات والمعارض.</p>
+            <p>متابعة الجهات المرتبطة بالإعلام والترفيه وتنظيم الفعاليات والمعارض.</p>
             <ul class="service-list">
               <li>وزارة الإعلام</li>
               <li>هيئة الترفيه</li>
@@ -2800,7 +3036,7 @@
             <p>متابعة الطلبات المرتبطة بالأنشطة الصناعية والثروة المعدنية والتراخيص ذات العلاقة.</p>
             <ul class="service-list">
               <li>وزارة الصناعة والثروة المعدنية</li>
-              <li>مراجعة مدن الصناعية</li>
+              <li>متابعة مدن الصناعية</li>
               <li>الأنشطة الصناعية</li>
               <li>التراخيص والتحديثات</li>
               <li>تنسيق المتطلبات التشغيلية</li>
@@ -2822,7 +3058,7 @@
             <h3>خدمات ذوي الاحتياجات الخاصة</h3>
             <p>متابعة وتنسيق الطلبات والخدمات المساندة لذوي الاحتياجات الخاصة باحترام ووضوح.</p>
             <ul class="service-list">
-              <li>مراجعة الجهات ذات العلاقة</li>
+              <li>التنسيق مع الجهات ذات العلاقة</li>
               <li>التنسيق مع مقدمي الخدمات</li>
               <li>متابعة الطلبات والمتطلبات</li>
               <li>تنظيم المستندات والمواعيد</li>
@@ -2835,7 +3071,7 @@
             <ul class="service-list">
               <li>متابعة المعاملات الشخصية</li>
               <li>التنسيق مع مقدمي الرعاية والخدمات</li>
-              <li>مراجعة الجهات عند الحاجة</li>
+              <li>متابعة الجهات عند الحاجة</li>
               <li>تنظيم الطلبات والمواعيد</li>
             </ul>
           </article>
@@ -2875,13 +3111,13 @@
           <article class="service-card">
             <span class="icon">27</span>
             <h3>تأشيرات السفر للخارج</h3>
-            <p>مراجعة ومتابعة متطلبات استخراج تأشيرات السفر للخارج حسب الجهة والدولة المطلوبة.</p>
+            <p>متابعة متطلبات استخراج تأشيرات السفر للخارج حسب الجهة والدولة المطلوبة.</p>
             <ul class="service-list">
               <li>تجهيز متطلبات التأشيرة</li>
-              <li>مراجعة السفارات والقنصليات</li>
+              <li>متابعة السفارات والقنصليات</li>
               <li>متابعة المواعيد والنماذج</li>
               <li>تنسيق المستندات</li>
-              <li>مراجعة حالة الطلب</li>
+              <li>متابعة حالة الطلب</li>
             </ul>
           </article>
         </div>
@@ -2909,7 +3145,7 @@
             <a class="btn btn-secondary" href="#request">اطلب هذه المجموعة</a>
           </article>
           <article class="category-card">
-            <h3>المراجعات الحكومية والقضائية</h3>
+            <h3>المتابعة الحكومية والقضائية</h3>
             <p>الوزارات، الأحوال، الجوازات، المرور، المحكمة التجارية، ومحكمة التنفيذ.</p>
             <a class="btn btn-secondary" href="#request">اطلب هذه المجموعة</a>
           </article>
@@ -2925,7 +3161,7 @@
           </article>
           <article class="category-card">
             <h3>خدمات الأفراد</h3>
-            <p>المعاملات الشخصية، المراجعات الحكومية، المعاملات العدلية، ومتابعة الطلبات.</p>
+            <p>المعاملات الشخصية، المتابعة الحكومية، المعاملات العدلية، ومتابعة الطلبات.</p>
             <a class="btn btn-secondary" href="#request">اطلب هذه المجموعة</a>
           </article>
           <article class="category-card">
@@ -2940,7 +3176,7 @@
           </article>
           <article class="category-card">
             <h3>الإعلام والترفيه والصناعة</h3>
-            <p>وزارة الإعلام، هيئة الترفيه، الفعاليات والمعارض، وزارة الصناعة والثروة المعدنية، ومراجعة مدن الصناعية.</p>
+            <p>وزارة الإعلام، هيئة الترفيه، الفعاليات والمعارض، وزارة الصناعة والثروة المعدنية، ومتابعة مدن الصناعية.</p>
             <a class="btn btn-secondary" href="#request">اطلب هذه المجموعة</a>
           </article>
           <article class="category-card">
@@ -2950,7 +3186,7 @@
           </article>
           <article class="category-card">
             <h3>التعليم والسفر للخارج</h3>
-            <p>التعليم في الخارج، تنسيق متطلبات القبول، مراجعة السفارات والقنصليات، وتأشيرات السفر للخارج.</p>
+            <p>التعليم في الخارج، تنسيق متطلبات القبول، متابعة السفارات والقنصليات، وتأشيرات السفر للخارج.</p>
             <a class="btn btn-secondary" href="#request">اطلب هذه المجموعة</a>
           </article>
           <article class="category-card">
@@ -2974,7 +3210,7 @@
         <div class="value-grid">
           <article class="value-card">
             <strong>وضوح المتطلبات</strong>
-            <p>نوضح للعميل المعلومات الأساسية قبل بدء الطلب حتى تقل المراجعات غير المكتملة.</p>
+            <p>نوضح للعميل المعلومات الأساسية قبل بدء الطلب حتى تقل الجولات غير المكتملة.</p>
           </article>
           <article class="value-card">
             <strong>متابعة منظمة</strong>
@@ -3014,7 +3250,7 @@
           </article>
           <article class="package-card featured">
             <h3>باقة التشغيل والمتابعة</h3>
-            <p>للمنشآت القائمة التي تحتاج متابعة ملفاتها ورخصها ومراجعات الجهات.</p>
+            <p>للمنشآت القائمة التي تحتاج متابعة ملفاتها ورخصها ومتابعة الجهات.</p>
             <ul class="service-list">
               <li>تحديثات وتجديدات</li>
               <li>متابعة الجهات</li>
@@ -3024,9 +3260,9 @@
           </article>
           <article class="package-card">
             <h3>باقة الأفراد</h3>
-            <p>للخدمات الشخصية والمعاملات الإدارية والعدلية ومراجعات الجهات.</p>
+            <p>للخدمات الشخصية والمعاملات الإدارية والعدلية ومتابعة الجهات.</p>
             <ul class="service-list">
-              <li>مراجعات حكومية</li>
+              <li>متابعة حكومية</li>
               <li>معاملات عدلية</li>
               <li>متابعة طلبات شخصية</li>
             </ul>
@@ -3060,7 +3296,7 @@
           </article>
           <article class="tag-card">
             <h3>السياحة والضيافة</h3>
-            <p>تراخيص سياحية، تنسيق متطلبات، ومراجعة الجهات ذات العلاقة.</p>
+            <p>تراخيص سياحية، تنسيق متطلبات، والتنسيق مع الجهات ذات العلاقة.</p>
           </article>
         </div>
       </div>
@@ -3070,71 +3306,86 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <span class="section-kicker">جهات نراجعها</span>
+            <span class="section-kicker">جهات نخدمك أمامها</span>
             <h2>نختصر عليك التشتت بين المنصات والجهات.</h2>
           </div>
-          <p>نوضح مسار المراجعة ونجهز المعلومات الأساسية قبل التواصل مع الجهات المطلوبة.</p>
+          <p>نوضح مسار المتابعة ونجهز المعلومات الأساسية قبل التواصل مع الجهات المطلوبة.</p>
         </div>
         <div class="tag-grid">
           <article class="tag-card">
             <h3>الوزارات والجهات الحكومية</h3>
             <p>وزارة المالية، وزارة الصحة، وزارة التجارة، وزارة الحج، وزارة الاستثمار، وزارة الإعلام، ووزارة العمل.</p>
+            <p class="tag-card-hint">نحدد جهة الاختصاص لطلبك ونبني مساراً للمستندات والمواعيد حسب الجهة دون تشتيت بين المنصات.</p>
           </article>
           <article class="tag-card">
             <h3>الجهات الاجتماعية والمدنية</h3>
             <p>مصلحة التقاعد، الضمان الاجتماعي، الأحوال المدنية، الجوازات، والمرور.</p>
+            <p class="tag-card-hint">نساعد في ترتيب الطلبات الشخصية والاعتمادات المطلوبة لدى الجهات المدنية وفق الاشتراطات الحالية.</p>
           </article>
           <article class="tag-card">
             <h3>البلديات والمرافق</h3>
             <p>الأمانات، البلديات الفرعية، مصلحة المياه، شركة الكهرباء، وشركات الاتصالات.</p>
+            <p class="tag-card-hint">نوازن بين اشتراطات البلدية والمرافق حتى تكتمل إجراءات التشغيل أو الربط بأقل تعثر ممكن.</p>
           </article>
           <article class="tag-card">
             <h3>القضاء والتنفيذ</h3>
             <p>المحكمة التجارية، محكمة التنفيذ، المحاكم العامة، وكتابات العدل.</p>
+            <p class="tag-card-hint">ننظم المستندات والمواعيد العدلية ونبقيك على اطلاع دون تتبع كل مسار على حدة بمفردك.</p>
           </article>
           <article class="tag-card">
             <h3>القطاع المالي والتمويلي</h3>
             <p>البنك المركزي، البنوك، شركات التمويل، شركات التأمين، والصناديق التنموية والتمويلية.</p>
+            <p class="tag-card-hint">ننسّق ملفات التواصل مع الجهات التمويلية وفقاً لطبيعة نشاطك والغرض من الطلب.</p>
           </article>
           <article class="tag-card">
             <h3>منصات الأعمال والتراخيص</h3>
             <p>المركز السعودي للأعمال، بلدي، السجلات والأنشطة، وتعديل بيانات المنشأة.</p>
+            <p class="tag-card-hint">نقلّص خطوات السجلات والتراخيص عبر المنصات المعتمدة مع توضيح ما يخص منشأتك فقط.</p>
           </article>
           <article class="tag-card">
             <h3>الموردون والتشغيل</h3>
             <p>التنسيق مع الموردين، متابعة عروض الأسعار، وتنظيم المخاطبات التشغيلية.</p>
+            <p class="tag-card-hint">نرتب المخاطبات التشغيلية مع الموردين حتى تبقى حالة الطلبات واضحة لإدارة المنشأة.</p>
           </article>
           <article class="tag-card">
             <h3>الصحة والحج والضيافة</h3>
             <p>متطلبات وزارة الصحة، وزارة الحج، الأنشطة الصحية، والسياحة والضيافة.</p>
+            <p class="tag-card-hint">نوازن بين اشتراطات القطاع الصحي أو الحج والسياحة وبين ملف نشاطك قبل رفع الطلبات.</p>
           </article>
           <article class="tag-card">
             <h3>الزكاة والضريبة والجمارك</h3>
             <p>هيئة الزكاة والضريبة والجمارك، الجمارك، الميناء، والمنافذ ذات العلاقة.</p>
+            <p class="tag-card-hint">ننسّق مسارات المنافذ والالتزامات المالية حسب نوع النشاط والبضائع أو الخدمات.</p>
           </article>
           <article class="tag-card">
             <h3>النقل والخدمات اللوجستية</h3>
             <p>وزارة النقل والخدمات اللوجستية، وزارة المواصلات، والتصاريح التشغيلية.</p>
+            <p class="tag-card-hint">نرتب متطلبات التصاريح والتحديثات لأنشطة النقل والخدمات اللوجستية ذات الصلة.</p>
           </article>
           <article class="tag-card">
             <h3>الإعلام والترفيه</h3>
             <p>وزارة الإعلام، هيئة الترفيه، تصاريح الفعاليات والمعارض، والمتطلبات المرتبطة بها.</p>
+            <p class="tag-card-hint">نهيئ ملفات التصاريح والمتطلبات للفعاليات والأنشطة الإعلامية قبل التواصل مع الجهات.</p>
           </article>
           <article class="tag-card">
             <h3>الصناعة والثروة المعدنية</h3>
             <p>وزارة الصناعة والثروة المعدنية، مدن الصناعية، الأنشطة الصناعية، والتراخيص التشغيلية ذات العلاقة.</p>
+            <p class="tag-card-hint">نربط بين اشتراطات الصناعة أو الثروة المعدنية وملف منشأتك للأنشطة المرخصة.</p>
           </article>
           <article class="tag-card">
             <h3>العلامات والتسويق</h3>
             <p>العلامات التجارية، تأسيس العلامات، التسويق للغير، والمتطلبات المرتبطة بها.</p>
+            <p class="tag-card-hint">ننظم مسار العلامة التجارية والتسويق للغير بما يقلل الارتباك مع الجهات المختصة.</p>
           </article>
           <article class="tag-card">
             <h3>الجمعيات والفئات الخاصة</h3>
             <p>الجمعيات التعاونية والخيرية، الأسر المنتجة، خدمات كبار السن، وذوو الاحتياجات الخاصة.</p>
+            <p class="tag-card-hint">ننسّق متطلبات الجمعيات والفئات الخاصة مع الجهات الداعمة وفق نطاق كل خدمة.</p>
           </article>
           <article class="tag-card">
             <h3>التعليم والتأشيرات</h3>
-            <p>خدمات التعليم في الخارج، تنسيق القبول، مراجعة السفارات والقنصليات، ومتطلبات تأشيرات السفر للخارج.</p>
+            <p>خدمات التعليم في الخارج، تنسيق القبول، متابعة السفارات والقنصليات، ومتطلبات تأشيرات السفر للخارج.</p>
+            <p class="tag-card-hint">نرتب مستندات الدراسة بالخارج أو التأشيرة حسب الدولة والجهة المعنية خطوة بخطوة.</p>
           </article>
         </div>
       </div>
@@ -3144,7 +3395,7 @@
       <div class="container">
         <div class="feature-band">
           <div class="feature-grid">
-            <div class="photo-block" role="img" aria-label="فريق عمل يناقش ملف تأسيس شركة"></div>
+            <div class="photo-block" role="img" aria-label="فريق عمل ينسّق ملف تأسيس شركة"></div>
             <div>
               <span class="section-kicker">من نحن</span>
               <h2>شريك إداري يختصر عليك تعقيد الإجراءات.</h2>
@@ -3167,10 +3418,20 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <span class="section-kicker">سابقة الأعمال</span>
-            <h2>خبرات د. طلال ومشاريعه المهنية.</h2>
+            <span class="section-kicker">خبرات المالك</span>
+            <h2>مالك المكتب الدكتور طلال حسن الزهراني — خبراته</h2>
           </div>
-          <p>يعرض هذا القسم نبذة مختصرة عن خبرة د. طلال بن حسن الزهراني، مع التركيز على الاستثمار، الإدارة المالية، تطوير الأعمال، وعلاقات الأعمال الدولية.</p>
+          <div class="section-head-aside">
+            <p>الدكتور طلال حسن الزهراني مالك مكتب ثقة الذهبية للخدمات العامة. فيما يلي ملخص لأبرز خبراته المهنية التي يستند إليها المكتب في توجيه الخدمات والتنسيق مع الجهات.</p>
+            <ul class="owner-exp-highlights" aria-label="أبرز الخبرات">
+              <li>رئاسة مجلس إدارة صندوق الاستثمار الدولي ونشاط استثماري وشراكات دولية</li>
+              <li>خدمات مالية واسعة وخبرة في إدارة المخاطر والأزمات والأسواق المحلية والعالمية</li>
+              <li>قيادة شركات في الخدمات المالية والمباني الذكية والإعلام والبترول والصناعات التحويلية</li>
+              <li>تأسيس كيانات وتطوير مشاريع في الاستثمار والتجارة والصناعة والإنتاج الإعلامي</li>
+              <li>مؤهلات أكاديمية: بكالوريوس محاسبة، ماجستير إدارة المخاطر والأزمات، ودكتوراه في محاسبة التكاليف والهندسة والتخطيط المالي</li>
+              <li>علاقات دولية وصفقات، لغات متعددة، ومهارات في تطوير الأسواق</li>
+            </ul>
+          </div>
         </div>
         <div class="portfolio-grid">
           <article class="portfolio-card">
@@ -3201,7 +3462,7 @@
           <article class="portfolio-card">
             <strong>06</strong>
             <h3>علاقات وصفقات دولية</h3>
-            <p>يعرض الملف خبرة في إدارة العلاقات الدولية وإغلاق الصفقات، مع إجادة عدة لغات ومهارات في صناعة الأسواق.</p>
+            <p>خبرة في إدارة العلاقات الدولية وإغلاق الصفقات، مع إجادة عدة لغات ومهارات في بناء الأسواق وتوسيع الفرص التجارية.</p>
           </article>
         </div>
         <div class="source-note">يمكن تعديل الصياغة أو إضافة إنجازات محددة حسب ما تريد إبرازه في الموقع.</div>
@@ -3258,7 +3519,7 @@
           <article class="step">
             <div class="step-number">01</div>
             <h3>تحليل النشاط</h3>
-            <p>نراجع نوع النشاط والمدينة والشكل النظامي المناسب.</p>
+            <p>نحدد نوع النشاط والمدينة والشكل النظامي المناسب.</p>
           </article>
           <article class="step">
             <div class="step-number">02</div>
@@ -3329,7 +3590,7 @@
             </article>
             <article class="step">
               <div class="step-number">03</div>
-              <h3>التجهيز والمراجعة مع الجهة</h3>
+              <h3>التجهيز والتنسيق مع الجهة</h3>
               <p>ترتيب الملفات والاستيفاء وفق اشتراطات الجهة المعنية.</p>
             </article>
             <article class="step">
@@ -3369,7 +3630,7 @@
           </article>
           <article class="faq-item">
             <h3>كم يستغرق تأسيس شركة عادةً؟</h3>
-            <p>لا يوجد رقم واحد يناسب كل الحالات؛ يختلف حسب الشكل النظامي والنشاط والجهات، ونوضّح التوقعات بعد مراجعة طلبك والمستندات الأولية.</p>
+            <p>لا يوجد رقم واحد يناسب كل الحالات؛ يختلف حسب الشكل النظامي والنشاط والجهات، ونوضّح التوقعات بعد الاطلاع على طلبك والمستندات الأولية.</p>
           </article>
           <article class="faq-item">
             <h3>هل تقدمون خدمات للمستثمر الأجنبي؟</h3>
@@ -3389,7 +3650,7 @@
           </article>
           <article class="faq-item">
             <h3>كيف أعرف أن الطلب وصل؟</h3>
-            <p>عند فتح واتساب أو البريد ستجد الرسالة جاهزة للمراجعة؛ بعد ضغط الإرسال نستلمها على الرقم أو البريد الرسمي.</p>
+            <p>عند فتح واتساب أو البريد ستجد الرسالة جاهزة للمعاينة؛ بعد ضغط الإرسال نستلمها على الرقم أو البريد الرسمي.</p>
           </article>
           <article class="faq-item">
             <h3>هل هذا استشارة قانونية؟</h3>
@@ -3430,7 +3691,7 @@
                 <option value="">اختر نوع الخدمة</option>
                 <option>تأسيس وتعديل الشركات</option>
                 <option>التراخيص والبلديات</option>
-                <option>المراجعات الحكومية والقضائية</option>
+                <option>المتابعة الحكومية والقضائية</option>
                 <option>المالية والتمويل والمطالبات</option>
                 <option>المرافق والموردين والتشغيل</option>
                 <option>إدارة الأملاك والمشاريع</option>
@@ -3438,7 +3699,7 @@
                 <option>العلامات والتسويق</option>
                 <option>الجمارك والزكاة والنقل</option>
                 <option>الإعلام والترفيه والصناعة</option>
-                <option>مراجعة مدن الصناعية</option>
+                <option>متابعة مدن الصناعية</option>
                 <option>الجمعيات والخدمات الاجتماعية</option>
                 <option>التعليم والسفر للخارج</option>
                 <option>التسويات والمقايضات</option>
@@ -3558,7 +3819,7 @@
         <button class="primary-chip" type="button" data-question="طلب خدمة الآن">طلب خدمة الآن</button>
         <button type="button" data-question="تأسيس وتعديل الشركات">تأسيس وتعديل</button>
         <button type="button" data-question="التراخيص والبلديات">تراخيص وبلديات</button>
-        <button type="button" data-question="المراجعات الحكومية والقضائية">مراجعات وجهات</button>
+        <button type="button" data-question="المتابعة الحكومية والقضائية">جهات ومتابعة</button>
         <button type="button" data-question="المالية والتمويل والمطالبات">مالية ومطالبات</button>
         <button type="button" data-question="المرافق والموردين والتشغيل">مرافق وموردين</button>
         <button type="button" data-question="إدارة الأملاك والمشاريع">أملاك ومشاريع</button>
@@ -3680,6 +3941,15 @@
       `mailto:info@thiqqah.live?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     const translations = {
+      "معلومات سريعة للزوار": "Quick visitor information",
+      "تأسيس شركات وتراخيص ومتابعة جهات حكومية في السعودية":
+        "Company formation, licensing, and government follow-up in Saudi Arabia",
+      "نستجيب لطلبات الموقع خلال يوم عمل في أغلب الأوقات":
+        "We respond to website requests within one business day in most cases",
+      "اطلب الخدمة عبر واتساب أو نموذج الطلب في الموقع":
+        "Request a service via WhatsApp or the site form below",
+      "جدة ومنطقة مكة المكرمة — خدمات للأفراد والمنشآت":
+        "Jeddah and Makkah Region — services for individuals and businesses",
       "السجل التجاري: 4030506321": "Commercial Registration: 4030506321",
       "فتح القائمة": "Open Menu",
       "Switch language": "Switch language",
@@ -3692,7 +3962,7 @@
       "الباقات": "Packages",
       "القطاعات": "Sectors",
       "من نحن": "About Us",
-      "سابقة الأعمال": "Track Record",
+      "خبرات المالك": "Principal’s experience",
       "صور المشاريع": "Project Images",
       "آلية العمل": "How We Work",
       "المتطلبات": "Requirements",
@@ -3711,13 +3981,13 @@
       "امتثال": "Compliance",
       "ملفات وتراخيص": "Files and Licenses",
       "مسار خدمة للأعمال والأفراد": "Service paths for businesses and individuals",
-      "جهة مراجعة وتمويل وتنظيم": "Review, finance, and regulatory entities",
+      "جهات تمويل وتنظيم ومتابعة": "Finance, regulatory, and follow-up entities",
       "باقات رئيسية للبدء بسرعة": "Main packages to start quickly",
       "استقبال الطلب من الموقع والشات بوت": "Requests received through the website and chatbot",
-      "تأسيس، تراخيص، مراجعات": "Formation, Licenses, Reviews",
+      "تأسيس، تراخيص، متابعة": "Formation, licenses, follow-up",
       "تراخيص": "Licenses",
       "بناء، نشاط، صناعة": "Construction, Activity, Industry",
-      "مراجعات": "Reviews",
+      "مراجعات": "Follow-ups",
       "جهات حكومية وتمويلية": "Government and finance entities",
       "ابدأ من الخدمة الأقرب لاحتياجك": "Start with the service closest to your need",
       "اختصرنا أكثر الطلبات تكرارا حتى تصل للنموذج أو الشات بوت بخطوة واحدة.": "We grouped the most common requests so you can reach the form or chatbot in one step.",
@@ -3725,7 +3995,7 @@
       "شركة، مؤسسة، سجل، ملف تأسيس": "Company, establishment, record, formation file",
       "التراخيص": "Licensing",
       "بلدية، بناء، نشاط، صناعة، سياحة": "Municipal, construction, activity, industry, tourism",
-      "مراجعة جهة": "Entity Review",
+      "متابعة جهة": "Authority follow-up",
       "وزارات، محاكم، مرور، بنوك، تمويل": "Ministries, courts, traffic, banks, finance",
       "خدمات الأفراد": "Individual Services",
       "تأشيرات، تعليم، أسر منتجة، كبار السن": "Visas, education, productive families, seniors",
@@ -3736,16 +4006,16 @@
       "تأسيس شركة في جدة أو الرياض، مؤسسة فردية، شركة ذات مسؤولية محدودة، شركة مساهمة مبسطة، وتعديل عقود الشركاء.": "Company formation in Jeddah or Riyadh, sole establishments, limited liability companies, simplified joint-stock companies, and partner contract amendments.",
       "التراخيص البلدية والبناء": "Municipal and Construction Licenses",
       "تراخيص بلدية، تراخيص بناء، إضافة أدوار وملاحق، تراخيص بيئة، نشاط تجاري، هدم وإزالة، وتراخيص صناعية وسياحية.": "Municipal licenses, construction permits, additional floors and annexes, environmental licenses, business activities, demolition and removal, and industrial and tourism licenses.",
-      "مراجعة الجهات الحكومية": "Government Entity Review",
-      "مراجعة الوزارات، مدن الصناعية، المحاكم، المرور، الجوازات، الأحوال المدنية، الأمانات، البلديات، والبنوك نيابة عن العميل.": "Reviewing ministries, MODON Industrial Cities, courts, traffic authorities, passports, civil affairs, municipalities, sub-municipalities, and banks on behalf of clients.",
+      "متابعة الجهات الحكومية": "Government authority coordination",
+      "متابعة المعاملات لدى الوزارات، مدن الصناعية، المحاكم، المرور، الجوازات، الأحوال المدنية، الأمانات، البلديات، والبنوك نيابة عن العميل.": "Coordinating transactions with ministries, MODON industrial cities, courts, traffic authorities, passports, civil affairs, municipalities, sub-municipalities, and banks on behalf of clients.",
       "إدارة الأملاك والمشاريع": "Property and Project Management",
       "إدارة الأملاك العقارية، متابعة العقود والمستحقات، تنسيق الصيانة، إدارة المشاريع، متابعة الموردين، وتقارير الإنجاز.": "Real estate property management, contract and receivable follow-up, maintenance coordination, project management, supplier follow-up, and progress reports.",
       "خدمات المستثمر الأجنبي": "Foreign Investor Services",
       "تجهيز متطلبات المستثمر الأجنبي، فروع الشركات الأجنبية، وزارة الاستثمار، المركز السعودي للأعمال، وملفات المنشأة.": "Preparing foreign investor requirements, foreign company branches, Ministry of Investment work, Saudi Business Center procedures, and entity files.",
       "تأشيرات السفر والتعليم بالخارج": "Travel Visas and Overseas Education",
-      "تأشيرات السفر للخارج، مراجعة السفارات والقنصليات، تنسيق متطلبات التعليم في الخارج، وترتيب المستندات.": "Travel visas, embassy and consulate reviews, overseas education requirement coordination, and document organization.",
+      "تأشيرات السفر للخارج، متابعة السفارات والقنصليات، تنسيق متطلبات التعليم في الخارج، وترتيب المستندات.": "Travel visas, embassy and consulate liaison, overseas education requirement coordination, and document organization.",
       "العلامات التجارية والتسويق": "Trademarks and Marketing",
-      "مراجعة العلامات التجارية، تأسيس العلامة التجارية، التسويق للغير، وتنظيم المتطلبات والمخاطبات.": "Trademark reviews, trademark establishment, third-party marketing, and organizing requirements and correspondence.",
+      "متابعة ملفات العلامات التجارية، تأسيس العلامة التجارية، التسويق للغير، وتنظيم المتطلبات والمخاطبات.": "Trademark file follow-up, trademark establishment, third-party marketing, and organizing requirements and correspondence.",
       "خدمات الأفراد والجمعيات": "Individual and Association Services",
       "خدمات الأفراد، الأسر المنتجة، ذوي الاحتياجات الخاصة، كبار السن، الجمعيات الخيرية، والجمعيات التعاونية.": "Individual services, productive families, people with disabilities, senior services, charities, and cooperatives.",
       "خدمات مميزة": "Featured Services",
@@ -3753,7 +4023,7 @@
       "اختصرنا الخدمات الأكثر احتياجا حتى يبدأ العميل من المسار الصحيح بدون قراءة كل التفاصيل.": "We summarized the most needed services so clients can start from the right path without reading every detail.",
       "تأسيس وتراخيص الأعمال": "Business Formation and Licensing",
       "تأسيس الشركات، التراخيص البلدية، البناء، الأنشطة، وتجهيز ملفات التشغيل.": "Company formation, municipal licenses, construction, business activities, and operating files.",
-      "مراجعات الجهات": "Entity Reviews",
+      "متابعة الجهات": "Government follow-up",
       "وزارات، محاكم، تنفيذ، مرور، بلديات، مرافق، وجهات تمويل وتنظيم.": "Ministries, courts, enforcement, traffic, municipalities, utilities, finance and regulatory entities.",
       "التأشيرات والتعليم بالخارج": "Visas and Overseas Education",
       "سفارات، قنصليات، تأشيرات سفر، تعليم في الخارج، وترتيب المتطلبات.": "Embassies, consulates, travel visas, overseas education, and requirement coordination.",
@@ -3765,7 +4035,7 @@
       "علامات تجارية، تسويق للغير، مقايضات، وتسويات تجارية ودية.": "Trademarks, third-party marketing, barter arrangements, and amicable commercial settlements.",
       "اطلب خدمة": "Request a service",
       "اطلب الخدمة": "Request Service",
-      "أرسل طلب مراجعة": "Send Review Request",
+      "أرسل طلب متابعة": "Send follow-up request",
       "ابدأ الطلب": "Start Request",
       "اطلب المتابعة": "Request Follow-up",
       "اختر المسار": "Choose Path",
@@ -3822,8 +4092,8 @@
       "أسئلة شائعة": "Common Questions",
       "إجابات سريعة قبل التواصل.": "Quick answers before you reach out.",
       "كيف أعرف أن الطلب وصل؟": "How do I know my request was sent?",
-      "عند فتح واتساب أو البريد ستجد الرسالة جاهزة للمراجعة؛ بعد ضغط الإرسال نستلمها على الرقم أو البريد الرسمي.":
-        "When WhatsApp or email opens, your message is ready to review; after you tap send, we receive it on our official number or inbox.",
+      "عند فتح واتساب أو البريد ستجد الرسالة جاهزة للمعاينة؛ بعد ضغط الإرسال نستلمها على الرقم أو البريد الرسمي.":
+        "When WhatsApp or email opens, your message is ready to check; after you tap send, we receive it on our official number or inbox.",
       "هل هذا استشارة قانونية؟": "Is this legal advice?",
       "الخدمات إدارية وتنسيقية مع الجهات؛ أي قرار نظامي نهائي يصدر من الجهة المختصة وفق أنظمتها.":
         "Services are administrative coordination with authorities; any final regulatory decision comes from the competent authority under its regulations.",
@@ -3846,7 +4116,7 @@
       "واتساب يتطلب ضغط العميل على زر الإرسال، لذلك أضفنا خيار البريد الإلكتروني كمسار احتياطي.":
         "WhatsApp requires you to tap Send—so we added email as an alternative path.",
       "الأعمال والتراخيص": "Business and Licensing",
-      "المراجعات والجهات": "Reviews and Entities",
+      "الجهات والمتابعة": "Authorities & follow-up",
       "المالية والمطالبات": "Finance and Claims",
       "الأفراد والجمعيات": "Individuals and Associations",
       "السفر والتعليم": "Travel and Education",
@@ -3874,8 +4144,8 @@
       "تجديد وتعديل الرخص": "License renewal and amendment",
       "متابعة الاشتراطات والملاحظات": "Follow-up of requirements and remarks",
       "الخدمات العامة": "Public Services",
-      "مراجعات وتمثيل نظامي أمام الجهات ذات العلاقة نيابة عن الغير.": "Reviews and authorized representation before relevant entities on behalf of clients.",
-      "مراجعة البنوك": "Bank reviews",
+      "متابعة وتمثيل نظامي أمام الجهات ذات العلاقة نيابة عن الغير.": "Follow-up and authorized representation before relevant entities on behalf of clients.",
+      "التنسيق مع البنوك": "Bank coordination",
       "الصندوق الصناعي": "Industrial Development Fund",
       "الصندوق السياحي": "Tourism Development Fund",
       "الصندوق الزراعي": "Agricultural Development Fund",
@@ -3905,10 +4175,10 @@
       "تنسيق الموردين والجهات": "Coordinating suppliers and entities",
       "متابعة الإنجاز والملاحظات": "Following up progress and remarks",
       "تقارير حالة مختصرة": "Brief status reports",
-      "مراجعة مدن": "MODON Review",
-      "مراجعة مدن الصناعية": "MODON Industrial Cities Review",
+      "متابعة مدن": "MODON follow-up",
+      "متابعة مدن الصناعية": "MODON industrial cities follow-up",
       "مدن الصناعية": "MODON Industrial Cities",
-      "وزارة الإعلام، هيئة الترفيه، الفعاليات والمعارض، وزارة الصناعة والثروة المعدنية، ومراجعة مدن الصناعية.": "Ministry of Media, General Entertainment Authority, events and exhibitions, Ministry of Industry and Mineral Resources, and MODON Industrial Cities review.",
+      "وزارة الإعلام، هيئة الترفيه، الفعاليات والمعارض، وزارة الصناعة والثروة المعدنية، ومتابعة مدن الصناعية.": "Ministry of Media, General Entertainment Authority, events and exhibitions, Ministry of Industry and Mineral Resources, and MODON industrial cities follow-up.",
       "وزارة الصناعة والثروة المعدنية، مدن الصناعية، الأنشطة الصناعية، والتراخيص التشغيلية ذات العلاقة.": "Ministry of Industry and Mineral Resources, MODON Industrial Cities, industrial activities, and related operating licenses.",
       "خدمات الموارد البشرية": "Human Resources Services",
       "متابعة شهرية للمنشآت": "Monthly Entity Follow-up",
@@ -3940,7 +4210,7 @@
       "التراخيص والبلديات": "Licenses and municipalities",
       "تراخيص البناء، الهدم، النشاط التجاري، الاشتراطات، الأمانات، والبلديات الفرعية.":
         "Construction and demolition licenses, commercial activity, requirements, principal municipalities, and sub-municipalities.",
-      "المراجعات الحكومية والقضائية": "Government and judicial reviews",
+      "المتابعة الحكومية والقضائية": "Government and judicial liaison",
       "الوزارات، الأحوال، الجوازات، المرور، المحكمة التجارية، ومحكمة التنفيذ.":
         "Ministries, civil affairs, passports, traffic, the commercial court, and enforcement court.",
       "المالية والتمويل والمطالبات": "Finance, funding, and claims",
@@ -3949,8 +4219,8 @@
       "المرافق والموردين والتشغيل": "Utilities, suppliers, and operations",
       "شركة الكهرباء، المياه، الاتصالات، الموردين، المخاطبات، وملفات التشغيل.":
         "Electricity, water, telecoms, suppliers, correspondence, and operating files.",
-      "المعاملات الشخصية، المراجعات الحكومية، المعاملات العدلية، ومتابعة الطلبات.":
-        "Personal transactions, government reviews, notarial matters, and request follow-up.",
+      "المعاملات الشخصية، المتابعة الحكومية، المعاملات العدلية، ومتابعة الطلبات.":
+        "Personal transactions, government liaison, notarial matters, and request follow-up.",
       "العلامات والتسويق": "Trademarks and marketing",
       "العلامات التجارية، تأسيس العلامات، التسويق للغير، وترتيب المخاطبات.":
         "Trademarks, trademark establishment, third-party marketing, and correspondence.",
@@ -3962,8 +4232,8 @@
       "الأسر المنتجة، ذوي الاحتياجات الخاصة، كبار السن، والجمعيات الخيرية والتعاونية.":
         "Productive families, people with disabilities, seniors, charities, and cooperatives.",
       "التعليم والسفر للخارج": "Education and travel abroad",
-      "التعليم في الخارج، تنسيق متطلبات القبول، مراجعة السفارات والقنصليات، وتأشيرات السفر للخارج.":
-        "Overseas education, admissions coordination, embassy and consulate reviews, and outbound travel visas.",
+      "التعليم في الخارج، تنسيق متطلبات القبول، متابعة السفارات والقنصليات، وتأشيرات السفر للخارج.":
+        "Overseas education, admissions coordination, embassy and consulate liaison, and outbound travel visas.",
       "التسويات والمقايضات": "Settlements and barter",
       "السعي في المقايضات التجارية والتسويات الودية وتنسيق الأطراف.":
         "Supporting commercial barter and amicable settlements and coordinating parties.",
@@ -3979,10 +4249,25 @@
       "باقة التشغيل والمتابعة": "Operations and Follow-up Package",
       "باقة الأفراد": "Individuals Package",
       "القطاعات التي نخدمها": "Sectors We Serve",
-      "جهات نراجعها": "Entities We Review",
+      "جهات نخدمك أمامها": "Authorities we coordinate for you",
       "نختصر عليك التشتت بين المنصات والجهات.": "We reduce confusion across platforms and entities.",
+      "نحدد جهة الاختصاص لطلبك ونبني مساراً للمستندات والمواعيد حسب الجهة دون تشتيت بين المنصات.": "We identify the competent authority for your request and build a documents-and-timeline path without platform sprawl.",
+      "نساعد في ترتيب الطلبات الشخصية والاعتمادات المطلوبة لدى الجهات المدنية وفق الاشتراطات الحالية.": "We help organize personal requests and civil-entity requirements under current rules.",
+      "نوازن بين اشتراطات البلدية والمرافق حتى تكتمل إجراءات التشغيل أو الربط بأقل تعثر ممكن.": "We balance municipal and utility requirements so connection or operating steps complete with minimal friction.",
+      "ننظم المستندات والمواعيد العدلية ونبقيك على اطلاع دون تتبع كل مسار على حدة بمفردك.": "We organize notarial documents and dates and keep you informed without chasing every path alone.",
+      "ننسّق ملفات التواصل مع الجهات التمويلية وفقاً لطبيعة نشاطك والغرض من الطلب.": "We coordinate finance-entity correspondence based on your activity and the purpose of the request.",
+      "نقلّص خطوات السجلات والتراخيص عبر المنصات المعتمدة مع توضيح ما يخص منشأتك فقط.": "We shorten registry and licensing steps on official platforms—focused on what applies to your establishment.",
+      "نرتب المخاطبات التشغيلية مع الموردين حتى تبقى حالة الطلبات واضحة لإدارة المنشأة.": "We structure supplier correspondence so order status stays clear for management.",
+      "نوازن بين اشتراطات القطاع الصحي أو الحج والسياحة وبين ملف نشاطك قبل رفع الطلبات.": "We align health, Hajj, or tourism rules with your activity file before submissions.",
+      "ننسّق مسارات المنافذ والالتزامات المالية حسب نوع النشاط والبضائع أو الخدمات.": "We coordinate port pathways and financial obligations by activity, goods, or services.",
+      "نرتب متطلبات التصاريح والتحديثات لأنشطة النقل والخدمات اللوجستية ذات الصلة.": "We organize permits and updates for transport and logistics activities.",
+      "نهيئ ملفات التصاريح والمتطلبات للفعاليات والأنشطة الإعلامية قبل التواصل مع الجهات.": "We prepare permits and requirements for events and media activities before authority contact.",
+      "نربط بين اشتراطات الصناعة أو الثروة المعدنية وملف منشأتك للأنشطة المرخصة.": "We connect industry or mining requirements with your establishment file for licensed activities.",
+      "ننظم مسار العلامة التجارية والتسويق للغير بما يقلل الارتباك مع الجهات المختصة.": "We organize trademark and third-party marketing flows to reduce confusion with regulators.",
+      "ننسّق متطلبات الجمعيات والفئات الخاصة مع الجهات الداعمة وفق نطاق كل خدمة.": "We coordinate association and special-category requirements with supporting entities.",
+      "نرتب مستندات الدراسة بالخارج أو التأشيرة حسب الدولة والجهة المعنية خطوة بخطوة.": "We arrange study-abroad or visa documents by country and authority—step by step.",
       "شريك إداري يختصر عليك تعقيد الإجراءات.": "An administrative partner that simplifies complex procedures.",
-      "خبرات د. طلال ومشاريعه المهنية.": "Dr. Talal's professional experience and projects.",
+      "مالك المكتب الدكتور طلال حسن الزهراني — خبراته": "Office owner Dr. Talal Hassan Al‑Zahrani — his experience",
       "واجهة مرئية تعكس قطاعات الأعمال والتطوير.": "A visual identity reflecting business and development sectors.",
       "مسار واضح من طلب الخدمة حتى التسليم.": "A clear path from request to delivery.",
       "نموذج طلب الخدمة": "Service Request Form",
@@ -4012,7 +4297,7 @@
       "طلب خدمة الآن": "Request Service Now",
       "تأسيس وتعديل": "Formation and Amendments",
       "تراخيص وبلديات": "Licenses and Municipalities",
-      "مراجعات وجهات": "Entity Reviews",
+      "جهات ومتابعة": "Authorities & follow-up",
       "مالية ومطالبات": "Finance and Claims",
       "مرافق وموردين": "Utilities and Suppliers",
       "أملاك ومشاريع": "Properties and Projects",
@@ -4040,7 +4325,7 @@
       "التواصل واستكمال البيانات": "Contact and complete details",
       "نحدد المستندات المتوفرة والمسار المناسب قبل أي صرف أو طلب رسمي حيث ينطبق.":
         "We confirm available documents and the appropriate path before fees or formal filings where applicable.",
-      "التجهيز والمراجعة مع الجهة": "Preparation and authority review",
+      "التجهيز والتنسيق مع الجهة": "Preparation and authority coordination",
       "ترتيب الملفات والاستيفاء وفق اشتراطات الجهة المعنية.":
         "Organizing files and compliance with the relevant authority’s requirements.",
       "المتابعة والتحديث": "Follow-up and updates",
@@ -4053,10 +4338,10 @@
       "يعتمد على الجهة والخدمة؛ نعمل على تقليل الزيارات غير الضرورية وترتيب ما يمكن إنجازه بعد استيفاء البيانات والمواعيد.":
         "It depends on the authority and service; we reduce unnecessary visits and organize what can be done after details and appointments are set.",
       "كم يستغرق تأسيس شركة عادةً؟": "How long does company formation usually take?",
-      "لا يوجد رقم واحد يناسب كل الحالات؛ يختلف حسب الشكل النظامي والنشاط والجهات، ونوضّح التوقعات بعد مراجعة طلبك والمستندات الأولية.":
-        "There is no single number for every case; it varies by legal form, activity, and authorities—we clarify expectations after reviewing your request and initial documents.",
+      "لا يوجد رقم واحد يناسب كل الحالات؛ يختلف حسب الشكل النظامي والنشاط والجهات، ونوضّح التوقعات بعد الاطلاع على طلبك والمستندات الأولية.":
+        "There is no single number for every case; it varies by legal form, activity, and authorities—we clarify expectations after assessing your request and initial documents.",
       "ملخص سريع بعد الهيرو": "Quick summary below the hero",
-      "تأسيس شركات · تراخيص · مراجعات جهات": "Formation · Licenses · Authority reviews",
+      "تأسيس شركات · تراخيص · متابعة جهات": "Formation · Licenses · Authority follow-up",
       "أولوية التصفح": "Where to start",
       "اختر مسارك": "Choose your path",
       "ثلاثة مداخل مختصرة قبل استعراض قائمة الخدمات الكاملة والبحث.":
@@ -4099,7 +4384,7 @@
       "تحسين إجراءات العمل": "Improving operating procedures",
       "تحليل المتطلبات": "Requirements analysis",
       "ترتيب الطلبات والمستندات": "Organizing requests and documents",
-      "ترتيب المتطلبات والمراجعات المرتبطة بقطاعات الصحة والحج والجهات ذات العلاقة.": "Organizing requirements and reviews related to health, Hajj, and relevant authorities.",
+      "ترتيب المتطلبات المرتبطة بقطاعات الصحة والحج والجهات ذات العلاقة.": "Organizing requirements related to health, Hajj, and relevant authorities.",
       "ترتيب المستندات المطلوبة": "Organizing required documents",
       "ترتيب بيانات الرخص والسجلات": "Organizing license and registry data",
       "تصاريح الفعاليات والمعارض": "Events and exhibition permits",
@@ -4124,7 +4409,7 @@
       "تنظيم المستندات والمواعيد": "Organizing documents and appointments",
       "تنظيم الملفات والتقارير": "Organizing files and reports",
       "تنظيم مسار المستثمر الأجنبي من فهم المتطلبات وحتى جاهزية الملفات الأولية.": "Organizing the foreign investor journey from understanding requirements to readiness of initial files.",
-      "تنظيم ملفات المنشأة التشغيلية والإدارية حتى تكون جاهزة للمراجعة والمتابعة.": "Organizing operational and administrative entity files for review and follow-up.",
+      "تنظيم ملفات المنشأة التشغيلية والإدارية حتى تكون جاهزة للتدقيق والمتابعة.": "Organizing operational and administrative entity files for audit readiness and follow-up.",
       "تنظيم ملفات الموظفين": "Organizing employee files",
       "توثيق حالة الطلبات": "Documenting request status",
       "توصيات تشغيلية": "Operational recommendations",
@@ -4162,22 +4447,21 @@
       "متابعة وتنسيق الطلبات والخدمات المساندة لذوي الاحتياجات الخاصة باحترام ووضوح.": "Following and coordinating requests and support services for people with disabilities—with clarity and respect.",
       "متابعة وتنظيم الطلبات المرتبطة بالجمعيات التعاونية والخيرية والجهات الداعمة.": "Following and organizing requests related to cooperatives, charities, and supporting entities.",
       "محكمة التنفيذ": "Enforcement Court",
-      "مراجعات الجهات الحكومية": "Government entity reviews",
-      "مراجعة أولية للبيانات والالتزامات لتقليل التعثر أثناء الإجراءات.": "Initial review of data and obligations to reduce friction during procedures.",
-      "مراجعة الجهات الخدمية والتشغيلية التي تحتاجها المنشآت والأفراد لاستمرار الخدمة.": "Reviewing utility and operational entities needed by businesses and individuals to maintain services.",
-      "مراجعة الجهات المرتبطة بالإعلام والترفيه وتنظيم الفعاليات والمعارض.": "Reviewing entities related to media, entertainment, and organizing events and exhibitions.",
-      "مراجعة الجهات المرتبطة بالنقل والمواصلات والتصاريح التشغيلية ذات العلاقة.": "Reviewing entities related to transport, mobility, and relevant operating permits.",
-      "مراجعة الجهات ذات العلاقة": "Reviewing relevant authorities",
-      "مراجعة الجهات عند الحاجة": "Authority reviews when needed",
-      "مراجعة السفارات والقنصليات": "Embassy and consulate reviews",
-      "مراجعة العلامات التجارية": "Trademark reviews",
-      "مراجعة حالة الطلب": "Reviewing request status",
-      "مراجعة ومتابعة متطلبات استخراج تأشيرات السفر للخارج حسب الجهة والدولة المطلوبة.": "Reviewing and following outbound visa requirements based on the authority and destination country.",
+      "تدقيق أولي للبيانات والالتزامات لتقليل التعثر أثناء الإجراءات.": "Initial verification of data and obligations to reduce friction during procedures.",
+      "متابعة الجهات الخدمية والتشغيلية التي تحتاجها المنشآت والأفراد لاستمرار الخدمة.": "Coordinating utility and operational entities needed by businesses and individuals to maintain services.",
+      "متابعة الجهات المرتبطة بالإعلام والترفيه وتنظيم الفعاليات والمعارض.": "Coordinating entities related to media, entertainment, and organizing events and exhibitions.",
+      "متابعة الجهات المرتبطة بالنقل والمواصلات والتصاريح التشغيلية ذات العلاقة.": "Coordinating entities related to transport, mobility, and relevant operating permits.",
+      "التنسيق مع الجهات ذات العلاقة": "Coordinating relevant authorities",
+      "متابعة الجهات عند الحاجة": "Authority follow-up when needed",
+      "متابعة السفارات والقنصليات": "Embassy and consulate liaison",
+      "متابعة ملفات العلامات التجارية": "Trademark file follow-up",
+      "متابعة حالة الطلب": "Following request status",
+      "متابعة متطلبات استخراج تأشيرات السفر للخارج حسب الجهة والدولة المطلوبة.": "Coordinating outbound visa requirements based on the authority and destination country.",
       "مساندة الطلاب وأولياء الأمور في تنسيق متطلبات الدراسة والتعليم خارج المملكة.": "Supporting students and guardians in coordinating study requirements abroad.",
       "مساندة المستثمرين في فهم المتطلبات والمسارات النظامية داخل السعودية.": "Supporting investors in understanding requirements and regulatory pathways inside Saudi Arabia.",
       "مساندة كبار السن في متابعة المعاملات والتنسيق مع مقدمي الخدمات والرعاية.": "Supporting seniors in following transactions and coordinating with care and service providers.",
       "مصلحة المياه": "Water authority",
-      "نقدم جميع الخدمات المناسبة للأفراد ومراجعات الجهات التي تتطلب متابعة وتنظيم معاملات.": "We provide suitable individual services and authority reviews that require transaction follow-up and organization.",
+      "نقدم جميع الخدمات المناسبة للأفراد ومتابعة الجهات التي تتطلب تنظيم معاملات.": "We provide suitable individual services and authority liaison wherever transactions need follow-up and organization.",
       "نقدم خدمات الموارد البشرية للشركات والمؤسسات بما يساعد على تنظيم فرق العمل والاحتياج الوظيفي.": "We provide HR services for companies and establishments to organize teams and staffing needs.",
       "نقوم بتطوير ومتابعة الأعمال للشركات والمؤسسات لضمان وضوح المسار التشغيلي والإداري.": "We develop and follow up operations for companies and establishments to keep administrative and operational paths clear.",
       "هيئة الترفيه": "General Entertainment Authority",
@@ -4240,7 +4524,7 @@
       "تحديثات وتجديدات": "Updates and renewals",
       "تحليل النشاط": "Activity analysis",
       "تراخيص بناء، إضافة أدوار، ملاحق، هدم وإزالة، ومتابعة اشتراطات.": "Building permits, floor additions, annexes, demolition and removal, and regulatory follow-up.",
-      "تراخيص سياحية، تنسيق متطلبات، ومراجعة الجهات ذات العلاقة.": "Tourism licenses, requirement coordination, and liaison with relevant authorities.",
+      "تراخيص سياحية، تنسيق متطلبات، والتنسيق مع الجهات ذات العلاقة.": "Tourism licenses, requirement coordination, and liaison with relevant authorities.",
       "تراخيص صناعية، محطات وقود، صناديق تمويل، وملفات تشغيل.": "Industrial licenses, fuel stations, funding schemes, and operating files.",
       "تسليم وتشغيل": "Handover and operations",
       "تقرير حالة مختصر": "Brief status report",
@@ -4251,7 +4535,7 @@
       "حجز الاسم والسجل": "Name and register reservation",
       "حضور حضري وتجاري يعكس طموح النمو والتوسع.": "Urban and commercial presence that reflects growth ambition.",
       "خبرة في تأسيس كيانات أعمال وتطوير مشاريع في قطاعات متنوعة تشمل الاستثمار، التجارة، الصناعة، والإنتاج الإعلامي.": "Experience forming business entities and developing projects across investment, trade, industry, and media production.",
-      "خدمات التعليم في الخارج، تنسيق القبول، مراجعة السفارات والقنصليات، ومتطلبات تأشيرات السفر للخارج.": "Study-abroad services, admissions coordination, embassy and consulate liaison, and outbound visa requirements.",
+      "خدمات التعليم في الخارج، تنسيق القبول، متابعة السفارات والقنصليات، ومتطلبات تأشيرات السفر للخارج.": "Study-abroad services, admissions coordination, embassy and consulate liaison, and outbound visa requirements.",
       "خدمات تأسيس الشركات، التراخيص، والمتابعة الحكومية في السعودية.": "Company formation, licensing, and government follow-up in Saudi Arabia.",
       "خدمات تناسب قطاعات الأعمال الأكثر طلبا.": "Services aligned with the most requested business sectors.",
       "خدمات مالية واسعة": "Broad financial services",
@@ -4267,13 +4551,12 @@
       "قيادة شركات متعددة": "Led multiple companies",
       "لا تضع مستندات أو بيانات حساسة داخل النموذج. سنطلب المتطلبات الرسمية بعد التواصل.": "Do not put sensitive documents or data in the form. We will request official requirements after contact.",
       "لا يتم طلب مستندات حساسة داخل الشات بوت، ويمكن استكمال التفاصيل عبر واتساب أو البريد الرسمي.": "Sensitive documents are not requested in the chatbot; details can be completed via WhatsApp or official email.",
-      "للخدمات الشخصية والمعاملات الإدارية والعدلية ومراجعات الجهات.": "For personal services, administrative and notarial transactions, and authority reviews.",
+      "للخدمات الشخصية والمعاملات الإدارية والعدلية ومتابعة الجهات.": "For personal services, administrative and notarial transactions, and authority follow-up.",
       "للشركات والمؤسسات الجديدة، وتشمل تحديد الكيان وتجهيز المتطلبات الأساسية.": "For new companies and establishments—including defining the entity and preparing core requirements.",
-      "للمنشآت القائمة التي تحتاج متابعة ملفاتها ورخصها ومراجعات الجهات.": "For existing establishments needing follow-up on files, licenses, and authority reviews.",
+      "للمنشآت القائمة التي تحتاج متابعة ملفاتها ورخصها ومتابعة الجهات.": "For existing establishments needing follow-up on files, licenses, and authority liaison.",
       "مؤهلات مالية وإدارية": "Financial and managerial qualifications",
       "ما الذي تحصل عليه؟": "What do you get?",
       "ماذا نحتاج منك؟": "What do we need from you?",
-      "متابعة الجهات": "Authority follow-up",
       "متابعة حالة الطلبات": "Following request status",
       "متابعة خطوة بخطوة": "Step-by-step follow-up",
       "متابعة طلبات شخصية": "Following personal requests",
@@ -4281,7 +4564,7 @@
       "متطلبات وزارة الصحة، وزارة الحج، الأنشطة الصحية، والسياحة والضيافة.": "Requirements spanning Ministry of Health, Ministry of Hajj, health activities, and tourism and hospitality.",
       "مخرجات منظمة وقابلة للمتابعة": "Organized, trackable deliverables",
       "مدينة العمل والفرع المطلوب": "City of operation and branch required",
-      "مراجعات حكومية": "Government reviews",
+      "متابعة حكومية": "Government follow-up",
       "مشاريع تطوير وإنشاءات ضمن قطاعات الأعمال الممكن خدمتها.": "Development and construction projects within sectors we can support.",
       "مصلحة التقاعد، الضمان الاجتماعي، الأحوال المدنية، الجوازات، والمرور.": "Pension authority, social insurance, civil affairs, passports, and traffic.",
       "معاملات عدلية": "Notarial transactions",
@@ -4291,13 +4574,13 @@
       "نتعامل مع بيانات الطلبات بقدر الحاجة للخدمة.": "We handle request data only as needed for the service.",
       "نتعامل مع بيانات العملاء ومستنداتهم بعناية ونطلب فقط ما يخدم مسار الخدمة.": "We handle client data and documents carefully and ask only what the service path requires.",
       "نحدد المستندات والبيانات المطلوبة قبل بدء الطلبات.": "We identify required documents and data before starting requests.",
-      "نراجع نوع النشاط والمدينة والشكل النظامي المناسب.": "We review activity type, city, and suitable legal form.",
+      "نحدد نوع النشاط والمدينة والشكل النظامي المناسب.": "We define activity type, city, and suitable legal form.",
       "نرتب الخدمة حسب طبيعة النشاط والجهة المطلوبة حتى تكون الرسالة أوضح من أول تواصل.": "We sequence the service by activity and target authority so messaging is clear from first contact.",
       "نرتب الطلبات حسب الخدمة والمدينة والجهة المطلوبة لتسهيل التواصل والتنفيذ.": "We organize requests by service, city, and authority to ease communication and execution.",
       "نسلم المستندات ونوضح الخطوات التالية بعد التأسيس.": "We deliver documents and clarify next steps after incorporation.",
       "نعمل كحلقة وصل منظمة بين العميل والجهات ذات العلاقة. هدفنا أن يعرف صاحب المشروع ماذا يحتاج، لماذا يحتاجه، ومتى يكتمل، بدون تشتيت بين المتطلبات والمنصات المختلفة.": "We act as an organized link between clients and authorities—so owners know what they need, why, and when it completes, without scattering across platforms.",
-      "نوضح للعميل المعلومات الأساسية قبل بدء الطلب حتى تقل المراجعات غير المكتملة.": "We clarify basics before starting requests to reduce incomplete rounds.",
-      "نوضح مسار المراجعة ونجهز المعلومات الأساسية قبل التواصل مع الجهات المطلوبة.": "We explain the review path and prepare basics before contacting authorities.",
+      "نوضح للعميل المعلومات الأساسية قبل بدء الطلب حتى تقل الجولات غير المكتملة.": "We clarify basics before starting requests to reduce incomplete rounds.",
+      "نوضح مسار المتابعة ونجهز المعلومات الأساسية قبل التواصل مع الجهات المطلوبة.": "We walk through the follow-up path and prepare basics before contacting authorities.",
       "نوع النشاط أو وصف مختصر للمشروع": "Activity type or short project description",
       "هيئة الزكاة والضريبة والجمارك، الجمارك، الميناء، والمنافذ ذات العلاقة.": "Zakat, Tax and Customs Authority, customs, ports, and related checkpoints.",
       "وزارة الإعلام، هيئة الترفيه، تصاريح الفعاليات والمعارض، والمتطلبات المرتبطة بها.": "Ministry of Media, Entertainment Authority, event and exhibition permits, and related requirements.",
@@ -4305,8 +4588,23 @@
       "وزارة النقل والخدمات اللوجستية، وزارة المواصلات، والتصاريح التشغيلية.": "Ministry of Transport and Logistics, Ministry of Transport, and operating permits.",
       "وضوح قبل التنفيذ": "Clarity before execution",
       "يطلب الموقع معلومات مختصرة مثل نوع الخدمة والمدينة وبيانات التواصل لغرض ترتيب الطلب فقط.": "The site asks for brief information—service type, city, and contact details—only to organize the request.",
-      "يعرض الملف خبرة في إدارة العلاقات الدولية وإغلاق الصفقات، مع إجادة عدة لغات ومهارات في صناعة الأسواق.": "The profile highlights international relations and deal-making, multilingual ability, and market-building skills.",
-      "يعرض هذا القسم نبذة مختصرة عن خبرة د. طلال بن حسن الزهراني، مع التركيز على الاستثمار، الإدارة المالية، تطوير الأعمال، وعلاقات الأعمال الدولية.": "This section summarizes Dr. Talal bin Hassan Al-Zahrani’s experience—investment, financial management, business development, and international business relations.",
+      "خبرة في إدارة العلاقات الدولية وإغلاق الصفقات، مع إجادة عدة لغات ومهارات في بناء الأسواق وتوسيع الفرص التجارية.":
+        "Experience in international relations and closing deals, with multilingual ability and skills in building markets and expanding commercial opportunities.",
+      "الدكتور طلال حسن الزهراني مالك مكتب ثقة الذهبية للخدمات العامة. فيما يلي ملخص لأبرز خبراته المهنية التي يستند إليها المكتب في توجيه الخدمات والتنسيق مع الجهات.":
+        "Dr. Talal Hassan Al‑Zahrani is the owner of Thiqah Golden Public Services. Below is a summary of his main professional experience that informs how the office guides services and coordinates with authorities.",
+      "أبرز الخبرات": "Key highlights",
+      "رئاسة مجلس إدارة صندوق الاستثمار الدولي ونشاط استثماري وشراكات دولية":
+        "Chairmanship of the International Investment Fund’s board, with investment activity and international partnerships",
+      "خدمات مالية واسعة وخبرة في إدارة المخاطر والأزمات والأسواق المحلية والعالمية":
+        "Broad financial services and experience in risk and crisis management across local and global markets",
+      "قيادة شركات في الخدمات المالية والمباني الذكية والإعلام والبترول والصناعات التحويلية":
+        "Leadership of companies in financial services, smart buildings, media, petroleum, and manufacturing",
+      "تأسيس كيانات وتطوير مشاريع في الاستثمار والتجارة والصناعة والإنتاج الإعلامي":
+        "Establishing entities and developing projects in investment, trade, industry, and media production",
+      "مؤهلات أكاديمية: بكالوريوس محاسبة، ماجستير إدارة المخاطر والأزمات، ودكتوراه في محاسبة التكاليف والهندسة والتخطيط المالي":
+        "Academic qualifications: Bachelor of Accounting, Master’s in Risk and Crisis Management, and PhD in cost accounting engineering and financial planning",
+      "علاقات دولية وصفقات، لغات متعددة، ومهارات في تطوير الأسواق":
+        "International relations and deal-making, multiple languages, and skills in market development",
       "يمكن إضافة خدمات وباقات جديدة بسرعة مع المحافظة على تجربة استخدام بسيطة.": "New services and packages can be added quickly while keeping the experience simple.",
       "يمكن تعديل الصياغة أو إضافة إنجازات محددة حسب ما تريد إبرازه في الموقع.": "Wording can be adjusted or achievements added as you wish to highlight on the site.",
       "نخطّ معكم مسار التأسيس بهدوء واحتراف؛ نوضّح الشكل النظامي بما يلائم نشاطكم دون وعود زائفة، وننسّق الملفات لتقليل المراجع غير المكتملة. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.":
@@ -4335,8 +4633,8 @@
         "Monthly follow-up means your file never sleeps—we gently remind you of deadlines and organize requests before they pile up. The link below is for official reference only—not a substitute for coordination through Thiqah Golden.",
       "استثماركم يستحق طمأنة؛ نوازن بين الشفافية والسرعة، دون أن نبيع أحلاماً غير واقعية. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.":
         "Your investment deserves reassurance—we balance transparency and speed without selling unrealistic dreams. The link below is for official reference only—not a substitute for coordination through Thiqah Golden.",
-      "ملف المنشأة مرآة عملكم؛ نرتّبه ليكون جاهزاً لكل مراجعة بثقة لا تكلّف زائدة. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.":
-        "Your establishment file mirrors your operation—we organize it so reviews meet confidence without unnecessary overhead. The link below is for official reference only—not a substitute for coordination through Thiqah Golden.",
+      "ملف المنشأة مرآة عملكم؛ نرتّبه ليكون جاهزاً لكل تدقيق رسمي بثقة لا تكلّف زائدة. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.":
+        "Your establishment file mirrors your operation—we organize it so it is ready for official scrutiny with confidence and without unnecessary overhead. The link below is for official reference only—not a substitute for coordination through Thiqah Golden.",
       "علاقات الموردين تحتاج توثيقاً ولُطفاً في المخاطبات؛ ننسّق الحوار كي لا يضيع الطلب بين الطرفين. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.":
         "Supplier relationships need documentation and courteous correspondence—we coordinate dialogue so requests do not fall between parties. The link below is for official reference only—not a substitute for coordination through Thiqah Golden.",
       "المطالبات المالية حسّاسة؛ نتابعها منظّمة وبصراحة حول ما يمكن إنجازه أمام الجهات المعنية. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.":
@@ -4410,7 +4708,7 @@
       "وزارة التعليم — الخدمات الإلكترونية": "Ministry of Education — e-services",
       "وزارة الخارجية — السفر والتأشيرات والخدمات القنصلية":
         "Ministry of Foreign Affairs — travel, visas, and consular services",
-      "فريق عمل يناقش ملف تأسيس شركة": "Team reviewing a company formation file",
+      "فريق عمل ينسّق ملف تأسيس شركة": "Team coordinating a company formation file",
       "أهلا بك. اختر نوع الخدمة أو اكتب طلبك، وسأجهز رسالة واتساب واضحة إلى رقم ثقة الذهبية. ملاحظة: بعد فتح واتساب يجب ضغط إرسال حتى تصل الرسالة للجوال.":
         "Welcome. Choose a service type or type your request, and I will prepare a clear WhatsApp message to Thiqah Golden’s number. Note: after WhatsApp opens you must tap Send for the message to reach the phone.",
       "روابط المواقع الحكومية والجهات الرسمية في بطاقات الخدمات للاطلاع العام فقط. لا يتحكم المكتب بمحتوى تلك المواقع أو تحديثاتها، والرابط لا يعد توصية من الجهة تجاه المكتب.":
@@ -4418,8 +4716,8 @@
       "تم إلغاء الطلب الحالي. اختر نوع الخدمة أو اكتب سؤالك من جديد.":
         "The current request was cancelled. Choose a service type or type your question again.",
       "تم اختيار: %s. في أي مدينة تريد تنفيذ الخدمة؟": "Selected: %s. Which city should the service be carried out in?",
-      "ما الخدمة المطلوبة؟ اكتبها باختصار، مثل: تأسيس شركة، ترخيص بناء، مراجعة جهة، أو خدمة موارد بشرية.":
-        "What service do you need? Write briefly—for example: company formation, construction permit, entity review, or HR services.",
+      "ما الخدمة المطلوبة؟ اكتبها باختصار، مثل: تأسيس شركة، ترخيص بناء، متابعة جهة، أو خدمة موارد بشرية.":
+        "What service do you need? Write briefly—for example: company formation, construction permit, authority follow-up, or HR services.",
       "اكتب الخدمة التي تريدها فقط، وسأجهزها لك في رسالة واتساب واضحة المصدر.":
         "Type only the service you need, and I will prepare it in a clear WhatsApp message with source context.",
       "في أي مدينة تريد تنفيذ الخدمة؟": "Which city should the service be carried out in?",
@@ -4435,7 +4733,7 @@
       "تفاصيل إضافية": "Additional details",
       "غير مذكور": "Not specified",
       "راجع الملخص. إذا كان صحيحا افتح واتساب واضغط إرسال حتى تصل الرسالة للجوال.":
-        "Review the summary. If it is correct, open WhatsApp and tap Send so the message reaches the phone.",
+        "Check the summary. If it is correct, open WhatsApp and tap Send so the message reaches the phone.",
       "تم تجهيز الرسالة لرقم ثقة الذهبية. اضغط الزر التالي لفتح واتساب، ثم اضغط إرسال داخل واتساب حتى تصل الرسالة للجوال.":
         "Your message is ready for Thiqah Golden’s number. Tap the button below to open WhatsApp, then tap Send in WhatsApp so the message reaches the phone.",
       "يمكن أيضا إرسال نفس الطلب عبر البريد الإلكتروني كخيار احتياطي.":
@@ -4687,7 +4985,7 @@
     const serviceCategories = [
       "تأسيس وتعديل الشركات",
       "التراخيص والبلديات",
-      "المراجعات الحكومية والقضائية",
+      "المتابعة الحكومية والقضائية",
       "المالية والتمويل والمطالبات",
       "المرافق والموردين والتشغيل",
       "إدارة الأملاك والمشاريع",
@@ -4697,7 +4995,7 @@
       "الإعلام والترفيه والصناعة",
       "الجمعيات والخدمات الاجتماعية",
       "التعليم والسفر للخارج",
-      "مراجعة مدن الصناعية",
+      "متابعة مدن الصناعية",
       "التسويات والمقايضات"
     ];
 
@@ -4709,7 +5007,7 @@
       const hints = [
         ["تأسيس وتعديل الشركات", ["formation", "company formation", "establish business"]],
         ["التراخيص والبلديات", ["municipal license", "balady", "construction permit"]],
-        ["المراجعات الحكومية والقضائية", ["government review", "judicial review"]],
+        ["المتابعة الحكومية والقضائية", ["government liaison", "judicial liaison", "government follow-up"]],
         ["المالية والتمويل والمطالبات", ["finance", "financing", "claims"]],
         ["المرافق والموردين والتشغيل", ["utilities", "suppliers", "operations"]],
         ["إدارة الأملاك والمشاريع", ["property management", "real estate"]],
@@ -4719,7 +5017,7 @@
         ["الإعلام والترفيه والصناعة", ["media", "entertainment", "industry"]],
         ["الجمعيات والخدمات الاجتماعية", ["associations", "nonprofit"]],
         ["التعليم والسفر للخارج", ["education abroad", "travel visa"]],
-        ["مراجعة مدن الصناعية", ["modon", "industrial cities"]],
+        ["متابعة مدن الصناعية", ["modon", "industrial cities"]],
         ["التسويات والمقايضات", ["settlements", "barter"]],
       ];
       for (const [ar, words] of hints) {
@@ -4757,7 +5055,7 @@
       "خدمات الأفراد": "معاملاتكم الشخصية تستحق احتراماً ووقتاً؛ نمشي معكم خطوة بخطوة دون استعجال يُرهقكم. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.",
       "متابعة شهرية للمنشآت": "متابعة شهرية تعني أن ملفكم لا ينام؛ نذكّركم بلطف بالمواعيد ونرتّب الطلبات قبل أن تتراكم. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.",
       "خدمات المستثمر الأجنبي": "استثماركم يستحق طمأنة؛ نوازن بين الشفافية والسرعة، دون أن نبيع أحلاماً غير واقعية. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.",
-      "إدارة ملفات المنشأة": "ملف المنشأة مرآة عملكم؛ نرتّبه ليكون جاهزاً لكل مراجعة بثقة لا تكلّف زائدة. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.",
+      "إدارة ملفات المنشأة": "ملف المنشأة مرآة عملكم؛ نرتّبه ليكون جاهزاً لكل تدقيق رسمي بثقة لا تكلّف زائدة. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.",
       "إدارة علاقات الموردين": "علاقات الموردين تحتاج توثيقاً ولُطفاً في المخاطبات؛ ننسّق الحوار كي لا يضيع الطلب بين الطرفين. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.",
       "متابعة المطالبات المالية": "المطالبات المالية حسّاسة؛ نتابعها منظّمة وبصراحة حول ما يمكن إنجازه أمام الجهات المعنية. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.",
       "خدمات المرافق والتشغيل": "الكهرباء والماء والاتصالات خط حياة تشغيلكم؛ نُبسّط التنسيق مع جهات الخدمة بلغة هادئة وواثقة. الرابط أدناه للاطلاع الرسمي فقط، وليس بديلاً عن التنسيق مع ثقة الذهبية.",
@@ -4912,7 +5210,7 @@
 
       const group = (() => {
         if (/تأسيس|تراخيص|بلدية|الشركات|الأجنبية|الامتثال|الأعمال|الموارد|ملفات المنشأة|الأملاك|المشاريع|مدن|العلامات|التسويق/.test(title)) return "business";
-        if (/الخدمات العامة|القضايا|الحج|الصحية|النقل|الجمارك|الزكاة|الضريبة|المرافق|المرور|السفارات|القنصليات/.test(title)) return "review";
+        if (/الخدمات العامة|القضايا|الحج|الصحية|النقل|الجمارك|الزكاة|الضريبة|المرافق|المرور|السفارات|القنصليات/.test(title)) return "authority";
         if (/المطالبات|التمويل|المستخلصات|الموردين|المقايضات|التسويات/.test(title)) return "finance";
         if (/الأفراد|الأسر|ذوي الاحتياجات|كبار السن|الجمعيات/.test(title)) return "social";
         if (/التعليم|تأشيرات|السفر/.test(title)) return "travel";
@@ -5039,8 +5337,8 @@
       {
         keywords: ["خدمات", "خدمتكم", "تقدمون"],
         keywordsEn: ["services","what services","do you provide"],
-        answerAr: "نقدم تأسيس الشركات، التراخيص، إدارة الأملاك، إدارة المشاريع، المراجعات الحكومية والمالية والقضائية، الإعلام والترفيه والفعاليات، الصناعة والثروة المعدنية، العلامات التجارية والتسويق، الجمارك والزكاة والنقل، وخدمات الأفراد.",
-        answerEn: "We provide company formation, licensing, property management, project management, government and financial reviews, media and events, industry and mineral wealth, trademarks and marketing, customs and VAT and transport, and individual services."
+        answerAr: "نقدم تأسيس الشركات، التراخيص، إدارة الأملاك، إدارة المشاريع، المتابعة الحكومية والمالية والقضائية، الإعلام والترفيه والفعاليات، الصناعة والثروة المعدنية، العلامات التجارية والتسويق، الجمارك والزكاة والنقل، وخدمات الأفراد.",
+        answerEn: "We provide company formation, licensing, property management, project management, government and financial coordination, media and events, industry and mineral wealth, trademarks and marketing, customs and VAT and transport, and individual services."
       },
       {
         keywords: ["أنواع", "الشركات", "مساهمة", "مبسطة", "مقفلة", "مسؤولية"],
@@ -5051,14 +5349,14 @@
       {
         keywords: ["ترخيص", "تراخيص", "بلدية", "بناء", "بيئة", "سياحة", "صناعية", "وقود", "هدم"],
         keywordsEn: ["license","municipal","construction permit","building permit"],
-        answerAr: "نراجع تراخيص البناء، إضافة الأدوار والملاحق، البيئة، فتح النشاط التجاري، الصناعية، السياحة، محطات الوقود، الهدم والإزالة، وتجديد وتعديل الرخص.",
+        answerAr: "نتابع تراخيص البناء، إضافة الأدوار والملاحق، البيئة، فتح النشاط التجاري، الصناعية، السياحة، محطات الوقود، الهدم والإزالة، وتجديد وتعديل الرخص.",
         answerEn: "We handle construction permits, adding floors and annexes, environmental permits, commercial/industrial/tourism activity openings, fuel stations, demolition and removal, and renewal/amendment of permits."
       },
       {
-        keywords: ["مراجعة", "مراجعات", "بنوك", "الصندوق", "تمويل", "تأمين", "تامين", "محاكم", "عدل", "جوازات", "مرور", "استثمار", "مالية", "صحة", "تقاعد", "ضمان", "تجارة", "حج", "إعلام", "اعلام", "ترفيه", "صناعة", "الثروة", "أحوال", "احوال"],
-        keywordsEn: ["government","ministries","banks","courts","review"],
-        answerAr: "نراجع نيابة عن العميل لدى وزارة المالية، وزارة الصحة، وزارة التجارة، وزارة الحج، وزارة الاستثمار، وزارة الإعلام، هيئة الترفيه، وزارة الصناعة والثروة المعدنية، مدن الصناعية، مصلحة التقاعد، الضمان الاجتماعي، الأحوال المدنية، الجوازات، المرور، المحاكم وكتابات العدل، والبنوك.",
-        answerEn: "We coordinate reviews before ministries and entities including finance, health, commerce, Hajj, investment, media, entertainment, industry/MIR, MODON, pensions, social insurance, civil affairs, passports, traffic, courts and notaries, and banks — as representatives."
+        keywords: ["مراجعة", "مراجعات", "متابعة", "متابعات", "تنسيق", "بنوك", "الصندوق", "تمويل", "تأمين", "تامين", "محاكم", "عدل", "جوازات", "مرور", "استثمار", "مالية", "صحة", "تقاعد", "ضمان", "تجارة", "حج", "إعلام", "اعلام", "ترفيه", "صناعة", "الثروة", "أحوال", "احوال"],
+        keywordsEn: ["government","ministries","banks","courts","follow-up","follow up","liaison"],
+        answerAr: "ننسّق ونتابع نيابة عن العميل لدى وزارة المالية، وزارة الصحة، وزارة التجارة، وزارة الحج، وزارة الاستثمار، وزارة الإعلام، هيئة الترفيه، وزارة الصناعة والثروة المعدنية، مدن الصناعية، مصلحة التقاعد، الضمان الاجتماعي، الأحوال المدنية، الجوازات، المرور، المحاكم وكتابات العدل، والبنوك.",
+        answerEn: "We coordinate and follow up before ministries and entities including finance, health, commerce, Hajj, investment, media, entertainment, industry/MIR, MODON, pensions, social insurance, civil affairs, passports, traffic, courts and notaries, and banks — as representatives."
       },
       {
         keywords: ["موارد", "بشرية", "موظفين", "العمل"],
@@ -5069,8 +5367,8 @@
       {
         keywords: ["أفراد", "الافراد", "الأفراد", "شخصية", "شخصي"],
         keywordsEn: ["individual","personal","people"],
-        answerAr: "نقدم خدمات للأفراد تشمل مراجعات الجهات الحكومية، المعاملات العدلية والإدارية، متابعة الطلبات الشخصية، وتنظيم المستندات والمتطلبات.",
-        answerEn: "We provide individual services including government reviews, administrative/notarial matters, personal request follow-up, and document preparation."
+        answerAr: "نقدم خدمات للأفراد تشمل متابعة الجهات الحكومية، المعاملات العدلية والإدارية، متابعة الطلبات الشخصية، وتنظيم المستندات والمتطلبات.",
+        answerEn: "We provide individual services including government liaison, administrative/notarial matters, personal request follow-up, and document preparation."
       },
       {
         keywords: ["تطوير", "متابعة الأعمال", "متابعة الاعمال", "اعمال", "الأعمال"],
@@ -5105,20 +5403,20 @@
       {
         keywords: ["علامة", "علامات", "تجارية", "تسويق", "التسويق"],
         keywordsEn: ["trademark","marketing"],
-        answerAr: "نقدم خدمات العلامات التجارية والتسويق، وتشمل مراجعة العلامات، تأسيس العلامات التجارية، التسويق للغير، وتنسيق المتطلبات والمخاطبات.",
-        answerEn: "We cover trademarks and marketing: trademark reviews, registrations, third‑party marketing, and correspondence coordination."
+        answerAr: "نقدم خدمات العلامات التجارية والتسويق، وتشمل متابعة ملفات العلامات التجارية، تأسيس العلامات التجارية، التسويق للغير، وتنسيق المتطلبات والمخاطبات.",
+        answerEn: "We cover trademarks and marketing: trademark file follow-up, registrations, third‑party marketing, and correspondence coordination."
       },
       {
         keywords: ["ميناء", "الميناء", "مينا", "جمارك", "الجمارك", "زكاة", "ضريبة", "الضريبة", "النقل", "المواصلات"],
         keywordsEn: ["customs","vat","transport"],
-        answerAr: "نراجع الميناء والمنافذ، الجمارك، هيئة الزكاة والضريبة والجمارك، ووزارة النقل والخدمات اللوجستية ووزارة المواصلات حسب نوع الطلب.",
+        answerAr: "نتابع الميناء والمنافذ، الجمارك، هيئة الزكاة والضريبة والجمارك، ووزارة النقل والخدمات اللوجستية ووزارة المواصلات حسب نوع الطلب.",
         answerEn: "We coordinate ports and customs, ZATCA, and transport/logistics authorities depending on the request."
       },
       {
         keywords: ["إعلام", "اعلام", "ترفيه", "الترفيه", "فعاليات", "معارض", "صناعة", "الصناعة", "الثروة", "معدنية", "مدن"],
         keywordsEn: ["media","events","entertainment","industry"],
-        answerAr: "نقدم خدمات مراجعة وزارة الإعلام، هيئة الترفيه، تصاريح الفعاليات والمعارض، وزارة الصناعة والثروة المعدنية، ومراجعة مدن الصناعية للأنشطة والتراخيص ذات العلاقة.",
-        answerEn: "We coordinate media/MOC reviews, entertainment permits for events/exhibitions, industry/MIR, and MODON-related licenses."
+        answerAr: "نقدم خدمات التنسيق مع وزارة الإعلام، هيئة الترفيه، تصاريح الفعاليات والمعارض، وزارة الصناعة والثروة المعدنية، ومتابعة ملفات مدن الصناعية للأنشطة والتراخيص ذات العلاقة.",
+        answerEn: "We coordinate media/MOC liaison, entertainment permits for events/exhibitions, industry/MIR, and MODON-related licenses."
       },
       {
         keywords: ["أسر", "اسر", "منتجة", "احتياجات", "كبار", "سن", "جمعيات", "خيرية", "تعاونية"],
@@ -5129,7 +5427,7 @@
       {
         keywords: ["تعليم", "دراسة", "الخارج", "تأشيرة", "تاشيرة", "تأشيرات", "تاشيرات", "سفر", "سفارة", "سفارات", "قنصلية", "قنصليات"],
         keywordsEn: ["education abroad","visa","embassy"],
-        answerAr: "نقدم خدمات التعليم في الخارج ومراجعة متطلبات تأشيرات السفر للخارج، وتشمل مراجعة السفارات والقنصليات، ترتيب المستندات، متابعة النماذج، وتنسيق المواعيد.",
+        answerAr: "نقدم خدمات التعليم في الخارج ومتابعة متطلبات تأشيرات السفر للخارج، وتشمل متابعة السفارات والقنصليات، ترتيب المستندات، متابعة النماذج، وتنسيق المواعيد.",
         answerEn: "We coordinate overseas education and travel visas, including embassies/consulates, documents, forms, and appointments."
       },
       {
@@ -5141,7 +5439,7 @@
       {
         keywords: ["كهرباء", "المياه", "مياه", "اتصالات", "بلديات", "الأمانات", "امانات"],
         keywordsEn: ["utilities","electricity","water","telecom"],
-        answerAr: "نراجع الجهات الخدمية والتشغيلية مثل شركة الكهرباء، مصلحة المياه، شركات الاتصالات، الأمانات، والبلديات الفرعية.",
+        answerAr: "ننسّق مع الجهات الخدمية والتشغيلية مثل شركة الكهرباء، مصلحة المياه، شركات الاتصالات، الأمانات، والبلديات الفرعية.",
         answerEn: "We coordinate utilities such as electricity, water, telecoms, municipalities and sub-municipalities."
       },
       {
@@ -5324,7 +5622,7 @@
         service
           ? chatFmt("تم اختيار: %s. في أي مدينة تريد تنفيذ الخدمة؟", service)
           : chatUi(
-              "ما الخدمة المطلوبة؟ اكتبها باختصار، مثل: تأسيس شركة، ترخيص بناء، مراجعة جهة، أو خدمة موارد بشرية."
+              "ما الخدمة المطلوبة؟ اكتبها باختصار، مثل: تأسيس شركة، ترخيص بناء، متابعة جهة، أو خدمة موارد بشرية."
             )
       );
       setChatbotPrompt(service ? "مثال: جدة، الرياض، مكة..." : "اكتب الخدمة المطلوبة...");
@@ -5492,8 +5790,8 @@
         return;
       }
 
-      if (/طلب\s*مراجعات|مراجعة\s*جهة|المراجعات/.test(normalized)) {
-        startFullServiceRequest("مراجعات الجهات");
+      if (/طلب\s*مراجعات|طلب\s*متابعات|متابعة\s*جهة|مراجعة\s*جهة|المراجعات|متابعة\s*الجهات/.test(normalized)) {
+        startFullServiceRequest("متابعة الجهات");
         return;
       }
 
@@ -5508,7 +5806,7 @@
       }
 
       if (/مرور/.test(normalized)) {
-        startFullServiceRequest("مراجعة المرور");
+        startFullServiceRequest("متابعة المرور");
         return;
       }
 
