@@ -1,0 +1,465 @@
+/* Advanced Dictionary Styles */
+
+/* Search Suggestions */
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: white;
+    border: 1px solid var(--primary-color);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    box-shadow: var(--hover-shadow);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.suggestions-list {
+    padding: 0.5rem 0;
+}
+
+.suggestion-item {
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.suggestion-item:hover {
+    background: var(--bg-light);
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-word {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-family: 'Amiri', serif;
+}
+
+.suggestion-meaning {
+    color: var(--text-dark);
+    opacity: 0.7;
+    font-size: 0.9rem;
+    flex: 1;
+}
+
+.suggestion-type {
+    background: var(--accent-color);
+    color: var(--text-dark);
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Search Summary */
+.search-summary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.summary-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.clear-search {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.clear-search:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Enhanced Dictionary Cards */
+.dictionary-card {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.dictionary-card.highlighted {
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    transform: scale(1.02);
+}
+
+.dictionary-card.search-result {
+    animation: searchPulse 0.5s ease;
+}
+
+@keyframes searchPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Similar Words Section */
+.similar-words {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--accent-color);
+    animation: slideInUp 0.5s ease;
+}
+
+.similar-words h4 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.similar-words-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.similar-word-item {
+    background: var(--bg-light);
+    padding: 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.similar-word-item:hover {
+    border-color: var(--primary-color);
+    transform: translateX(-5px);
+}
+
+.similar-word {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-family: 'Amiri', serif;
+}
+
+.similar-type {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Enhanced Audio Button */
+.btn-audio-pronunciation {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-audio-pronunciation.playing {
+    background: var(--secondary-color);
+    animation: audioPlaying 1s ease-in-out infinite;
+}
+
+@keyframes audioPlaying {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.btn-audio-pronunciation.playing::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: ripple 1.5s ease-in-out infinite;
+}
+
+@keyframes ripple {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+/* Advanced Search Filters */
+.dictionary-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-label {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.filter-select {
+    padding: 0.5rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    background: white;
+    color: var(--text-dark);
+    font-family: 'Tajawal', sans-serif;
+    cursor: pointer;
+}
+
+/* Word Details Modal */
+.word-details-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.word-details-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.word-details-content {
+    background: white;
+    border-radius: 20px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    margin: 2rem;
+}
+
+.word-details-header {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 2rem;
+    border-radius: 20px 20px 0 0;
+}
+
+.word-details-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    font-family: 'Amiri', serif;
+}
+
+.word-details-pronunciation {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.word-details-body {
+    padding: 2rem;
+}
+
+.word-details-meaning {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+}
+
+.word-details-examples {
+    margin-bottom: 1.5rem;
+}
+
+.word-details-examples h4 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.word-example {
+    background: var(--bg-light);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    border-right: 3px solid var(--primary-color);
+}
+
+/* Keyboard Shortcuts Help */
+.keyboard-help {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--primary-color);
+    color: white;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    z-index: 1000;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.keyboard-help:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dark Mode Enhancements */
+.dark-theme .search-suggestions {
+    background: var(--bg-dark);
+    border-color: var(--primary-color);
+}
+
+.dark-theme .suggestion-item {
+    border-bottom-color: rgba(255, 215, 0, 0.1);
+}
+
+.dark-theme .suggestion-item:hover {
+    background: var(--card-shadow);
+}
+
+.dark-theme .similar-words {
+    border-top-color: var(--accent-color);
+}
+
+.dark-theme .similar-word-item {
+    background: var(--card-shadow);
+}
+
+/* Responsive Design for Advanced Features */
+@media (max-width: 768px) {
+    .search-suggestions {
+        max-height: 200px;
+    }
+    
+    .suggestion-item {
+        padding: 0.6rem 0.8rem;
+    }
+    
+    .suggestion-word {
+        font-size: 1rem;
+    }
+    
+    .suggestion-meaning {
+        font-size: 0.8rem;
+    }
+    
+    .similar-words-list {
+        gap: 0.3rem;
+    }
+    
+    .similar-word-item {
+        padding: 0.6rem;
+    }
+    
+    .word-details-content {
+        margin: 1rem;
+        max-height: 90vh;
+    }
+    
+    .word-details-header {
+        padding: 1.5rem;
+    }
+    
+    .word-details-title {
+        font-size: 1.5rem;
+    }
+    
+    .word-details-body {
+        padding: 1.5rem;
+    }
+}
+
+/* Loading States */
+.dictionary-loading {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+}
+
+.dictionary-loading i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* No Results State */
+.no-results-message {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-dark);
+}
+
+.no-results-content i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.no-results-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.no-results-content p {
+    opacity: 0.7;
+    margin-bottom: 1.5rem;
+}
+
+.no-results-content button {
+    margin-top: 1rem;
+}
