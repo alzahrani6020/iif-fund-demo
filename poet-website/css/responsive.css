@@ -1,0 +1,516 @@
+/* Responsive Design */
+
+/* Large Tablets and Small Desktops */
+@media (max-width: 1024px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+    }
+    
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .current-audio {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .audio-cover {
+        margin: 0 auto;
+    }
+    
+    .poem-footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .poem-actions {
+        justify-content: center;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        right: -100%;
+        top: 80px;
+        flex-direction: column;
+        background-color: var(--bg-light);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(139, 69, 19, 0.1);
+        padding: 2rem 0;
+    }
+    
+    .nav-menu.active {
+        right: 0;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .poems-grid,
+    .videos-grid,
+    .dictionary-grid,
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-tabs {
+        justify-content: center;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .about-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .social-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        margin: 1rem;
+        max-height: 95vh;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .search-container {
+        width: 95%;
+    }
+    
+    .search-filters {
+        justify-content: center;
+    }
+    
+    .quick-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .poet-avatar {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .filter-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .tab-btn {
+        width: 200px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .footer-social {
+        justify-content: center;
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
+    }
+    
+    .quotes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-header {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .modal-footer {
+        padding: 1rem 1.5rem 1.5rem;
+    }
+    
+    .quick-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .dictionary-search {
+        flex-direction: column;
+    }
+    
+    .search-btn {
+        width: 100%;
+    }
+    
+    .poem-card,
+    .dictionary-card,
+    .video-card,
+    .event-card {
+        padding: 1.5rem;
+    }
+    
+    .poem-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .audio-player-container {
+        padding: 1.5rem;
+    }
+    
+    .current-audio {
+        gap: 1.5rem;
+    }
+    
+    .audio-cover {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .contact-form {
+        padding: 1.5rem;
+    }
+    
+    .about-content {
+        gap: 2rem;
+    }
+    
+    .about-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Very Small Mobile Phones */
+@media (max-width: 360px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+    }
+    
+    .poet-avatar {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .container {
+        padding: 0 10px;
+    }
+    
+    .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .poem-card,
+    .dictionary-card,
+    .video-card,
+    .event-card {
+        padding: 1rem;
+    }
+    
+    .audio-player-container {
+        padding: 1rem;
+    }
+    
+    .audio-cover {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .search-input {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+    
+    .nav-container {
+        padding: 0 15px;
+    }
+    
+    .nav-logo {
+        font-size: 1.5rem;
+    }
+    
+    .nav-logo i {
+        font-size: 1.5rem;
+    }
+}
+
+/* Landscape Orientation for Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: 100px 0 30px;
+    }
+    
+    .hero-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    
+    .poet-avatar {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-stats {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .poet-avatar img,
+    .audio-cover img,
+    .video-thumbnail img,
+    .about-image img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .header,
+    .footer,
+    .hero-buttons,
+    .nav-actions,
+    .scroll-indicator,
+    .loading-screen,
+    .search-overlay,
+    .modal {
+        display: none !important;
+    }
+    
+    .hero {
+        min-height: auto;
+        padding: 2rem 0;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .poem-card,
+    .dictionary-card,
+    .video-card,
+    .event-card {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        break-inside: avoid;
+    }
+    
+    .section-title {
+        color: black !important;
+    }
+    
+    a {
+        text-decoration: none !important;
+        color: black !important;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .hero-title,
+    .poet-avatar,
+    .scroll-indicator {
+        animation: none !important;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-light: #2C1810;
+        --text-dark: #F5E6D3;
+        --bg-light: #1A0F08;
+        --bg-dark: #FFF8F0;
+    }
+    
+    body.dark-theme {
+        --text-light: #2C1810;
+        --text-dark: #F5E6D3;
+        --bg-light: #1A0F08;
+        --bg-dark: #FFF8F0;
+    }
+}
+
+/* Touch Devices */
+@media (hover: none) and (pointer: coarse) {
+    .nav-link:hover::after {
+        width: 0;
+    }
+    
+    .nav-link:active::after {
+        width: 100%;
+    }
+    
+    .quick-card:active,
+    .poem-card:active,
+    .dictionary-card:active,
+    .video-card:active,
+    .event-card:active {
+        transform: scale(0.98);
+    }
+    
+    .btn:active {
+        transform: scale(0.95);
+    }
+    
+    .play-button:active {
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+}
+
+/* Large Screens */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1600px;
+    }
+    
+    .hero-title {
+        font-size: 4.5rem;
+    }
+    
+    .section-title {
+        font-size: 3.5rem;
+    }
+    
+    .poet-avatar {
+        width: 400px;
+        height: 400px;
+    }
+    
+    .quick-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .poems-grid,
+    .videos-grid,
+    .dictionary-grid,
+    .events-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Ultra Wide Screens */
+@media (min-width: 1920px) {
+    .container {
+        max-width: 1800px;
+    }
+    
+    .hero-title {
+        font-size: 5rem;
+    }
+    
+    .section-title {
+        font-size: 4rem;
+    }
+    
+    .poet-avatar {
+        width: 450px;
+        height: 450px;
+    }
+    
+    .quick-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    
+    .poems-grid,
+    .videos-grid,
+    .dictionary-grid,
+    .events-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
