@@ -82,6 +82,17 @@ export interface Comment {
   date: string
 }
 
+export interface HistoricalEvent {
+  id: string
+  title: string
+  date: string
+  location?: string
+  sides?: string
+  result?: string
+  description: string
+  category: "معركة" | "حدث" | "معاهدة" | "شخصية"
+}
+
 export interface ContentData {
   poems: Poem[]
   articles: Article[]
@@ -90,6 +101,7 @@ export interface ContentData {
   videos: Video[]
   audio: Audio[]
   comments: Comment[]
+  history: HistoricalEvent[]
 }
 
 const STORAGE_KEY = "alzahrani_content_data_v2"
@@ -97,6 +109,13 @@ const AUTH_KEY = "alzahrani_admin_auth"
 
 const defaultData: ContentData = {
   comments: [],
+  history: [
+    { id: "1", title: "معركة زهران", date: "1322 هـ", location: "زهران، جنوب السعودية", sides: "قبائل زهران ضد العثمانيين", result: "انتصار زهران", description: "معركة تاريخية مجيدة خاضتها قبائل زهران ضد الحملة العثمانية بقيادة أحمد طوسون باشا، وتم فيها صد الهجوم وحماية الديار.", category: "معركة" },
+    { id: "2", title: "يوم الوهابين", date: "1318 هـ", location: "وادي بيشة", sides: "زهران وعسير ضد الأتراك", result: "انتصار قاطع", description: "يوم مشهور في تاريخ الجنوب السعودي، سقط فيه القائد التركي وهُزم جيشه أمام شجاعة رجال زهران وعسير.", category: "معركة" },
+    { id: "3", title: "معاهدة الطائف", date: "1343 هـ", location: "الطائف", sides: "الملك عبدالعزيز والإمارة", result: "توحيد المملكة", description: "من الأحداث المهمة في توحيد المملكة العربية السعودية، شاركت فيها قبائل زهران بوفاء وولاء.", category: "معاهدة" },
+    { id: "4", title: "الشيخ حزام بن زاهر", date: "1290 هـ", location: "زهران", sides: "—", result: "—", description: "أحد أبرز زعماء قبيلة زهران، اشتهر بحكمته وشجاعته في قيادة قبيلته في مواجهات عدة.", category: "شخصية" },
+    { id: "5", title: "تأسيس إمارة الباحة", date: "1345 هـ", location: "الباحة", sides: "—", result: "استقرار المنطقة", description: "حدث إداري مهم ساهم في تطوير المنطقة وربطها بالدولة الحديثة.", category: "حدث" }
+  ],
   poems: [
     { id: "1", title: "قصيدة الوطن الغالي", category: "وطنية", content: "يا وطني يا منبع الخير والعطا\nيا أرض أجدادي وموطن آبائي\nفيك تربيت وفيك شبيت\nوحبك في قلبي ما له نهاية\n\nمن جبالك شامخة وعالية\nإلى سهولك خضرا وغالية\nأنت في قلبي دايم باقي\nووفائي لك ما له نهاية", excerpt: "يا وطني يا منبع الخير والعطا...", date: "1445/06/15", views: 234, likes: 245, hasAudio: true },
     { id: "2", title: "شوق وحنين", category: "غزل", content: "يا طير يا مسافر للديار البعيدة\nخذ معك سلامي للأحباب الغالين\nقل لهم قلبي عليهم مشتاق\nوالعين من بعدهم ما تنام الليالي", excerpt: "يا طير يا مسافر للديار البعيدة...", date: "1445/06/12", views: 187, likes: 198, hasAudio: true },
@@ -428,6 +447,36 @@ export function deleteComment(id: string): boolean {
   return data.comments.length < initialLength
 }
 
+// History CRUD
+export function getHistory(): HistoricalEvent[] {
+  return getData().history
+}
+
+export function addHistoryEvent(event: Omit<HistoricalEvent, "id">): HistoricalEvent {
+  const data = getData()
+  const newEvent: HistoricalEvent = { ...event, id: generateId() }
+  data.history = [newEvent, ...data.history]
+  saveData(data)
+  return newEvent
+}
+
+export function updateHistoryEvent(id: string, updates: Partial<Omit<HistoricalEvent, "id">>): HistoricalEvent | null {
+  const data = getData()
+  const index = data.history.findIndex(e => e.id === id)
+  if (index === -1) return null
+  data.history[index] = { ...data.history[index], ...updates }
+  saveData(data)
+  return data.history[index]
+}
+
+export function deleteHistoryEvent(id: string): boolean {
+  const data = getData()
+  const initialLength = data.history.length
+  data.history = data.history.filter(e => e.id !== id)
+  saveData(data)
+  return data.history.length < initialLength
+}
+
 // Stats
 export function getStats() {
   const data = getData()
@@ -438,6 +487,7 @@ export function getStats() {
     dictionary: data.dictionary.length,
     videos: data.videos.length,
     audio: data.audio.length,
+    history: data.history.length,
     totalViews: 
       data.poems.reduce((s, p) => s + p.views, 0) +
       data.articles.reduce((s, a) => s + a.views, 0) +
