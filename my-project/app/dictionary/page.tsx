@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { BookText, Search, Volume2, BookOpen, Star, Share2, Copy, Check } from "lucide-react"
+import { getDictionary } from "@/lib/data-store"
 
 const letters = [
   "الكل", "أ", "ب", "ت", "ث", "ج", "ح", "خ", "د", "ذ", "ر", "ز", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ك", "ل", "م", "ن", "هـ", "و", "ي"
@@ -14,134 +15,13 @@ const letters = [
 
 const categories = ["الكل", "الطبيعة", "الأدوات", "الطعام", "المنزل", "العادات", "الزراعة"]
 
-const dictionaryEntries = [
-  {
-    id: 1,
-    word: "الصَّبَّة",
-    meaning: "الماء الجاري في الوادي بعد المطر، ويُطلق على السيل الصغير الذي ينحدر من الجبال",
-    usage: "جات الصبة من الجبل وملت الوادي، وسقينا منها المزارع",
-    culturalNote: "الصبة من أهم مصادر المياه في المنطقة الجبلية، وكان الأهالي ينتظرونها بفارغ الصبر",
-    letter: "ص",
-    category: "الطبيعة",
-    pronunciation: "as-sab-bah",
-  },
-  {
-    id: 2,
-    word: "المَقْيَل",
-    meaning: "مكان الراحة والاستراحة وقت القيلولة، عادة يكون تحت ظل شجرة أو في مكان بارد",
-    usage: "رحنا للمقيل نرتاح من حر الظهيرة تحت ظل السدرة",
-    culturalNote: "المقيل تقليد قديم في المنطقة الجنوبية، حيث يستريح الناس من حرارة منتصف النهار",
-    letter: "م",
-    category: "العادات",
-    pronunciation: "al-maq-yil",
-  },
-  {
-    id: 3,
-    word: "الغَبْقَة",
-    meaning: "وجبة العشاء أو الطعام الذي يؤكل في الليل، تُقدم عادة بعد صلاة المغرب",
-    usage: "تعال معنا نتغبق عند الوالد، عنده ذبيحة الليلة",
-    culturalNote: "الغبقة وجبة اجتماعية مهمة تجمع الأهل والأصدقاء",
-    letter: "غ",
-    category: "الطعام",
-    pronunciation: "al-ghab-qah",
-  },
-  {
-    id: 4,
-    word: "الحِلَّة",
-    meaning: "مجموعة البيوت أو الخيام المتجاورة، القرية الصغيرة أو التجمع السكني",
-    usage: "حلتنا على رأس الجبل، منها نشوف كل الوادي",
-    culturalNote: "الحلة وحدة اجتماعية مهمة تجمع عدة عائلات مترابطة",
-    letter: "ح",
-    category: "المنزل",
-    pronunciation: "al-hil-lah",
-  },
-  {
-    id: 5,
-    word: "القَرَوَة",
-    meaning: "الإناء الكبير المصنوع من الفخار لحفظ الماء وتبريده، يُصنع محلياً",
-    usage: "اشرب من القروة ماء بارد، حطيناها في الظل من الصباح",
-    culturalNote: "القروة من أهم الأدوات التراثية، تحفظ الماء بارداً بطريقة طبيعية",
-    letter: "ق",
-    category: "الأدوات",
-    pronunciation: "al-qar-wah",
-  },
-  {
-    id: 6,
-    word: "العَرِيش",
-    meaning: "سقيفة من الخشب والأغصان للظل، تُبنى أمام البيوت أو في المزارع",
-    usage: "قعدنا تحت العريش نشرب القهوة ونسولف",
-    culturalNote: "العريش مكان للضيافة واستقبال الزوار في فصل الصيف",
-    letter: "ع",
-    category: "المنزل",
-    pronunciation: "al-a-reesh",
-  },
-  {
-    id: 7,
-    word: "السَّدَة",
-    meaning: "الباب أو المدخل الرئيسي للبيت، وتُطلق أيضاً على عتبة الباب",
-    usage: "استقبلناه عند السدة وأدخلناه للمجلس",
-    culturalNote: "السدة لها رمزية في الضيافة، حيث يُستقبل الضيف عندها",
-    letter: "س",
-    category: "المنزل",
-    pronunciation: "as-sad-dah",
-  },
-  {
-    id: 8,
-    word: "المَجْرَة",
-    meaning: "الطريق أو الممر بين الجبال، المسار الذي يسلكه الناس والماشية",
-    usage: "مشينا في المجرة ساعتين حتى وصلنا للقرية الثانية",
-    culturalNote: "المجرة طرق قديمة شقها الأجداد بين الجبال للتنقل والتجارة",
-    letter: "م",
-    category: "الطبيعة",
-    pronunciation: "al-maj-rah",
-  },
-  {
-    id: 9,
-    word: "الدَّلَو",
-    meaning: "الوعاء المستخدم لجلب الماء من البئر، يُصنع من الجلد أو المعدن",
-    usage: "نزل الدلو وطلع مليان ماء زلال من البير",
-    culturalNote: "الدلو أداة أساسية في حياة الأجداد قبل وصول المياه الحديثة",
-    letter: "د",
-    category: "الأدوات",
-    pronunciation: "ad-dal-o",
-  },
-  {
-    id: 10,
-    word: "البَيْدَر",
-    meaning: "المكان الذي يُجمع فيه الحصاد ويُدرس، ساحة مفتوحة لفصل الحبوب",
-    usage: "جمعنا القمح في البيدر وبدأنا ندرسه بالبقر",
-    culturalNote: "البيدر مكان للعمل الجماعي، يجتمع فيه أهل القرية للمساعدة",
-    letter: "ب",
-    category: "الزراعة",
-    pronunciation: "al-bay-dar",
-  },
-  {
-    id: 11,
-    word: "التَّنُّور",
-    meaning: "فرن الطين المستخدم لخبز الخبز، يُصنع يدوياً من الطين المحلي",
-    usage: "أمي تخبز في التنور كل صباح، وريحة الخبز تفوح في البيت",
-    culturalNote: "التنور رمز للأصالة والحياة التقليدية، ولا يزال يُستخدم في بعض المناطق",
-    letter: "ت",
-    category: "الأدوات",
-    pronunciation: "at-tan-noor",
-  },
-  {
-    id: 12,
-    word: "الجَلْسَة",
-    meaning: "مجلس الضيوف والسمر، الاجتماع للحديث وتبادل الأخبار",
-    usage: "جلستنا الليلة عند فلان، بنسمع شعر ونشرب قهوة",
-    culturalNote: "الجلسة تقليد اجتماعي مهم لتقوية روابط المجتمع وتبادل الحكم والقصص",
-    letter: "ج",
-    category: "العادات",
-    pronunciation: "al-jal-sah",
-  },
-]
+const dictionaryEntries = getDictionary()
 
 export default function DictionaryPage() {
   const [selectedLetter, setSelectedLetter] = useState("الكل")
   const [selectedCategory, setSelectedCategory] = useState("الكل")
   const [searchQuery, setSearchQuery] = useState("")
-  const [copiedId, setCopiedId] = useState<number | null>(null)
+  const [copiedId, setCopiedId] = useState<string | null>(null)
 
   const filteredEntries = dictionaryEntries.filter((entry) => {
     const matchesLetter = selectedLetter === "الكل" || entry.letter === selectedLetter
@@ -150,7 +30,7 @@ export default function DictionaryPage() {
     return matchesLetter && matchesCategory && matchesSearch
   })
 
-  const handleCopy = (id: number, text: string) => {
+  const handleCopy = (id: string, text: string) => {
     navigator.clipboard.writeText(text)
     setCopiedId(id)
     setTimeout(() => setCopiedId(null), 2000)

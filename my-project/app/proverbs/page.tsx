@@ -6,95 +6,11 @@ import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Quote, Search, Heart, Share2, Filter, MessageSquareQuote } from "lucide-react"
+import { getProverbs } from "@/lib/data-store"
 
 const categories = ["الكل", "حكمة", "صبر", "كرم", "شجاعة", "تجارة", "أخلاق", "عمل"]
 
-const proverbs = [
-  {
-    id: 1,
-    text: "اللي ما يعرف الصقر يشويه",
-    meaning: "من لا يعرف قيمة الشيء قد يهينه أو يضيعه",
-    category: "حكمة",
-    likes: 245,
-  },
-  {
-    id: 2,
-    text: "الصبر مفتاح الفرج",
-    meaning: "الصبر على المصائب يجلب الفرج والخير",
-    category: "صبر",
-    likes: 312,
-  },
-  {
-    id: 3,
-    text: "الضيف ضيف الله",
-    meaning: "يجب إكرام الضيف لأنه في ضيافة الله",
-    category: "كرم",
-    likes: 289,
-  },
-  {
-    id: 4,
-    text: "الشجاعة نص الفزعة",
-    meaning: "الشجاعة تمثل نصف النجاح في مواجهة الصعاب",
-    category: "شجاعة",
-    likes: 198,
-  },
-  {
-    id: 5,
-    text: "البيع والشرا ما فيه خسارة",
-    meaning: "التجارة فيها ربح وخسارة وهذا أمر طبيعي",
-    category: "تجارة",
-    likes: 156,
-  },
-  {
-    id: 6,
-    text: "العين ما تعلى على الحاجب",
-    meaning: "الفرع لا يعلو على الأصل، والصغير يحترم الكبير",
-    category: "أخلاق",
-    likes: 267,
-  },
-  {
-    id: 7,
-    text: "اللي يبي العسل يصبر على قرص النحل",
-    meaning: "من يريد النجاح عليه أن يصبر على المشقة",
-    category: "صبر",
-    likes: 334,
-  },
-  {
-    id: 8,
-    text: "الكلمة الطيبة صدقة",
-    meaning: "الكلام الحسن له أجر عند الله كالصدقة",
-    category: "أخلاق",
-    likes: 423,
-  },
-  {
-    id: 9,
-    text: "من جد وجد ومن زرع حصد",
-    meaning: "الجد والعمل يؤديان إلى النجاح والحصاد",
-    category: "عمل",
-    likes: 398,
-  },
-  {
-    id: 10,
-    text: "الجار قبل الدار",
-    meaning: "اختر الجار الصالح قبل اختيار المنزل",
-    category: "حكمة",
-    likes: 287,
-  },
-  {
-    id: 11,
-    text: "الكريم كريم ولو على مزبلة",
-    meaning: "الكرم صفة أصيلة لا تتغير بتغير الظروف",
-    category: "كرم",
-    likes: 345,
-  },
-  {
-    id: 12,
-    text: "الرجال مواقف",
-    meaning: "قيمة الرجل تعرف من مواقفه وليس من كلامه",
-    category: "شجاعة",
-    likes: 412,
-  },
-]
+const proverbs = getProverbs()
 
 export default function ProverbsPage() {
   const [selectedCategory, setSelectedCategory] = useState("الكل")
