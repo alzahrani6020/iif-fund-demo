@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Search, BookOpen, Mic, Video, BookText, Quote, User, Image, FileText, Mail, LayoutDashboard, MessageSquare } from "lucide-react"
+import { Menu, X, Search, BookOpen, Mic, Video, BookText, Quote, User, Image, FileText, Mail, LayoutDashboard, MessageSquare, Landmark } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   getPoems, getArticles, getProverbs, getDictionary, getVideos, getAudio
@@ -17,6 +17,7 @@ const navItems = [
   { href: "/videos", label: "مكتبة الفيديو", icon: Video },
   { href: "/dictionary", label: "معجم اللهجة", icon: BookText },
   { href: "/proverbs", label: "الأمثال والموروث", icon: Quote },
+  { href: "/history", label: "تاريخ زهران", icon: Landmark },
   { href: "/biography", label: "السيرة الذاتية", icon: User },
   { href: "/archive", label: "الصور والأرشيف", icon: Image },
   { href: "/articles", label: "المقالات", icon: FileText },

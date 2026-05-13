@@ -18,7 +18,8 @@ import {
 import {
   LayoutDashboard, BookOpen, Mic, Video, BookText, Quote, FileText,
   MessageSquare, Image, Users, Eye, Heart, Plus, Edit, Trash2, Search,
-  Settings, LogOut, Bell, ChevronLeft, X, Save, AlertTriangle, Download, Upload
+  Settings, LogOut, Bell, ChevronLeft, X, Save, AlertTriangle, Download, Upload,
+  Landmark
 } from "lucide-react"
 import {
   isLoggedIn, logout, getStats,
@@ -28,6 +29,7 @@ import {
   getDictionary, addDictionaryEntry, updateDictionaryEntry, deleteDictionaryEntry,
   getVideos, addVideo, updateVideo, deleteVideo,
   getAudio, addAudio, updateAudio, deleteAudio,
+  getHistory, addHistoryEvent, updateHistoryEvent, deleteHistoryEvent,
   exportData, importData,
   type Poem, type Article, type Proverb, type DictionaryEntry, type Video as VideoItem, type Audio
 } from "@/lib/data-store"
@@ -51,9 +53,10 @@ const sidebarItems = [
   { key: "dictionary", label: "معجم اللهجة", icon: BookText },
   { key: "proverbs", label: "الأمثال", icon: Quote },
   { key: "articles", label: "المقالات", icon: FileText },
+  { key: "history", label: "تاريخ ومعارك", icon: Landmark },
 ]
 
-type TabKey = "dashboard" | "poems" | "articles" | "proverbs" | "dictionary" | "videos" | "audio"
+type TabKey = "dashboard" | "poems" | "articles" | "proverbs" | "dictionary" | "videos" | "audio" | "history"
 
 export default function AdminPage() {
   const router = useRouter()
@@ -238,6 +241,22 @@ export default function AdminPage() {
                 fields={[
                   { name: "title", label: "العنوان", type: "text" },
                   { name: "url", label: "الرابط", type: "text" },
+                ]}
+              />
+            )}
+            {activeTab === "history" && (
+              <ContentTab key="history" title="الأحداث التاريخية" icon={Landmark} items={getHistory()}
+                onAdd={(data) => { addHistoryEvent(data as any); triggerRefresh() }}
+                onUpdate={(id, data) => { updateHistoryEvent(id, data as any); triggerRefresh() }}
+                onDelete={(id) => { deleteHistoryEvent(id); triggerRefresh() }}
+                fields={[
+                  { name: "title", label: "العنوان", type: "text" },
+                  { name: "date", label: "التاريخ", type: "text" },
+                  { name: "location", label: "الموقع", type: "text" },
+                  { name: "sides", label: "الأطراف", type: "text" },
+                  { name: "result", label: "النتيجة", type: "text" },
+                  { name: "description", label: "الوصف", type: "textarea" },
+                  { name: "category", label: "التصنيف", type: "text" },
                 ]}
               />
             )}
