@@ -6,6 +6,9 @@ import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Search, BookOpen, Mic, Video, BookText, Quote, User, Image, FileText, Mail, LayoutDashboard, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import {
+  getPoems, getArticles, getProverbs, getDictionary, getVideos, getAudio
+} from "@/lib/data-store"
 
 const navItems = [
   { href: "/", label: "الرئيسية", icon: null },
@@ -27,6 +30,9 @@ export function Navigation() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
+  const [searchQuery, setSearchQuery] = useState("")
+  const [searchResults, setSearchResults] = useState<{title: string; label: string; href: string}[]>([])
+  const [showResults, setShowResults] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +45,51 @@ export function Navigation() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  const performSearch = (query: string) => {
+    setSearchQuery(query)
+    if (!query.trim()) {
+      setSearchResults([])
+      setShowResults(false)
+      return
+    }
+    const q = query.trim().toLowerCase()
+    const results: {title: string; label: string; href: string}[] = []
+
+    getPoems().forEach(item => {
+      if (item.title.toLowerCase().includes(q) || item.content.toLowerCase().includes(q) || item.category.toLowerCase().includes(q)) {
+        results.push({ title: item.title, label: "قصيدة", href: "/diwan" })
+      }
+    })
+    getArticles().forEach(item => {
+      if (item.title.toLowerCase().includes(q) || item.content.toLowerCase().includes(q)) {
+        results.push({ title: item.title, label: "مقال", href: "/articles" })
+      }
+    })
+    getProverbs().forEach(item => {
+      if (item.text.toLowerCase().includes(q) || item.meaning.toLowerCase().includes(q)) {
+        results.push({ title: item.text, label: "مثل", href: "/proverbs" })
+      }
+    })
+    getDictionary().forEach(item => {
+      if (item.word.toLowerCase().includes(q) || item.meaning.toLowerCase().includes(q) || item.example.toLowerCase().includes(q)) {
+        results.push({ title: item.word, label: "مفردة", href: "/dictionary" })
+      }
+    })
+    getVideos().forEach(item => {
+      if (item.title.toLowerCase().includes(q)) {
+        results.push({ title: item.title, label: "فيديو", href: "/videos" })
+      }
+    })
+    getAudio().forEach(item => {
+      if (item.title.toLowerCase().includes(q)) {
+        results.push({ title: item.title, label: "صوتي", href: "/audio" })
+      }
+    })
+
+    setSearchResults(results.slice(0, 8))
+    setShowResults(true)
+  }
 
   return (
     <>
@@ -181,13 +232,55 @@ export function Navigation() {
                 transition={{ duration: 0.3 }}
               >
                 <div className="relative">
-                  <Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                  <Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground z-10" />
                   <input
                     type="text"
                     placeholder="ابحث في القصائد والمقالات والمفردات..."
+                    value={searchQuery}
+                    onChange={(e) => performSearch(e.target.value)}
                     className="w-full glass border-0 rounded-xl pr-12 pl-4 py-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
                     autoFocus
                   />
+                  {/* Results Dropdown */}
+                  <AnimatePresence>
+                    {showResults && searchResults.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute top-full right-0 left-0 mt-2 glass-dark rounded-xl shadow-2xl border border-border overflow-hidden z-50"
+                      >
+                        <div className="max-h-80 overflow-y-auto py-2">
+                          {searchResults.map((result, index) => (
+                            <Link
+                              key={index}
+                              href={result.href}
+                              onClick={() => { setShowResults(false); setSearchOpen(false); setSearchQuery(""); }}
+                              className="flex items-center justify-between px-4 py-3 hover:bg-primary/10 transition-colors"
+                            >
+                              <div className="flex flex-col">
+                                <span className="text-sm font-medium text-foreground truncate">{result.title}</span>
+                                <span className="text-xs text-muted-foreground">{result.label}</span>
+                              </div>
+                              <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
+                                {result.label}
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                    {showResults && searchQuery.trim() && searchResults.length === 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute top-full right-0 left-0 mt-2 glass-dark rounded-xl shadow-2xl border border-border overflow-hidden z-50 p-4 text-center text-sm text-muted-foreground"
+                      >
+                        لا توجد نتائج لـ «{searchQuery}»
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </motion.div>
             )}

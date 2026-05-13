@@ -7,92 +7,12 @@ import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Mic, Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Clock, Heart, Download, Shuffle, Repeat, List } from "lucide-react"
+import { getAudio } from "@/lib/data-store"
 
-const audioTracks = [
-  {
-    id: 1,
-    title: "قصيدة الوطن الغالي",
-    duration: "4:32",
-    durationSecs: 272,
-    category: "وطنية",
-    plays: 1234,
-    description: "قصيدة وطنية تتغنى بحب الوطن والانتماء للأرض والأجداد",
-    year: "1445",
-  },
-  {
-    id: 2,
-    title: "شوق وحنين",
-    duration: "3:45",
-    durationSecs: 225,
-    category: "غزل",
-    plays: 987,
-    description: "قصيدة غزلية تعبر عن الشوق والحنين للأحباب البعيدين",
-    year: "1445",
-  },
-  {
-    id: 3,
-    title: "حكمة الزمان",
-    duration: "5:20",
-    durationSecs: 320,
-    category: "حكمة",
-    plays: 1567,
-    description: "قصيدة تحمل حكم ومواعظ من تجارب الحياة",
-    year: "1444",
-  },
-  {
-    id: 4,
-    title: "فخر القبيلة",
-    duration: "6:10",
-    durationSecs: 370,
-    category: "فخر",
-    plays: 2345,
-    description: "قصيدة فخر بالأصل والقبيلة والموروث",
-    year: "1444",
-  },
-  {
-    id: 5,
-    title: "ليالي السمر",
-    duration: "4:55",
-    durationSecs: 295,
-    category: "غزل",
-    plays: 876,
-    description: "قصيدة عن جمال الليالي والسهر مع الأصحاب",
-    year: "1443",
-  },
-  {
-    id: 6,
-    title: "مدح الكريم",
-    duration: "3:30",
-    durationSecs: 210,
-    category: "مدح",
-    plays: 654,
-    description: "قصيدة مدح في أهل الكرم والجود",
-    year: "1443",
-  },
-  {
-    id: 7,
-    title: "ذكريات الطفولة",
-    duration: "5:45",
-    durationSecs: 345,
-    category: "وجدانية",
-    plays: 1123,
-    description: "قصيدة تستعيد ذكريات الطفولة والأيام الجميلة",
-    year: "1442",
-  },
-  {
-    id: 8,
-    title: "نداء الجبال",
-    duration: "4:15",
-    durationSecs: 255,
-    category: "وطنية",
-    plays: 1456,
-    description: "قصيدة تتغنى بجمال جبال زهران وعظمتها",
-    year: "1442",
-  },
-]
+const audioTracks = getAudio()
 
 export default function AudioPage() {
-  const [currentTrack, setCurrentTrack] = useState<number | null>(null)
+  const [currentTrack, setCurrentTrack] = useState<string | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
   const [progress, setProgress] = useState(0)
@@ -118,7 +38,7 @@ export default function AudioPage() {
     return () => clearInterval(interval)
   }, [isPlaying, currentTrack])
 
-  const handlePlayTrack = (trackId: number) => {
+  const handlePlayTrack = (trackId: string) => {
     if (currentTrack === trackId) {
       setIsPlaying(!isPlaying)
     } else {
@@ -168,7 +88,7 @@ export default function AudioPage() {
               </div>
               <div className="w-px h-12 bg-border" />
               <div className="text-center">
-                <span className="text-3xl font-bold gold-gradient">+{audioTracks.reduce((a, b) => a + b.plays, 0).toLocaleString()}</span>
+                <span className="text-3xl font-bold gold-gradient">+{audioTracks.reduce((a, b) => a + (b.views || 0), 0).toLocaleString()}</span>
                 <p className="text-sm">استماع</p>
               </div>
             </div>
@@ -275,7 +195,7 @@ export default function AudioPage() {
                 {/* Progress Bar */}
                 <div className="flex items-center gap-3">
                   <span className="text-sm text-muted-foreground w-12 text-left">
-                    {currentTrackData ? formatTime(progress, currentTrackData.durationSecs) : "0:00"}
+                    {currentTrackData && currentTrackData.durationSecs ? formatTime(progress, currentTrackData.durationSecs) : "0:00"}
                   </span>
                   <div className="flex-1 h-2 bg-secondary rounded-full overflow-hidden cursor-pointer group">
                     <motion.div
@@ -356,7 +276,7 @@ export default function AudioPage() {
                         </span>
                         <span className="flex items-center gap-1">
                           <Play className="h-4 w-4" />
-                          {track.plays.toLocaleString()}
+                          {(track.views || 0).toLocaleString()}
                         </span>
                       </div>
 

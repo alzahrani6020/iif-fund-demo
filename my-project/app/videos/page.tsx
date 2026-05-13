@@ -7,79 +7,11 @@ import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Video, Play, Calendar, Eye, X, Search, Filter, Clock, Heart, Share2 } from "lucide-react"
+import { getVideos } from "@/lib/data-store"
 
 const categories = ["الكل", "أمسيات شعرية", "مقابلات", "وثائقيات", "محاضرات"]
 
-const videos = [
-  {
-    id: 1,
-    title: "أمسية شعرية في مهرجان الجنادرية",
-    description: "قصائد نبطية أصيلة ألقيت في مهرجان الجنادرية للتراث والثقافة، تضمنت قصائد وطنية وتراثية",
-    thumbnail: "/api/placeholder/640/360",
-    youtubeId: "dQw4w9WgXcQ",
-    category: "أمسيات شعرية",
-    date: "1445/03/15",
-    views: 12500,
-    duration: "45:20",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "لقاء تلفزيوني عن التراث الشعبي",
-    description: "حوار مع الشاعر حول أهمية الحفاظ على التراث الشعبي في منطقة زهران",
-    thumbnail: "/api/placeholder/640/360",
-    youtubeId: "dQw4w9WgXcQ",
-    category: "مقابلات",
-    date: "1445/02/20",
-    views: 8900,
-    duration: "32:15",
-  },
-  {
-    id: 3,
-    title: "وثائقي: لهجة زهران وأصولها",
-    description: "فيلم وثائقي يستعرض تاريخ ومفردات لهجة منطقة زهران",
-    thumbnail: "/api/placeholder/640/360",
-    youtubeId: "dQw4w9WgXcQ",
-    category: "وثائقيات",
-    date: "1445/01/10",
-    views: 15600,
-    duration: "58:40",
-    featured: true,
-  },
-  {
-    id: 4,
-    title: "محاضرة: الشعر النبطي تاريخ وأصالة",
-    description: "محاضرة ثقافية عن تاريخ الشعر النبطي وتطوره في الجزيرة العربية",
-    thumbnail: "/api/placeholder/640/360",
-    youtubeId: "dQw4w9WgXcQ",
-    category: "محاضرات",
-    date: "1444/12/05",
-    views: 6700,
-    duration: "1:15:30",
-  },
-  {
-    id: 5,
-    title: "أمسية الشعراء في الباحة",
-    description: "أمسية شعرية جمعت نخبة من شعراء المنطقة",
-    thumbnail: "/api/placeholder/640/360",
-    youtubeId: "dQw4w9WgXcQ",
-    category: "أمسيات شعرية",
-    date: "1444/11/20",
-    views: 9800,
-    duration: "52:10",
-  },
-  {
-    id: 6,
-    title: "لقاء إذاعي: ذكريات وحكايات",
-    description: "حديث شيق عن الذكريات والقصص من التراث الشعبي",
-    thumbnail: "/api/placeholder/640/360",
-    youtubeId: "dQw4w9WgXcQ",
-    category: "مقابلات",
-    date: "1444/10/15",
-    views: 5400,
-    duration: "28:45",
-  },
-]
+const videos = getVideos()
 
 export default function VideosPage() {
   const [selectedCategory, setSelectedCategory] = useState("الكل")
@@ -88,7 +20,7 @@ export default function VideosPage() {
 
   const filteredVideos = videos.filter((video) => {
     const matchesCategory = selectedCategory === "الكل" || video.category === selectedCategory
-    const matchesSearch = video.title.includes(searchQuery) || video.description.includes(searchQuery)
+    const matchesSearch = video.title.includes(searchQuery) || (video.description || "").includes(searchQuery)
     return matchesCategory && matchesSearch
   })
 
@@ -281,7 +213,7 @@ export default function VideosPage() {
                       {video.title}
                     </h3>
                     <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-                      {video.description}
+                      {video.description || ""}
                     </p>
                     <div className="flex items-center justify-between text-sm text-muted-foreground">
                       <span className="flex items-center gap-1">

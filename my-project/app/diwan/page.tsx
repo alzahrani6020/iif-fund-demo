@@ -8,6 +8,8 @@ import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Search, Filter, Heart, Share2, BookOpen, Calendar, Tag, X, Play, ChevronLeft, ChevronRight } from "lucide-react"
+import { getPoems, updatePoem } from "@/lib/data-store"
+import CommentsSection from "@/components/comments-section"
 
 const categories = [
   { id: "all", label: "الكل", count: 524 },
@@ -19,79 +21,19 @@ const categories = [
   { id: "watani", label: "القصائد الوطنية", count: 74 },
 ]
 
-const poems = [
-  {
-    id: 1,
-    title: "قصيدة الوطن الغالي",
-    excerpt: "يا وطني يا منبع الخير والعطا\nيا أرض أجدادي وموطن آبائي\nفيك تربيت وفيك شبيت\nوحبك في قلبي ما له نهاية",
-    fullText: "يا وطني يا منبع الخير والعطا\nيا أرض أجدادي وموطن آبائي\nفيك تربيت وفيك شبيت\nوحبك في قلبي ما له نهاية\n\nمن جبالك شامخة وعالية\nإلى سهولك خضرا وغالية\nأنت في قلبي دايم باقي\nووفائي لك ما له نهاية\n\nيا بلادي يا أرض الطيبين\nيا موطن الأجداد والأولين\nفخري فيك ما له مثيل\nوحبي لك صادق ويقين",
-    category: "وطنية",
-    date: "1445/03/15",
-    likes: 234,
-    hasAudio: true,
-  },
-  {
-    id: 2,
-    title: "شوق وحنين",
-    excerpt: "يا طير يا مسافر للديار البعيدة\nخذ معك سلامي للأحباب الغالين\nقل لهم قلبي عليهم مشتاق\nوالعين من بعدهم ما تنام الليالي",
-    fullText: "يا طير يا مسافر للديار البعيدة\nخذ معك سلامي للأحباب الغالين\nقل لهم قلبي عليهم مشتاق\nوالعين من بعدهم ما تنام الليالي\n\nكل يوم أتذكرهم وأتحسر\nعلى أيام مضت ما تتكرر\nكانوا معي في كل وقت حاضرين\nواليوم بعدهم كل شي متغير\n\nيا ليت الأيام ترجع كما كانت\nويجتمع الشمل اللي تفرق وبان\nويرجع الفرح لقلبي المحزون\nويطيب الجرح اللي من زمان",
-    category: "غزل",
-    date: "1445/02/20",
-    likes: 187,
-    hasAudio: true,
-  },
-  {
-    id: 3,
-    title: "حكمة الزمان",
-    excerpt: "تعلمت من أيامي دروس كثيرة\nوعرفت إن الصبر مفتاح كل باب\nوإن الدنيا ما تدوم لحد\nواللي يصبر ينال المراد",
-    fullText: "تعلمت من أيامي دروس كثيرة\nوعرفت إن الصبر مفتاح كل باب\nوإن الدنيا ما تدوم لحد\nواللي يصبر ينال المراد\n\nالدنيا دار فنا وزوال\nوالباقي العمل الصالح بكل حال\nمن يزرع الخير يحصد ثماره\nومن يزرع الشر ما يلقى إلا الوبال\n\nيا صاحبي اسمع نصيحة مجرب\nلا تحسب الدنيا على كيفك تمشي\nاصبر على ما جاك واحمد ربك\nوخذ من الدنيا على قد ما تعيش",
-    category: "حكمة",
-    date: "1445/01/10",
-    likes: 312,
-    hasAudio: false,
-  },
-  {
-    id: 4,
-    title: "فخر القبيلة",
-    excerpt: "نحن أهل زهران من قديم الزمان\nشيمتنا الكرم والطيب والوفاء\nديرتنا عالية والجبال شواهد\nعلى مجد آباءنا وعز أجدادنا",
-    fullText: "نحن أهل زهران من قديم الزمان\nشيمتنا الكرم والطيب والوفاء\nديرتنا عالية والجبال شواهد\nعلى مجد آباءنا وعز أجدادنا\n\nتاريخنا مشرف ومكتوب بالذهب\nوأجدادنا رجال ما خافوا من التعب\nحموا الديار وصانوا العرض والشرف\nوتركوا لنا إرث عظيم وحسب\n\nيا فخرنا يا عزنا يا زهران\nأنتي في قلوبنا دايم المكان\nنفديك بالروح والمال والولد\nويبقى حبك في القلب مدى الزمان",
-    category: "فخر",
-    date: "1444/12/05",
-    likes: 456,
-    hasAudio: true,
-  },
-  {
-    id: 5,
-    title: "رثاء صديق عزيز",
-    excerpt: "يا صاحبي اللي راح وما ودعني\nتركت قلبي في حسرة وألم\nكان وجودك نور في حياتي\nوغيابك ظلام ما له آخر",
-    fullText: "يا صاحبي اللي راح وما ودعني\nتركت قلبي في حسرة وألم\nكان وجودك نور في حياتي\nوغيابك ظلام ما له آخر\n\nكنت لي سند في كل وقت وحين\nوكنت لي عون على همومي\nواليوم بعدك ما لقيت من يواسيني\nولا من يخفف علي همومي\n\nالله يرحمك ويغفر لك ذنوبك\nويسكنك فسيح جناته\nوأسأل الله يجمعنا في الجنة\nيا خير صاحب عرفته في حياتي",
-    category: "رثاء",
-    date: "1444/11/20",
-    likes: 145,
-    hasAudio: false,
-  },
-  {
-    id: 6,
-    title: "مدح الكريم",
-    excerpt: "يا من كرمه شاع في كل مكان\nوطيبته ما لها مثيل\nبابك مفتوح للضيوف دايم\nوقهوتك للزاير أول سبيل",
-    fullText: "يا من كرمه شاع في كل مكان\nوطيبته ما لها مثيل\nبابك مفتوح للضيوف دايم\nوقهوتك للزاير أول سبيل\n\nأنت الكريم اللي ما رد سائل\nوأنت الشهم اللي ما خذل طامع\nوجهك بشوش للقريب والبعيد\nوكفك سخي ما يعرف المانع\n\nيا ليت كل الناس مثلك يكونون\nفي الجود والكرم والأخلاق\nتستاهل المدح والثناء الجميل\nوتستاهل كل خير ووفاق",
-    category: "مدح",
-    date: "1444/10/15",
-    likes: 198,
-    hasAudio: true,
-  },
-]
-
 export default function DiwanPage() {
+  const [poems, setPoems] = useState(() => getPoems())
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedPoem, setSelectedPoem] = useState<typeof poems[0] | null>(null)
+  const [selectedPoem, setSelectedPoem] = useState<(typeof poems)[0] | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const poemsPerPage = 6
 
+  const refreshPoems = () => setPoems(getPoems())
+
   const filteredPoems = poems.filter((poem) => {
     const matchesCategory = selectedCategory === "all" || poem.category === categories.find(c => c.id === selectedCategory)?.label
-    const matchesSearch = poem.title.includes(searchQuery) || poem.excerpt.includes(searchQuery)
+    const matchesSearch = poem.title.includes(searchQuery) || (poem.excerpt || "").includes(searchQuery)
     return matchesCategory && matchesSearch
   })
 
@@ -235,7 +177,7 @@ export default function DiwanPage() {
                     </div>
                     
                     <p className="text-muted-foreground font-serif text-lg leading-relaxed whitespace-pre-line mb-6 line-clamp-4">
-                      {poem.excerpt}
+                      {poem.excerpt || poem.content?.slice(0, 150) + "..." || ""}
                     </p>
 
                     <div className="flex items-center justify-between pt-4 border-t border-border">
@@ -246,7 +188,7 @@ export default function DiwanPage() {
                         </span>
                         <span className="flex items-center gap-1">
                           <Heart className="h-4 w-4" />
-                          {poem.likes}
+                          {poem.likes || 0}
                         </span>
                       </div>
                       <Button
@@ -345,12 +287,20 @@ export default function DiwanPage() {
               </div>
               <div className="p-8">
                 <p className="text-foreground font-serif text-xl leading-loose whitespace-pre-line text-center">
-                  {selectedPoem.fullText}
+                  {selectedPoem.content || ""}
                 </p>
                 <div className="flex items-center justify-center gap-4 mt-8 pt-6 border-t border-border">
-                  <Button variant="outline" className="border-accent/50 text-accent hover:bg-accent/10">
+                  <Button 
+                    variant="outline" 
+                    className="border-accent/50 text-accent hover:bg-accent/10"
+                    onClick={() => {
+                      updatePoem(selectedPoem.id, { likes: (selectedPoem.likes || 0) + 1 })
+                      refreshPoems()
+                      setSelectedPoem({ ...selectedPoem, likes: (selectedPoem.likes || 0) + 1 })
+                    }}
+                  >
                     <Heart className="ml-2 h-5 w-5" />
-                    إعجاب ({selectedPoem.likes})
+                    إعجاب ({selectedPoem.likes || 0})
                   </Button>
                   <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10">
                     <Share2 className="ml-2 h-5 w-5" />
@@ -363,6 +313,9 @@ export default function DiwanPage() {
                     </Button>
                   )}
                 </div>
+              </div>
+              <div className="border-t border-border">
+                <CommentsSection itemId={selectedPoem.id} itemType="poem" />
               </div>
             </motion.div>
           </motion.div>

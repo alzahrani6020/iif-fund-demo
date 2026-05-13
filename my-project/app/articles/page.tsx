@@ -7,65 +7,11 @@ import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { FileText, Search, Calendar, Clock, User, ArrowLeft, Filter, Eye } from "lucide-react"
+import { getArticles } from "@/lib/data-store"
 
 const categories = ["الكل", "الشعر النبطي", "التراث", "اللهجات", "ثقافة", "تاريخ"]
 
-const articles = [
-  {
-    id: 1,
-    title: "أصول الشعر النبطي في الجزيرة العربية",
-    excerpt: "دراسة معمقة في تاريخ الشعر النبطي ونشأته وتطوره عبر العصور، وكيف أصبح جزءاً أصيلاً من الهوية الثقافية العربية...",
-    category: "الشعر النبطي",
-    date: "1445/04/15",
-    readTime: "10 دقائق",
-    views: 1250,
-  },
-  {
-    id: 2,
-    title: "لهجة زهران: دراسة لغوية",
-    excerpt: "بحث لغوي في خصائص لهجة منطقة زهران، مفرداتها الفريدة، وصلتها باللغة العربية الفصحى والعناصر اللغوية القديمة...",
-    category: "اللهجات",
-    date: "1445/03/20",
-    readTime: "15 دقيقة",
-    views: 980,
-  },
-  {
-    id: 3,
-    title: "الأمثال الشعبية مرآة المجتمع",
-    excerpt: "كيف تعكس الأمثال الشعبية قيم المجتمع وتجاربه، ودورها في نقل الحكمة من جيل إلى جيل عبر التاريخ...",
-    category: "التراث",
-    date: "1445/02/10",
-    readTime: "8 دقائق",
-    views: 1560,
-  },
-  {
-    id: 4,
-    title: "المجالس الشعرية في الجنوب السعودي",
-    excerpt: "تاريخ المجالس الشعرية ودورها في الحفاظ على الموروث الثقافي، وكيف كانت منبراً للشعراء والأدباء...",
-    category: "ثقافة",
-    date: "1445/01/05",
-    readTime: "12 دقيقة",
-    views: 870,
-  },
-  {
-    id: 5,
-    title: "تاريخ منطقة زهران",
-    excerpt: "رحلة عبر التاريخ في منطقة زهران، من العصور القديمة إلى الحاضر، وأهم المحطات التاريخية والشخصيات المؤثرة...",
-    category: "تاريخ",
-    date: "1444/12/20",
-    readTime: "20 دقيقة",
-    views: 2100,
-  },
-  {
-    id: 6,
-    title: "فن الإلقاء الشعري",
-    excerpt: "أساسيات فن الإلقاء الشعري وكيفية إيصال المعنى والمشاعر من خلال الصوت والأداء، مع نصائح للشعراء الناشئين...",
-    category: "الشعر النبطي",
-    date: "1444/11/15",
-    readTime: "7 دقائق",
-    views: 1340,
-  },
-]
+const articles = getArticles()
 
 export default function ArticlesPage() {
   const [selectedCategory, setSelectedCategory] = useState("الكل")
@@ -73,7 +19,7 @@ export default function ArticlesPage() {
 
   const filteredArticles = articles.filter((article) => {
     const matchesCategory = selectedCategory === "الكل" || article.category === selectedCategory
-    const matchesSearch = article.title.includes(searchQuery) || article.excerpt.includes(searchQuery)
+    const matchesSearch = article.title.includes(searchQuery) || (article.excerpt || "").includes(searchQuery)
     return matchesCategory && matchesSearch
   })
 
@@ -161,7 +107,7 @@ export default function ArticlesPage() {
                       </h3>
                       
                       <p className="text-muted-foreground leading-relaxed mb-4">
-                        {article.excerpt}
+                        {article.excerpt || article.content?.slice(0, 150) + "..." || ""}
                       </p>
 
                       <div className="flex items-center justify-between">
