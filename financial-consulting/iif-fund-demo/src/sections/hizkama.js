@@ -41,21 +41,8 @@ style="width: 100%; padding: var(--space-2); border: 1px solid var(--color-borde
 style="width: 100%; padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm);"></div><div><label class="lang-en"></label><label class="lang-ar">سياسات الحوكمة</label><input type="file" name="governance-policies" id="governance-policies-input" accept=".pdf,.doc,.docx"
 style="width: 100%; padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm);"></div><div><label class="lang-en"></label><label class="lang-ar">تقارير التدقيق</label><input type="file" name="audit-reports" id="audit-reports-input" accept=".pdf,.doc,.docx"
 style="width: 100%; padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm);"></div></div></div><div style="grid-column: 1 / -1; margin-top: var(--space-4);"><button type="submit" class="btn btn--primary" id="governance-submit-btn"
-style="width: 100%; max-width: 300px; margin: 0 auto;"><span class="lang-en"></span><span class="lang-ar">تقديم معلومات الشركة</span></button></div><div style="grid-column: 1 / -1; margin-top: var(--space-4); text-align: center;"><button type="button" class="btn btn--primary" id="owner-login-btn" onclick="ownerLoginAccess(event)"
-style="margin-right: var(--space-2); display:none;"><span class="lang-en"></span><span class="lang-ar">دخول المالك</span></button><button type="button" class="btn btn--ghost" onclick="generatePersonalizedRecommendations()"
+style="width: 100%; max-width: 300px; margin: 0 auto;"><span class="lang-en"></span><span class="lang-ar">تقديم معلومات الشركة</span></button></div><div style="grid-column: 1 / -1; margin-top: var(--space-4); text-align: center;"><button type="button" class="btn btn--ghost" onclick="generatePersonalizedRecommendations()"
 style="margin-right: var(--space-2);"><span class="lang-en"></span><span class="lang-ar">إنشاء التوصيات</span></button><button type="button" class="btn btn--outline" onclick="downloadCompanyReport()"><span class="lang-en"></span><span class="lang-ar">تحميل التقرير</span></button></div></form><script>
-// Show owner login button if not logged in
-function showOwnerLoginButton() {
-try {
-var email = (localStorage.getItem('iif-user-email') || '').trim().toLowerCase();
-var ownerEmail = (window.IIF_CONFIG && window.IIF_CONFIG.ownerEmail) ? window.IIF_CONFIG.ownerEmail.toLowerCase() : 'talalkenani@gmail.com';
-var isLoggedIn = localStorage.getItem('iif-logged-in') === '1';
-var ownerBtn = document.getElementById('owner-login-btn');
-if (ownerBtn) {
-ownerBtn.style.display = (!isLoggedIn || email !== ownerEmail) ? 'inline-block' : 'none';
-}
-} catch (e) { }
-}
 // Control form access based on user role
 function controlFormAccess() {
 try {
@@ -116,11 +103,6 @@ if (dashOverlay) {
 // Make sure overlay is properly initialized
 dashOverlay.classList.remove('is-open');
 dashOverlay.setAttribute('aria-hidden', 'true');
-}
-// Hide the login button
-var ownerBtn = document.getElementById('owner-login-btn');
-if (ownerBtn) {
-ownerBtn.style.display = 'none';
 }
 // Show success message
 var successDiv = document.createElement('div');
@@ -358,7 +340,6 @@ console.error('❌ Error adding sample data:', e);
 }
 // Check on page load
 document.addEventListener('DOMContentLoaded', function () {
-showOwnerLoginButton();
 controlFormAccess();
 });
 </script></div></section>`;
