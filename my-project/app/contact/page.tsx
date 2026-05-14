@@ -28,8 +28,17 @@ const contactInfo = [
   },
 ]
 
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.88-2.89 2.89 2.89 0 0 1 2.88-2.89c.2 0 .39.02.57.06v-3.5a6.37 6.37 0 0 0-.57-.03A6.34 6.34 0 0 0 3 15.34 6.34 6.34 0 0 0 9.34 21.68a6.34 6.34 0 0 0 6.34-6.34V9.01a8.04 8.04 0 0 0 4.91 1.68V7.24a4.83 4.83 0 0 1-1-.55z"/>
+    </svg>
+  )
+}
+
 const socialLinks = [
-  { icon: Youtube, label: "يوتيوب", href: "#" },
+  { icon: Youtube, label: "يوتيوب", href: "https://www.youtube.com/@mohd3z" },
+  { icon: TikTokIcon, label: "تيك توك", href: "https://www.tiktok.com/@Mohd3z" },
   { icon: Twitter, label: "تويتر", href: "#" },
 ]
 

@@ -7,6 +7,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Quote, Search, Heart, Share2, Filter, MessageSquareQuote } from "lucide-react"
 import { getProverbs } from "@/lib/data-store"
+import { ShareButtons } from "@/components/share-buttons"
+import { BookmarkButton } from "@/components/bookmark-button"
+import { FocusModeToggle } from "@/components/focus-mode-toggle"
+import { TTSPlayer } from "@/components/tts-player"
 
 const categories = ["الكل", "حكمة", "صبر", "كرم", "شجاعة", "تجارة", "أخلاق", "عمل"]
 
@@ -35,9 +39,10 @@ export default function ProverbsPage() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-serif mb-4">
             <span className="gold-gradient">الأمثال</span> والموروث
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
             حكم وأمثال شعبية تتناقلها الأجيال، تحمل خلاصة تجارب الأجداد
           </p>
+          <FocusModeToggle />
         </div>
       </section>
 
@@ -95,11 +100,11 @@ export default function ProverbsPage() {
                     </span>
                   </div>
                   
-                  <blockquote className="text-xl font-bold text-foreground font-serif mb-4 leading-relaxed group-hover:text-primary transition-colors duration-300">
+                  <blockquote className="text-2xl font-bold text-foreground font-serif mb-4 leading-loose group-hover:text-primary transition-colors duration-300">
                     {`"${proverb.text}"`}
                   </blockquote>
                   
-                  <p className="text-muted-foreground text-sm mb-6">
+                  <p className="text-muted-foreground text-base leading-relaxed mb-6">
                     <span className="text-accent font-medium">المعنى: </span>
                     {proverb.meaning}
                   </p>
@@ -110,10 +115,15 @@ export default function ProverbsPage() {
                         <Heart className="h-4 w-4" />
                         <span className="text-sm">{proverb.likes}</span>
                       </button>
+                      <BookmarkButton
+                        itemId={proverb.id}
+                        itemType="proverb"
+                        title={proverb.text}
+                        href={`/proverbs`}
+                      />
+                      <TTSPlayer text={`مثل شعبي: ${proverb.text}. المعنى: ${proverb.meaning}`} title={proverb.text} />
                     </div>
-                    <button className="text-muted-foreground hover:text-primary transition-colors duration-300">
-                      <Share2 className="h-5 w-5" />
-                    </button>
+                    <ShareButtons title={proverb.text} />
                   </div>
                 </CardContent>
               </Card>

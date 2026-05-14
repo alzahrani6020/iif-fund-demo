@@ -8,6 +8,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Video, Play, Calendar, Eye, X, Search, Filter, Clock, Heart, Share2 } from "lucide-react"
 import { getVideos } from "@/lib/data-store"
+import { ShareButtons } from "@/components/share-buttons"
+import { BookmarkButton } from "@/components/bookmark-button"
 
 const categories = ["الكل", "أمسيات شعرية", "مقابلات", "وثائقيات", "محاضرات"]
 
@@ -95,8 +97,8 @@ export default function VideosPage() {
                   <span className="inline-block px-3 py-1 bg-accent text-accent-foreground text-xs rounded-full mb-4">
                     مميز
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">{featuredVideo.title}</h3>
-                  <p className="text-muted-foreground max-w-2xl mb-4">{featuredVideo.description}</p>
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground font-serif mb-2">{featuredVideo.title}</h3>
+                  <p className="text-muted-foreground max-w-2xl mb-4 text-base leading-relaxed">{featuredVideo.description}</p>
                   <div className="flex items-center gap-6 text-sm text-muted-foreground">
                     <span className="flex items-center gap-2">
                       <Clock className="h-4 w-4" />
@@ -209,10 +211,10 @@ export default function VideosPage() {
                     <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs rounded-full mb-3">
                       {video.category}
                     </span>
-                    <h3 className="font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                    <h3 className="font-bold text-foreground font-serif text-lg mb-2 group-hover:text-primary transition-colors duration-300 line-clamp-2">
                       {video.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+                    <p className="text-sm text-muted-foreground line-clamp-2 mb-4 leading-relaxed">
                       {video.description || ""}
                     </p>
                     <div className="flex items-center justify-between text-sm text-muted-foreground">
@@ -303,16 +305,17 @@ export default function VideosPage() {
                     <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs rounded-full mb-2">
                       {selectedVideo.category}
                     </span>
-                    <h3 className="text-2xl font-bold text-foreground mb-2">{selectedVideo.title}</h3>
-                    <p className="text-muted-foreground">{selectedVideo.description}</p>
+                    <h3 className="text-2xl font-bold text-foreground font-serif mb-2">{selectedVideo.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">{selectedVideo.description}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-accent">
-                      <Heart className="h-5 w-5" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary">
-                      <Share2 className="h-5 w-5" />
-                    </Button>
+                    <BookmarkButton
+                      itemId={selectedVideo.id}
+                      itemType="video"
+                      title={selectedVideo.title}
+                      href={`/videos`}
+                    />
+                    <ShareButtons title={selectedVideo.title} />
                   </div>
                 </div>
                 <div className="flex items-center gap-6 mt-4 text-sm text-muted-foreground">

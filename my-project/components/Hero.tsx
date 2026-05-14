@@ -1,8 +1,18 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
+import { getSiteConfig } from "@/lib/data-store"
 
 export default function Hero() {
+  const [config, setConfig] = useState(() => getSiteConfig())
+
+  useEffect(() => {
+    const handleStorage = () => setConfig(getSiteConfig())
+    window.addEventListener("storage", handleStorage)
+    return () => window.removeEventListener("storage", handleStorage)
+  }, [])
+
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background layers */}
@@ -37,9 +47,10 @@ export default function Hero() {
         >
           <div className="w-full h-full rounded-full overflow-hidden border-2 border-accent/40 purple-glow relative">
             <img
-              src="/poet.jpg"
+              src={config.poetImage || "/poet.jpg"}
               alt="صورة الشاعر"
               className="w-full h-full object-cover"
+              onError={(e) => { (e.target as HTMLImageElement).src = "/poet.jpg" }}
             />
             <div className="absolute inset-0 ring-2 ring-inset ring-accent/20 rounded-full" />
           </div>
@@ -51,8 +62,9 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
           className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-wide"
+          style={{ fontFamily: "'Amiri', serif" }}
         >
-          <span className="gold-gradient">محمد عيضة الزهراني</span>
+          <span className="gold-gradient">{config.poetName}</span>
         </motion.h1>
 
         {/* Title */}
@@ -62,7 +74,7 @@ export default function Hero() {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="text-lg md:text-xl text-purple-200/90 max-w-2xl mx-auto leading-relaxed mb-8 font-light"
         >
-          شاعر نظم… وصوت يحمل موروث زهران بين السطور
+          {config.poetSubtitle}
         </motion.p>
 
         {/* Quote */}

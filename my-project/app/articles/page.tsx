@@ -8,6 +8,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { FileText, Search, Calendar, Clock, User, ArrowLeft, Filter, Eye } from "lucide-react"
 import { getArticles } from "@/lib/data-store"
+import { ShareButtons } from "@/components/share-buttons"
+import { BookmarkButton } from "@/components/bookmark-button"
+import { FocusModeToggle } from "@/components/focus-mode-toggle"
+import { TTSPlayer } from "@/components/tts-player"
 
 const categories = ["الكل", "الشعر النبطي", "التراث", "اللهجات", "ثقافة", "تاريخ"]
 
@@ -36,9 +40,10 @@ export default function ArticlesPage() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-serif mb-4">
             <span className="gold-gradient">المقالات</span> الثقافية
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
             مقالات ودراسات في الشعر والتراث واللهجات المحلية
           </p>
+          <FocusModeToggle />
         </div>
       </section>
 
@@ -102,11 +107,11 @@ export default function ArticlesPage() {
                         </span>
                       </div>
                       
-                      <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+                      <h3 className="text-xl md:text-2xl font-bold text-foreground font-serif mb-3 group-hover:text-primary transition-colors duration-300">
                         {article.title}
                       </h3>
                       
-                      <p className="text-muted-foreground leading-relaxed mb-4">
+                      <p className="text-muted-foreground leading-loose mb-4 text-base">
                         {article.excerpt || article.content?.slice(0, 150) + "..." || ""}
                       </p>
 
@@ -121,13 +126,23 @@ export default function ArticlesPage() {
                             {article.views}
                           </span>
                         </div>
-                        <Link
-                          href={`/articles/${article.id}`}
-                          className="inline-flex items-center text-accent hover:text-accent/80 font-medium transition-colors duration-300"
-                        >
-                          قراءة المقال
-                          <ArrowLeft className="mr-2 h-4 w-4" />
-                        </Link>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <TTSPlayer text={`${article.title}.\n${article.content || article.excerpt || ""}`} title={article.title} />
+                          <BookmarkButton
+                            itemId={article.id}
+                            itemType="article"
+                            title={article.title}
+                            href={`/articles`}
+                          />
+                          <ShareButtons title={article.title} />
+                          <Link
+                            href={`/articles/${article.id}`}
+                            className="inline-flex items-center text-accent hover:text-accent/80 font-medium transition-colors duration-300"
+                          >
+                            قراءة المقال
+                            <ArrowLeft className="mr-2 h-4 w-4" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>

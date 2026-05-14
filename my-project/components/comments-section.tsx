@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { MessageSquare, Send, User, Clock, Trash2, AlertTriangle } from "lucide-react"
-import { getComments, addComment, deleteComment, type Comment } from "@/lib/data-store"
+import { getComments, addComment, deleteComment, checkContent, type Comment } from "@/lib/data-store"
 import { toast } from "@/hooks/use-toast"
 import {
   AlertDialog,
@@ -30,14 +30,48 @@ export default function CommentsSection({ itemId, itemType }: CommentsSectionPro
   const [name, setName] = useState("")
   const [content, setContent] = useState("")
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
+  const [contentWarning, setContentWarning] = useState<string | null>(null)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!name.trim() || !content.trim()) return
-    const newComment = addComment({ itemId, itemType, name: name.trim(), content: content.trim() })
+
+    const check = checkContent(content.trim())
+    const isFlagged = !check.clean
+
+    const newComment = addComment({
+      itemId, itemType, name: name.trim(), content: content.trim(),
+      status: isFlagged ? "pending" : "approved",
+      isFlagged
+    } as any)
+
     setComments([newComment, ...comments])
     setContent("")
-    toast({ title: "تم إرسال التعليق", description: "شكراً لمشاركتك" })
+    setContentWarning(null)
+
+    if (isFlagged) {
+      toast({
+        title: "⚠️ تعليقك قيد المراجعة",
+        description: `تم اكتشاف كلمات غير لائقة: ${check.flaggedWords.join(", ")} — سيتم مراجعته من الإدارة`,
+        variant: "destructive"
+      })
+    } else {
+      toast({ title: "تم إرسال التعليق", description: "شكراً لمشاركتك" })
+    }
+  }
+
+  const handleContentChange = (text: string) => {
+    setContent(text)
+    if (text.trim()) {
+      const check = checkContent(text)
+      if (!check.clean) {
+        setContentWarning(`⚠️ تحذير: ${check.flaggedWords.join(", ")}`)
+      } else {
+        setContentWarning(null)
+      }
+    } else {
+      setContentWarning(null)
+    }
   }
 
   const handleDelete = (id: string) => {
@@ -72,10 +106,16 @@ export default function CommentsSection({ itemId, itemType }: CommentsSectionPro
               <label className="text-sm font-medium text-foreground mb-2 block">التعليق</label>
               <Textarea
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
+                onChange={(e) => handleContentChange(e.target.value)}
                 placeholder="اكتب تعليقك هنا..."
-                className="glass border-border text-foreground min-h-[100px]"
+                className={`glass border-border text-foreground min-h-[100px] ${contentWarning ? "border-red-400/50 focus:ring-red-400/30" : ""}`}
               />
+              {contentWarning && (
+                <p className="text-red-400 text-sm flex items-center gap-1">
+                  <AlertTriangle className="h-4 w-4" />
+                  {contentWarning}
+                </p>
+              )}
             </div>
             <Button type="submit" disabled={!name.trim() || !content.trim()} className="bg-primary hover:bg-primary/90">
               <Send className="ml-2 h-4 w-4" />
@@ -130,6 +170,17 @@ export default function CommentsSection({ itemId, itemType }: CommentsSectionPro
                       </Button>
                     </div>
                     <p className="mt-3 text-foreground text-sm leading-relaxed">{comment.content}</p>
+                    {(comment as any).status === "pending" && (
+                      <span className="inline-flex items-center gap-1 mt-2 text-xs text-amber-400 bg-amber-400/10 px-2 py-1 rounded-full">
+                        <AlertTriangle className="h-3 w-3" />
+                        قيد المراجعة
+                      </span>
+                    )}
+                    {(comment as any).status === "rejected" && (
+                      <span className="inline-flex items-center gap-1 mt-2 text-xs text-red-400 bg-red-400/10 px-2 py-1 rounded-full">
+                        مرفوض
+                      </span>
+                    )}
                   </CardContent>
                 </Card>
               </motion.div>

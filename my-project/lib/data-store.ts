@@ -82,6 +82,16 @@ export interface Comment {
   date: string
 }
 
+export interface UserProfile {
+  id: string
+  name: string
+  email: string
+  password: string
+  avatar?: string
+  frame?: "gold" | "purple" | "blue" | "green" | "none"
+  createdAt: string
+}
+
 export interface HistoricalEvent {
   id: string
   title: string
@@ -106,6 +116,8 @@ export interface ContentData {
 
 const STORAGE_KEY = "alzahrani_content_data_v2"
 const AUTH_KEY = "alzahrani_admin_auth"
+const USERS_KEY = "alzahrani_users_v1"
+const USER_SESSION_KEY = "alzahrani_user_session"
 
 const defaultData: ContentData = {
   comments: [],
@@ -117,12 +129,46 @@ const defaultData: ContentData = {
     { id: "5", title: "تأسيس إمارة الباحة", date: "1345 هـ", location: "الباحة", sides: "—", result: "استقرار المنطقة", description: "حدث إداري مهم ساهم في تطوير المنطقة وربطها بالدولة الحديثة.", category: "حدث" }
   ],
   poems: [
-    { id: "1", title: "قصيدة الوطن الغالي", category: "وطنية", content: "يا وطني يا منبع الخير والعطا\nيا أرض أجدادي وموطن آبائي\nفيك تربيت وفيك شبيت\nوحبك في قلبي ما له نهاية\n\nمن جبالك شامخة وعالية\nإلى سهولك خضرا وغالية\nأنت في قلبي دايم باقي\nووفائي لك ما له نهاية", excerpt: "يا وطني يا منبع الخير والعطا...", date: "1445/06/15", views: 234, likes: 245, hasAudio: true },
-    { id: "2", title: "شوق وحنين", category: "غزل", content: "يا طير يا مسافر للديار البعيدة\nخذ معك سلامي للأحباب الغالين\nقل لهم قلبي عليهم مشتاق\nوالعين من بعدهم ما تنام الليالي", excerpt: "يا طير يا مسافر للديار البعيدة...", date: "1445/06/12", views: 187, likes: 198, hasAudio: true },
-    { id: "3", title: "حكمة الزمان", category: "حكمة", content: "تعلمت من أيامي دروس كثيرة\nوعرفت إن الصبر مفتاح كل باب\nوإن الدنيا ما تدوم لحد\nواللي يصبر ينال المراد", excerpt: "تعلمت من أيامي دروس كثيرة...", date: "1445/06/10", views: 312, likes: 156, hasAudio: false },
-    { id: "4", title: "فخر القبيلة", category: "فخر", content: "نحن أهل زهران من قديم الزمان\nشيمتنا الكرم والطيب والوفاء\nديرتنا عالية والجبال شواهد\nعلى مجد آباءنا وعز أجدادنا", excerpt: "نحن أهل زهران من قديم الزمان...", date: "1444/12/05", views: 456, likes: 312, hasAudio: true },
-    { id: "5", title: "رثاء صديق عزيز", category: "رثاء", content: "يا صاحبي اللي راح وما ودعني\nتركت قلبي في حسرة وألم\nكان وجودك نور في حياتي\nوغيابك ظلام ما له آخر", excerpt: "يا صاحبي اللي راح وما ودعني...", date: "1444/11/20", views: 145, likes: 89, hasAudio: false },
-    { id: "6", title: "مدح الكريم", category: "مدح", content: "يا من كرمه شاع في كل مكان\nوطيبته ما لها مثيل\nبابك مفتوح للضيوف دايم\nوقهوتك للزاير أول سبيل", excerpt: "يا من كرمه شاع في كل مكان...", date: "1444/10/15", views: 198, likes: 167, hasAudio: true }
+    // ===== القصائد الوطنية =====
+    { id: "1", title: "قصيدة الوطن الغالي", category: "القصائد الوطنية", content: "يا وطني يا منبع الخير والعطا\nيا أرض أجدادي وموطن آبائي\nفيك تربيت وفيك شبيت\nوحبك في قلبي ما له نهاية\n\nمن جبالك شامخة وعالية\nإلى سهولك خضرا وغالية\nأنت في قلبي دايم باقي\nووفائي لك ما له نهاية\n\nيا دار العز يا مهوى الأحرار\nيا بلاد الإسلام يا أغلى الديار\nراح أبذل روحي في حماك\nواسمك يا وطني في فؤادي نار", excerpt: "يا وطني يا منبع الخير والعطا...", date: "1445/06/15", views: 2340, likes: 245, hasAudio: true },
+    { id: "p-wat-2", title: "راية التوحيد", category: "القصائد الوطنية", content: "فوق الهامات راية التوحيد\nتسمو بعزم الأبطال السما\nمن يوم فيصل حتى اليوم\nنحمل العهد ونمضي قدما\n\nيا بلادنا يا أغلى من الروح\nدمنا فداكِ والروح فداكِ\nمن جبال سراة حتى نجد\nنشيد العز في كل فجاجكِ", excerpt: "فوق الهامات راية التوحيد...", date: "1445/05/20", views: 1890, likes: 198, hasAudio: true },
+    { id: "p-wat-3", title: "نشيد زهران", category: "القصائد الوطنية", content: "يا زهران يا دار العز والبطوله\nمن يوم الأجداد وأنتِ على العز ثابته\nجبالك شوامخ تلامس الغمام\nورجالك أوفياء في كل الأيام\n\nإن هزّ الهوى سارية العز عندنا\nترتفع راية التوحيد عاليّه\nمن الباحة البهية حتى بلجرشي\nترى العز والفخر في كل باديّه", excerpt: "يا زهران يا دار العز والبطوله...", date: "1445/04/10", views: 1560, likes: 167, hasAudio: true },
+    { id: "p-wat-4", title: "الولاء للقيادة", category: "القصائد الوطنية", content: "يا سلام يا سلام على وطن العز\nقادته أوفياء وشعبه أحرار\nسلمان الحزم يمشي على الدرب\nوابن سلمان يبني المستقبل دار\n\nنشعر بالفخر ونحنا في هذا الزمان\nنشهد التطور والرخاء والأمان\nولا زلنا على العهد والولاء ثابتين\nنفديك يا وطني بكل الأرواح", excerpt: "يا سلام يا سلام على وطن العز...", date: "1445/03/15", views: 2100, likes: 234, hasAudio: false },
+    { id: "p-wat-5", title: "يوم التأسيس", category: "القصائد الوطنية", content: "في ثاني وعشرين من فبراير\nنحتفل بيوم بدأ فيه السرور\nإمامنا محمد بن سعود\nأسس الدولة على التوحيد والنور\n\nثلاثة قرون من العز والمجد\nولا زال اسم المملكة في السحب يسمو\nنفتخر بتاريخنا وبتراثنا\nونبني المستقبل بأيدينا نحو", excerpt: "في ثاني وعشرين من فبراير...", date: "1444/12/05", views: 1780, likes: 189, hasAudio: true },
+
+    // ===== الشعر النبطي =====
+    { id: "p-nab-1", title: "يا دارٍ ما لها نظير", category: "الشعر النبطي", content: "يا دارٍ ما لها نظير في الحسن\nيا منزلي ويا مهوى قلبي الساكن\nجبالك شامخة والضباب يزورها\nوينسم الهوى من شعابك العاليات\n\nيا وادي بيشة يا منبع الفخر\nيا أرض الأبطال يا مهوى الشعر\nمن جدّك تعلّمت الصبر والعزم\nومن ترابك شربت الكرَم والطهر\n\nيا زهران يا أغلى من الروح\nفي قلبي حبك دايم مشتعل\nلو سافرت لآخر الدنيا\nترجع بذاكرتي لجبالك العذل", excerpt: "يا دارٍ ما لها نظير في الحسن...", date: "1445/06/01", views: 3200, likes: 412, hasAudio: true },
+    { id: "p-nab-2", title: "الغيمة اللي ما تمطر", category: "الشعر النبطي", content: "الغيمة اللي ما تمطر ولا تنفع\nياليتها تمشي وتروح عن السماء\nويسعد الناس بمطر خير ورخاء\nوياخضر الربيع في كل الوديان\n\nويقول البدوي اللي عاش في الصحرا\nالمطر عندنا بمثابة العيد\nإذا هطلّت السماء بكينا فرح\nونشكر ربّنا على النعم الجديد\n\nيا مرحبا بالمطر يا بارد الروح\nيا منظف الدنيا ويا نور العيون\nإذا هطلت على الجبال والوديان\nترجع الروح للأرض بعد المحن", excerpt: "الغيمة اللي ما تمطر ولا تنفع...", date: "1445/05/15", views: 2800, likes: 356, hasAudio: true },
+    { id: "p-nab-3", title: "الفزعة يا زهران", category: "الشعر النبطي", content: "الفزعة يا زهران ما هي غريبة\nعليكم من يوم الجدّ والأسلاف\nإذا استنجد الضعيف تجتمعون\nوتدفعون الشر عن كل الأعناق\n\nيا رجال زهران يا أهل الوفا\nشيمتكم الكرم والجود والشجاعة\nمن يوم الوهابين حتى اليوم\nاسمكم في كل لسان له صياحة\n\nإذا قيل زهران قام الفخر\nوارتفع الراس في كل المجالس\nأنتم الأصل والفخر والعز\nومنكم تعلّمت الدنيا المبادئ", excerpt: "الفزعة يا زهران ما هي غريبة...", date: "1445/04/22", views: 3100, likes: 398, hasAudio: true },
+    { id: "p-nab-4", title: "ليالي السمر", category: "الشعر النبطي", content: "يا ليلة السمر يا أغلى من الدر\nيا وقت الفرح والشعر والحكي\nنلتقي في مجلس الأحباب\nونشرب القهوة ونسمع الغني\n\nالدلة تفوح بريحة الهيل\nوالنار تضيء وجوه الحضور\nوالشاعر يقصّد القصيدة\nوتسعد القلوب من حلاوة السور\n\nيا ليلة السمر لا تطولي\nلكن عيشي في قلوبنا عمر\nننتظرك من أسبوع لأسبوع\nونحسب الليالي والشهور", excerpt: "يا ليلة السمر يا أغلى من الدر...", date: "1445/03/30", views: 2650, likes: 312, hasAudio: true },
+    { id: "p-nab-5", title: "الرحيل عن الديار", category: "الشعر النبطي", content: "صعب الرحيل عن الديار اللي عشت فيها\nصعب الوداع على الوجدان الحزين\nلكن الظروف تجبر الإنسان\nيسافر بعيد عن الأهل والحبايب\n\nيا دارٍ في قلبي ما نسيتك\nأيا كنت في المشرق أو في المغرب\nأحلم بيوم أرجع وأشوفك\nوأمشي في شعابك وأشم الترب\n\nيا أمي يا غالية يا نور العين\nدعواتك معي في كل مسيري\nأمشي وأنا مطمن لأن فيك\nأمان ودفء وسند وخيري", excerpt: "صعب الرحيل عن الديار اللي عشت فيها...", date: "1445/02/18", views: 2400, likes: 287, hasAudio: false },
+    { id: "p-nab-6", title: "الكرم زهراني", category: "الشعر النبطي", content: "الكرم عندنا مو صفة\nالكرم عندنا هو الدين والأصل\nضيفك عندنا يا مرحبا الف\nوالمائدة دايم ممتلئة بالفضل\n\nيا زاير دارنا لا تشيل هم\nعندنا الكرم فوق ما تتصوّر\nالدلة تفوح والتمري يمر\nوالشاي يسكب في فناجين السُحُر\n\nنحن أهل زهران والكرم فينا\nموجود من يوم الجدّ والأجداد\nوإن طال الزمن واختلفت الأيام\nباقي الكرم فينا ما تبدّل ولا زاد", excerpt: "الكرم عندنا مو صفة...", date: "1445/01/25", views: 2900, likes: 345, hasAudio: true },
+    { id: "p-nab-7", title: "جبال الباحة", category: "الشعر النبطي", content: "يا جبال الباحة يا شامخة السما\nيا من تلامس الغيوم بقممك العاليات\nفي ظلك تنام القلوب مطمئنة\nوفي هواك ترجع الروح للحياة\n\nيا سروات زهران يا خضرة العين\nيا ورد يفوح في كل المروج\nمنظرك يأخذ العقل والإحساس\nويجعل القلب ينبض بالأفراح والأمواج\n\nيا جبال الباحة أنتِ سندي\nأنتِ الأمل وأنتِ الفخر والعز\nمهما سافرت وبعدت عنك\nأرجع لكِ بقلبي قبل أرجع بالجسد", excerpt: "يا جبال الباحة يا شامخة السما...", date: "1444/11/15", views: 2200, likes: 278, hasAudio: true },
+    { id: "p-nab-8", title: "الغيم والمطر", category: "الشعر النبطي", content: "يا غيمة الخير يا بشرة السعد\nيا من تجمعين في سما زهران\nإذا اشتكى الزرع من الحر والعطش\nتنزلي بمطركِ وتروين الأركان\n\nيا رعد يا برق يا موسيقى السما\nأنتِ السيمفونية اللي تسعد القلب\nوالبرق يخط في الأفق لوحات\nوالرعد يدق طبول الفرح والطرب\n\nيا مطر يا مطر يا منظف الروح\nغسل همومي واغسل أحزاني\nورجع للأرض خضرتها وبهجتها\nواملأ القلوب فرح وإيماني", excerpt: "يا غيمة الخير يا بشرة السعد...", date: "1444/10/10", views: 1950, likes: 234, hasAudio: false },
+
+    // ===== النظم الفصيح =====
+    { id: "p-naz-1", title: "مدح الرسول ﷺ", category: "النظم", content: "يا خير من وطئ الثرى طالباً\nهدى الأمم ونور الدجى ساطع\nصلّى عليك الله يا من جئت\nبالهدى والنور والفرقان نافع\n\nيا طه يا طه يا سيدي\nيا من بجمالك الكون أضاء\nصلاتي وسلامي عليك دوماً\nما هبت النسائم وما انطفأ\n\nيا رسول الله يا شفيعي\nاشفع لي يوم الحشر واللقاء\nفإني عبدٌ ضعيفٌ مقصرٌ\nوأنت يا رسول الله أكرم سماء", excerpt: "يا خير من وطئ الثرى طالباً...", date: "1445/05/10", views: 4100, likes: 567, hasAudio: true },
+    { id: "p-naz-2", title: "في حب الوطن", category: "النظم", content: "أحببتُكِ يا وطني حباً عميقاً\nفيكَ عشقتُ الحريةَ والسموا\nوجبالُكِ الشامخاتُ تعانقُ السحبَ\nوسهولُكِ الخضراءُ تُنبتُ الأملا\n\nيا أغلىَ دارٍ على قلبي وروحي\nأنتِ العزُّ وأنتِ الفخرُ والعلا\nسأبقى لكِ مخلصاً في كلّ حينٍ\nوسأردّدُ اسمَكِ في كلّ زمانٍ دُجى", excerpt: "أحببتُكِ يا وطني حباً عميقاً...", date: "1445/04/05", views: 2300, likes: 289, hasAudio: false },
+    { id: "p-naz-3", title: "قصيدة في الصبر", category: "النظم", content: "صبراً يا نفسُ فإنّ الصبرَ مفتاحُ\nكلّ خيرٍ، وفيهِ الأملُ ينفتحُ\nإنّ اللهَ مع الصابرينَ دوماً\nويجازيهمُ عن كلّ ضيمٍ ينزحُ\n\nتأمّلي في طيورِ السما تحلّقُ\nوتأمّلي في أزهارِ الربيعِ تتفتحُ\nفالحياةُ رحلةٌ مليئةٌ بالدروسِ\nومن يصبرْ ينلْ مرادَهُ ويرتفعُ", excerpt: "صبراً يا نفسُ فإنّ الصبرَ مفتاحُ...", date: "1445/03/20", views: 1850, likes: 234, hasAudio: false },
+    { id: "p-naz-4", title: "نشيد العلم", category: "النظم", content: "علّمتَني يا وطني حبّ العلمِ\nوأنّ الجهلَ هو النارُ التي تحرقُ\nفأنا اليومَ أحملُ القلمَ سلاحي\nوأكتبُ الشعرَ والنثرَ وأتألقُ\n\nيا معلّمي يا من أنرتَ دربي\nأنتَ السندُ وأنتَ النورُ الذي يشرقُ\nسأبقى طالبَ علمٍ إلى أن ألقى\nربّي، وأملأُ الدنيا بالأرزاقِ والفرقُ", excerpt: "علّمتَني يا وطني حبّ العلمِ...", date: "1445/02/15", views: 1600, likes: 198, hasAudio: false },
+    { id: "p-naz-5", title: "رؤية مستقبلية", category: "النظم", content: "أنظرُ إلى المستقبلِ بنورِ الأملِ\nوأرى فيهِ تقدماً ورخاءً يفيضُ\nنحنُ أبناءُ هذا الوطنِ العظيمِ\nونبنيُ غدَهُ بإخلاصٍ لا يبوضُ\n\nيا أجيالَ المستقبلِ استمروا\nعلى دربِ العزِّ والفخرِ والعطاءِ\nوارفعوا رايةَ التوحيدِ عالياً\nواكتبوا التاريخَ بمدادِ البهاءِ", excerpt: "أنظرُ إلى المستقبلِ بنورِ الأملِ...", date: "1445/01/10", views: 1450, likes: 176, hasAudio: true },
+
+    // ===== المدح =====
+    { id: "p-mdh-1", title: "مدح الشيخ الجليل", category: "المدح", content: "يا شيخاً جليلاً في كلّ موقفٍ\nيا من كرمهُ يفيضُ على الحضورِ\nبابُكَ مفتوحٌ للضيفِ دائماً\nوكلمتُكَ حكمةٌ وبصيرةُ بصيرِ\n\nفي مجلسِكَ تَجتمعُ القلوبُ\nوتسموُ الأرواحُ في ظلّ حُكمِكَ\nأنتَ السندُ للضعيفِ دوماً\nوأنتَ النورُ الذي يبدّدُ الظُّلمِكَ\n\nيا كريماً ما شابَهُ أحدٌ\nفي طيبتِكَ وفي سماحةِ نفسِكَ\nأدعو اللهَ أن يطيلَ عمرَكَ\nويجعلَكَ ذخراً للإسلامِ والأُممِكَ", excerpt: "يا شيخاً جليلاً في كلّ موقفٍ...", date: "1445/04/28", views: 2100, likes: 267, hasAudio: true },
+    { id: "p-mdh-2", title: "مدح الوالد", category: "المدح", content: "يا والدي يا من علّمتني الكرَمَ\nيا من غرستَ في قلبي حبّ الوطنِ\nأنتَ السندُ وأنتَ النورُ لعيني\nوبفضلكَ تعلّمتُ معنى الحسنِ\n\nيا من سهرتَ الليالي لأجلنا\nيا من تعبتَ في جمعِ الرزقِ لنا\nأدعو اللهَ أن يرزقَكَ الجنّةَ\nوأن يجعلَ كلّ أيامَكَ سناءً لنا\n\nيا أبي يا غالي يا نورَ البيتِ\nأنتَ العزُّ وأنتَ الفخرُ والبِناءُ\nسأبقى أفتخرُ بكَ كلّ عمري\nوسأحملُ اسمَكَ فوقَ الرأسِ علياءُ", excerpt: "يا والدي يا من علّمتني الكرَمَ...", date: "1445/03/05", views: 3200, likes: 412, hasAudio: true },
+    { id: "p-mdh-3", title: "مدح رجل الأعمال", category: "المدح", content: "يا رجلَ الأعمالِ يا ذا الهممِ\nأنتَ بنيتَ من الصفرِ صروحاً\nوفي كلّ مكانٍ فيكَ خيرٌ\nيبتسمُ للمحتاجِ ويداوي الجروحا\n\nأعمالُكَ نموذجٌ للشبابِ\nتقولُ لهم: اجتهدوا واصبروا\nفالنجاحُ يأتي بالاجتهادِ\nوالرزقُ يأتي من حيثُ لا تدروا\n\nيا كريماً في زمنٍ قلّ فيهِ\nأنتَ النخلةُ التي تعطي بلا حدِّ\nأدعو اللهَ أن يباركَ في مالِكَ\nويجعلَكَ في الدارينِ من السعدِ", excerpt: "يا رجلَ الأعمالِ يا ذا الهممِ...", date: "1445/01/28", views: 1800, likes: 223, hasAudio: false },
+
+    // ===== الرثاء =====
+    { id: "p-rth-1", title: "وداع الروح", category: "الرثاء", content: "رحلتَ يا صاحبي وتركتَ في قلبي\nجرحاً عميقاً ما لهُ دواءُ\nكنتَ نوراً في دربي الحالكِ\nوكنتَ فرحاً في أيامي البلاءُ\n\nيا من رحلتَ إلى دارِ الحقِّ\nأدعو اللهَ أن يرحمَكَ ويغفرَ\nوأن يجمعَنا بكَ في جنّاتِ النعيمِ\nحيثُ لا فراقٌ ولا حزنٌ يظهرُ\n\nسأبقى أذكرُكَ في كلّ مساءٍ\nوأحدّثُ عنكَ في كلّ مجلسِ\nفأنتَ عزيزٌ على قلبي دوماً\nولا يغيّرُ الحبَّ فينا المجلسُ", excerpt: "رحلتَ يا صاحبي وتركتَ في قلبي...", date: "1445/03/12", views: 3400, likes: 445, hasAudio: true },
+    { id: "p-rth-2", title: "رثاء الأم", category: "الرثاء", content: "يا أمي يا من رحلتِ عن دنيانا\nتركتِ في قلبي ظلاماً لا ينجلي\nكنتِ نورَ البيتِ وسرَّ سعادتِهِ\nوكنتِ الحنانَ الذي لا يزولُ\n\nيا جنّتي التي فقدتُها بغتةً\nيا دعاءً في الليلِ ما ينقطعُ\nأشتاقُ لصوتِكِ ولابتسامتِكِ\nوأشتاقُ ليدِكِ التي تدفّئُ الأشواقَ\n\nأدعو اللهَ أن يجمعَني بكِ\nفي جنّةِ الفردوسِ حيثُ الخلودُ\nوأن يرحمَكِ رحمةً واسعةً\nتسعُ السماواتِ والأرضِ والورودُ", excerpt: "يا أمي يا من رحلتِ عن دنيانا...", date: "1445/02/20", views: 5100, likes: 678, hasAudio: true },
+    { id: "p-rth-3", title: "رثاء الشيخ حمدان", category: "الرثاء", content: "رحل الشيخُ حمدانُ عن دنيانا\nوتفتّتتْ قلوبُنا من الحزنِ\nكانَ رمزاً للكرمِ والشجاعةِ\nوكانَ سنداً للضعيفِ والمحنِ\n\nيا من رحلتَ إلى ربّكَ كريماً\nأدعو اللهَ أن يجازيكَ عنّا\nفلقد علّمتَنا معنى الوفاءِ\nوأنّ الكريمَ لا يُنسَى أبداً\n\nسنبقى نذكرُكَ في كلّ ليلةٍ\nونروي لأولادِنا عن فضلِكَ\nفأنتَ عالَمٌ من العزِّ والكرمِ\nوأنتَ النجمُ الذي في سمائِنا يُضيءُ", excerpt: "رحل الشيخُ حمدانُ عن دنيانا...", date: "1444/12/18", views: 2800, likes: 356, hasAudio: false },
+
+    // ===== المناسبات =====
+    { id: "p-mun-1", title: "فرح الولد", category: "المناسبات", content: "اليوم فرحتنا يا مرحبا\nولدنا تزوّج وصار رجال\nيا هلّا بالضيوف يا مرحبا\nالمجلس نور والقلوب طيبة\n\nنبارك للعريس ونقول مبروك\nوألف مبروك يا غالي يا عزيز\nربّي يتمّم لك على خير\nويجعل حياتك كلها سرور وعزيز\n\nيا ليلة الفرح يا أغلى من الدر\nنسمع الغني ونرقص الفرح\nوالدلة تفوح والقهوة تمر\nوالكل يبارك ويدعي بالخير", excerpt: "اليوم فرحتنا يا مرحبا...", date: "1445/05/25", views: 1900, likes: 234, hasAudio: true },
+    { id: "p-mun-2", title: "عيد الأضحى", category: "المناسبات", content: "يا هلا بالعيد يا هلا بالفرح\nيا أيام الخير يا أيام السرور\nالكل يجتمع في بيوت الأهل\nوالضحايا تذبح والقلوب طيّبة\n\nيا عيد الأضحى يا أغلى المواسم\nنذكر إبراهيم وابنه إسماعيل\nوكيف فداه ربّنا بذبح عظيم\nفالولاء لله فوق كل ولاء\n\nنبارك للجميع ونقول عساكم\nمن عواده وكل عام وأنتم بخير\nوالليالي الجاية تجمعنا دايم\nفي سلام وأمان ومحبة وسرور", excerpt: "يا هلا بالعيد يا هلا بالفرح...", date: "1445/04/15", views: 2200, likes: 289, hasAudio: true },
+    { id: "p-mun-3", title: "حفل التخرج", category: "المناسبات", content: "اليوم نفرح بتخرّج أبنائنا\nاللي سهروا الليالي في الدراسة\nأنتم فخر لنا وفخر لوطنكم\nوأنتم المستقبل اللي نبنيه بإرادة\n\nيا خريجي اليوم يا أصحاب العزم\nاستمروا في العطاء ولا تتوقفوا\nالعلم نور والجهل ظلام\nوأنتم حملة الشعلة للأجيال\n\nنبارك لكم ونقول مبروك\nوألف مبروك على التخرج العظيم\nربّي يوفّقكم في حياتكم\nويجعلكم منارةً للخير والتمكين", excerpt: "اليوم نفرح بتخرّج أبنائنا...", date: "1445/03/18", views: 1750, likes: 212, hasAudio: false },
+    { id: "p-mun-4", title: "ليلة النصر", category: "المناسبات", content: "اليوم نحتفل بيوم النصر العظيم\nيوم انتصر فيه أجدادنا الأبطال\nيوم الوهابين يا أغلى من الدر\nيوم كتب فيه التاريخ بمداد الفخر\n\nيا رجال زهران يا أهل البطولة\nأنتم من صنعتم المجد والعزة\nومن يومكم هذا والوطن يرفرف\nبراية التوحيد فوق كل قمة\n\nنحتفل ونفتخر ونروي للأجيال\nعن شجاعة الأبطال وعن الفداء\nونقول إن زهران باقية على العهد\nوفي كل زمن رجالها أوفياء", excerpt: "اليوم نحتفل بيوم النصر العظيم...", date: "1445/02/10", views: 2600, likes: 334, hasAudio: true },
+    { id: "p-mun-5", title: "وليمة العيد", category: "المناسبات", content: "يا هلا بالضيوف في وليمة العيد\nالمائدة ممتلئة والقلوب فرحانة\nالكبسة تفوح واللحم طري\nوالسلطات ملونة والعصير بارد\n\nيا أيام العيد يا أيام الجمع\nالكل يجتمع في بيت الجد الكبير\nوالأطفال يلعبون في الساحة\nوالكبار يتبادلون الأخبار والسرور\n\nالعيد عندنا مو يوم واحد\nالعيد عندنا أيام وليالي\nوالضيف يجي ويروح بقلب طيب\nويقول: يا زهران يا دار الكرامة", excerpt: "يا هلا بالضيوف في وليمة العيد...", date: "1445/01/15", views: 1980, likes: 245, hasAudio: false }
   ],
   articles: [
     { id: "1", title: "أصول الشعر النبطي في الجزيرة العربية", content: "دراسة معمقة في تاريخ الشعر النبطي ونشأته وتطوره عبر العصور...", excerpt: "دراسة معمقة في تاريخ الشعر النبطي ونشأته وتطوره عبر العصور...", category: "الشعر النبطي", date: "1445/04/15", views: 1250, readTime: "10 دقائق" },
@@ -477,6 +523,165 @@ export function deleteHistoryEvent(id: string): boolean {
   return data.history.length < initialLength
 }
 
+// User Auth
+function getUsers(): UserProfile[] {
+  if (typeof window === "undefined") return []
+  const stored = localStorage.getItem(USERS_KEY)
+  if (!stored) return []
+  try {
+    return JSON.parse(stored)
+  } catch {
+    return []
+  }
+}
+
+function saveUsers(users: UserProfile[]) {
+  if (typeof window === "undefined") return
+  localStorage.setItem(USERS_KEY, JSON.stringify(users))
+}
+
+export function registerUser(
+  name: string,
+  email: string,
+  password: string,
+  avatar?: string
+): { success: boolean; message: string; user?: UserProfile } {
+  const users = getUsers()
+  if (users.some((u) => u.email === email)) {
+    return { success: false, message: "البريد الإلكتروني مستخدم بالفعل" }
+  }
+  const newUser: UserProfile = {
+    id: generateId(),
+    name: name.trim(),
+    email: email.trim().toLowerCase(),
+    password,
+    avatar: avatar || undefined,
+    frame: "gold",
+    createdAt: getToday(),
+  }
+  saveUsers([...users, newUser])
+  localStorage.setItem(USER_SESSION_KEY, newUser.id)
+  return { success: true, message: "تم إنشاء الحساب بنجاح", user: newUser }
+}
+
+export function loginUser(
+  email: string,
+  password: string
+): { success: boolean; message: string; user?: UserProfile } {
+  const users = getUsers()
+  const user = users.find(
+    (u) => u.email === email.trim().toLowerCase() && u.password === password
+  )
+  if (!user) {
+    return { success: false, message: "البريد أو كلمة المرور غير صحيحة" }
+  }
+  localStorage.setItem(USER_SESSION_KEY, user.id)
+  return { success: true, message: "تم تسجيل الدخول بنجاح", user }
+}
+
+export function logoutUser() {
+  if (typeof window === "undefined") return
+  localStorage.removeItem(USER_SESSION_KEY)
+}
+
+export function getCurrentUser(): UserProfile | null {
+  if (typeof window === "undefined") return null
+  const sessionId = localStorage.getItem(USER_SESSION_KEY)
+  if (!sessionId) return null
+  const users = getUsers()
+  return users.find((u) => u.id === sessionId) || null
+}
+
+export function updateUserProfile(
+  id: string,
+  updates: Partial<Omit<UserProfile, "id" | "email" | "createdAt">>
+): UserProfile | null {
+  const users = getUsers()
+  const index = users.findIndex((u) => u.id === id)
+  if (index === -1) return null
+  users[index] = { ...users[index], ...updates }
+  saveUsers(users)
+  return users[index]
+}
+
+export function isUserLoggedIn(): boolean {
+  return getCurrentUser() !== null
+}
+
+// Bookmarks
+const BOOKMARKS_KEY = "alzahrani_bookmarks_v1"
+
+export interface Bookmark {
+  id: string
+  userId: string
+  itemId: string
+  itemType: string
+  title: string
+  href: string
+  date: string
+}
+
+function getBookmarksData(): Bookmark[] {
+  if (typeof window === "undefined") return []
+  const stored = localStorage.getItem(BOOKMARKS_KEY)
+  if (!stored) return []
+  try {
+    return JSON.parse(stored)
+  } catch {
+    return []
+  }
+}
+
+function saveBookmarksData(bookmarks: Bookmark[]) {
+  if (typeof window === "undefined") return
+  localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks))
+}
+
+export function getUserBookmarks(userId: string): Bookmark[] {
+  return getBookmarksData().filter((b) => b.userId === userId)
+}
+
+export function addBookmark(
+  userId: string,
+  itemId: string,
+  itemType: string,
+  title: string,
+  href: string
+): Bookmark {
+  const bookmarks = getBookmarksData()
+  const existing = bookmarks.find(
+    (b) => b.userId === userId && b.itemId === itemId && b.itemType === itemType
+  )
+  if (existing) return existing
+  const newBookmark: Bookmark = {
+    id: generateId(),
+    userId,
+    itemId,
+    itemType,
+    title,
+    href,
+    date: getToday(),
+  }
+  saveBookmarksData([newBookmark, ...bookmarks])
+  return newBookmark
+}
+
+export function removeBookmark(userId: string, itemId: string, itemType: string): boolean {
+  const bookmarks = getBookmarksData()
+  const initial = bookmarks.length
+  const filtered = bookmarks.filter(
+    (b) => !(b.userId === userId && b.itemId === itemId && b.itemType === itemType)
+  )
+  saveBookmarksData(filtered)
+  return filtered.length < initial
+}
+
+export function isBookmarked(userId: string, itemId: string, itemType: string): boolean {
+  return getBookmarksData().some(
+    (b) => b.userId === userId && b.itemId === itemId && b.itemType === itemType
+  )
+}
+
 // Stats
 export function getStats() {
   const data = getData()
@@ -494,4 +699,269 @@ export function getStats() {
       data.videos.reduce((s, v) => s + v.views, 0) +
       data.audio.reduce((s, a) => s + a.views, 0),
   }
+}
+
+// ==================== DYNAMIC CATEGORIES ====================
+
+export interface Category {
+  id: string
+  name: string
+  type: "poem" | "article" | "proverb" | "dictionary" | "video" | "audio" | "history"
+  color?: string
+  icon?: string
+  createdAt: string
+}
+
+const CATEGORIES_KEY = "alzahrani_categories_v1"
+
+function getCategoriesData(): Category[] {
+  if (typeof window === "undefined") return []
+  const stored = localStorage.getItem(CATEGORIES_KEY)
+  if (!stored) return []
+  try {
+    return JSON.parse(stored)
+  } catch {
+    return []
+  }
+}
+
+function saveCategoriesData(categories: Category[]) {
+  if (typeof window === "undefined") return
+  localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories))
+}
+
+export function getCategories(type?: Category["type"]): Category[] {
+  const all = getCategoriesData()
+  return type ? all.filter(c => c.type === type) : all
+}
+
+export function addCategory(category: Omit<Category, "id" | "createdAt">): Category {
+  const categories = getCategoriesData()
+  const newCategory: Category = { ...category, id: generateId(), createdAt: getToday() }
+  saveCategoriesData([...categories, newCategory])
+  return newCategory
+}
+
+export function updateCategory(id: string, updates: Partial<Omit<Category, "id">>): Category | null {
+  const categories = getCategoriesData()
+  const index = categories.findIndex(c => c.id === id)
+  if (index === -1) return null
+  categories[index] = { ...categories[index], ...updates }
+  saveCategoriesData(categories)
+  return categories[index]
+}
+
+export function deleteCategory(id: string): boolean {
+  const categories = getCategoriesData()
+  const initial = categories.length
+  saveCategoriesData(categories.filter(c => c.id !== id))
+  return categories.length > getCategoriesData().length
+}
+
+// ==================== USER MANAGEMENT ====================
+
+export function getAllUsers(): UserProfile[] {
+  return getUsers()
+}
+
+export function deleteUser(id: string): boolean {
+  const users = getUsers()
+  const initial = users.length
+  saveUsers(users.filter(u => u.id !== id))
+  return users.length > getAllUsers().length
+}
+
+export function toggleUserActive(id: string): UserProfile | null {
+  const users = getUsers()
+  const index = users.findIndex(u => u.id === id)
+  if (index === -1) return null
+  users[index] = { ...users[index], isActive: !(users[index] as any).isActive }
+  saveUsers(users)
+  return users[index]
+}
+
+export function updateUserRole(id: string, role: "user" | "moderator" | "admin"): UserProfile | null {
+  const users = getUsers()
+  const index = users.findIndex(u => u.id === id)
+  if (index === -1) return null
+  users[index] = { ...users[index], role } as UserProfile
+  saveUsers(users)
+  return users[index]
+}
+
+// ==================== COMMENTS MODERATION ====================
+
+export function getAllComments(): Comment[] {
+  return getData().comments
+}
+
+export function getPendingComments(): Comment[] {
+  return getData().comments.filter(c => (c as any).status === "pending" || !(c as any).status)
+}
+
+export function getApprovedComments(): Comment[] {
+  return getData().comments.filter(c => (c as any).status === "approved")
+}
+
+export function getRejectedComments(): Comment[] {
+  return getData().comments.filter(c => (c as any).status === "rejected")
+}
+
+export function approveComment(id: string): boolean {
+  const data = getData()
+  const comment = data.comments.find(c => c.id === id)
+  if (!comment) return false
+  comment.status = "approved" as any
+  comment.isFlagged = false as any
+  saveData(data)
+  return true
+}
+
+export function rejectComment(id: string): boolean {
+  const data = getData()
+  const comment = data.comments.find(c => c.id === id)
+  if (!comment) return false
+  comment.status = "rejected" as any
+  saveData(data)
+  return true
+}
+
+// ==================== CONTENT MODERATION ====================
+
+const BANNED_WORDS = [
+  "سب", "قذف", "شتم", "خنيث", "منكر", "فاجر", "زنديق", "ملحد",
+  "كافر", "منافق", "فاسق", "عاهر", "زاني", "سارق", "قاتل",
+  "مجرم", "ارهابي", "مخدرات", "حشيش", "خمر"
+]
+
+export interface ContentCheckResult {
+  clean: boolean
+  flaggedWords: string[]
+}
+
+export function checkContent(text: string): ContentCheckResult {
+  const normalized = text.toLowerCase()
+  const flaggedWords = BANNED_WORDS.filter(word => normalized.includes(word))
+  return {
+    clean: flaggedWords.length === 0,
+    flaggedWords
+  }
+}
+
+export function getBannedWords(): string[] {
+  return [...BANNED_WORDS]
+}
+
+export function addBannedWord(word: string): string[] {
+  if (!BANNED_WORDS.includes(word.toLowerCase())) {
+    BANNED_WORDS.push(word.toLowerCase())
+  }
+  return [...BANNED_WORDS]
+}
+
+export function removeBannedWord(word: string): string[] {
+  const index = BANNED_WORDS.indexOf(word.toLowerCase())
+  if (index > -1) BANNED_WORDS.splice(index, 1)
+  return [...BANNED_WORDS]
+}
+
+// ==================== IMAGE MODERATION ====================
+
+export interface ImageCheckResult {
+  status: "safe" | "warning" | "blocked"
+  reason?: string
+}
+
+const BLOCKED_EXTENSIONS = [".exe",".bat",".cmd",".sh",".php",".js"]
+const SUSPICIOUS_PATTERNS = ["porn","xxx","adult","nude","naked","sex"]
+
+export function checkImageUrl(url: string): ImageCheckResult {
+  const lower = url.toLowerCase()
+  // Check blocked extensions
+  if (BLOCKED_EXTENSIONS.some(ext => lower.endsWith(ext))) {
+    return { status: "blocked", reason: "امتداد ملف غير مسموح" }
+  }
+  // Check suspicious patterns
+  if (SUSPICIOUS_PATTERNS.some(p => lower.includes(p))) {
+    return { status: "warning", reason: "عنوان URL يحتوي على نمط مشبوه" }
+  }
+  return { status: "safe" }
+}
+
+export function getImageModerationRules() {
+  return {
+    blockedExtensions: [...BLOCKED_EXTENSIONS],
+    suspiciousPatterns: [...SUSPICIOUS_PATTERNS]
+  }
+}
+
+// ==================== ENHANCED STATS ====================
+
+export function getEnhancedStats() {
+  const data = getData()
+  const users = getUsers()
+  const categories = getCategoriesData()
+  const pendingComments = getPendingComments()
+  const allComments = data.comments
+  const flaggedComments = allComments.filter(c => (c as any).isFlagged)
+
+  return {
+    poems: data.poems.length,
+    articles: data.articles.length,
+    proverbs: data.proverbs.length,
+    dictionary: data.dictionary.length,
+    videos: data.videos.length,
+    audio: data.audio.length,
+    history: data.history.length,
+    users: users.length,
+    comments: allComments.length,
+    pendingComments: pendingComments.length,
+    flaggedItems: flaggedComments.length,
+    categories: categories.length,
+    totalViews:
+      data.poems.reduce((s, p) => s + p.views, 0) +
+      data.articles.reduce((s, a) => s + a.views, 0) +
+      data.videos.reduce((s, v) => s + v.views, 0) +
+      data.audio.reduce((s, a) => s + a.views, 0),
+  }
+}
+
+// ==================== SITE CONFIG ====================
+
+export interface SiteConfig {
+  poetName: string
+  poetSubtitle: string
+  logoImage: string | null
+  poetImage: string | null
+}
+
+const SITE_CONFIG_KEY = "alzahrani_site_config_v1"
+
+const defaultSiteConfig: SiteConfig = {
+  poetName: "محمد عيضة الزهراني",
+  poetSubtitle: "شاعر وباحث في التراث الشعبي",
+  logoImage: null,
+  poetImage: null,
+}
+
+export function getSiteConfig(): SiteConfig {
+  if (typeof window === "undefined") return defaultSiteConfig
+  const stored = localStorage.getItem(SITE_CONFIG_KEY)
+  if (!stored) return defaultSiteConfig
+  try {
+    return { ...defaultSiteConfig, ...JSON.parse(stored) }
+  } catch {
+    return defaultSiteConfig
+  }
+}
+
+export function updateSiteConfig(updates: Partial<SiteConfig>): SiteConfig {
+  const config = { ...getSiteConfig(), ...updates }
+  localStorage.setItem(SITE_CONFIG_KEY, JSON.stringify(config))
+  return config
+}
+
+export function resetSiteConfig(): SiteConfig {
+  localStorage.setItem(SITE_CONFIG_KEY, JSON.stringify(defaultSiteConfig))
+  return defaultSiteConfig
 }

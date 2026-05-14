@@ -8,6 +8,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Mic, Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Clock, Heart, Download, Shuffle, Repeat, List } from "lucide-react"
 import { getAudio } from "@/lib/data-store"
+import { ShareButtons } from "@/components/share-buttons"
+import { BookmarkButton } from "@/components/bookmark-button"
 
 const audioTracks = getAudio()
 
@@ -261,8 +263,8 @@ export default function AudioPage() {
 
                       {/* Info */}
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-foreground mb-1">{track.title}</h3>
-                        <p className="text-sm text-muted-foreground line-clamp-1">{track.description}</p>
+                        <h3 className="font-bold text-foreground font-serif mb-1 text-lg">{track.title}</h3>
+                        <p className="text-sm text-muted-foreground line-clamp-1 leading-relaxed">{track.description}</p>
                       </div>
 
                       {/* Meta */}
@@ -282,13 +284,13 @@ export default function AudioPage() {
 
                       {/* Actions */}
                       <div className="flex items-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-muted-foreground hover:text-accent"
-                        >
-                          <Heart className="h-5 w-5" />
-                        </Button>
+                        <BookmarkButton
+                          itemId={track.id}
+                          itemType="audio"
+                          title={track.title}
+                          href={`/audio`}
+                        />
+                        <ShareButtons title={track.title} />
                         <Button
                           variant="ghost"
                           size="icon"

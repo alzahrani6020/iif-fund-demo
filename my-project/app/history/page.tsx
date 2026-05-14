@@ -7,6 +7,10 @@ import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Landmark, MapPin, Swords, Calendar, Filter, Scroll, User, FileText } from "lucide-react"
 import { getHistory } from "@/lib/data-store"
+import { ShareButtons } from "@/components/share-buttons"
+import { BookmarkButton } from "@/components/bookmark-button"
+import { FocusModeToggle } from "@/components/focus-mode-toggle"
+import { TTSPlayer } from "@/components/tts-player"
 
 const categories = ["الكل", "معركة", "حدث", "معاهدة", "شخصية"]
 
@@ -68,6 +72,9 @@ export default function HistoryPage() {
                 <span className="text-3xl font-bold gold-gradient">{events.filter(e => e.category === "معركة").length}</span>
                 <p className="text-sm">معركة</p>
               </div>
+            </div>
+            <div className="mt-6 flex justify-center">
+              <FocusModeToggle />
             </div>
           </motion.div>
         </div>
@@ -134,8 +141,8 @@ export default function HistoryPage() {
                                 {event.date}
                               </span>
                             </div>
-                            <h3 className="text-xl font-bold text-foreground mb-2">{event.title}</h3>
-                            <p className="text-muted-foreground leading-relaxed mb-4">{event.description}</p>
+                            <h3 className="text-xl font-bold text-foreground font-serif mb-2">{event.title}</h3>
+                            <p className="text-muted-foreground leading-loose text-base mb-4">{event.description}</p>
                             <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                               {event.location && (
                                 <span className="flex items-center gap-1">
@@ -155,6 +162,16 @@ export default function HistoryPage() {
                                   النتيجة: {event.result}
                                 </span>
                               )}
+                            </div>
+                            <div className="flex items-center gap-2 mt-4 pt-4 border-t border-border/50">
+                              <TTSPlayer text={`${event.title}. ${event.description}`} title={event.title} />
+                              <BookmarkButton
+                                itemId={event.id}
+                                itemType="history"
+                                title={event.title}
+                                href={`/history`}
+                              />
+                              <ShareButtons title={event.title} />
                             </div>
                           </div>
                         </div>
