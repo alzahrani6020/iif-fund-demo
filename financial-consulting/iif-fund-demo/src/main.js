@@ -22,7 +22,7 @@ async function init() {
 
   // Render all sections
   const sectionOrder = [
-    'about', 'about_team', 'services', 'sectors', 'mission',
+    'hero', 'about', 'about_team', 'services', 'sectors', 'mission',
     'business_council', 'leadership', 'history', 'contact',
     'members', 'suggest', 'financial_consultation',
     'urgent_consultation_online', 'hizkama', 'activities',

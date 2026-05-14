@@ -1,3 +1,4 @@
+import { render as render_hero } from './hero.js';
 import { render as render_business_council } from './business_council.js';
 import { render as render_leadership } from './leadership.js';
 import { render as render_history } from './history.js';
@@ -35,6 +36,7 @@ import { render as render_page_representative } from './page_representative.js';
 import { render as render_page_research_center } from './page_research_center.js';
 
 export const sections = {
+  'hero': render_hero,
   'business_council': render_business_council,
   'leadership': render_leadership,
   'history': render_history,

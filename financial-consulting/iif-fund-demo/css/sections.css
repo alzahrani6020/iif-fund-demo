@@ -1,0 +1,171 @@
+/* Sections — قواعد الأقسام المشتركة (مستخرجة من styles.css ومنظمة) */
+
+/* ===== Language visibility ===== */
+.lang-ar, [data-i18n] {
+  display: none !important;
+}
+
+[data-lang="ar"] .lang-en {
+  display: none !important;
+}
+
+[data-lang="ar"] .lang-ar {
+  display: block !important;
+}
+
+/* ===== Section base ===== */
+.section {
+  padding: var(--space-16) 0;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.section:first-of-type {
+  border-top: none;
+}
+
+.section__title {
+  margin-bottom: var(--space-10);
+  font-size: clamp(1.6rem, 2.5vw, 2rem);
+  font-weight: 700;
+  color: var(--color-text-main);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  position: relative;
+  padding-left: var(--space-5);
+}
+
+.section__title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  bottom: 0.15em;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--color-accent-gold), var(--color-accent-gold-soft));
+}
+
+[dir="rtl"] .section__title {
+  padding-left: 0;
+  padding-right: var(--space-5);
+}
+
+[dir="rtl"] .section__title::before {
+  left: auto;
+  right: 0;
+}
+
+/* ===== Grid systems ===== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+/* ===== Cards (section variant) ===== */
+.card {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.card h3 {
+  margin-bottom: var(--space-3);
+  font-weight: 600;
+}
+
+.card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+/* ===== About team ===== */
+.about-team {
+  margin-top: var(--space-12);
+}
+
+.about-team__title {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-6);
+  color: var(--color-text-main);
+}
+
+.about-team-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-8);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ===== Members ===== */
+.members-section {
+  margin-top: var(--space-12);
+}
+
+.members-section__intro {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+}
+
+.members-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-12) 0;
+  }
+  .section__title {
+    font-size: 1.5rem;
+    padding-left: var(--space-4);
+  }
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+  .about-team-list,
+  .members-list {
+    grid-template-columns: 1fr;
+  }
+}
