@@ -2,25 +2,57 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Search, BookOpen, Mic, Video, BookText, Quote, User, Image, FileText, Mail, LayoutDashboard, MessageSquare, Landmark } from "lucide-react"
+import {
+  Menu,
+  X,
+  Search,
+  BookOpen,
+  Mic,
+  Video,
+  BookText,
+  Quote,
+  User,
+  Image,
+  FileText,
+  Mail,
+  LayoutDashboard,
+  MessageSquare,
+  Landmark,
+  ArrowLeft,
+  Bookmark,
+  Clock,
+  Feather,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
-  getPoems, getArticles, getProverbs, getDictionary, getVideos, getAudio
+  getPoems,
+  getArticles,
+  getProverbs,
+  getDictionary,
+  getVideos,
+  getAudio,
+  getHistory,
 } from "@/lib/data-store"
+import { useUser } from "@/hooks/use-user"
+import { getSiteConfig } from "@/lib/data-store"
+import { UserAuthDialog } from "@/components/user-auth-dialog"
+import { UserProfileDialog } from "@/components/user-profile-dialog"
 
 const navItems = [
   { href: "/", label: "الرئيسية", icon: null },
   { href: "/diwan", label: "الديوان الشعري", icon: BookOpen },
+  { href: "/aghraz", label: "أغراض الشعر", icon: Feather },
+  { href: "/articles", label: "المقالات", icon: FileText },
+  { href: "/history", label: "تاريخ زهران", icon: Landmark },
+  { href: "/proverbs", label: "الأمثال والموروث", icon: Quote },
+  { href: "/dictionary", label: "معجم اللهجة", icon: BookText },
   { href: "/audio", label: "القصائد الصوتية", icon: Mic },
   { href: "/videos", label: "مكتبة الفيديو", icon: Video },
-  { href: "/dictionary", label: "معجم اللهجة", icon: BookText },
-  { href: "/proverbs", label: "الأمثال والموروث", icon: Quote },
-  { href: "/history", label: "تاريخ زهران", icon: Landmark },
+  { href: "/timeline", label: "الخط الزمني", icon: Clock },
   { href: "/biography", label: "السيرة الذاتية", icon: User },
   { href: "/archive", label: "الصور والأرشيف", icon: Image },
-  { href: "/articles", label: "المقالات", icon: FileText },
   { href: "/majlis", label: "المجلس", icon: MessageSquare },
   { href: "/contact", label: "تواصل معنا", icon: Mail },
 ]
@@ -31,20 +63,40 @@ export function Navigation() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
-  const [searchResults, setSearchResults] = useState<{title: string; label: string; href: string}[]>([])
+  const [searchResults, setSearchResults] = useState<
+    { title: string; label: string; href: string; excerpt: string }[]
+  >([])
   const [showResults, setShowResults] = useState(false)
+  const [authOpen, setAuthOpen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
+  const { user, isLoggedIn } = useUser()
+  const [siteConfig, setSiteConfig] = useState(() => getSiteConfig())
+
+  useEffect(() => {
+    const handleStorage = () => setSiteConfig(getSiteConfig())
+    window.addEventListener("storage", handleStorage)
+    return () => window.removeEventListener("storage", handleStorage)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight
+      const totalHeight =
+        document.documentElement.scrollHeight - window.innerHeight
       const progress = (window.scrollY / totalHeight) * 100
       setScrollProgress(progress)
-      setIsScrolled(window.scrollY > 50)
+      setIsScrolled(window.scrollY > 30)
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const handler = () => setAuthOpen(true)
+    window.addEventListener("open-user-auth", handler)
+    return () => window.removeEventListener("open-user-auth", handler)
   }, [])
 
   const performSearch = (query: string) => {
@@ -55,40 +107,98 @@ export function Navigation() {
       return
     }
     const q = query.trim().toLowerCase()
-    const results: {title: string; label: string; href: string}[] = []
+    const results: {
+      title: string
+      label: string
+      href: string
+      excerpt: string
+    }[] = []
 
-    getPoems().forEach(item => {
-      if (item.title.toLowerCase().includes(q) || item.content.toLowerCase().includes(q) || item.category.toLowerCase().includes(q)) {
-        results.push({ title: item.title, label: "قصيدة", href: "/diwan" })
+    const push = (
+      title: string,
+      label: string,
+      href: string,
+      excerpt: string
+    ) => {
+      results.push({
+        title,
+        label,
+        href,
+        excerpt: excerpt.slice(0, 60) + (excerpt.length > 60 ? "…" : ""),
+      })
+    }
+
+    getPoems().forEach((item) => {
+      if (
+        item.title.toLowerCase().includes(q) ||
+        item.content.toLowerCase().includes(q) ||
+        item.category.toLowerCase().includes(q)
+      ) {
+        push(
+          item.title,
+          "قصيدة",
+          `/diwan/${item.id}`,
+          item.excerpt || item.content || ""
+        )
       }
     })
-    getArticles().forEach(item => {
-      if (item.title.toLowerCase().includes(q) || item.content.toLowerCase().includes(q)) {
-        results.push({ title: item.title, label: "مقال", href: "/articles" })
+    getArticles().forEach((item) => {
+      if (
+        item.title.toLowerCase().includes(q) ||
+        item.content.toLowerCase().includes(q)
+      ) {
+        push(
+          item.title,
+          "مقال",
+          "/articles",
+          item.excerpt || item.content || ""
+        )
       }
     })
-    getProverbs().forEach(item => {
-      if (item.text.toLowerCase().includes(q) || item.meaning.toLowerCase().includes(q)) {
-        results.push({ title: item.text, label: "مثل", href: "/proverbs" })
+    getProverbs().forEach((item) => {
+      if (
+        item.text.toLowerCase().includes(q) ||
+        item.meaning.toLowerCase().includes(q)
+      ) {
+        push(item.text, "مثل", "/proverbs", item.meaning)
       }
     })
-    getDictionary().forEach(item => {
-      if (item.word.toLowerCase().includes(q) || item.meaning.toLowerCase().includes(q) || item.example.toLowerCase().includes(q)) {
-        results.push({ title: item.word, label: "مفردة", href: "/dictionary" })
+    getDictionary().forEach((item) => {
+      if (
+        item.word.toLowerCase().includes(q) ||
+        item.meaning.toLowerCase().includes(q) ||
+        item.example.toLowerCase().includes(q)
+      ) {
+        push(item.word, "مفردة", "/dictionary", item.meaning)
       }
     })
-    getVideos().forEach(item => {
-      if (item.title.toLowerCase().includes(q)) {
-        results.push({ title: item.title, label: "فيديو", href: "/videos" })
+    getVideos().forEach((item) => {
+      if (
+        item.title.toLowerCase().includes(q) ||
+        item.description?.toLowerCase().includes(q)
+      ) {
+        push(item.title, "فيديو", "/videos", item.description || "")
       }
     })
-    getAudio().forEach(item => {
-      if (item.title.toLowerCase().includes(q)) {
-        results.push({ title: item.title, label: "صوتي", href: "/audio" })
+    getAudio().forEach((item) => {
+      if (
+        item.title.toLowerCase().includes(q) ||
+        item.description?.toLowerCase().includes(q)
+      ) {
+        push(item.title, "صوتي", "/audio", item.description || "")
+      }
+    })
+    getHistory().forEach((item) => {
+      if (
+        item.title.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q) ||
+        item.location?.toLowerCase().includes(q)
+      ) {
+        push(item.title, "تاريخي", "/history", item.description)
       }
     })
 
-    setSearchResults(results.slice(0, 8))
+    setSearchResults(results.slice(0, 6))
     setShowResults(true)
   }
 
@@ -96,32 +206,63 @@ export function Navigation() {
     <>
       {/* Scroll Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 scroll-progress z-[60]"
+        className="fixed top-0 left-0 right-0 h-1 z-[60]"
         style={{ width: `${scrollProgress}%` }}
-      />
+      >
+        <div className="h-full bg-gradient-to-l from-primary via-accent to-primary animate-pulse" />
+      </motion.div>
 
       <motion.nav
-        className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
-          isScrolled ? "glass-dark shadow-lg" : "bg-transparent"
+        className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 border-b ${
+          isScrolled
+            ? "bg-background/90 backdrop-blur-2xl border-border/40 shadow-2xl shadow-black/30"
+            : "bg-background/40 backdrop-blur-3xl border-transparent"
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
+        {/* Bottom gradient border */}
+        <div className="absolute bottom-0 right-0 left-0 h-[1px] bg-gradient-to-l from-transparent via-accent/40 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
+          <div className="flex items-center justify-between h-24">
+            {/* Logo — Luxurious */}
+            <Link href="/" className="flex items-center gap-4 group">
               <motion.div
-                className="w-12 h-12 rounded-full bg-primary/20 border-2 border-accent flex items-center justify-center purple-glow"
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 400 }}
+                className="relative w-16 h-16 rounded-full flex items-center justify-center"
+                whileHover={{ scale: 1.08 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
-                <span className="text-accent font-serif text-xl">م</span>
+                {/* Animated ring */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary via-accent to-primary animate-spin" style={{ animationDuration: '4s' }} />
+                <div className="absolute inset-[2px] rounded-full bg-background flex items-center justify-center overflow-hidden">
+                  {siteConfig.logoImage ? (
+                    <img src={siteConfig.logoImage} alt="الشاعر" className="w-full h-full object-cover" />
+                  ) : (
+                    <span
+                      className="text-accent font-bold text-3xl gold-gradient"
+                      style={{ fontFamily: "'Amiri', serif" }}
+                    >
+                      م
+                    </span>
+                  )}
+                </div>
+                {/* Glow */}
+                <div className="absolute inset-0 rounded-full bg-accent/20 blur-xl -z-10" />
               </motion.div>
               <div className="hidden sm:block">
-                <h1 className="text-lg font-bold gold-gradient">محمد عيضة الزهراني</h1>
-                <p className="text-xs text-muted-foreground">شاعر وباحث في التراث</p>
+                <motion.h1
+                  className="text-2xl font-bold leading-tight tracking-wide"
+                  style={{ fontFamily: "'Amiri', serif" }}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <span className="animated-gradient">{siteConfig.poetName}</span>
+                </motion.h1>
+                <p className="text-xs text-muted-foreground/80 tracking-widest uppercase mt-0.5 flex items-center gap-1.5">
+                  <span className="w-4 h-[1px] bg-accent/50" />
+                  {siteConfig.poetSubtitle}
+                  <span className="w-4 h-[1px] bg-accent/50" />
+                </p>
               </div>
             </Link>
 
@@ -131,26 +272,45 @@ export function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3 py-2 text-sm transition-colors duration-300 relative group ${
-                    pathname === item.href ? "text-accent" : "text-foreground/80 hover:text-accent"
+                  className={`px-4 py-2.5 text-[15px] font-medium transition-colors duration-300 relative group rounded-lg ${
+                    pathname === item.href
+                      ? "text-accent"
+                      : "text-foreground/60 hover:text-accent"
                   }`}
                 >
                   {item.label}
-                  <motion.span
-                    className="absolute bottom-0 right-0 h-0.5 bg-accent"
-                    initial={{ width: 0 }}
-                    animate={{ width: pathname === item.href ? "100%" : 0 }}
-                    whileHover={{ width: "100%" }}
-                    transition={{ duration: 0.3 }}
-                  />
+                  {/* Active underline pill */}
+                  {pathname === item.href && (
+                    <motion.span
+                      layoutId="activeNav"
+                      className="absolute bottom-0 right-2 left-2 h-[2px] bg-gradient-to-l from-primary via-accent to-primary rounded-full"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  {/* Hover glow */}
+                  <span className="absolute inset-0 rounded-lg bg-accent/0 group-hover:bg-accent/5 transition-colors duration-300" />
                 </Link>
               ))}
               <div className="relative group">
-                <button className="px-3 py-2 text-sm text-foreground/80 hover:text-accent transition-colors duration-300">
-                  المزيد
+                <button className="px-4 py-2.5 text-[15px] font-medium text-foreground/60 hover:text-accent transition-colors duration-300 rounded-lg flex items-center gap-1 relative group">
+                  <span className="absolute inset-0 rounded-lg bg-accent/0 group-hover:bg-accent/5 transition-colors duration-300" />
+                  <span className="relative">المزيد</span>
+                  <svg
+                    className="w-3.5 h-3.5 transition-transform group-hover:rotate-180 relative"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
                 </button>
                 <motion.div
-                  className="absolute top-full right-0 mt-2 w-56 glass rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden"
+                  className="absolute top-full right-0 mt-2 w-60 glass-dark rounded-xl shadow-2xl border border-border/50 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                 >
@@ -158,10 +318,10 @@ export function Navigation() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center gap-3 px-4 py-3 text-sm transition-colors duration-300 ${
+                      className={`flex items-center gap-3 px-4 py-3 text-sm transition-colors duration-200 ${
                         pathname === item.href
                           ? "text-accent bg-primary/10"
-                          : "text-foreground/80 hover:text-accent hover:bg-secondary/50"
+                          : "text-foreground/70 hover:text-accent hover:bg-secondary/50"
                       }`}
                     >
                       {item.icon && <item.icon className="h-4 w-4" />}
@@ -170,7 +330,7 @@ export function Navigation() {
                   ))}
                   <Link
                     href="/admin"
-                    className="flex items-center gap-3 px-4 py-3 text-sm text-primary hover:bg-primary/10 border-t border-border transition-colors duration-300"
+                    className="flex items-center gap-3 px-4 py-3 text-sm text-primary hover:bg-primary/10 border-t border-border transition-colors duration-200"
                   >
                     <LayoutDashboard className="h-4 w-4" />
                     لوحة التحكم
@@ -179,21 +339,68 @@ export function Navigation() {
               </div>
             </div>
 
-            {/* Search and Mobile Menu */}
-            <div className="flex items-center gap-2">
+            {/* Actions */}
+            <div className="flex items-center gap-3">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setSearchOpen(!searchOpen)}
-                className="text-foreground/80 hover:text-accent hover:bg-secondary/50"
+                className="text-foreground/70 hover:text-accent hover:bg-accent/10 rounded-full w-10 h-10"
               >
                 <Search className="h-5 w-5" />
               </Button>
+
+              {isLoggedIn && (
+                <Link href="/bookmarks">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-foreground/70 hover:text-accent hover:bg-accent/10 rounded-full w-10 h-10 hidden sm:flex"
+                  >
+                    <Bookmark className="h-5 w-5" />
+                  </Button>
+                </Link>
+              )}
+
+              {/* User Avatar */}
+              <button
+                onClick={() =>
+                  isLoggedIn ? setProfileOpen(true) : setAuthOpen(true)
+                }
+                className="relative group"
+                title={isLoggedIn ? user?.name : "تسجيل الدخول"}
+              >
+                <div
+                  className={`w-10 h-10 rounded-full overflow-hidden border-[2.5px] transition-all ${
+                    user?.frame === "purple"
+                      ? "border-purple-400 shadow-lg shadow-purple-400/30"
+                      : user?.frame === "blue"
+                      ? "border-sky-400 shadow-lg shadow-sky-400/30"
+                      : user?.frame === "green"
+                      ? "border-emerald-400 shadow-lg shadow-emerald-400/30"
+                      : user?.frame === "none"
+                      ? "border-transparent"
+                      : "border-amber-400 shadow-lg shadow-amber-400/30"
+                  }`}
+                >
+                  <img
+                    src={user?.avatar || "/placeholder-user.jpg"}
+                    alt={user?.name || "User"}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {!isLoggedIn && (
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-muted border-2 border-background flex items-center justify-center">
+                    <User className="w-2 h-2 text-muted-foreground" />
+                  </span>
+                )}
+              </button>
+
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(!isOpen)}
-                className="lg:hidden text-foreground/80 hover:text-accent hover:bg-secondary/50"
+                className="lg:hidden text-foreground/70 hover:text-accent hover:bg-accent/10 rounded-full w-10 h-10"
               >
                 <AnimatePresence mode="wait">
                   {isOpen ? (
@@ -226,22 +433,37 @@ export function Navigation() {
           <AnimatePresence>
             {searchOpen && (
               <motion.div
-                className="py-4 border-t border-border"
+                className="py-5 border-t border-border/50"
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="relative">
-                  <Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground z-10" />
-                  <input
-                    type="text"
-                    placeholder="ابحث في القصائد والمقالات والمفردات..."
-                    value={searchQuery}
-                    onChange={(e) => performSearch(e.target.value)}
-                    className="w-full glass border-0 rounded-xl pr-12 pl-4 py-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
-                    autoFocus
-                  />
+                <div className="relative max-w-2xl mx-auto">
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault()
+                      if (searchQuery.trim()) {
+                        router.push(
+                          `/search?q=${encodeURIComponent(searchQuery.trim())}`
+                        )
+                        setShowResults(false)
+                        setSearchOpen(false)
+                        setSearchQuery("")
+                      }
+                    }}
+                    className="relative"
+                  >
+                    <Search className="absolute right-5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground z-10" />
+                    <input
+                      type="text"
+                      placeholder="ابحث في القصائد والمقالات والمفردات والتاريخ..."
+                      value={searchQuery}
+                      onChange={(e) => performSearch(e.target.value)}
+                      className="w-full glass border-0 rounded-2xl pr-14 pl-5 py-4 text-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all duration-300"
+                      autoFocus
+                    />
+                  </form>
                   {/* Results Dropdown */}
                   <AnimatePresence>
                     {showResults && searchResults.length > 0 && (
@@ -249,38 +471,66 @@ export function Navigation() {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-full right-0 left-0 mt-2 glass-dark rounded-xl shadow-2xl border border-border overflow-hidden z-50"
+                        className="absolute top-full right-0 left-0 mt-3 glass-dark rounded-xl shadow-2xl border border-border/50 overflow-hidden z-50"
                       >
                         <div className="max-h-80 overflow-y-auto py-2">
                           {searchResults.map((result, index) => (
                             <Link
                               key={index}
                               href={result.href}
-                              onClick={() => { setShowResults(false); setSearchOpen(false); setSearchQuery(""); }}
-                              className="flex items-center justify-between px-4 py-3 hover:bg-primary/10 transition-colors"
+                              onClick={() => {
+                                setShowResults(false)
+                                setSearchOpen(false)
+                                setSearchQuery("")
+                              }}
+                              className="flex items-center justify-between px-5 py-3.5 hover:bg-primary/10 transition-colors"
                             >
-                              <div className="flex flex-col">
-                                <span className="text-sm font-medium text-foreground truncate">{result.title}</span>
-                                <span className="text-xs text-muted-foreground">{result.label}</span>
+                              <div className="flex flex-col min-w-0 flex-1 gap-0.5">
+                                <span className="text-sm font-semibold text-foreground truncate">
+                                  {result.title}
+                                </span>
+                                <span className="text-xs text-muted-foreground truncate">
+                                  {result.excerpt}
+                                </span>
                               </div>
-                              <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
+                              <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary mr-3 shrink-0 font-medium">
                                 {result.label}
                               </span>
                             </Link>
                           ))}
+                          <button
+                            onClick={() => {
+                              if (searchQuery.trim()) {
+                                router.push(
+                                  `/search?q=${encodeURIComponent(
+                                    searchQuery.trim()
+                                  )}`
+                                )
+                                setShowResults(false)
+                                setSearchOpen(false)
+                                setSearchQuery("")
+                              }
+                            }}
+                            className="flex items-center justify-center gap-2 w-full px-5 py-3.5 text-sm text-accent hover:bg-primary/10 transition-colors border-t border-border mt-1 font-medium"
+                          >
+                            <span>عرض كل النتائج</span>
+                            <ArrowLeft className="h-4 w-4" />
+                          </button>
                         </div>
                       </motion.div>
                     )}
-                    {showResults && searchQuery.trim() && searchResults.length === 0 && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-full right-0 left-0 mt-2 glass-dark rounded-xl shadow-2xl border border-border overflow-hidden z-50 p-4 text-center text-sm text-muted-foreground"
-                      >
-                        لا توجد نتائج لـ «{searchQuery}»
-                      </motion.div>
-                    )}
+                    {showResults &&
+                      searchQuery.trim() &&
+                      searchResults.length === 0 && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="absolute top-full right-0 left-0 mt-3 glass-dark rounded-xl shadow-2xl border border-border/50 overflow-hidden z-50 p-5 text-center text-sm text-muted-foreground"
+                        >
+                          لا توجد نتائج لـ «{searchQuery}»
+                        </motion.div>
+                      )}
                   </AnimatePresence>
                 </div>
               </motion.div>
@@ -292,7 +542,7 @@ export function Navigation() {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="lg:hidden glass-dark border-t border-border"
+              className="lg:hidden glass-dark border-t border-border/50"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -309,10 +559,10 @@ export function Navigation() {
                     <Link
                       href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-300 ${
+                      className={`flex items-center gap-3 px-4 py-3.5 rounded-xl transition-colors duration-200 text-base ${
                         pathname === item.href
-                          ? "text-accent bg-primary/10"
-                          : "text-foreground/80 hover:text-accent hover:bg-secondary/50"
+                          ? "text-accent bg-primary/10 font-semibold"
+                          : "text-foreground/70 hover:text-accent hover:bg-secondary/50"
                       }`}
                     >
                       {item.icon && <item.icon className="h-5 w-5" />}
@@ -329,7 +579,7 @@ export function Navigation() {
                   <Link
                     href="/admin"
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 text-primary hover:bg-primary/10 rounded-lg transition-colors duration-300"
+                    className="flex items-center gap-3 px-4 py-3.5 text-primary hover:bg-primary/10 rounded-xl transition-colors duration-200 text-base"
                   >
                     <LayoutDashboard className="h-5 w-5" />
                     لوحة التحكم
@@ -340,6 +590,9 @@ export function Navigation() {
           )}
         </AnimatePresence>
       </motion.nav>
+
+      <UserAuthDialog open={authOpen} onOpenChange={setAuthOpen} />
+      <UserProfileDialog open={profileOpen} onOpenChange={setProfileOpen} />
     </>
   )
 }

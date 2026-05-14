@@ -2,6 +2,8 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { User, MapPin, Calendar, Award, BookOpen, Mic, FileText, Star } from "lucide-react"
+import { FocusModeToggle } from "@/components/focus-mode-toggle"
+import { TTSPlayer } from "@/components/tts-player"
 
 const timeline = [
   {
@@ -80,6 +82,9 @@ export default function BiographyPage() {
                   شاعر نبطي
                 </span>
               </div>
+              <div className="mt-4 flex justify-center lg:justify-start">
+                <FocusModeToggle />
+              </div>
             </div>
           </div>
         </div>
@@ -103,9 +108,15 @@ export default function BiographyPage() {
       {/* About */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold font-serif mb-8 text-center">
-            <span className="gold-gradient">نبذة</span> عن الشاعر
-          </h2>
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <h2 className="text-3xl font-bold font-serif text-center">
+              <span className="gold-gradient">نبذة</span> عن الشاعر
+            </h2>
+            <TTSPlayer
+              text="محمد عيضة الزهراني شاعر نبطي وباحث في التراث الشعبي من منطقة زهران بمنطقة الباحة في المملكة العربية السعودية. نشأ في بيئة غنية بالموروث الثقافي والشعر الشعبي. يتميز شعره بالأصالة والعمق، حيث يستلهم من بيئته الجبلية ومن تراث أجداده. كما يُعرف بجهوده في توثيق مفردات اللهجة الزهرانية وجمع الأمثال الشعبية. شارك في العديد من الأمسيات الشعرية والمهرجانات الثقافية وحظي بتكريمات عديدة."
+              title="نبذة عن الشاعر"
+            />
+          </div>
           <div className="prose prose-lg max-w-none text-muted-foreground leading-relaxed space-y-6">
             <p>
               محمد عيضة الزهراني شاعر نبطي وباحث في التراث الشعبي من منطقة زهران بمنطقة الباحة في المملكة العربية السعودية. نشأ في بيئة غنية بالموروث الثقافي والشعر الشعبي، ما أسهم في تشكيل موهبته الشعرية منذ سن مبكرة.

@@ -8,6 +8,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { BookText, Search, Volume2, BookOpen, Star, Share2, Copy, Check } from "lucide-react"
 import { getDictionary } from "@/lib/data-store"
+import { ShareButtons } from "@/components/share-buttons"
+import { BookmarkButton } from "@/components/bookmark-button"
+import { FocusModeToggle } from "@/components/focus-mode-toggle"
+import { TTSPlayer } from "@/components/tts-player"
 
 const letters = [
   "الكل", "أ", "ب", "ت", "ث", "ج", "ح", "خ", "د", "ذ", "ر", "ز", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ك", "ل", "م", "ن", "هـ", "و", "ي"
@@ -83,6 +87,9 @@ export default function DictionaryPage() {
                 <span className="text-3xl font-bold gold-gradient">7</span>
                 <p className="text-sm">تصنيفات</p>
               </div>
+            </div>
+            <div className="mt-6 flex justify-center">
+              <FocusModeToggle />
             </div>
           </motion.div>
         </div>
@@ -209,9 +216,14 @@ export default function DictionaryPage() {
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-accent">
-                              <Star className="h-5 w-5" />
-                            </Button>
+                            <TTSPlayer text={`${entry.word}. المعنى: ${entry.meaning}. مثال: ${entry.example || entry.usage || ""}`} title={entry.word} />
+                            <BookmarkButton
+                              itemId={entry.id}
+                              itemType="dictionary"
+                              title={entry.word}
+                              href={`/dictionary`}
+                            />
+                            <ShareButtons title={entry.word} />
                             <Button
                               variant="ghost"
                               size="icon"
@@ -235,7 +247,7 @@ export default function DictionaryPage() {
                             <BookOpen className="h-4 w-4" />
                             المعنى
                           </span>
-                          <p className="text-foreground mt-2 leading-relaxed">{entry.meaning}</p>
+                          <p className="text-foreground mt-2 leading-relaxed text-lg">{entry.meaning}</p>
                         </div>
                         
                         <div className="pt-4 border-t border-border">
@@ -247,7 +259,7 @@ export default function DictionaryPage() {
 
                         <div className="pt-4 border-t border-border">
                           <span className="text-sm text-accent font-medium">ملاحظة ثقافية:</span>
-                          <p className="text-muted-foreground mt-2 text-sm italic">{entry.culturalNote}</p>
+                          <p className="text-muted-foreground mt-2 text-base italic leading-relaxed">{entry.culturalNote}</p>
                         </div>
                       </div>
                     </CardContent>
