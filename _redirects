@@ -1,2 +1,20 @@
-# يفرض عرض web-search.html على /search حتى لا يطغى عليه أي ملف قديم أو كاش (Netlify: 200!)
-/search   /financial-consulting/iif-fund-demo/web-search.html   200!
+# Cloudflare Pages — Redirects
+# https://developers.cloudflare.com/pages/platform/redirects/
+
+# Executive brief shortcuts
+/executive /executive-brief.html 301
+/sovereign /sovereign-standards.html 301
+/charter /charter.html 301
+
+# Fund interface shortcuts
+/fund /financial-consulting/iif-fund-demo/index.html 301
+/cp /financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1 301
+/panel /financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1 301
+/dashboard /financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1 301
+
+# Government platform
+/government /financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html 301
+/gov /financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html 301
+
+# Thiqqah
+/thiqqah /tools/thiqqah-site/index.html 301

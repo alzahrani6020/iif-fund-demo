@@ -27,6 +27,8 @@
     "check:deploy": "node scripts/deploy-readiness.mjs",
     "build": "npm run build:gov-data && npm run i18n:packs",
     "build:github-pages": "npm run build && node scripts/prepare-github-pages-site.mjs",
+    "cloudflare:build": "npm run build:github-pages",
+    "cloudflare:preview": "npm run build:github-pages && npx wrangler pages dev gh-pages-dist",
     "validate": "npm run build",
     "verify": "npm run build && node --check scripts/dev-server.js && node --check scripts/check-urls.js && node --check scripts/smoke-with-server.mjs && node --check scripts/smoke-news-api.mjs && node --check scripts/check-news-feeds.mjs && node --check scripts/e2e-public-viewports.mjs && node --check scripts/maintenance-full-audit.mjs && node --check scripts/lib/dotenv-load.mjs && node --check scripts/minimax-ask.mjs && node --check scripts/minimax-env-status.mjs && node --check scripts/verify-netlify-proxy.mjs && node --check scripts/smoke-live-site.mjs && node --check scripts/netlify-upsert-site-env.mjs && node --check scripts/searxng-production-path.mjs && node --check scripts/trigger-netlify-build.cjs && node --check netlify/functions/searx.js && node --check netlify/functions/healthz.js && node --check financial-consulting/iif-fund-demo/api/user-registration-forward.js && node --check netlify/functions/news.js && node --check netlify/functions/check-content.js",
     "verify:local": "npm run verify && node scripts/maintenance-full-audit.mjs",
