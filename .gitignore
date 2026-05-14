@@ -47,3 +47,4 @@ exports/
 
 # نتيجة فك/اختبار QR مؤقتة
 qr_decode_result.txt
+dist/

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://thiqqah.live/sitemap.xml
