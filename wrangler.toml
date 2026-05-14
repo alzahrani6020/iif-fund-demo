@@ -1,0 +1,11 @@
+# Cloudflare Pages — Wrangler configuration
+# https://developers.cloudflare.com/pages/platform/wrangler-configuration/
+
+name = "iif-fund"
+compatibility_date = "2024-01-01"
+
+[build]
+command = "npm run build:github-pages"
+
+[site]
+bucket = "./gh-pages-dist"
