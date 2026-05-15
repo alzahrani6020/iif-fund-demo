@@ -125,9 +125,9 @@ export default function AdminLoginPage() {
               </a>
             </div>
 
-            {/* Hint */}
+            {/* Security note */}
             <p className="mt-4 text-xs text-muted-foreground/50 text-center">
-              كلمة المرور الافتراضية: admin123
+              يمكنك تغيير كلمة المرور من إعدادات لوحة التحكم
             </p>
           </CardContent>
         </Card>

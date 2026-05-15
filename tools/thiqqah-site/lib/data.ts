@@ -35,8 +35,7 @@ export const services: ServiceItem[] = [
     icon: 'Building2',
     features: [
       'شركات ذات مسؤولية محدودة',
-      'شركة مساهمة مقفلة',
-      'شركة مساهمة مبسطة',
+      'شركة مساهمة مقفلة ومبسطة',
       'مؤسسات فردية وفروع',
       'فروع الشركات الأجنبية',
       'تعديل عقود وبيانات الشركاء',
@@ -46,8 +45,7 @@ export const services: ServiceItem[] = [
     ],
     featuresEn: [
       'Limited Liability Companies',
-      'Closed Joint Stock Companies',
-      'Simplified Joint Stock Companies',
+      'Closed & Simplified JSC',
       'Sole Proprietorships & Branches',
       'Foreign Company Branches',
       'Partner data & contract amendments',
@@ -65,26 +63,22 @@ export const services: ServiceItem[] = [
     category: ['all', 'popular', 'business'],
     icon: 'FileCheck',
     features: [
-      'تراخيص البناء',
+      'تراخيص البناء والهدم',
       'إضافة الأدوار والملاحق',
       'تراخيص البيئة',
       'فتح النشاط التجاري',
-      'التراخيص الصناعية',
-      'تراخيص السياحة',
+      'التراخيص الصناعية والسياحية',
       'تراخيص محطات الوقود',
-      'الهدم والإزالة',
       'تجديد وتعديل الرخص',
       'متابعة الاشتراطات والملاحظات'
     ],
     featuresEn: [
-      'Construction permits',
+      'Construction & demolition permits',
       'Floor additions & annexes',
       'Environmental licenses',
       'Commercial activity opening',
-      'Industrial licenses',
-      'Tourism licenses',
+      'Industrial & tourism licenses',
       'Gas station permits',
-      'Demolition & removal',
       'License renewal & amendment',
       'Requirements & remarks follow-up'
     ]
@@ -98,25 +92,17 @@ export const services: ServiceItem[] = [
     category: ['all', 'popular', 'authority'],
     icon: 'Landmark',
     features: [
-      'التنسيق مع البنوك',
-      'الصندوق الصناعي',
-      'الصندوق السياحي',
-      'الصندوق الزراعي',
-      'شركات التمويل',
-      'وزارة الاستثمار',
-      'المركز السعودي للأعمال',
+      'التنسيق مع البنوك وشركات التمويل',
+      'الصناديق الصناعية والسياحية والزراعية',
+      'وزارة الاستثمار والمركز السعودي للأعمال',
       'المحاكم وكتابات العدل',
       'الجوازات ووزارة العمل',
       'وزارة الإسكان والجهات الحكومية'
     ],
     featuresEn: [
-      'Bank coordination',
-      'Industrial Development Fund',
-      'Tourism Development Fund',
-      'Agricultural Development Fund',
-      'Financing companies',
-      'Ministry of Investment',
-      'Saudi Business Center',
+      'Bank & financing company coordination',
+      'Industrial, tourism & agricultural funds',
+      'Ministry of Investment & Saudi Business Center',
       'Courts & notaries',
       'Passports & Ministry of Labor',
       'Ministry of Housing & government entities'
@@ -135,14 +121,14 @@ export const services: ServiceItem[] = [
   },
   {
     id: 'foreign-investor',
-    title: 'الشركات الأجنبية',
-    titleEn: 'Foreign Companies',
-    desc: 'مساندة المستثمرين في فهم المتطلبات والمسارات النظامية داخل السعودية.',
-    descEn: 'Supporting investors in understanding requirements and regulatory pathways inside Saudi Arabia.',
+    title: 'الشركات الأجنبية والمستثمرون',
+    titleEn: 'Foreign Companies & Investors',
+    desc: 'مساندة المستثمرين والشركات الأجنبية في فهم المتطلبات وتنظيم الملفات والمسارات النظامية داخل السعودية.',
+    descEn: 'Supporting foreign investors and companies in understanding requirements, organizing files and regulatory pathways inside Saudi Arabia.',
     category: ['all', 'popular', 'business'],
     icon: 'Globe',
-    features: ['تحليل المتطلبات', 'تجهيز المستندات', 'تنسيق الإجراءات'],
-    featuresEn: ['Requirements analysis', 'Document preparation', 'Procedure coordination']
+    features: ['تحليل المتطلبات وتحديد الكيان', 'تجهيز المستندات الأساسية', 'التنسيق مع الجهات المختصة', 'متابعة ملفات الاستثمار'],
+    featuresEn: ['Requirements analysis & entity selection', 'Core document preparation', 'Coordinating with competent authorities', 'Following investment files']
   },
   {
     id: 'compliance',
@@ -222,17 +208,6 @@ export const services: ServiceItem[] = [
     featuresEn: ['License & renewal follow-up', 'Authority request coordination', 'Brief follow-up report', 'Important deadline alerts']
   },
   {
-    id: 'investor',
-    title: 'خدمات المستثمر الأجنبي',
-    titleEn: 'Foreign Investor Services',
-    desc: 'تنظيم مسار المستثمر الأجنبي من فهم المتطلبات وحتى جاهزية الملفات الأولية.',
-    descEn: 'Organizing the foreign investor journey from understanding requirements to readiness of initial files.',
-    category: ['all', 'popular', 'business'],
-    icon: 'Plane',
-    features: ['تحديد نوع الكيان المناسب', 'تجهيز المتطلبات الأساسية', 'التنسيق مع الجهات المختصة', 'متابعة ملفات الاستثمار'],
-    featuresEn: ['Identifying the appropriate entity type', 'Preparing core requirements', 'Coordinating with competent authorities', 'Following investment files']
-  },
-  {
     id: 'file-mgmt',
     title: 'إدارة ملفات المنشأة',
     titleEn: 'Entity File Management',
@@ -262,8 +237,8 @@ export const services: ServiceItem[] = [
     descEn: 'Following claims, payments, and financial correspondence with relevant entities.',
     category: ['all', 'finance'],
     icon: 'Scale',
-    features: ['وزارة المالية', 'شركات التمويل', 'شركات التأمين', 'البنك المركزي', 'الفواتير ومتابعة المستخلصات'],
-    featuresEn: ['Ministry of Finance', 'Financing companies', 'Insurance companies', 'Central Bank', 'Invoices & payment certificates']
+    features: ['وزارة المالية', 'شركات التمويل والتأمين', 'البنك المركزي', 'الفواتير ومتابعة المستخلصات'],
+    featuresEn: ['Ministry of Finance', 'Financing & insurance companies', 'Central Bank', 'Invoices & payment certificates']
   },
   {
     id: 'utilities',
@@ -303,7 +278,7 @@ export const services: ServiceItem[] = [
     title: 'العلامات التجارية والتسويق',
     titleEn: 'Trademarks & Marketing',
     desc: 'متابعة ملفات العلامات التجارية وخدمات التسويق للغير بما يخدم نشاط المنشأة.',
-    descEn: 'Following trademark files and third-party marketing services that support the entity’s activity.',
+    descEn: 'Following trademark files and third-party marketing services that support the entity\'s activity.',
     category: ['all', 'business'],
     icon: 'Tag',
     features: ['متابعة ملفات العلامات التجارية', 'تأسيس العلامات التجارية', 'التسويق للغير', 'تنسيق المتطلبات والمخاطبات'],
@@ -314,7 +289,7 @@ export const services: ServiceItem[] = [
     title: 'الجمارك والزكاة والضريبة',
     titleEn: 'Customs, Zakat & Tax',
     desc: 'متابعة الجهات المرتبطة بالمنافذ والالتزامات المالية والتنظيمية للمنشآت.',
-    descEn: 'Following entities related to ports and entities’ financial and regulatory obligations.',
+    descEn: 'Following entities related to ports and entities\' financial and regulatory obligations.',
     category: ['all', 'finance'],
     icon: 'ShieldCheck',
     features: ['الميناء والمنافذ', 'الجمارك', 'هيئة الزكاة والضريبة والجمارك', 'متابعة النواقص والملاحظات'],

@@ -14,7 +14,7 @@ export function FAQ({ lang }: { lang: Lang }) {
     <section id="faq" className="py-16 sm:py-24 bg-white">
       <div className="container-modern max-w-3xl">
         <SectionHeading kicker={t.faq.kicker} title={t.faq.title} centered />
-        <div className="mt-12 space-y-3">
+        <div className="mt-10 sm:mt-14 space-y-3">
           {t.faq.items.map((item, i) => (
             <motion.div
               key={i}
@@ -26,9 +26,9 @@ export function FAQ({ lang }: { lang: Lang }) {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between p-5 text-right"
+                className="w-full flex items-center justify-between p-5 text-right touch-target"
               >
-                <span className="font-bold text-surface-900 text-sm">{item.q}</span>
+                <span className="font-bold text-ink-900 text-sm">{item.q}</span>
                 <ChevronDown
                   size={18}
                   className={`text-saudi-600 shrink-0 ml-3 transition-transform duration-300 ${openIndex === i ? 'rotate-180' : ''}`}
@@ -37,7 +37,7 @@ export function FAQ({ lang }: { lang: Lang }) {
               <AnimatePresence initial={false}>
                 {openIndex === i && (
                   <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}>
-                    <div className="px-5 pb-5 text-sm text-surface-500 leading-relaxed">{item.a}</div>
+                    <div className="px-5 pb-5 text-sm text-ink-500 leading-relaxed">{item.a}</div>
                   </motion.div>
                 )}
               </AnimatePresence>
