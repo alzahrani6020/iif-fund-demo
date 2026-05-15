@@ -12,8 +12,9 @@ export function Process({ lang }: { lang: Lang }) {
       <div className="container-modern">
         <SectionHeading kicker={t.process.kicker} title={t.process.title} centered />
         <div className="mt-10 sm:mt-14 relative">
-          <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-ink-300 to-transparent" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          {/* Connecting line - desktop only */}
+          <div className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-saudi-200 via-saudi-400 to-saudi-200 rounded-full" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
             {t.process.steps.map((step, i) => (
               <motion.div
                 key={step.num}
@@ -23,10 +24,10 @@ export function Process({ lang }: { lang: Lang }) {
                 transition={{ delay: i * 0.15 }}
                 className="relative text-center"
               >
-                <div className="w-20 h-20 mx-auto rounded-full bg-white border-2 border-ink-200 flex items-center justify-center shadow-soft relative z-10">
-                  <span className="text-xl font-extrabold text-gradient">{step.num}</span>
+                <div className="w-24 h-24 mx-auto rounded-full bg-surface border-2 border-saudi-200 flex items-center justify-center shadow-card relative z-10">
+                  <span className="text-2xl font-extrabold text-gradient">{step.num}</span>
                 </div>
-                <h3 className="mt-5 sm:mt-6 text-base font-bold text-ink-900">{step.title}</h3>
+                <h3 className="mt-6 text-base font-bold text-ink-900">{step.title}</h3>
                 <p className="mt-2 text-sm text-ink-500 leading-relaxed">{step.desc}</p>
               </motion.div>
             ))}

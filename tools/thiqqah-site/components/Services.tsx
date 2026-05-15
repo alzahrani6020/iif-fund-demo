@@ -49,7 +49,7 @@ export function Services({ lang }: { lang: Lang }) {
   }, [filter, query, lang]);
 
   return (
-    <section id="services" className="py-16 sm:py-24 bg-ink-50">
+    <section id="services" className="py-16 sm:py-24 bg-surface">
       <div className="container-modern">
         <SectionHeading kicker={t.services.kicker} title={t.services.title} description={t.services.desc} />
 
@@ -69,10 +69,10 @@ export function Services({ lang }: { lang: Lang }) {
             <button
               key={tab.key}
               onClick={() => setFilter(tab.key)}
-              className={`px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all ${
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all ${
                 filter === tab.key
-                  ? 'bg-saudi-800 text-white shadow-soft'
-                  : 'bg-white text-ink-600 border border-ink-200 hover:border-saudi-300'
+                  ? 'bg-saudi-700 text-white shadow-soft'
+                  : 'bg-white text-ink-600 border border-ink-200 hover:border-saudi-400 hover:text-saudi-600'
               }`}
             >
               {tab.label}
@@ -80,7 +80,7 @@ export function Services({ lang }: { lang: Lang }) {
           ))}
         </div>
 
-        <motion.div layout className="mt-8 sm:mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <motion.div layout className="mt-8 sm:mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           <AnimatePresence mode="popLayout">
             {filtered.map((s) => {
               const Icon = iconMap[s.icon] || Building2;
@@ -95,19 +95,19 @@ export function Services({ lang }: { lang: Lang }) {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.2 }}
-                  className="card-modern p-5 sm:p-6 group"
+                  className="card-modern p-6 sm:p-7 group"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-saudi-50 text-saudi-700 flex items-center justify-center group-hover:bg-saudi-800 group-hover:text-white transition-all">
-                      <Icon size={20} />
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-11 h-11 rounded-xl bg-saudi-50 text-saudi-600 flex items-center justify-center group-hover:bg-saudi-600 group-hover:text-white transition-all duration-300">
+                      <Icon size={22} />
                     </div>
                     <h3 className="text-sm sm:text-base font-bold text-ink-900">{title}</h3>
                   </div>
-                  <p className="mt-3 text-sm text-ink-500 leading-relaxed">{desc}</p>
-                  <ul className="mt-4 space-y-2">
+                  <p className="mt-4 text-sm text-ink-500 leading-relaxed">{desc}</p>
+                  <ul className="mt-5 space-y-2.5">
                     {feats.slice(0, 4).map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-xs text-ink-600">
-                        <span className="w-1.5 h-1.5 rounded-full bg-saudi-400" />
+                      <li key={f} className="flex items-center gap-2.5 text-xs text-ink-600">
+                        <span className="w-1.5 h-1.5 rounded-full bg-saudi-400 shrink-0" />
                         {f}
                       </li>
                     ))}

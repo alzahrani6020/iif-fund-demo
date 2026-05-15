@@ -18,10 +18,10 @@ export function Sectors({ lang }: { lang: Lang }) {
   const icons = [HardHat, Utensils, Factory, Plane];
 
   return (
-    <section id="sectors" className="py-16 sm:py-24 bg-white">
+    <section id="sectors" className="py-16 sm:py-24 bg-surface">
       <div className="container-modern">
         <SectionHeading kicker={t.sectors.kicker} title={t.sectors.title} />
-        <div className="mt-10 sm:mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        <div className="mt-10 sm:mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {t.sectors.items.map((item, i) => {
             const Icon = icons[i];
             return (
@@ -33,7 +33,7 @@ export function Sectors({ lang }: { lang: Lang }) {
                 transition={{ delay: i * 0.1 }}
                 className="card-modern overflow-hidden text-center group"
               >
-                <div className="relative h-36 sm:h-40 overflow-hidden">
+                <div className="relative h-40 sm:h-44 overflow-hidden">
                   <Image
                     src={sectorImages[i]}
                     alt={item.title}
@@ -43,11 +43,11 @@ export function Sectors({ lang }: { lang: Lang }) {
                     priority={i < 2}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 to-transparent" />
-                  <div className="absolute bottom-3 right-3 w-10 h-10 rounded-xl bg-white/90 text-saudi-700 flex items-center justify-center shadow-soft">
-                    <Icon size={20} />
+                  <div className="absolute bottom-3 right-3 w-11 h-11 rounded-xl bg-white/95 text-saudi-600 flex items-center justify-center shadow-card">
+                    <Icon size={22} />
                   </div>
                 </div>
-                <div className="p-5">
+                <div className="p-6">
                   <h3 className="text-base font-bold text-ink-900">{item.title}</h3>
                   <p className="mt-2 text-sm text-ink-500 leading-relaxed">{item.desc}</p>
                 </div>

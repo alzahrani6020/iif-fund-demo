@@ -26,7 +26,7 @@ export function FAQ({ lang }: { lang: Lang }) {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between p-5 text-right touch-target"
+                className="w-full flex items-center justify-between p-5 sm:p-6 text-right touch-target"
               >
                 <span className="font-bold text-ink-900 text-sm">{item.q}</span>
                 <ChevronDown
@@ -37,7 +37,7 @@ export function FAQ({ lang }: { lang: Lang }) {
               <AnimatePresence initial={false}>
                 {openIndex === i && (
                   <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}>
-                    <div className="px-5 pb-5 text-sm text-ink-500 leading-relaxed">{item.a}</div>
+                    <div className="px-5 sm:px-6 pb-5 sm:pb-6 text-sm text-ink-500 leading-relaxed">{item.a}</div>
                   </motion.div>
                 )}
               </AnimatePresence>

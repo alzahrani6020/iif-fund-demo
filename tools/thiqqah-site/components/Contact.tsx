@@ -28,22 +28,22 @@ export function Contact({ lang }: { lang: Lang }) {
           <a href={`tel:${siteConfig.phone}`} className="btn-outline">
             <Phone size={18} /> {t.contact.call}
           </a>
-          <a href={`mailto:${siteConfig.email}`} className="btn-outline">
+          <a href={`mailto:${siteConfig.email}`} className="btn-ghost">
             <Mail size={18} /> {t.contact.email}
           </a>
         </motion.div>
 
         <p className="mt-6 sm:mt-8 text-center text-sm text-ink-400">{t.contact.replyHint}</p>
 
-        <div className="mt-8 sm:mt-10 grid sm:grid-cols-2 gap-4 max-w-xl mx-auto">
-          <a href={`tel:${siteConfig.phone}`} className="card-modern p-5 sm:p-6 text-center hover:border-saudi-300 transition-colors group">
-            <Phone size={20} className="mx-auto text-saudi-600 group-hover:scale-110 transition-transform" />
-            <strong className="block mt-3 text-ink-900">{t.contact.phoneLabel}</strong>
+        <div className="mt-8 sm:mt-10 grid sm:grid-cols-2 gap-5 max-w-xl mx-auto">
+          <a href={`tel:${siteConfig.phone}`} className="card-modern p-6 sm:p-7 text-center hover:border-saudi-400 transition-colors group">
+            <Phone size={22} className="mx-auto text-saudi-600 group-hover:scale-110 transition-transform" />
+            <strong className="block mt-4 text-ink-900">{t.contact.phoneLabel}</strong>
             <span className="block mt-1 text-sm text-ink-500" dir="ltr">{siteConfig.phoneDisplay}</span>
           </a>
-          <a href={`mailto:${siteConfig.email}`} className="card-modern p-5 sm:p-6 text-center hover:border-saudi-300 transition-colors group">
-            <Mail size={20} className="mx-auto text-gold-600 group-hover:scale-110 transition-transform" />
-            <strong className="block mt-3 text-ink-900">{t.contact.emailLabel}</strong>
+          <a href={`mailto:${siteConfig.email}`} className="card-modern p-6 sm:p-7 text-center hover:border-gold-400 transition-colors group">
+            <Mail size={22} className="mx-auto text-gold-600 group-hover:scale-110 transition-transform" />
+            <strong className="block mt-4 text-ink-900">{t.contact.emailLabel}</strong>
             <span className="block mt-1 text-sm text-ink-500">{siteConfig.email}</span>
           </a>
         </div>

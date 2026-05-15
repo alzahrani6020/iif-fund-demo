@@ -41,7 +41,7 @@ export function WhatsAppFloat({ lang }: { lang: Lang }) {
               <button onClick={() => setOpen(false)} className="p-1.5 hover:bg-white/10 rounded-lg transition touch-target"><X size={18} /></button>
             </div>
             <div className="p-4 max-h-[320px] overflow-y-auto">
-              <p className="text-xs text-ink-500 bg-ink-50 rounded-xl p-3 leading-relaxed border border-ink-100">
+              <p className="text-xs text-ink-500 bg-surface rounded-xl p-3 leading-relaxed border border-ink-100">
                 {lang === 'ar'
                   ? 'أهلا بك. اختر نوع الخدمة أو اكتب طلبك، وسأجهز رسالة واتساب واضحة إلى رقم ثقة الذهبية.'
                   : 'Welcome. Choose a service type or type your request, and we will prepare a clear WhatsApp message.'}
@@ -61,7 +61,7 @@ export function WhatsAppFloat({ lang }: { lang: Lang }) {
                 onChange={(e) => setMsg(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && msg && send(msg)}
                 placeholder={lang === 'ar' ? 'اكتب سؤالك...' : 'Type your question...'}
-                className="flex-1 text-sm bg-ink-50 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-saudi-200 border border-ink-100 text-ink-800 placeholder:text-ink-400"
+                className="flex-1 text-sm bg-surface rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-saudi-200 border border-ink-100 text-ink-800 placeholder:text-ink-400"
               />
               <button onClick={() => msg && send(msg)} className="w-9 h-9 rounded-full bg-saudi-800 text-white flex items-center justify-center hover:bg-saudi-900 transition touch-target">
                 <Send size={14} />
@@ -75,7 +75,7 @@ export function WhatsAppFloat({ lang }: { lang: Lang }) {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setOpen(!open)}
-        className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-saudi-700 to-saudi-900 text-white shadow-lg shadow-saudi-800/25 flex items-center justify-center hover:shadow-saudi-800/40 transition touch-target"
+        className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-saudi-600 to-saudi-800 text-white shadow-lg shadow-saudi-800/30 flex items-center justify-center hover:shadow-saudi-800/50 transition touch-target"
         aria-label="WhatsApp chat"
       >
         {open ? <X size={22} /> : <MessageCircle size={26} />}

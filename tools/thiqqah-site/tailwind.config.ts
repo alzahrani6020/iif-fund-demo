@@ -45,6 +45,9 @@ const config: Config = {
           800: '#343a40',
           900: '#212529',
         },
+        surface: {
+          DEFAULT: '#f6faf8',
+        },
       },
       fontFamily: {
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
@@ -55,6 +58,7 @@ const config: Config = {
         'card': '0 4px 16px rgba(0, 44, 34, 0.06)',
         'elevated': '0 8px 30px rgba(0, 44, 34, 0.08)',
         'float': '0 12px 40px rgba(0, 44, 34, 0.1)',
+        'glow': '0 20px 40px rgba(0, 108, 53, 0.15)',
       },
     },
   },

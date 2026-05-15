@@ -50,7 +50,7 @@ export function RequestForm({ lang }: { lang: Lang }) {
   };
 
   return (
-    <section id="request" className="py-16 sm:py-24 bg-ink-50">
+    <section id="request" className="py-16 sm:py-24 bg-surface">
       <div className="container-modern max-w-3xl">
         <SectionHeading kicker={t.request.kicker} title={t.request.title} description={t.request.desc} centered />
 

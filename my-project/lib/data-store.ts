@@ -289,7 +289,7 @@ function hashPassword(password: string): string {
   return Math.abs(hash).toString(36)
 }
 
-const DEFAULT_PASSWORD_HASH = "4w2r8m" // hash of "admin123"
+const DEFAULT_PASSWORD_HASH = "g10hvh" // hash of "admin123"
 const ADMIN_PASSWORD_KEY = "mzahrani_admin_pwd"
 
 export function login(password: string): boolean {
