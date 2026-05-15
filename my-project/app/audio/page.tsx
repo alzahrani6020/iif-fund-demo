@@ -11,9 +11,9 @@ import { getAudio } from "@/lib/data-store"
 import { ShareButtons } from "@/components/share-buttons"
 import { BookmarkButton } from "@/components/bookmark-button"
 
-const audioTracks = getAudio()
-
 export default function AudioPage() {
+  const [audioTracks, setAudioTracks] = useState<any[]>([])
+  useEffect(() => { getAudio().then(setAudioTracks) }, [])
   const [currentTrack, setCurrentTrack] = useState<string | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(false)

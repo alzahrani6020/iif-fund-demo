@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
@@ -14,9 +14,9 @@ import { TTSPlayer } from "@/components/tts-player"
 
 const categories = ["الكل", "حكمة", "صبر", "كرم", "شجاعة", "تجارة", "أخلاق", "عمل"]
 
-const proverbs = getProverbs()
-
 export default function ProverbsPage() {
+  const [proverbs, setProverbs] = useState<any[]>([])
+  useEffect(() => { getProverbs().then(setProverbs) }, [])
   const [selectedCategory, setSelectedCategory] = useState("الكل")
   const [searchQuery, setSearchQuery] = useState("")
 

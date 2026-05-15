@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -19,9 +19,9 @@ const letters = [
 
 const categories = ["الكل", "الطبيعة", "الأدوات", "الطعام", "المنزل", "العادات", "الزراعة"]
 
-const dictionaryEntries = getDictionary()
-
 export default function DictionaryPage() {
+  const [dictionaryEntries, setDictionaryEntries] = useState<any[]>([])
+  useEffect(() => { getDictionary().then(setDictionaryEntries) }, [])
   const [selectedLetter, setSelectedLetter] = useState("الكل")
   const [selectedCategory, setSelectedCategory] = useState("الكل")
   const [searchQuery, setSearchQuery] = useState("")
@@ -210,9 +210,11 @@ export default function DictionaryPage() {
                               <span className="px-3 py-1 bg-accent/10 text-accent text-xs rounded-full">
                                 {entry.category}
                               </span>
-                              <span className="text-xs text-muted-foreground" dir="ltr">
-                                [{entry.pronunciation}]
-                              </span>
+                              {entry.pronunciation && (
+                                <span className="text-xs text-muted-foreground" dir="ltr">
+                                  [{entry.pronunciation}]
+                                </span>
+                              )}
                             </div>
                           </div>
                           <div className="flex items-center gap-2">

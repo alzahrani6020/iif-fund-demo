@@ -93,7 +93,16 @@ function highlightQuery(text: string, query: string): React.ReactNode {
   )
 }
 
-function performSearch(query: string): SearchResult[] {
+function performSearch(
+  query: string,
+  poemsData: any[],
+  articlesData: any[],
+  proverbsData: any[],
+  dictionaryData: any[],
+  videosData: any[],
+  audioData: any[],
+  historyData: any[]
+): SearchResult[] {
   if (!query.trim()) return []
   const q = query.trim().toLowerCase()
   const results: SearchResult[] = []
@@ -120,52 +129,52 @@ function performSearch(query: string): SearchResult[] {
     })
   }
 
-  getPoems().forEach((item) => {
+  poemsData.forEach((item) => {
     const fields = [item.title, item.content, item.category, item.excerpt]
     if (fields.some((f) => f?.toLowerCase().includes(q))) {
-      addResult(item.id, item.title, item.content || item.excerpt || "", "poem", item.date)
+      addResult(item.id || item._id, item.title, item.content || item.excerpt || "", "poem", item.date)
     }
   })
 
-  getArticles().forEach((item) => {
+  articlesData.forEach((item) => {
     const fields = [item.title, item.content, item.category, item.excerpt]
     if (fields.some((f) => f?.toLowerCase().includes(q))) {
-      addResult(item.id, item.title, item.content || item.excerpt || "", "article", item.date)
+      addResult(item.id || item._id, item.title, item.content || item.excerpt || "", "article", item.date)
     }
   })
 
-  getProverbs().forEach((item) => {
+  proverbsData.forEach((item) => {
     const fields = [item.text, item.meaning, item.category]
     if (fields.some((f) => f?.toLowerCase().includes(q))) {
-      addResult(item.id, item.text, item.meaning, "proverb", item.date)
+      addResult(item.id || item._id, item.text, item.meaning, "proverb", item.date)
     }
   })
 
-  getDictionary().forEach((item) => {
+  dictionaryData.forEach((item) => {
     const fields = [item.word, item.meaning, item.example, item.usage, item.culturalNote, item.category]
     if (fields.some((f) => f?.toLowerCase().includes(q))) {
-      addResult(item.id, item.word, item.meaning + " " + item.example, "dictionary", item.date)
+      addResult(item.id || item._id, item.word, item.meaning + " " + item.example, "dictionary", item.date)
     }
   })
 
-  getVideos().forEach((item) => {
+  videosData.forEach((item) => {
     const fields = [item.title, item.description, item.category]
     if (fields.some((f) => f?.toLowerCase().includes(q))) {
-      addResult(item.id, item.title, item.description || "", "video", item.date)
+      addResult(item.id || item._id, item.title, item.description || "", "video", item.date)
     }
   })
 
-  getAudio().forEach((item) => {
+  audioData.forEach((item) => {
     const fields = [item.title, item.description, item.category]
     if (fields.some((f) => f?.toLowerCase().includes(q))) {
-      addResult(item.id, item.title, item.description || "", "audio", item.date)
+      addResult(item.id || item._id, item.title, item.description || "", "audio", item.date)
     }
   })
 
-  getHistory().forEach((item) => {
+  historyData.forEach((item) => {
     const fields = [item.title, item.description, item.location, item.sides, item.result, item.category]
     if (fields.some((f) => f?.toLowerCase().includes(q))) {
-      addResult(item.id, item.title, item.description, "history", item.date)
+      addResult(item.id || item._id, item.title, item.description, "history", item.date)
     }
   })
 
@@ -182,6 +191,29 @@ function SearchPageContent() {
   const [loading, setLoading] = useState(false)
   const [activeFilter, setActiveFilter] = useState<string>("all")
 
+  const [poemsData, setPoemsData] = useState<any[]>([])
+  const [articlesData, setArticlesData] = useState<any[]>([])
+  const [proverbsData, setProverbsData] = useState<any[]>([])
+  const [dictionaryData, setDictionaryData] = useState<any[]>([])
+  const [videosData, setVideosData] = useState<any[]>([])
+  const [audioData, setAudioData] = useState<any[]>([])
+  const [historyData, setHistoryData] = useState<any[]>([])
+
+  useEffect(() => {
+    Promise.all([
+      getPoems(), getArticles(), getProverbs(), getDictionary(),
+      getVideos(), getAudio(), getHistory()
+    ]).then(([p, a, pr, d, v, au, h]) => {
+      setPoemsData(p)
+      setArticlesData(a)
+      setProverbsData(pr)
+      setDictionaryData(d)
+      setVideosData(v)
+      setAudioData(au)
+      setHistoryData(h)
+    })
+  }, [])
+
   useEffect(() => {
     const q = searchParams.get("q") || ""
     setQuery(q)
@@ -195,7 +227,10 @@ function SearchPageContent() {
     return () => clearTimeout(timer)
   }, [activeQuery])
 
-  const allResults = useMemo(() => performSearch(activeQuery), [activeQuery])
+  const allResults = useMemo(() =>
+    performSearch(activeQuery, poemsData, articlesData, proverbsData, dictionaryData, videosData, audioData, historyData),
+    [activeQuery, poemsData, articlesData, proverbsData, dictionaryData, videosData, audioData, historyData]
+  )
 
   const filters = useMemo(() => {
     const counts: Record<string, number> = { all: allResults.length }

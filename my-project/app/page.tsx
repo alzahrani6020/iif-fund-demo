@@ -2,6 +2,7 @@ import Hero from "@/components/Hero"
 import MainContent from "@/components/MainContent"
 import LatestAdditions from "@/components/latest-additions"
 import SocialSection from "@/components/social-section"
+import DedicationSection from "@/components/dedication-section"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { SectionItem } from "@/components/SectionCard"
@@ -72,6 +73,7 @@ export default function Home() {
       <MainContent sections={sections} />
       <LatestAdditions />
       <SocialSection />
+      <DedicationSection />
       <Footer />
     </div>
   )

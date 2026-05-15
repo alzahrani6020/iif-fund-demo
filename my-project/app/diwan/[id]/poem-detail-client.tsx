@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -16,13 +16,21 @@ interface PoemDetailClientProps {
 
 export default function PoemDetailClient({ poem }: PoemDetailClientProps) {
   const [liked, setLiked] = useState(false)
-  const poems = getPoems()
-  const currentIndex = poems.findIndex((p) => p.id === poem.id)
-  const prevPoem = currentIndex > 0 ? poems[currentIndex - 1] : null
-  const nextPoem = currentIndex < poems.length - 1 ? poems[currentIndex + 1] : null
+  const [poems, setPoems] = useState<Poem[]>([])
+  const [prevPoem, setPrevPoem] = useState<Poem | null>(null)
+  const [nextPoem, setNextPoem] = useState<Poem | null>(null)
 
-  const handleLike = () => {
-    updatePoem(poem.id, { likes: (poem.likes || 0) + 1 })
+  useEffect(() => {
+    getPoems().then(allPoems => {
+      setPoems(allPoems)
+      const currentIndex = allPoems.findIndex((p) => (p as any)._id === poem.id || p.id === poem.id)
+      setPrevPoem(currentIndex > 0 ? allPoems[currentIndex - 1] : null)
+      setNextPoem(currentIndex < allPoems.length - 1 ? allPoems[currentIndex + 1] : null)
+    })
+  }, [poem.id])
+
+  const handleLike = async () => {
+    await updatePoem(poem.id, { likes: (poem.likes || 0) + 1 })
     setLiked(true)
   }
 

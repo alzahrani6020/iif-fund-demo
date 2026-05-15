@@ -18,6 +18,7 @@ import {
   Check,
 } from "lucide-react"
 import { useUser } from "@/hooks/use-user"
+import { toast } from "@/hooks/use-toast"
 import { useState as useStateBase } from "react"
 
 interface ShareButtonsProps {

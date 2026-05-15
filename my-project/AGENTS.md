@@ -6,7 +6,7 @@
 
 This is a **Next.js 16** web application built with the App Router. It serves as a cultural platform for **Mohammed Ayedh Al-Zahrani (محمد عيضة الزهراني)**, a poet and researcher of folk heritage. The user interface is entirely in **Arabic** and renders in **RTL** mode.
 
-The site is currently a collection of static content pages. There are no API routes, no database layer, and no authentication system.
+The site has been upgraded to a full-stack Next.js application with API routes, MongoDB database, and JWT-based authentication. All content is now served from the backend via REST API endpoints.
 
 ## Technology Stack
 
@@ -27,6 +27,10 @@ The site is currently a collection of static content pages. There are no API rou
 | Dates | `date-fns` + `react-day-picker` | Date formatting and picking |
 | Themes | `next-themes` | Dark/light mode support |
 | Analytics | `@vercel/analytics` | Injected in production only |
+| Database | MongoDB + Mongoose | Content storage via ODM |
+| Auth | JWT + bcryptjs | HTTP-only cookies |
+| File Storage | Cloudflare R2 | Video uploads via presigned URLs |
+| AWS SDK | `@aws-sdk/client-s3` | R2 S3-compatible uploads |
 
 ## Project Structure
 
@@ -35,7 +39,34 @@ app/                          # Next.js App Router
 ├── layout.tsx                # Root layout: lang="ar", dir="rtl", metadata, Vercel Analytics
 ├── page.tsx                  # Home page
 ├── globals.css               # ACTIVE global stylesheet (Tailwind v4 imports, custom theme, utilities)
-├── admin/page.tsx
+├── api/                      # API Routes (REST backend)
+│   ├── auth/login/route.ts   # Admin login → JWT cookie
+│   ├── auth/me/route.ts      # Auth check
+│   ├── auth/logout/route.ts  # Clear cookie
+│   ├── upload/presign/route.ts  # R2 presigned URL for video upload
+│   ├── videos/route.ts       # CRUD for videos
+│   ├── videos/[id]/route.ts
+│   ├── poems/route.ts        # CRUD for poems
+│   ├── poems/[id]/route.ts
+│   ├── articles/route.ts     # CRUD for articles
+│   ├── articles/[id]/route.ts
+│   ├── proverbs/route.ts     # CRUD for proverbs
+│   ├── proverbs/[id]/route.ts
+│   ├── dictionary/route.ts   # CRUD for dictionary
+│   ├── dictionary/[id]/route.ts
+│   ├── audio/route.ts        # CRUD for audio
+│   ├── audio/[id]/route.ts
+│   ├── history/route.ts      # CRUD for history events
+│   ├── history/[id]/route.ts
+│   ├── categories/route.ts   # CRUD for categories
+│   ├── categories/[id]/route.ts
+│   ├── comments/route.ts     # Comments CRUD
+│   ├── comments/[id]/route.ts
+│   ├── users/route.ts        # User management
+│   ├── users/[id]/route.ts
+│   └── site-config/route.ts  # Site settings
+├── admin/page.tsx            # Admin dashboard (fixed ContentTab + Video upload)
+├── admin/login/page.tsx
 ├── archive/page.tsx
 ├── articles/page.tsx
 ├── audio/page.tsx
@@ -43,31 +74,31 @@ app/                          # Next.js App Router
 ├── contact/page.tsx
 ├── dictionary/page.tsx
 ├── diwan/page.tsx
+├── diwan/[id]/page.tsx
+├── history/page.tsx
 ├── majlis/page.tsx
 ├── proverbs/page.tsx
-├── videos/page.tsx
+├── videos/page.tsx           # Supports both YouTube and uploaded videos
 ├── config.yaml               # Local LLM config (LM Studio). NOT application runtime config.
-├── favicon.ico
 components/
-├── ui/                       # shadcn/ui components (60+ files: button, card, dialog, etc.)
-├── Header.tsx
-├── Hero.tsx
-├── MainContent.tsx
-├── Navigation.tsx
-├── SectionCard.tsx
-├── Footer.tsx
-├── featured-sections.tsx
-├── hero-section.tsx
-├── navigation.tsx
-└── theme-provider.tsx
+├── ui/                       # shadcn/ui components (60+ files)
+├── Header.tsx, Hero.tsx, Navigation.tsx, Footer.tsx, ...
 hooks/
-├── use-mobile.ts             # useIsMobile() hook (768px breakpoint)
-└── use-toast.ts              # Toast state management (reducer-based)
+├── use-mobile.ts
+└── use-toast.ts
 lib/
-└── utils.ts                  # `cn()` helper: clsx + tailwind-merge
+├── db.ts                     # MongoDB connection (cached for Next.js hot reload)
+├── models/                   # Mongoose models (Video, Poem, Article, etc.)
+├── auth.ts                   # JWT sign/verify helpers
+├── r2.ts                     # Cloudflare R2 S3 client + presigned URL generator
+├── data-store.ts             # Client-side API client (calls /api/* endpoints)
+└── utils.ts                  # `cn()` helper
+middleware.ts                 # Route protection (admin + API auth)
+scripts/
+└── seed.ts                   # Seed MongoDB with default data
 styles/
 └── globals.css               # UNUSED alternate stylesheet (do not edit)
-public/                       # Static assets: icons, placeholder images, SVGs
+public/                       # Static assets
 ```
 
 ### Key Path Aliases (`tsconfig.json`)
@@ -140,6 +171,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  trailingSlash: true,
 }
 ```
 
@@ -152,13 +184,15 @@ const nextConfig = {
 ### Deployment Target
 - The project is set up for **Vercel** (evidenced by `@vercel/analytics` and the default README).
 - No CI/CD configuration files (`.github/workflows`, Docker, etc.) are present.
-- No `output: 'export'` is set, but image unoptimization suggests the project may be deployed to static-friendly environments.
+- **Static export was removed** — the app now uses full Next.js SSR with API routes.
+- Requires a running MongoDB instance and Cloudflare R2 credentials for full functionality.
 
 ## Security Considerations
 
 - `app/config.yaml` contains a local LLM configuration (LM Studio provider, local endpoint). It is not exposed to the browser, but avoid placing production secrets in YAML files inside `app/`.
-- There is **no authentication or authorization** in the codebase.
-- There are **no API routes** (`app/api/.../route.ts`), so there is no server-side attack surface beyond the Next.js runtime itself.
+- Authentication uses **JWT in HTTP-only cookies** with bcrypt password hashing.
+- API routes are protected by `middleware.ts` — admin routes redirect to login, API routes return 401 for unauthenticated requests.
+- The `.env.local` file contains sensitive credentials (MongoDB URI, JWT secret, R2 keys). It is listed in `.gitignore`.
 - No `.env` file is present. If environment variables are introduced later, ensure `.env` and `.env.local` are listed in `.gitignore`.
 - Because images are unoptimized, any user-provided image URLs rendered with `next/image` will be served as-is.
 
@@ -167,6 +201,7 @@ const nextConfig = {
 1. **Next.js 16 Breaking Changes** — This version may include APIs and conventions that differ from Next.js 14/15 training data. If you are unsure about an App Router API, consult the local docs in `node_modules/next/dist/docs/`.
 2. **Tailwind CSS v4** — There is no `tailwind.config.js`. All Tailwind configuration is done inside `app/globals.css` using `@theme inline` and `@import 'tailwindcss'`.
 3. **Active vs. Inactive Files** — The active global CSS is `app/globals.css`. The active Next.js config is `next.config.mjs`. The file at `styles/globals.css` is unused.
-4. **Static Data** — Page data (poems, articles, proverbs, etc.) is currently hardcoded as static arrays inside individual `page.tsx` files. There is no CMS, no database, and no `getStaticProps` equivalent.
+4. **Database-Backed Data** — All content (poems, articles, videos, etc.) is now stored in MongoDB and fetched via API routes. `lib/data-store.ts` is a client-side API client. `scripts/seed.ts` seeds the database with default data.
+5. **Video Upload** — The admin panel supports uploading video files directly to Cloudflare R2 via presigned URLs. Uploaded videos are displayed with the HTML5 `<video>` element; YouTube videos still use `iframe` embed.
 5. **RTL Context** — Always remember the site is Arabic/RTL. Avoid hardcoding left/right margins without considering RTL transforms, and ensure any new text content is Arabic or properly localized.
 6. **Keep It Simple** — The project is a static content site. Do not introduce unnecessary backend complexity (API routes, databases, auth) unless explicitly requested.

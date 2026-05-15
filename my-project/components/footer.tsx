@@ -204,9 +204,42 @@ export function Footer() {
             <p className="text-xs text-muted-foreground/40 mt-1">✦ شاعر وباحث في التراث الشعبي ✦</p>
           </motion.div>
 
+          {/* Developer Credit */}
+          <motion.div
+            className="mt-8 pt-6 border-t border-border/50"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.55 }}
+          >
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+              <a 
+                href="https://afaq-global.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-secondary/20 px-6 py-3 rounded-xl border border-border/30 hover:bg-secondary/30 transition-colors group"
+              >
+                <span className="text-sm text-muted-foreground">تصميم وتطوير:</span>
+                <div className="flex items-center gap-2">
+                  <img 
+                    src="/afaq-logo.png" 
+                    alt="آفاق إبداعية" 
+                    className="w-8 h-8 object-contain"
+                    onError={(e) => { const t = e.target as HTMLImageElement; t.style.display = 'none' }}
+                  />
+                  <span className="text-sm font-bold text-amber-300/80 group-hover:text-amber-200 transition-colors" style={{ fontFamily: "'Amiri', serif" }}>
+                    آفاق إبداعية
+                  </span>
+                </div>
+                <span className="text-xs text-muted-foreground/50 hidden md:inline">|</span>
+                <span className="text-xs text-muted-foreground/50 hidden md:inline group-hover:text-muted-foreground/70 transition-colors">afaq-global.com</span>
+              </a>
+            </div>
+          </motion.div>
+
           {/* Bottom */}
           <motion.div
-            className="mt-8 pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4"
+            className="mt-6 pt-6 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}

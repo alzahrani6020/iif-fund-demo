@@ -35,12 +35,11 @@ export default function BookmarksPage() {
 
   const bookmarks = useMemo(() => {
     if (!user) return []
-    return getUserBookmarks(user.id)
+    return getUserBookmarks()
   }, [user])
 
   const handleRemove = (itemId: string, itemType: string) => {
-    if (!user) return
-    removeBookmark(user.id, itemId, itemType)
+    removeBookmark(itemId, itemType)
     window.dispatchEvent(new Event("storage"))
   }
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -13,12 +13,20 @@ import { BookmarkButton } from "@/components/bookmark-button"
 
 const categories = ["الكل", "أمسيات شعرية", "مقابلات", "وثائقيات", "محاضرات"]
 
-const videos = getVideos()
-
 export default function VideosPage() {
+  const [videos, setVideos] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState("الكل")
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedVideo, setSelectedVideo] = useState<typeof videos[0] | null>(null)
+  const [selectedVideo, setSelectedVideo] = useState<any>(null)
+
+  useEffect(() => {
+    setLoading(true)
+    getVideos().then(data => {
+      setVideos(data)
+      setLoading(false)
+    })
+  }, [])
 
   const filteredVideos = videos.filter((video) => {
     const matchesCategory = selectedCategory === "الكل" || video.category === selectedCategory
@@ -289,15 +297,29 @@ export default function VideosPage() {
                 <X className="h-6 w-6" />
               </Button>
               <div className="aspect-video bg-card rounded-xl overflow-hidden border border-border shadow-2xl">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`}
-                  title={selectedVideo.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="w-full h-full"
-                />
+                {selectedVideo.fileUrl ? (
+                  <video
+                    src={selectedVideo.fileUrl}
+                    controls
+                    autoPlay
+                    className="w-full h-full"
+                    title={selectedVideo.title}
+                  />
+                ) : selectedVideo.youtubeId ? (
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`}
+                    title={selectedVideo.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                    لا يوجد مصدر فيديو
+                  </div>
+                )}
               </div>
               <div className="mt-6 glass rounded-xl p-6">
                 <div className="flex items-start justify-between">

@@ -5,16 +5,22 @@ import { motion } from "framer-motion"
 import { getSiteConfig } from "@/lib/data-store"
 
 export default function Hero() {
-  const [config, setConfig] = useState(() => getSiteConfig())
+  const [config, setConfig] = useState<any>({
+    poetName: 'محمد عيضة الزهراني',
+    poetSubtitle: 'شاعر وباحث في التراث',
+    poetImage: '/poet.jpg',
+    logoImage: undefined,
+  })
 
   useEffect(() => {
-    const handleStorage = () => setConfig(getSiteConfig())
+    getSiteConfig().then(setConfig)
+    const handleStorage = () => getSiteConfig().then(setConfig)
     window.addEventListener("storage", handleStorage)
     return () => window.removeEventListener("storage", handleStorage)
   }, [])
 
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-36">
       {/* Background layers */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-950" />
       <div className="absolute inset-0 islamic-pattern opacity-50" />
@@ -47,9 +53,9 @@ export default function Hero() {
         >
           <div className="w-full h-full rounded-full overflow-hidden border-2 border-accent/40 purple-glow relative">
             <img
-              src={config.poetImage || "/poet.jpg"}
+              src={config.poetImage || "/poet.jpg?v=2"}
               alt="صورة الشاعر"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
               onError={(e) => { (e.target as HTMLImageElement).src = "/poet.jpg" }}
             />
             <div className="absolute inset-0 ring-2 ring-inset ring-accent/20 rounded-full" />

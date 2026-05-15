@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -30,7 +30,8 @@ const categoryColors: Record<string, string> = {
 
 export default function HistoryPage() {
   const [selectedCategory, setSelectedCategory] = useState("الكل")
-  const events = getHistory()
+  const [events, setEvents] = useState<any[]>([])
+  useEffect(() => { getHistory().then(setEvents) }, [])
 
   const filteredEvents = events.filter((event) => {
     return selectedCategory === "الكل" || event.category === selectedCategory

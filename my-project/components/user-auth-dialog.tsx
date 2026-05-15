@@ -57,8 +57,8 @@ export function UserAuthDialog({ open, onOpenChange }: UserAuthDialogProps) {
     if (!file) return
     try {
       toast({ title: "جاري الرفع", description: "يتم رفع الصورة على السحابة..." })
-      const url = await uploadImageToR2(file)
-      setCustomAvatar(url)
+      const result = await uploadImageToR2(file)
+      setCustomAvatar(result.url)
       toast({ title: "تم رفع الصورة", description: "تم رفع الصورة على السحابة" })
     } catch (err: any) {
       toast({ title: "خطأ", description: err.message, variant: "destructive" })

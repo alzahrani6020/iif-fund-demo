@@ -52,8 +52,8 @@ export function UserProfileDialog({ open, onOpenChange }: UserProfileDialogProps
     if (!file) return
     try {
       toast({ title: "جاري الرفع", description: "يتم رفع الصورة على السحابة..." })
-      const url = await uploadImageToR2(file)
-      setUploadedAvatar(url)
+      const result = await uploadImageToR2(file)
+      setUploadedAvatar(result.url)
       setCustomUrl("")
       toast({ title: "تم رفع الصورة", description: "تم رفع الصورة على السحابة" })
     } catch (err: any) {

@@ -74,7 +74,35 @@ export function Navigation() {
   const [authOpen, setAuthOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const { user, isLoggedIn } = useUser()
-  const [siteConfig, setSiteConfig] = useState(() => getSiteConfig())
+  const [siteConfig, setSiteConfig] = useState<any>({
+    poetName: 'محمد عيضة الزهراني',
+    poetSubtitle: 'شاعر وباحث في التراث',
+    poetImage: undefined,
+    logoImage: undefined,
+  })
+  const [poemsData, setPoemsData] = useState<any[]>([])
+  const [articlesData, setArticlesData] = useState<any[]>([])
+  const [proverbsData, setProverbsData] = useState<any[]>([])
+  const [dictionaryData, setDictionaryData] = useState<any[]>([])
+  const [videosData, setVideosData] = useState<any[]>([])
+  const [audioData, setAudioData] = useState<any[]>([])
+  const [historyData, setHistoryData] = useState<any[]>([])
+
+  useEffect(() => {
+    getSiteConfig().then(setSiteConfig)
+    Promise.all([
+      getPoems(), getArticles(), getProverbs(), getDictionary(),
+      getVideos(), getAudio(), getHistory()
+    ]).then(([p, a, pr, d, v, au, h]) => {
+      setPoemsData(p)
+      setArticlesData(a)
+      setProverbsData(pr)
+      setDictionaryData(d)
+      setVideosData(v)
+      setAudioData(au)
+      setHistoryData(h)
+    })
+  }, [])
 
   // ⏰ الساعة والتاريخ
   const [now, setNow] = useState(new Date())
@@ -111,7 +139,7 @@ export function Navigation() {
   }, [])
 
   useEffect(() => {
-    const handleStorage = () => setSiteConfig(getSiteConfig())
+    const handleStorage = () => getSiteConfig().then(setSiteConfig)
     window.addEventListener("storage", handleStorage)
     return () => window.removeEventListener("storage", handleStorage)
   }, [])
@@ -164,7 +192,7 @@ export function Navigation() {
       })
     }
 
-    getPoems().forEach((item) => {
+    poemsData.forEach((item) => {
       if (
         item.title.toLowerCase().includes(q) ||
         item.content.toLowerCase().includes(q) ||
@@ -173,12 +201,12 @@ export function Navigation() {
         push(
           item.title,
           "قصيدة",
-          `/diwan/${item.id}`,
+          `/diwan/${item.id || item._id}`,
           item.excerpt || item.content || ""
         )
       }
     })
-    getArticles().forEach((item) => {
+    articlesData.forEach((item) => {
       if (
         item.title.toLowerCase().includes(q) ||
         item.content.toLowerCase().includes(q)
@@ -191,7 +219,7 @@ export function Navigation() {
         )
       }
     })
-    getProverbs().forEach((item) => {
+    proverbsData.forEach((item) => {
       if (
         item.text.toLowerCase().includes(q) ||
         item.meaning.toLowerCase().includes(q)
@@ -199,7 +227,7 @@ export function Navigation() {
         push(item.text, "مثل", "/proverbs", item.meaning)
       }
     })
-    getDictionary().forEach((item) => {
+    dictionaryData.forEach((item) => {
       if (
         item.word.toLowerCase().includes(q) ||
         item.meaning.toLowerCase().includes(q) ||
@@ -208,7 +236,7 @@ export function Navigation() {
         push(item.word, "مفردة", "/dictionary", item.meaning)
       }
     })
-    getVideos().forEach((item) => {
+    videosData.forEach((item) => {
       if (
         item.title.toLowerCase().includes(q) ||
         item.description?.toLowerCase().includes(q)
@@ -216,7 +244,7 @@ export function Navigation() {
         push(item.title, "فيديو", "/videos", item.description || "")
       }
     })
-    getAudio().forEach((item) => {
+    audioData.forEach((item) => {
       if (
         item.title.toLowerCase().includes(q) ||
         item.description?.toLowerCase().includes(q)
@@ -224,7 +252,7 @@ export function Navigation() {
         push(item.title, "صوتي", "/audio", item.description || "")
       }
     })
-    getHistory().forEach((item) => {
+    historyData.forEach((item) => {
       if (
         item.title.toLowerCase().includes(q) ||
         item.description.toLowerCase().includes(q) ||
@@ -297,16 +325,15 @@ export function Navigation() {
                 {/* Animated ring */}
                 <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary via-accent to-primary animate-spin" style={{ animationDuration: '4s' }} />
                 <div className="absolute inset-[2px] rounded-full bg-background flex items-center justify-center overflow-hidden">
-                  {siteConfig.logoImage ? (
-                    <img src={siteConfig.logoImage} alt="الشاعر" className="w-full h-full object-cover" />
-                  ) : (
-                    <span
-                      className="text-accent font-bold text-3xl gold-gradient"
-                      style={{ fontFamily: "'Amiri', serif" }}
-                    >
-                      م
-                    </span>
-                  )}
+                  <img 
+                    src="/poet.jpg?v=2" 
+                    alt="الشاعر" 
+                    className="w-full h-full object-cover object-top"
+                    onError={(e) => { 
+                      const target = e.target as HTMLImageElement
+                      target.style.display = 'none'
+                    }}
+                  />
                 </div>
                 {/* Glow */}
                 <div className="absolute inset-0 rounded-full bg-accent/20 blur-xl -z-10" />
@@ -317,11 +344,11 @@ export function Navigation() {
                   style={{ fontFamily: "'Amiri', serif" }}
                   whileHover={{ scale: 1.02 }}
                 >
-                  <span className="animated-gradient">{siteConfig.poetName}</span>
+                  <span className="animated-gradient">محمد عيضة الزهراني</span>
                 </motion.h1>
                 <p className="text-xs text-muted-foreground/80 tracking-widest uppercase mt-0.5 flex items-center gap-1.5">
                   <span className="w-4 h-[1px] bg-accent/50" />
-                  {siteConfig.poetSubtitle}
+                  شاعر وباحث في التراث الشعبي
                   <span className="w-4 h-[1px] bg-accent/50" />
                 </p>
               </div>

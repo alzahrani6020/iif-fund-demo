@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -15,9 +15,9 @@ import { TTSPlayer } from "@/components/tts-player"
 
 const categories = ["الكل", "الشعر النبطي", "التراث", "اللهجات", "ثقافة", "تاريخ"]
 
-const articles = getArticles()
-
 export default function ArticlesPage() {
+  const [articles, setArticles] = useState<any[]>([])
+  useEffect(() => { getArticles().then(setArticles) }, [])
   const [selectedCategory, setSelectedCategory] = useState("الكل")
   const [searchQuery, setSearchQuery] = useState("")
 

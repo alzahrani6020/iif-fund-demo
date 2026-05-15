@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
@@ -7,17 +8,18 @@ import { BookOpen, FileText, Video, Mic, Clock } from "lucide-react"
 import { getPoems, getArticles, getVideos, getAudio } from "@/lib/data-store"
 
 export default function LatestAdditions() {
-  const poems = getPoems().slice(0, 2)
-  const articles = getArticles().slice(0, 2)
-  const videos = getVideos().slice(0, 1)
-  const audio = getAudio().slice(0, 1)
+  const [items, setItems] = useState<any[]>([])
 
-  const items = [
-    ...poems.map((p) => ({ type: "قصيدة", title: p.title, href: "/diwan", icon: BookOpen, date: p.date, color: "text-primary" })),
-    ...articles.map((a) => ({ type: "مقال", title: a.title, href: "/articles", icon: FileText, date: a.date, color: "text-accent" })),
-    ...videos.map((v) => ({ type: "فيديو", title: v.title, href: "/videos", icon: Video, date: v.date, color: "text-primary" })),
-    ...audio.map((a) => ({ type: "صوتي", title: a.title, href: "/audio", icon: Mic, date: a.date, color: "text-accent" })),
-  ]
+  useEffect(() => {
+    Promise.all([getPoems(), getArticles(), getVideos(), getAudio()]).then(([poems, articles, videos, audio]) => {
+      setItems([
+        ...poems.slice(0, 2).map((p: any) => ({ type: "قصيدة", title: p.title, href: "/diwan", icon: BookOpen, date: p.date, color: "text-primary" })),
+        ...articles.slice(0, 2).map((a: any) => ({ type: "مقال", title: a.title, href: "/articles", icon: FileText, date: a.date, color: "text-accent" })),
+        ...videos.slice(0, 1).map((v: any) => ({ type: "فيديو", title: v.title, href: "/videos", icon: Video, date: v.date, color: "text-primary" })),
+        ...audio.slice(0, 1).map((a: any) => ({ type: "صوتي", title: a.title, href: "/audio", icon: Mic, date: a.date, color: "text-accent" })),
+      ])
+    })
+  }, [])
 
   if (items.length === 0) return null
 

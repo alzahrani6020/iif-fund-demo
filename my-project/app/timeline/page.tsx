@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Navigation } from "@/components/navigation"
@@ -49,10 +49,10 @@ function parseHijriDate(dateStr: string): { year: number; month: number; day: nu
   return { year: 0, month: 0, day: 0 }
 }
 
-function buildTimeline(): TimelineItem[] {
+function buildTimeline(historyData: any[], poemsData: any[], articlesData: any[]): TimelineItem[] {
   const items: TimelineItem[] = []
 
-  getHistory().forEach((item) => {
+  historyData.forEach((item) => {
     const d = parseHijriDate(item.date)
     items.push({
       id: `h-${item.id}`,
@@ -71,12 +71,12 @@ function buildTimeline(): TimelineItem[] {
     })
   })
 
-  getPoems().forEach((item) => {
+  poemsData.forEach((item) => {
     const d = parseHijriDate(item.date)
     items.push({
       id: `p-${item.id}`,
       title: item.title,
-      description: item.excerpt || item.content?.slice(0, 100) + "..." || "",
+      description: item.excerpt || (item.content ? item.content.slice(0, 100) + "..." : "") || "",
       date: item.date,
       year: d.year,
       month: d.month,
@@ -90,12 +90,12 @@ function buildTimeline(): TimelineItem[] {
     })
   })
 
-  getArticles().forEach((item) => {
+  articlesData.forEach((item) => {
     const d = parseHijriDate(item.date)
     items.push({
       id: `a-${item.id}`,
       title: item.title,
-      description: item.excerpt || item.content?.slice(0, 100) + "..." || "",
+      description: item.excerpt || (item.content ? item.content.slice(0, 100) + "..." : "") || "",
       date: item.date,
       year: d.year,
       month: d.month,
@@ -137,7 +137,19 @@ function groupByEra(items: TimelineItem[]) {
 }
 
 export default function TimelinePage() {
-  const items = useMemo(() => buildTimeline(), [])
+  const [historyData, setHistoryData] = useState<any[]>([])
+  const [poemsData, setPoemsData] = useState<any[]>([])
+  const [articlesData, setArticlesData] = useState<any[]>([])
+
+  useEffect(() => {
+    Promise.all([getHistory(), getPoems(), getArticles()]).then(([h, p, a]) => {
+      setHistoryData(h)
+      setPoemsData(p)
+      setArticlesData(a)
+    })
+  }, [])
+
+  const items = useMemo(() => buildTimeline(historyData, poemsData, articlesData), [historyData, poemsData, articlesData])
   const groups = useMemo(() => groupByEra(items), [items])
 
   const eraOrder = [

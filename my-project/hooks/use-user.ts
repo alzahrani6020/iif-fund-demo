@@ -29,23 +29,30 @@ export function useUser() {
   const login = useCallback(
     (email: string, password: string) => {
       const result = loginUser(email, password)
-      if (result.success && result.user) {
-        setUser(result.user)
+      if (result) {
+        setUser(result)
         window.dispatchEvent(new Event("storage"))
+        return { success: true, user: result }
       }
-      return result
+      return { success: false, message: "البريد أو كلمة المرور غير صحيحة" }
     },
     []
   )
 
   const register = useCallback(
     (name: string, email: string, password: string, avatar?: string) => {
-      const result = registerUser(name, email, password, avatar)
-      if (result.success && result.user) {
-        setUser(result.user)
+      const result = registerUser(name, email, password)
+      if (result) {
+        if (avatar) {
+          const updated = updateUserProfile({ avatar })
+          if (updated) setUser(updated)
+        } else {
+          setUser(result)
+        }
         window.dispatchEvent(new Event("storage"))
+        return { success: true, user: result }
       }
-      return result
+      return { success: false, message: "البريد مستخدم مسبقاً" }
     },
     []
   )
@@ -58,15 +65,14 @@ export function useUser() {
 
   const update = useCallback(
     (updates: Partial<Omit<UserProfile, "id" | "email" | "createdAt">>) => {
-      if (!user) return null
-      const updated = updateUserProfile(user.id, updates)
+      const updated = updateUserProfile(updates)
       if (updated) {
         setUser(updated)
         window.dispatchEvent(new Event("storage"))
       }
       return updated
     },
-    [user]
+    []
   )
 
   return {

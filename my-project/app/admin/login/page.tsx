@@ -16,19 +16,23 @@ export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
     setLoading(true)
 
-    setTimeout(() => {
-      if (login(password)) {
+    try {
+      const success = await login(password)
+      if (success) {
         router.push("/admin")
       } else {
         setError("كلمة المرور غير صحيحة")
         setLoading(false)
       }
-    }, 500)
+    } catch {
+      setError("حدث خطأ في الاتصال بالخادم")
+      setLoading(false)
+    }
   }
 
   return (

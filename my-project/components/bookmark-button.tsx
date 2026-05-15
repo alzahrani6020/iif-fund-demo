@@ -22,7 +22,7 @@ interface BookmarkButtonProps {
 export function BookmarkButton({ itemId, itemType, title, href }: BookmarkButtonProps) {
   const { user, isLoggedIn } = useUser()
   const [bookmarked, setBookmarked] = useState(() =>
-    user ? isBookmarked(user.id, itemId, itemType) : false
+    isBookmarked(itemId, itemType)
   )
   const [showAuth, setShowAuth] = useState(false)
 
@@ -33,11 +33,11 @@ export function BookmarkButton({ itemId, itemType, title, href }: BookmarkButton
     }
 
     if (bookmarked) {
-      removeBookmark(user.id, itemId, itemType)
+      removeBookmark(itemId, itemType)
       setBookmarked(false)
       toast({ title: "🗑️ تم الإزالة", description: "أُزيل من محفوظاتك" })
     } else {
-      addBookmark(user.id, itemId, itemType, title, href)
+      addBookmark({ itemId, itemType, title, href })
       setBookmarked(true)
       toast({ title: "🔖 تم الحفظ", description: "أُضيف إلى محفوظاتك" })
     }

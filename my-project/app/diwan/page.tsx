@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Navigation } from "@/components/navigation"
@@ -14,7 +14,8 @@ import { FocusModeToggle } from "@/components/focus-mode-toggle"
 import { TTSPlayer } from "@/components/tts-player"
 
 export default function DiwanPage() {
-  const [poems, setPoems] = useState(() => getPoems())
+  const [poems, setPoems] = useState<any[]>([])
+  useEffect(() => { getPoems().then(setPoems) }, [])
   const [selectedCategory, setSelectedCategory] = useState("الكل")
   const [searchQuery, setSearchQuery] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
