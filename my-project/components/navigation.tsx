@@ -61,17 +61,10 @@ const navItems = [
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
-  const [currentTime, setCurrentTime] = useState(new Date())
   const [searchOpen, setSearchOpen] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
-
-  // Update clock every second
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000)
-    return () => clearInterval(timer)
-  }, [])
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<
@@ -247,16 +240,41 @@ export function Navigation() {
 
   return (
     <>
+      {/* ─── Top Bar: Clock & Date ─── */}
+      <div className="fixed top-0 right-0 left-0 z-[55] hidden lg:flex items-center justify-center h-8 bg-black/20 backdrop-blur-sm border-b border-white/5">
+        <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center gap-4">
+          {/* Clock icon + time */}
+          <div className="flex items-center gap-1.5">
+            <Clock className="w-3 h-3 text-amber-300/70" />
+            <time className="font-sans font-bold text-amber-100 text-[13px] tracking-[0.12em] tabular-nums">
+              {getTime(now)}
+            </time>
+          </div>
+          {/* Divider */}
+          <span className="w-px h-3 bg-white/10" />
+          {/* Hijri date */}
+          <span className="font-serif text-amber-200/60 text-[11px] font-light tracking-wide">
+            {getHijriDate(now)}
+          </span>
+          {/* Divider */}
+          <span className="w-px h-3 bg-white/10" />
+          {/* Gregorian date */}
+          <span className="font-sans text-white/40 text-[11px] font-light tracking-wide">
+            {getGregorianDate(now)}
+          </span>
+        </div>
+      </div>
+
       {/* Scroll Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 z-[60]"
+        className="fixed top-8 left-0 right-0 h-1 z-[60]"
         style={{ width: `${scrollProgress}%` }}
       >
         <div className="h-full bg-gradient-to-l from-primary via-accent to-primary animate-pulse" />
       </motion.div>
 
       <motion.nav
-        className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 border-b ${
+        className={`fixed top-8 right-0 left-0 z-50 transition-all duration-500 border-b ${
           isScrolled
             ? "bg-background/90 backdrop-blur-2xl border-border/40 shadow-2xl shadow-black/30"
             : "bg-background/40 backdrop-blur-3xl border-transparent"
@@ -308,27 +326,6 @@ export function Navigation() {
                 </p>
               </div>
             </Link>
-
-              {/* Clock & Date - Desktop Only */}
-              <div className="hidden lg:flex items-center gap-3 px-4 py-2 glass rounded-xl border border-border/30">
-                <Clock className="w-4 h-4 text-accent" />
-                <div className="flex flex-col items-center leading-tight">
-                  <span className="text-sm font-semibold tracking-wide" style={{ fontFamily: "'Amiri', serif" }}>
-                    {currentTime.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}
-                  </span>
-                  <span className="text-[10px] text-muted-foreground/70">
-                    {(() => {
-                      try {
-                        const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', { day: 'numeric', month: 'long', year: 'numeric' }).format(currentTime)
-                        const gregorian = currentTime.toLocaleDateString('ar-SA', { day: 'numeric', month: 'long', year: 'numeric' })
-                        return `${hijri} · ${gregorian}`
-                      } catch {
-                        return currentTime.toLocaleDateString('ar-SA', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
-                      }
-                    })()}
-                  </span>
-                </div>
-              </div>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
