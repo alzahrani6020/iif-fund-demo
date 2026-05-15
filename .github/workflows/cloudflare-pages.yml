@@ -32,4 +32,3 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           projectName: iif-fund-demo
           directory: gh-pages-dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
