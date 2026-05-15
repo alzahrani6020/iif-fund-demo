@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
@@ -8,6 +8,7 @@ import {
   Menu,
   X,
   Search,
+  Clock,
   BookOpen,
   Mic,
   Video,
@@ -22,8 +23,9 @@ import {
   Landmark,
   ArrowLeft,
   Bookmark,
-  Clock,
   Feather,
+  LogIn,
+  Calendar,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -59,10 +61,17 @@ const navItems = [
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+  const [currentTime, setCurrentTime] = useState(new Date())
   const [searchOpen, setSearchOpen] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
+
+  // Update clock every second
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000)
+    return () => clearInterval(timer)
+  }, [])
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<
@@ -73,6 +82,40 @@ export function Navigation() {
   const [profileOpen, setProfileOpen] = useState(false)
   const { user, isLoggedIn } = useUser()
   const [siteConfig, setSiteConfig] = useState(() => getSiteConfig())
+
+  // ⏰ الساعة والتاريخ
+  const [now, setNow] = useState(new Date())
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const getHijriDate = useCallback((date: Date) => {
+    return new Intl.DateTimeFormat("ar-SA-u-ca-islamic", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(date)
+  }, [])
+
+  const getGregorianDate = useCallback((date: Date) => {
+    return new Intl.DateTimeFormat("ar-SA", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      weekday: "long",
+    }).format(date)
+  }, [])
+
+  const getTime = useCallback((date: Date) => {
+    return new Intl.DateTimeFormat("ar-SA", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    }).format(date)
+  }, [])
 
   useEffect(() => {
     const handleStorage = () => setSiteConfig(getSiteConfig())
@@ -265,6 +308,27 @@ export function Navigation() {
                 </p>
               </div>
             </Link>
+
+              {/* Clock & Date - Desktop Only */}
+              <div className="hidden lg:flex items-center gap-3 px-4 py-2 glass rounded-xl border border-border/30">
+                <Clock className="w-4 h-4 text-accent" />
+                <div className="flex flex-col items-center leading-tight">
+                  <span className="text-sm font-semibold tracking-wide" style={{ fontFamily: "'Amiri', serif" }}>
+                    {currentTime.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground/70">
+                    {(() => {
+                      try {
+                        const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', { day: 'numeric', month: 'long', year: 'numeric' }).format(currentTime)
+                        const gregorian = currentTime.toLocaleDateString('ar-SA', { day: 'numeric', month: 'long', year: 'numeric' })
+                        return `${hijri} · ${gregorian}`
+                      } catch {
+                        return currentTime.toLocaleDateString('ar-SA', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+                      }
+                    })()}
+                  </span>
+                </div>
+              </div>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
