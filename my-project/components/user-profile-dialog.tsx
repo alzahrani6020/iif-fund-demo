@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { LogOut, Save, User, Camera, Upload } from "lucide-react"
 import { useUser } from "@/hooks/use-user"
-import { readImageFile } from "@/lib/data-store"
+import { uploadImageToR2 } from "@/lib/data-store"
 import { toast } from "@/hooks/use-toast"
 
 interface UserProfileDialogProps {
@@ -51,10 +51,11 @@ export function UserProfileDialog({ open, onOpenChange }: UserProfileDialogProps
     const file = e.target.files?.[0]
     if (!file) return
     try {
-      const base64 = await readImageFile(file)
-      setUploadedAvatar(base64)
+      toast({ title: "جاري الرفع", description: "يتم رفع الصورة على السحابة..." })
+      const url = await uploadImageToR2(file)
+      setUploadedAvatar(url)
       setCustomUrl("")
-      toast({ title: "تم رفع الصورة", description: "تم تحديث صورتك الشخصية" })
+      toast({ title: "تم رفع الصورة", description: "تم رفع الصورة على السحابة" })
     } catch (err: any) {
       toast({ title: "خطأ", description: err.message, variant: "destructive" })
     }

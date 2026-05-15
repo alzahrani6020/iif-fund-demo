@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label"
 import { LogIn, UserPlus, Eye, EyeOff, Upload, Camera } from "lucide-react"
 import { useUser } from "@/hooks/use-user"
 import { toast } from "@/hooks/use-toast"
-import { readImageFile } from "@/lib/data-store"
+import { uploadImageToR2 } from "@/lib/data-store"
 
 interface UserAuthDialogProps {
   open: boolean
@@ -56,9 +56,10 @@ export function UserAuthDialog({ open, onOpenChange }: UserAuthDialogProps) {
     const file = e.target.files?.[0]
     if (!file) return
     try {
-      const base64 = await readImageFile(file)
-      setCustomAvatar(base64)
-      toast({ title: "تم رفع الصورة", description: "تم اختيار صورتك الشخصية" })
+      toast({ title: "جاري الرفع", description: "يتم رفع الصورة على السحابة..." })
+      const url = await uploadImageToR2(file)
+      setCustomAvatar(url)
+      toast({ title: "تم رفع الصورة", description: "تم رفع الصورة على السحابة" })
     } catch (err: any) {
       toast({ title: "خطأ", description: err.message, variant: "destructive" })
     }

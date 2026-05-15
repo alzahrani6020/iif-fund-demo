@@ -658,6 +658,35 @@ export function readImageFile(file: File): Promise<string> {
   })
 }
 
+// ==================== R2 IMAGE UPLOAD ====================
+
+const R2_UPLOAD_URL = "https://images.mzahrani.com"
+
+export async function uploadImageToR2(file: File): Promise<string> {
+  if (!file.type.startsWith("image/")) {
+    throw new Error("الملف ليس صورة")
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    throw new Error("حجم الصورة يجب أن يكون أقل من 5 ميجابايت")
+  }
+
+  const formData = new FormData()
+  formData.append("file", file)
+
+  const response = await fetch(R2_UPLOAD_URL, {
+    method: "POST",
+    body: formData,
+  })
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ error: "فشل رفع الصورة" }))
+    throw new Error(error.error || "فشل رفع الصورة")
+  }
+
+  const result = await response.json()
+  return result.url
+}
+
 // Bookmarks
 const BOOKMARKS_KEY = "alzahrani_bookmarks_v1"
 
