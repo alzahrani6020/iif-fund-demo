@@ -20,7 +20,7 @@ export function render(container, lang = "ar") {
         <text x="60" y="68" text-anchor="middle" fill="#e8c968" font-size="22" font-weight="700" font-family="system-ui,sans-serif" letter-spacing="0.15em">FII</text>
       </svg>
     </div>
-    <h1 class="hero__title">
+    <h1 class="hero__title hero__title--gradient">
       <span class="lang-en">International Investment Fund</span>
       <span class="lang-ar">صندوق الاستثمار الدولي</span>
     </h1>
@@ -28,14 +28,15 @@ export function render(container, lang = "ar") {
       <span class="lang-en">Financing for global prosperity · Sovereign partnerships · Institutional capital</span>
       <span class="lang-ar">تمويل الازدهار العالمي · شراكات سيادية · رأس مال مؤسسي</span>
     </p>
+    <div class="hero__divider" aria-hidden="true"></div>
     <div class="hero__actions">
       <a href="#services" class="btn btn--primary btn--lg hero__btn--glow">
-        <span class="lang-en">Services &amp; Consultation</span>
-        <span class="lang-ar">خدمات واستشارة</span>
+        <span class="lang-en">Explore Services</span>
+        <span class="lang-ar">استكشف الخدمات</span>
       </a>
-      <a href="#about" class="btn btn--ghost btn--lg">
-        <span class="lang-en">About the Fund</span>
-        <span class="lang-ar">عن الصندوق</span>
+      <a href="#contact" class="btn btn--ghost btn--lg">
+        <span class="lang-en">Get in Touch</span>
+        <span class="lang-ar">تواصل معنا</span>
       </a>
     </div>
     <div class="hero__stats">
