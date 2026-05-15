@@ -11,8 +11,10 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { LogOut, Save, User, Camera } from "lucide-react"
+import { LogOut, Save, User, Camera, Upload } from "lucide-react"
 import { useUser } from "@/hooks/use-user"
+import { readImageFile } from "@/lib/data-store"
+import { toast } from "@/hooks/use-toast"
 
 interface UserProfileDialogProps {
   open: boolean
@@ -42,11 +44,25 @@ export function UserProfileDialog({ open, onOpenChange }: UserProfileDialogProps
   const [avatar, setAvatar] = useState(user?.avatar || avatarOptions[0])
   const [frame, setFrame] = useState(user?.frame || "gold")
   const [customUrl, setCustomUrl] = useState("")
+  const [uploadedAvatar, setUploadedAvatar] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    try {
+      const base64 = await readImageFile(file)
+      setUploadedAvatar(base64)
+      setCustomUrl("")
+      toast({ title: "تم رفع الصورة", description: "تم تحديث صورتك الشخصية" })
+    } catch (err: any) {
+      toast({ title: "خطأ", description: err.message, variant: "destructive" })
+    }
+  }
 
   const handleSave = () => {
     setSaving(true)
-    const finalAvatar = customUrl.trim() || avatar
+    const finalAvatar = uploadedAvatar || customUrl.trim() || avatar
     update({ name: name.trim(), avatar: finalAvatar, frame: frame as any })
     setSaving(false)
     onOpenChange(false)
@@ -78,14 +94,15 @@ export function UserProfileDialog({ open, onOpenChange }: UserProfileDialogProps
                 className={`w-24 h-24 rounded-full overflow-hidden border-[3px] shadow-lg ${activeFrame.className}`}
               >
                 <img
-                  src={avatar || "/placeholder-user.jpg"}
+                  src={uploadedAvatar || avatar || "/placeholder-user.jpg"}
                   alt={user.name}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+              <label className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer hover:bg-primary/90 transition-colors">
+                <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
                 <Camera className="h-4 w-4 text-primary-foreground" />
-              </div>
+              </label>
             </div>
             <p className="text-sm text-muted-foreground">{user.email}</p>
           </div>
@@ -109,9 +126,9 @@ export function UserProfileDialog({ open, onOpenChange }: UserProfileDialogProps
                 <button
                   key={src}
                   type="button"
-                  onClick={() => { setAvatar(src); setCustomUrl("") }}
+                  onClick={() => { setAvatar(src); setCustomUrl(""); setUploadedAvatar(null) }}
                   className={`w-10 h-10 rounded-full overflow-hidden border-2 transition-all ${
-                    avatar === src && !customUrl
+                    avatar === src && !customUrl && !uploadedAvatar
                       ? "border-accent scale-110"
                       : "border-transparent opacity-60 hover:opacity-100"
                   }`}
@@ -119,12 +136,22 @@ export function UserProfileDialog({ open, onOpenChange }: UserProfileDialogProps
                   <img src={src} alt="avatar" className="w-full h-full object-cover" />
                 </button>
               ))}
+              {/* Uploaded avatar preview */}
+              {uploadedAvatar && (
+                <button
+                  type="button"
+                  onClick={() => { setAvatar(uploadedAvatar); setCustomUrl("") }}
+                  className="w-10 h-10 rounded-full overflow-hidden border-2 border-accent scale-110 transition-all"
+                >
+                  <img src={uploadedAvatar} alt="uploaded" className="w-full h-full object-cover" />
+                </button>
+              )}
             </div>
             <div className="flex items-center gap-2">
               <Input
                 placeholder="أو أدخل رابط صورة..."
                 value={customUrl}
-                onChange={(e) => setCustomUrl(e.target.value)}
+                onChange={(e) => { setCustomUrl(e.target.value); setUploadedAvatar(null) }}
                 className="glass border-border text-sm"
                 dir="ltr"
               />

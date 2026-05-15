@@ -639,6 +639,25 @@ export function isUserLoggedIn(): boolean {
   return getCurrentUser() !== null
 }
 
+// ==================== IMAGE UPLOAD ====================
+
+export function readImageFile(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    if (!file.type.startsWith("image/")) {
+      reject(new Error("الملف ليس صورة"))
+      return
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      reject(new Error("حجم الصورة يجب أن يكون أقل من 2 ميجابايت"))
+      return
+    }
+    const reader = new FileReader()
+    reader.onload = (e) => resolve(e.target?.result as string)
+    reader.onerror = () => reject(new Error("فشل قراءة الصورة"))
+    reader.readAsDataURL(file)
+  })
+}
+
 // Bookmarks
 const BOOKMARKS_KEY = "alzahrani_bookmarks_v1"
 

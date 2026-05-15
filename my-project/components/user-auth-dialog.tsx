@@ -11,9 +11,10 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { LogIn, UserPlus, Eye, EyeOff } from "lucide-react"
+import { LogIn, UserPlus, Eye, EyeOff, Upload, Camera } from "lucide-react"
 import { useUser } from "@/hooks/use-user"
 import { toast } from "@/hooks/use-toast"
+import { readImageFile } from "@/lib/data-store"
 
 interface UserAuthDialogProps {
   open: boolean
@@ -36,6 +37,7 @@ export function UserAuthDialog({ open, onOpenChange }: UserAuthDialogProps) {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [selectedAvatar, setSelectedAvatar] = useState(avatarOptions[0])
+  const [customAvatar, setCustomAvatar] = useState<string | null>(null)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
@@ -47,6 +49,19 @@ export function UserAuthDialog({ open, onOpenChange }: UserAuthDialogProps) {
     setPassword("")
     setError("")
     setSelectedAvatar(avatarOptions[0])
+    setCustomAvatar(null)
+  }
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    try {
+      const base64 = await readImageFile(file)
+      setCustomAvatar(base64)
+      toast({ title: "تم رفع الصورة", description: "تم اختيار صورتك الشخصية" })
+    } catch (err: any) {
+      toast({ title: "خطأ", description: err.message, variant: "destructive" })
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -70,7 +85,8 @@ export function UserAuthDialog({ open, onOpenChange }: UserAuthDialogProps) {
           setLoading(false)
           return
         }
-        const result = register(name, email, password, selectedAvatar)
+        const finalAvatar = customAvatar || selectedAvatar
+        const result = register(name, email, password, finalAvatar)
         if (result.success) {
           reset()
           onOpenChange(false)
@@ -152,16 +168,16 @@ export function UserAuthDialog({ open, onOpenChange }: UserAuthDialogProps) {
             </div>
 
             {mode === "register" && (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label>اختر صورة شخصية</Label>
-                <div className="flex flex-wrap gap-2 justify-center">
+                <div className="flex flex-wrap gap-2 justify-center items-center">
                   {avatarOptions.map((src) => (
                     <button
                       key={src}
                       type="button"
-                      onClick={() => setSelectedAvatar(src)}
+                      onClick={() => { setSelectedAvatar(src); setCustomAvatar(null) }}
                       className={`w-12 h-12 rounded-full overflow-hidden border-2 transition-all ${
-                        selectedAvatar === src
+                        selectedAvatar === src && !customAvatar
                           ? "border-accent scale-110 ring-2 ring-accent/30"
                           : "border-transparent opacity-60 hover:opacity-100"
                       }`}
@@ -169,7 +185,28 @@ export function UserAuthDialog({ open, onOpenChange }: UserAuthDialogProps) {
                       <img src={src} alt="avatar" className="w-full h-full object-cover" />
                     </button>
                   ))}
+                  {/* Upload from device */}
+                  <label className="cursor-pointer">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleFileUpload}
+                    />
+                    <div className={`w-12 h-12 rounded-full overflow-hidden border-2 transition-all flex items-center justify-center bg-secondary/50 ${
+                      customAvatar ? "border-accent scale-110 ring-2 ring-accent/30" : "border-dashed border-muted-foreground/30 hover:border-muted-foreground"
+                    }`}>
+                      {customAvatar ? (
+                        <img src={customAvatar} alt="uploaded" className="w-full h-full object-cover" />
+                      ) : (
+                        <Camera className="h-5 w-5 text-muted-foreground" />
+                      )}
+                    </div>
+                  </label>
                 </div>
+                {customAvatar && (
+                  <p className="text-xs text-center text-accent">✓ تم اختيار صورة من الجهاز</p>
+                )}
               </div>
             )}
 

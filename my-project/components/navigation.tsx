@@ -367,9 +367,14 @@ export function Navigation() {
                 onClick={() =>
                   isLoggedIn ? setProfileOpen(true) : setAuthOpen(true)
                 }
-                className="relative group"
+                className="relative group flex items-center gap-2"
                 title={isLoggedIn ? user?.name : "تسجيل الدخول"}
               >
+                {isLoggedIn && (
+                  <span className="hidden sm:inline text-sm font-medium text-foreground/80 group-hover:text-accent transition-colors">
+                    {user?.name}
+                  </span>
+                )}
                 <div
                   className={`w-10 h-10 rounded-full overflow-hidden border-[2.5px] transition-all ${
                     user?.frame === "purple"
