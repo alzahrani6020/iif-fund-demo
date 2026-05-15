@@ -4,20 +4,15 @@ import { siteConfig } from '@/lib/data';
 
 export const metadata: Metadata = {
   title: 'ثقة الذهبية | تأسيس شركات وخدمات عامة في السعودية',
-  description:
-    'ثقة الذهبية مكتب خدمات عامة في السعودية لتأسيس الشركات، التراخيص البلدية والبناء، متابعة الجهات الحكومية ومدن الصناعية، إدارة الأملاك والمشاريع، خدمات الأفراد، وتأشيرات السفر.',
-  keywords:
-    'تأسيس شركة في السعودية, تأسيس شركة في جدة, مكتب خدمات عامة في جدة, تراخيص بلدية, تراخيص بناء, متابعة الجهات الحكومية, متابعة مدن الصناعية, إدارة الأملاك, إدارة المشاريع, خدمات المستثمر الأجنبي, تأشيرات السفر للخارج',
+  description: 'ثقة الذهبية مكتب خدمات عامة في السعودية لتأسيس الشركات، التراخيص البلدية والبناء، متابعة الجهات الحكومية ومدن الصناعية، إدارة الأملاك والمشاريع، خدمات الأفراد، وتأشيرات السفر.',
+  keywords: 'تأسيس شركة في السعودية, تأسيس شركة في جدة, مكتب خدمات عامة في جدة, تراخيص بلدية, تراخيص بناء, متابعة الجهات الحكومية, متابعة مدن الصناعية, إدارة الأملاك, إدارة المشاريع, خدمات المستثمر الأجنبي, تأشيرات السفر للخارج',
   authors: [{ name: 'ثقة الذهبية' }],
   creator: 'ثقة الذهبية',
   publisher: 'ثقة الذهبية',
   robots: 'index, follow',
   alternates: {
     canonical: siteConfig.url,
-    languages: {
-      'ar': siteConfig.url,
-      'en': `${siteConfig.url}/?lang=en`,
-    },
+    languages: { 'ar': siteConfig.url, 'en': `${siteConfig.url}/?lang=en` },
   },
   openGraph: {
     type: 'website',
@@ -26,22 +21,13 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     siteName: 'ثقة الذهبية',
     title: 'ثقة الذهبية | تأسيس شركات وخدمات عامة في السعودية',
-    description:
-      'ثقة الذهبية مكتب خدمات عامة في السعودية لتأسيس الشركات، التراخيص البلدية والبناء، متابعة الجهات الحكومية ومدن الصناعية، إدارة الأملاك والمشاريع، خدمات الأفراد، وتأشيرات السفر.',
-    images: [
-      {
-        url: `${siteConfig.url}/assets/thiqqah-logo-full.png`,
-        width: 1200,
-        height: 630,
-        alt: 'شعار ثقة الذهبية',
-      },
-    ],
+    description: 'ثقة الذهبية مكتب خدمات عامة في السعودية لتأسيس الشركات، التراخيص البلدية والبناء، متابعة الجهات الحكومية ومدن الصناعية، إدارة الأملاك والمشاريع، خدمات الأفراد، وتأشيرات السفر.',
+    images: [{ url: `${siteConfig.url}/assets/thiqqah-logo-full.png`, width: 1200, height: 630, alt: 'شعار ثقة الذهبية' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ثقة الذهبية | تأسيس شركات وخدمات عامة في السعودية',
-    description:
-      'ثقة الذهبية مكتب خدمات عامة في السعودية لتأسيس الشركات، التراخيص البلدية والبناء، متابعة الجهات الحكومية ومدن الصناعية، إدارة الأملاك والمشاريع، خدمات الأفراد، وتأشيرات السفر.',
+    description: 'ثقة الذهبية مكتب خدمات عامة في السعودية لتأسيس الشركات، التراخيص البلدية والبناء، متابعة الجهات الحكومية ومدن الصناعية، إدارة الأملاك والمشاريع، خدمات الأفراد، وتأشيرات السفر.',
     images: [`${siteConfig.url}/assets/thiqqah-logo-full.png`],
   },
   other: {
@@ -60,11 +46,7 @@ const jsonLd = {
       name: 'ثقة الذهبية | تأسيس شركات وخدمات عامة في السعودية',
       datePublished: '2024-11-30T13:24:38.658Z',
       dateModified: new Date().toISOString(),
-      isPartOf: {
-        '@type': 'WebSite',
-        url: siteConfig.url,
-        name: 'ثقة الذهبية للخدمات العامة وتأسيس الأعمال',
-      },
+      isPartOf: { '@type': 'WebSite', url: siteConfig.url, name: 'ثقة الذهبية للخدمات العامة وتأسيس الأعمال' },
       about: { '@id': `${siteConfig.url}/#business` },
     },
     {
@@ -76,18 +58,8 @@ const jsonLd = {
       telephone: siteConfig.phone,
       email: siteConfig.email,
       areaServed: { '@type': 'Country', name: 'المملكة العربية السعودية' },
-      address: {
-        '@type': 'PostalAddress',
-        addressCountry: 'SA',
-        addressRegion: 'منطقة مكة المكرمة',
-        addressLocality: 'جدة',
-      },
-      identifier: {
-        '@type': 'PropertyValue',
-        propertyID: 'commercial_registration',
-        name: 'السجل التجاري',
-        value: siteConfig.cr,
-      },
+      address: { '@type': 'PostalAddress', addressCountry: 'SA', addressRegion: 'منطقة مكة المكرمة', addressLocality: 'جدة' },
+      identifier: { '@type': 'PropertyValue', propertyID: 'commercial_registration', name: 'السجل التجاري', value: siteConfig.cr },
       description: 'خدمات عامة وتأسيس شركات وتراخيص ومتابعة جهات حكومية في السعودية.',
       logo: `${siteConfig.url}/assets/thiqqah-logo-full.png`,
       image: `${siteConfig.url}/assets/thiqqah-logo-full.png`,
@@ -118,7 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </>
         )}
       </head>
-      <body className="antialiased bg-white text-surface-900">
+      <body className="antialiased bg-white text-ink-900">
         {children}
       </body>
     </html>

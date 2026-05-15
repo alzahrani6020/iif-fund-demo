@@ -50,7 +50,7 @@ export function RequestForm({ lang }: { lang: Lang }) {
   };
 
   return (
-    <section id="request" className="py-16 sm:py-24 bg-surface-50">
+    <section id="request" className="py-16 sm:py-24 bg-ink-50">
       <div className="container-modern max-w-3xl">
         <SectionHeading kicker={t.request.kicker} title={t.request.title} description={t.request.desc} centered />
 
@@ -58,10 +58,10 @@ export function RequestForm({ lang }: { lang: Lang }) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 card-modern p-7 sm:p-10"
+          className="mt-10 sm:mt-14 card-modern p-6 sm:p-10"
         >
           <div className="grid sm:grid-cols-2 gap-4">
-            <label className="block text-sm font-bold text-surface-800">
+            <label className="block text-sm font-bold text-ink-800">
               {t.request.serviceLabel}
               <select value={service} onChange={(e) => setService(e.target.value)} className="input-modern mt-2" required>
                 <option value="">{lang === 'ar' ? 'اختر' : 'Select'}</option>
@@ -70,11 +70,11 @@ export function RequestForm({ lang }: { lang: Lang }) {
                 ))}
               </select>
             </label>
-            <label className="block text-sm font-bold text-surface-800">
+            <label className="block text-sm font-bold text-ink-800">
               {t.request.cityLabel}
               <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder={lang === 'ar' ? 'مثال: جدة' : 'e.g. Jeddah'} className="input-modern mt-2" />
             </label>
-            <label className="block text-sm font-bold text-surface-800">
+            <label className="block text-sm font-bold text-ink-800">
               {t.request.clientTypeLabel}
               <select value={clientType} onChange={(e) => setClientType(e.target.value)} className="input-modern mt-2">
                 {t.request.clientTypes.map((o) => (
@@ -82,21 +82,21 @@ export function RequestForm({ lang }: { lang: Lang }) {
                 ))}
               </select>
             </label>
-            <label className="block text-sm font-bold text-surface-800">
+            <label className="block text-sm font-bold text-ink-800">
               {t.request.nameLabel}
               <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder={lang === 'ar' ? 'الاسم' : 'Name'} className="input-modern mt-2" />
             </label>
-            <label className="block text-sm font-bold text-surface-800 sm:col-span-2">
+            <label className="block text-sm font-bold text-ink-800 sm:col-span-2">
               {t.request.phoneLabel}
               <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+9665xxxxxxxx" dir="ltr" className="input-modern mt-2 text-left" required />
             </label>
-            <label className="block text-sm font-bold text-surface-800 sm:col-span-2">
+            <label className="block text-sm font-bold text-ink-800 sm:col-span-2">
               {t.request.detailsLabel}
               <textarea value={details} onChange={(e) => setDetails(e.target.value)} rows={4} placeholder={lang === 'ar' ? 'اكتب وصف الخدمة باختصار' : 'Briefly describe the service needed'} className="input-modern mt-2 resize-none" />
             </label>
           </div>
 
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className="mt-6 sm:mt-7 flex flex-wrap gap-3">
             <button onClick={() => handleSubmit('whatsapp')} className="btn-primary flex-1">
               <Send size={18} /> {t.request.sendWhatsapp}
             </button>
@@ -111,7 +111,7 @@ export function RequestForm({ lang }: { lang: Lang }) {
             </motion.p>
           )}
 
-          <p className="mt-4 text-xs text-surface-400">{t.request.legalNote}</p>
+          <p className="mt-4 text-xs text-ink-400">{t.request.legalNote}</p>
         </motion.div>
       </div>
     </section>

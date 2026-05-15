@@ -18,12 +18,10 @@ export function SectionHeading({ kicker, title, description, centered = false }:
       transition={{ duration: 0.5 }}
       className={centered ? 'text-center' : ''}
     >
-      {kicker && <span className="section-kicker mb-4 inline-flex">{kicker}</span>}
-      <h2 className="mt-4 text-3xl sm:text-4xl font-extrabold text-surface-900 tracking-tight">{title}</h2>
+      {kicker && <span className="section-kicker mb-5 inline-flex">{kicker}</span>}
+      <h2 className="mt-4 text-3xl sm:text-4xl font-extrabold text-ink-900 tracking-tight">{title}</h2>
       {description && (
-        <p className="mt-4 max-w-2xl text-surface-500 leading-relaxed text-base sm:text-lg">
-          {description}
-        </p>
+        <p className="mt-4 max-w-2xl text-ink-500 leading-relaxed text-base sm:text-lg">{description}</p>
       )}
     </motion.div>
   );

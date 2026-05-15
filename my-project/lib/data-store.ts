@@ -278,13 +278,44 @@ export function isLoggedIn(): boolean {
   return localStorage.getItem(AUTH_KEY) === "true"
 }
 
+// Simple hash for client-side admin password
+function hashPassword(password: string): string {
+  let hash = 0
+  for (let i = 0; i < password.length; i++) {
+    const char = password.charCodeAt(i)
+    hash = ((hash << 5) - hash) + char
+    hash = hash & hash
+  }
+  return Math.abs(hash).toString(36)
+}
+
+const DEFAULT_PASSWORD_HASH = "4w2r8m" // hash of "admin123"
+const ADMIN_PASSWORD_KEY = "mzahrani_admin_pwd"
+
 export function login(password: string): boolean {
-  // Default password: admin123 (change in production)
-  if (password === "admin123") {
+  const storedHash = localStorage.getItem(ADMIN_PASSWORD_KEY)
+  const targetHash = storedHash || DEFAULT_PASSWORD_HASH
+  if (hashPassword(password) === targetHash) {
     localStorage.setItem(AUTH_KEY, "true")
     return true
   }
   return false
+}
+
+export function changeAdminPassword(currentPassword: string, newPassword: string): { success: boolean; message: string } {
+  const storedHash = localStorage.getItem(ADMIN_PASSWORD_KEY)
+  const targetHash = storedHash || DEFAULT_PASSWORD_HASH
+  
+  if (hashPassword(currentPassword) !== targetHash) {
+    return { success: false, message: "كلمة المرور الحالية غير صحيحة" }
+  }
+  
+  if (newPassword.length < 6) {
+    return { success: false, message: "كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل" }
+  }
+  
+  localStorage.setItem(ADMIN_PASSWORD_KEY, hashPassword(newPassword))
+  return { success: true, message: "تم تغيير كلمة المرور بنجاح" }
 }
 
 export function logout() {

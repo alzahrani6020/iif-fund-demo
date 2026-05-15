@@ -24,46 +24,46 @@ export function WhatsAppFloat({ lang }: { lang: Lang }) {
   };
 
   return (
-    <div className="fixed bottom-6 left-6 z-50" dir="ltr">
+    <div className="fixed bottom-5 sm:bottom-6 left-5 sm:left-6 z-50" dir="ltr">
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="mb-4 w-[320px] bg-white rounded-3xl shadow-elevated border border-surface-200 overflow-hidden"
+            className="mb-4 w-[300px] sm:w-[320px] bg-white rounded-3xl shadow-float border border-ink-200 overflow-hidden"
           >
-            <div className="bg-saudi-600 text-white p-5 flex items-center justify-between">
+            <div className="bg-gradient-to-r from-saudi-800 to-saudi-900 text-white p-5 flex items-center justify-between">
               <div>
                 <strong className="block text-sm">{lang === 'ar' ? 'مساعد ثقة الذهبية' : 'Thiqqah Assistant'}</strong>
-                <span className="block text-xs text-emerald-100 mt-0.5">{lang === 'ar' ? 'أسئلة متتابعة وتجهيز طلب واتساب' : 'Quick questions & WhatsApp request'}</span>
+                <span className="block text-xs text-saudi-200 mt-0.5">{lang === 'ar' ? 'أسئلة متتابعة وتجهيز طلب واتساب' : 'Quick questions & WhatsApp request'}</span>
               </div>
-              <button onClick={() => setOpen(false)} className="p-1.5 hover:bg-white/10 rounded-lg transition"><X size={18} /></button>
+              <button onClick={() => setOpen(false)} className="p-1.5 hover:bg-white/10 rounded-lg transition touch-target"><X size={18} /></button>
             </div>
             <div className="p-4 max-h-[320px] overflow-y-auto">
-              <p className="text-xs text-surface-500 bg-surface-50 rounded-xl p-3 leading-relaxed border border-surface-100">
+              <p className="text-xs text-ink-500 bg-ink-50 rounded-xl p-3 leading-relaxed border border-ink-100">
                 {lang === 'ar'
                   ? 'أهلا بك. اختر نوع الخدمة أو اكتب طلبك، وسأجهز رسالة واتساب واضحة إلى رقم ثقة الذهبية.'
                   : 'Welcome. Choose a service type or type your request, and we will prepare a clear WhatsApp message.'}
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {quick.map((q) => (
-                  <button key={q} onClick={() => send(q)} className="text-xs bg-saudi-50 text-saudi-700 font-semibold px-3 py-1.5 rounded-full hover:bg-saudi-100 transition border border-saudi-100">
+                  <button key={q} onClick={() => send(q)} className="text-xs bg-saudi-50 text-saudi-700 font-semibold px-3 py-1.5 rounded-full hover:bg-saudi-100 transition border border-saudi-100 touch-target">
                     {q}
                   </button>
                 ))}
               </div>
             </div>
-            <div className="p-3 border-t border-surface-100 flex gap-2">
+            <div className="p-3 border-t border-ink-100 flex gap-2">
               <input
                 type="text"
                 value={msg}
                 onChange={(e) => setMsg(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && msg && send(msg)}
                 placeholder={lang === 'ar' ? 'اكتب سؤالك...' : 'Type your question...'}
-                className="flex-1 text-sm bg-surface-50 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-saudi-200 border border-surface-100 text-surface-800 placeholder:text-surface-400"
+                className="flex-1 text-sm bg-ink-50 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-saudi-200 border border-ink-100 text-ink-800 placeholder:text-ink-400"
               />
-              <button onClick={() => msg && send(msg)} className="w-9 h-9 rounded-full bg-saudi-500 text-white flex items-center justify-center hover:bg-saudi-600 transition">
+              <button onClick={() => msg && send(msg)} className="w-9 h-9 rounded-full bg-saudi-800 text-white flex items-center justify-center hover:bg-saudi-900 transition touch-target">
                 <Send size={14} />
               </button>
             </div>
@@ -75,10 +75,10 @@ export function WhatsAppFloat({ lang }: { lang: Lang }) {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setOpen(!open)}
-        className="w-14 h-14 rounded-full bg-saudi-500 text-white shadow-lg shadow-saudi-500/25 flex items-center justify-center hover:bg-saudi-600 transition"
+        className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-saudi-700 to-saudi-900 text-white shadow-lg shadow-saudi-800/25 flex items-center justify-center hover:shadow-saudi-800/40 transition touch-target"
         aria-label="WhatsApp chat"
       >
-        {open ? <X size={24} /> : <MessageCircle size={28} />}
+        {open ? <X size={22} /> : <MessageCircle size={26} />}
       </motion.button>
     </div>
   );

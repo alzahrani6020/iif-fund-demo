@@ -14,7 +14,7 @@ import {
 import {
   LayoutDashboard, BookOpen, Mic, Video, BookText, Quote, FileText,
   MessageSquare, Users, Eye, Heart, Plus, Edit, Trash2, Search,
-  Settings, Settings2, LogOut, Bell, ChevronLeft, X, Save, AlertTriangle, Download, Upload,
+  Settings, Settings2, LogOut, Bell, ChevronLeft, X, Save, AlertTriangle, Download, Upload, Lock, User,
   Landmark, Tag, Shield, ShieldAlert, ShieldCheck, ImageIcon, Ban, CheckCircle2,
   Clock, UserX, UserCheck, BarChart3, Filter, Camera, Type
 } from "lucide-react"
@@ -31,7 +31,7 @@ import {
   getAllUsers, deleteUser, updateUserRole,
   getAllComments, getPendingComments, approveComment, rejectComment,
   getBannedWords, addBannedWord, removeBannedWord,
-  checkImageUrl, exportData, importData, getSiteConfig, updateSiteConfig, type SiteConfig,
+  checkImageUrl, exportData, importData, getSiteConfig, updateSiteConfig, changeAdminPassword, type SiteConfig,
   type Category, type UserProfile, type Comment, type ContentCheckResult
 } from "@/lib/data-store"
 import { toast } from "@/hooks/use-toast"
@@ -903,6 +903,56 @@ function ImageModerationTab() {
   )
 }
 
+// ==================== CHANGE PASSWORD FORM ====================
+
+function ChangePasswordForm() {
+  const [currentPassword, setCurrentPassword] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (newPassword !== confirmPassword) {
+      toast({ title: "خطأ", description: "كلمة المرور الجديدة غير متطابقة", variant: "destructive" })
+      return
+    }
+    setLoading(true)
+    setTimeout(() => {
+      const result = changeAdminPassword(currentPassword, newPassword)
+      if (result.success) {
+        toast({ title: "تم", description: result.message })
+        setCurrentPassword("")
+        setNewPassword("")
+        setConfirmPassword("")
+      } else {
+        toast({ title: "خطأ", description: result.message, variant: "destructive" })
+      }
+      setLoading(false)
+    }, 300)
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="text-sm font-medium text-foreground mb-2 block">كلمة المرور الحالية</label>
+        <Input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} className="glass border-border text-foreground" placeholder="أدخل كلمة المرور الحالية" />
+      </div>
+      <div>
+        <label className="text-sm font-medium text-foreground mb-2 block">كلمة المرور الجديدة</label>
+        <Input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="glass border-border text-foreground" placeholder="أدخل كلمة المرور الجديدة" />
+      </div>
+      <div>
+        <label className="text-sm font-medium text-foreground mb-2 block">تأكيد كلمة المرور الجديدة</label>
+        <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="glass border-border text-foreground" placeholder="أعد إدخال كلمة المرور الجديدة" />
+      </div>
+      <Button type="submit" disabled={loading || !currentPassword || !newPassword || !confirmPassword} className="bg-primary hover:bg-primary/90">
+        {loading ? <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full" /> : <><Lock className="ml-2 h-4 w-4" /> تغيير كلمة المرور</>}
+      </Button>
+    </form>
+  )
+}
+
 // ==================== SETTINGS TAB ====================
 
 function SettingsTab({ onRefresh }: { onRefresh: () => void }) {
@@ -1036,6 +1086,16 @@ function SettingsTab({ onRefresh }: { onRefresh: () => void }) {
                 )}
               </div>
             </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Change Password */}
+      <section>
+        <h2 className="text-xl font-bold mb-4 flex items-center gap-2"><Lock className="h-5 w-5 text-accent" /> تغيير كلمة المرور</h2>
+        <Card className="glass border-border">
+          <CardContent className="p-6 space-y-4">
+            <ChangePasswordForm />
           </CardContent>
         </Card>
       </section>

@@ -18,7 +18,7 @@ export function PathPicker({ lang }: { lang: Lang }) {
     <section id="pick-path" className="py-16 sm:py-24 bg-white">
       <div className="container-modern">
         <SectionHeading kicker={t.paths.title} title={t.paths.title} description={t.paths.subtitle} centered />
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="mt-10 sm:mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {paths.map((p, i) => (
             <motion.a
               key={p.title}
@@ -27,21 +27,21 @@ export function PathPicker({ lang }: { lang: Lang }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group card-modern p-7 flex flex-col gap-4 hover:border-saudi-300"
+              className="group card-modern p-6 sm:p-7 flex flex-col gap-4 hover:border-saudi-300"
             >
-              <div className="w-12 h-12 rounded-xl bg-saudi-50 text-saudi-600 flex items-center justify-center group-hover:bg-saudi-500 group-hover:text-white transition-all">
+              <div className="w-12 h-12 rounded-xl bg-saudi-50 text-saudi-700 flex items-center justify-center group-hover:bg-saudi-600 group-hover:text-white transition-all">
                 <p.icon size={24} />
               </div>
-              <h3 className="text-lg font-bold text-surface-900">{p.title}</h3>
-              <p className="text-surface-500 text-sm leading-relaxed flex-1">{p.desc}</p>
-              <span className="inline-flex items-center gap-2 text-saudi-600 font-bold text-sm group-hover:gap-3 transition-all">
+              <h3 className="text-base sm:text-lg font-bold text-ink-900">{p.title}</h3>
+              <p className="text-ink-500 text-sm leading-relaxed flex-1">{p.desc}</p>
+              <span className="inline-flex items-center gap-2 text-saudi-700 font-bold text-sm group-hover:gap-3 transition-all">
                 {lang === 'ar' ? 'استكشف المسار' : 'Explore path'} <ArrowLeft size={16} className="rtl:rotate-180" />
               </span>
             </motion.a>
           ))}
         </div>
         <div className="mt-8 text-center">
-          <a href="#services" className="inline-flex items-center gap-2 text-saudi-600 font-bold hover:text-saudi-700 transition-colors text-sm">
+          <a href="#services" className="inline-flex items-center gap-2 text-saudi-700 font-bold hover:text-saudi-900 transition-colors text-sm">
             {t.paths.allServices} <ArrowLeft size={16} className="rtl:rotate-180" />
           </a>
         </div>

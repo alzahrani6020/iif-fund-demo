@@ -20,7 +20,7 @@ export function Contact({ lang }: { lang: Lang }) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 flex flex-wrap justify-center gap-3"
+          className="mt-10 sm:mt-14 flex flex-wrap justify-center gap-3"
         >
           <a href={`https://wa.me/${siteConfig.phone.replace('+', '')}`} className="btn-primary">
             <MessageCircle size={18} /> {t.contact.whatsapp}
@@ -33,22 +33,22 @@ export function Contact({ lang }: { lang: Lang }) {
           </a>
         </motion.div>
 
-        <p className="mt-6 text-center text-sm text-surface-400">{t.contact.replyHint}</p>
+        <p className="mt-6 sm:mt-8 text-center text-sm text-ink-400">{t.contact.replyHint}</p>
 
-        <div className="mt-10 grid sm:grid-cols-2 gap-4 max-w-xl mx-auto">
-          <a href={`tel:${siteConfig.phone}`} className="card-modern p-6 text-center hover:border-saudi-300 transition-colors group">
+        <div className="mt-8 sm:mt-10 grid sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+          <a href={`tel:${siteConfig.phone}`} className="card-modern p-5 sm:p-6 text-center hover:border-saudi-300 transition-colors group">
             <Phone size={20} className="mx-auto text-saudi-600 group-hover:scale-110 transition-transform" />
-            <strong className="block mt-3 text-surface-900">{t.contact.phoneLabel}</strong>
-            <span className="block mt-1 text-sm text-surface-500" dir="ltr">{siteConfig.phoneDisplay}</span>
+            <strong className="block mt-3 text-ink-900">{t.contact.phoneLabel}</strong>
+            <span className="block mt-1 text-sm text-ink-500" dir="ltr">{siteConfig.phoneDisplay}</span>
           </a>
-          <a href={`mailto:${siteConfig.email}`} className="card-modern p-6 text-center hover:border-saudi-300 transition-colors group">
-            <Mail size={20} className="mx-auto text-primary-600 group-hover:scale-110 transition-transform" />
-            <strong className="block mt-3 text-surface-900">{t.contact.emailLabel}</strong>
-            <span className="block mt-1 text-sm text-surface-500">{siteConfig.email}</span>
+          <a href={`mailto:${siteConfig.email}`} className="card-modern p-5 sm:p-6 text-center hover:border-saudi-300 transition-colors group">
+            <Mail size={20} className="mx-auto text-gold-600 group-hover:scale-110 transition-transform" />
+            <strong className="block mt-3 text-ink-900">{t.contact.emailLabel}</strong>
+            <span className="block mt-1 text-sm text-ink-500">{siteConfig.email}</span>
           </a>
         </div>
 
-        <p className="mt-10 text-center text-xs text-surface-400 max-w-2xl mx-auto leading-relaxed">{t.contact.disclaimer}</p>
+        <p className="mt-10 sm:mt-12 text-center text-xs text-ink-400 max-w-2xl mx-auto leading-relaxed">{t.contact.disclaimer}</p>
       </div>
     </section>
   );

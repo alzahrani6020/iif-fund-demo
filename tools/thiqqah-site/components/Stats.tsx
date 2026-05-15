@@ -13,9 +13,9 @@ export function Stats({ lang }: { lang: Lang }) {
   ];
 
   return (
-    <section id="stats" className="relative py-12 -mt-6 z-10">
+    <section id="stats" className="relative py-10 sm:py-12 -mt-4 sm:-mt-6 z-10">
       <div className="container-modern">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {items.map((item, i) => (
             <motion.div
               key={item.label}
@@ -23,10 +23,10 @@ export function Stats({ lang }: { lang: Lang }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-white rounded-2xl p-6 sm:p-8 text-center shadow-card border border-surface-200"
+              className="bg-white rounded-2xl p-5 sm:p-8 text-center shadow-card border border-ink-200"
             >
-              <p className="text-3xl sm:text-4xl font-extrabold text-gradient">{item.value}</p>
-              <p className="mt-2 text-sm text-surface-500 font-medium">{item.label}</p>
+              <p className="text-2xl sm:text-4xl font-extrabold text-gradient">{item.value}</p>
+              <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm text-ink-500 font-medium">{item.label}</p>
             </motion.div>
           ))}
         </div>
