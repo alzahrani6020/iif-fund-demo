@@ -1,0 +1,15 @@
+name = "mzahrani-image-upload"
+main = "r2-image-upload.js"
+compatibility_date = "2026-05-14"
+
+# Custom domain for the worker
+routes = [
+  { pattern = "images.mzahrani.com", custom_domain = true }
+]
+
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "mzahrani-images"
+
+[vars]
+R2_PUBLIC_URL = "https://images.mzahrani.com"

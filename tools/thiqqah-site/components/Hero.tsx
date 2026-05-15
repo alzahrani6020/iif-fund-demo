@@ -14,13 +14,14 @@ export function Hero({ lang }: { lang: Lang }) {
       <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-saudi-500/[0.04] rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gold-500/[0.04] rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="container-modern relative pt-10 sm:pt-16 pb-20 sm:pb-28">
+      <div className="container-modern relative pt-8 sm:pt-12 pb-20 sm:pb-28">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           {/* Text content */}
           <motion.div
             initial={{ opacity: 0, x: lang === 'ar' ? 30 : -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
+            className="order-2 lg:order-1"
           >
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -63,29 +64,22 @@ export function Hero({ lang }: { lang: Lang }) {
             </div>
           </motion.div>
 
-          {/* Image side */}
+          {/* Logo side */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className="relative hidden lg:block"
+            className="relative order-1 lg:order-2 flex justify-center"
           >
-            <div className="relative rounded-[2rem] overflow-hidden shadow-glow border-2 border-saudi-100">
+            <div className="relative w-full max-w-[420px]">
               <Image
-                src="/assets/modern-building.webp"
-                alt="مبنى حديث"
-                width={700}
-                height={520}
-                className="w-full h-[340px] xl:h-[400px] object-cover"
+                src="/assets/thiqqah-logo-full.png"
+                alt="مكتب ثقة الذهبية للخدمات العامة"
+                width={1024}
+                height={725}
+                className="w-full h-auto object-contain drop-shadow-2xl"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-saudi-900/30 to-transparent" />
-              {/* Floating badge */}
-              <div className="absolute bottom-5 right-5">
-                <span className="inline-flex items-center gap-2 bg-white/95 backdrop-blur text-saudi-700 text-sm font-bold px-5 py-2.5 rounded-xl shadow-card">
-                  {lang === 'ar' ? 'تأسيس · تراخيص · متابعة' : 'Formation · Licenses · Follow-up'}
-                </span>
-              </div>
             </div>
 
             {/* Floating stat card */}
@@ -93,7 +87,7 @@ export function Hero({ lang }: { lang: Lang }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-float border border-saudi-100 z-10"
+              className="absolute -bottom-4 left-0 bg-white rounded-2xl p-5 shadow-float border border-saudi-100 z-10"
             >
               <p className="text-3xl font-extrabold text-gradient">{t.stats.years}</p>
               <p className="text-sm text-ink-500 mt-1">{t.stats.yearsLabel}</p>
@@ -104,7 +98,7 @@ export function Hero({ lang }: { lang: Lang }) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.7 }}
-              className="absolute -top-4 -right-4 bg-white rounded-2xl p-4 shadow-float border border-saudi-100 z-10"
+              className="absolute -top-2 right-0 bg-white rounded-2xl p-4 shadow-float border border-saudi-100 z-10"
             >
               <div className="flex items-center gap-3">
                 <div className="w-11 h-11 rounded-xl bg-saudi-50 flex items-center justify-center">

@@ -41,6 +41,8 @@ export default function RootLayout({
         <TypographyControls />
         <Toaster />
         {process.env.NODE_ENV === 'production' && <Analytics />}
+        {/* Cloudflare Web Analytics — استبدل TOKEN بالقيمة من dash.cloudflare.com/web-analytics */}
+        <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_CF_ANALYTICS_TOKEN"}'></script>
       </body>
     </html>
   )

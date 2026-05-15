@@ -18,6 +18,9 @@ import { Contact } from '@/components/Contact';
 import { Privacy } from '@/components/Privacy';
 import { Footer } from '@/components/Footer';
 import { WhatsAppFloat } from '@/components/WhatsAppFloat';
+import { About } from '@/components/About';
+import { Agencies } from '@/components/Agencies';
+import { TrustSignals } from '@/components/TrustSignals';
 import { Lang } from '@/lib/i18n';
 
 export default function Home() {
@@ -56,11 +59,14 @@ export default function Home() {
         <Hero lang={lang} />
         <Stats lang={lang} />
         <PathPicker lang={lang} />
+        <TrustSignals lang={lang} />
         <Formation lang={lang} />
         <WhyUs lang={lang} />
         <Services lang={lang} />
         <Packages lang={lang} />
         <Sectors lang={lang} />
+        <About lang={lang} />
+        <Agencies lang={lang} />
         <Process lang={lang} />
         <Documents lang={lang} />
         <FAQ lang={lang} />
