@@ -26,11 +26,7 @@ data-scroll-to="page-research-center"><span data-i18n>مركز الأبحاث</s
 style="background:none;border:none;color:inherit;text-align:left;width:100%;padding:var(--space-2) var(--space-3);font-size:inherit;cursor:pointer;"><span data-i18n>حاسبة</span></button></div></div><a href="#contact" class="btn btn--primary" data-i18n="navContact">Contact</a><a href="#activities"><span data-i18n>ساهم مع
 الصندوق</span></a><a href="#terms"><span data-i18n>الشروط والأحكام</span></a><a href="#page-representative" class="nav-to-section nav-link--rep-glow"
 data-scroll-to="page-representative"><span data-i18n>كن ممثلاً لنا</span></a><a href="#compliance" data-i18n="navLicenses">Licenses</a><a href="#customer-experience"><span data-i18n>تجربة
-العملاء</span></a><a href="#careers"><span data-i18n>التوظيف</span></a><button type="button" class="btn btn--ghost" id="calc-open" aria-label="Calculator" style="display:none;"><span data-i18n>حاسبة</span></button><button type="button" class="btn btn--primary" id="auth-owner-login-nav"
-style="background: linear-gradient(135deg, #c9a227, #e8c968); color: #0a0e18; font-weight: 600; margin-right: 8px;"
-onclick="ownerLoginDirect()"><span data-i18n>👑 دخول المالك</span></button><button type="button" class="btn btn--ghost" id="reset-device-nav-btn"
-style="background: #dc2626; color: white; font-weight: 600; padding: 6px 12px; font-size: 12px; margin-right: 4px;"
-onclick="resetDeviceRegistration()" title="Reset device registration for testing"><span data-i18n>إعادة تعيين</span></button><a href="#dashboard" class="btn btn--ghost nav-dashboard-link" id="nav-dashboard" aria-label="Dashboard"
+العملاء</span></a><a href="#careers"><span data-i18n>التوظيف</span></a><button type="button" class="btn btn--ghost" id="calc-open" aria-label="Calculator" style="display:none;"><span data-i18n>حاسبة</span></button><a href="#dashboard" class="btn btn--ghost nav-dashboard-link" id="nav-dashboard" aria-label="Dashboard"
 style="display:none; text-decoration:none;"><span data-i18n>لوحة التحكم</span></a><a href="#user-dashboard" class="btn btn--ghost nav-user-dashboard-link" id="nav-user-dashboard"
 aria-label="User Dashboard" style="display:none; text-decoration:none;"><span data-i18n>ملفي الشخصي</span></a><button type="button" class="btn btn--ghost nav-logout-link" id="nav-logout" aria-label="Sign out"
 style="display:none;"><span data-i18n>تسجيل الخروج</span></button><div class="header-search" id="iif-search-wrap-outer"><input type="search" id="iif-search" autocomplete="off" data-i18n="searchPlaceholder"
@@ -523,20 +519,9 @@ style="width: 100%; padding: var(--space-2); border: 1px solid var(--color-borde
 style="width: 100%; padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm);"></div><div><label class="lang-ar">سياسات الحوكمة</label><input type="file" name="governance-policies" id="governance-policies-input" accept=".pdf,.doc,.docx"
 style="width: 100%; padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm);"></div><div><label class="lang-ar">تقارير التدقيق</label><input type="file" name="audit-reports" id="audit-reports-input" accept=".pdf,.doc,.docx"
 style="width: 100%; padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm);"></div></div></div><div style="grid-column: 1 / -1; margin-top: var(--space-4);"><button type="submit" class="btn btn--primary" id="governance-submit-btn"
-style="width: 100%; max-width: 300px; margin: 0 auto;"><span data-i18n>تقديم معلومات الشركة</span></button></div><div style="grid-column: 1 / -1; margin-top: var(--space-4); text-align: center;"><button type="button" class="btn btn--primary" id="owner-login-btn" onclick="ownerLoginAccess(event)"
-style="margin-right: var(--space-2); display:none;"><span data-i18n>دخول المالك</span></button><button type="button" class="btn btn--secondary" onclick="generatePersonalizedRecommendations()"
+style="width: 100%; max-width: 300px; margin: 0 auto;"><span data-i18n>تقديم معلومات الشركة</span></button></div><div style="grid-column: 1 / -1; margin-top: var(--space-4); text-align: center;"><button type="button" class="btn btn--secondary" onclick="generatePersonalizedRecommendations()"
 style="margin-right: var(--space-2);"><span data-i18n>إنشاء التوصيات</span></button><button type="button" class="btn btn--outline" onclick="downloadCompanyReport()"><span data-i18n>تحميل التقرير</span></button></div></form><script>
-// Show owner login button if not logged in
-function showOwnerLoginButton() {
-try {
-var email = (localStorage.getItem('iif-user-email') || '').trim().toLowerCase();
-var ownerEmail = (window.IIF_CONFIG && window.IIF_CONFIG.ownerEmail) ? window.IIF_CONFIG.ownerEmail.toLowerCase() : 'talalkenani@gmail.com';
-var isLoggedIn = localStorage.getItem('iif-logged-in') === '1';
-var ownerBtn = document.getElementById('owner-login-btn');
-if (ownerBtn) {
-ownerBtn.style.display = (!isLoggedIn || email !== ownerEmail) ? 'inline-block' : 'none';
-}
-} catch (e) { }
+ catch (e) { }
 }
 // Control form access based on user role
 function controlFormAccess() {
@@ -1393,17 +1378,7 @@ style="padding: var(--space-4); background: rgba(255,193,7,0.15); border: 1px so
 aria-label="Search" /><button type="button" id="research-search-btn" class="btn btn--primary" style="margin-top:0.5rem;"><span data-i18n>بحث</span></button></div><ul id="centers-list" style="list-style:none; padding:0; margin:0;"></ul></div></section></main><footer><p data-i18n="footerCopy">© International Investment Fund · Financing for Global Prosperity · All Nations Globally
 </p></footer><script src="i18n.js" defer></script><script src="membership-auth.js" defer></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" crossorigin="anonymous"
 defer></script><script src="app-init.js" defer></script><script src="chairman-controls.js" defer></script><script src="header-user-card.js" defer></script><script nonce="iif2026">
-// دالة دخول المالك الآمن - محمية بكلمة مرور والتحقق من الجهاز
-function ownerLoginDirect() {
-try {
-// التحقق من الجهاز المسجل مسبقاً
-var deviceFingerprint = localStorage.getItem('iif-owner-device');
-var currentFingerprint = navigator.userAgent + navigator.language + screen.width + 'x' + screen.height;
-// إذا كان الجهاز مسجلاً، لا حاجة لكلمة المرور
-if (deviceFingerprint === currentFingerprint) {
-performOwnerLogin();
-return;
-}
+
 // طلب كلمة المرور السرية
 var password = prompt('Enter owner password:');
 if (!password) return;
@@ -1461,30 +1436,9 @@ if (dashBtn) {
 dashBtn.style.display = 'inline-flex';
 dashBtn.classList.add('is-visible');
 }
-// إخفاء زر دخول المالك بعد تسجيل الدخول
-var ownerLoginBtn = document.getElementById('auth-owner-login-nav');
-if (ownerLoginBtn) {
-ownerLoginBtn.style.display = 'none';
+, 100);
 }
-console.log('Owner login completed successfully');
-// منح العضوية البلاتينية
-localStorage.setItem('iif_membership_type_' + ownerEmail, 'premium_4143');
-var futureDate = new Date();
-futureDate.setFullYear(futureDate.getFullYear() + 50);
-localStorage.setItem('iif_membership_end_' + ownerEmail, futureDate.toISOString().split('T')[0]);
-localStorage.setItem('iif_membership_start_' + ownerEmail, new Date().toISOString().split('T')[0]);
-// تحديث الواجهة
-setTimeout(function () {
-if (typeof updateDashboardNav === 'function') updateDashboardNav();
-// location.reload(); // لا نعيد تحميل الصفحة للحفاظ على رسالة النجاح
-}, 100);
-}
-// دالة إعادة تعيين تسجيل الجهاز
-function resetDeviceRegistration() {
-try {
-localStorage.removeItem('iif-owner-device');
-alert('Device registration reset! Next login will require password.');
-} catch (e) {
+ catch (e) {
 alert('Reset completed!');
 }
 }
@@ -2057,31 +2011,7 @@ var headerRegister = document.getElementById('auth-header-register');
 if (headerRegister) headerRegister.addEventListener('click', function () { openAuth('register'); });
 var ownerLogin = document.getElementById('auth-owner-login');
 if (ownerLogin) ownerLogin.addEventListener('click', function () {
-// دخول المالك التلقائي
-var ownerEmail = (window.IIF_CONFIG && window.IIF_CONFIG.ownerEmail) ? window.IIF_CONFIG.ownerEmail : 'talalkenani@gmail.com';
-localStorage.setItem('iif-user-email', ownerEmail);
-localStorage.setItem('iif-user-name', 'Financial Advisor Dr. Talal Hassan Al-Zahrani');
-localStorage.setItem('iif-logged-in', '1');
-localStorage.setItem('iif-is-admin', '1');
-// منح العضوية البلاتينية
-localStorage.setItem('iif_membership_type_' + ownerEmail, 'premium_4143');
-var futureDate = new Date();
-futureDate.setFullYear(futureDate.getFullYear() + 50);
-localStorage.setItem('iif_membership_end_' + ownerEmail, futureDate.toISOString().split('T')[0]);
-localStorage.setItem('iif_membership_start_' + ownerEmail, new Date().toISOString().split('T')[0]);
-if (typeof updateDashboardNav === 'function') updateDashboardNav();
-if (typeof closeAuth === 'function') closeAuth();
-// إظهار رسالة ترحيب
-var lang = (document.documentElement.getAttribute('data-lang') || 'ar').toLowerCase();
-var isAr = lang !== 'en';
-var msg = isAr ? 'مرحباً يا دكتور طلال! تم تسجيل دخولك كمالك الموقع.' : 'Welcome Dr. Talal! Logged in as site owner.';
-if (typeof alert === 'function') alert(msg);
-});
-if (closeBtn) closeBtn.addEventListener('click', closeAuth);
-if (overlay) {
-overlay.addEventListener('click', function (e) {
-if (e.target === overlay) closeAuth();
-});
+);
 document.addEventListener('keydown', function authEscape(e) {
 if (overlay && overlay.classList.contains('is-open') && (e.key === 'Escape' || e.keyCode === 27)) {
 e.preventDefault();
