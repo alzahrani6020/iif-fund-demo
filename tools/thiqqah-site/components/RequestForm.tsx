@@ -14,17 +14,30 @@ function normalizePhone(input: string): string {
     '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9',
   };
   let cleaned = input.split('').map(c => arToEn[c] || c).join('');
-  // Remove everything except digits and leading +
+  // Remove everything except digits, +, and leading 00
   cleaned = cleaned.replace(/[^0-9+]/g, '');
+  // Convert 00 prefix to +
+  if (cleaned.startsWith('00')) {
+    cleaned = '+' + cleaned.slice(2);
+  }
   return cleaned;
 }
 
-function isValidSaudiPhone(phone: string): boolean {
+function isValidPhone(phone: string): boolean {
   const p = phone.replace(/\+/g, '');
-  // Patterns: +9665xxxxxxxx, 9665xxxxxxxx, 05xxxxxxxx
-  if (/^9665\d{8}$/.test(p)) return true;
+  // Reject all zeros or too short/long
+  if (/^0+$/.test(p)) return false;
+  if (p.length < 7) return false;
+
+  // Saudi local: 05xxxxxxxx (10 digits)
   if (/^05\d{8}$/.test(p)) return true;
-  if (/^5\d{8}$/.test(p)) return true; // after +966
+  // Saudi without +: 9665xxxxxxxx (12 digits)
+  if (/^9665\d{8}$/.test(p)) return true;
+  // International: starts with country code (1-3 digits) then number, min 7 max 15 total digits after +
+  if (/^\+/.test(phone) && /^\+\d{7,15}$/.test(phone)) return true;
+  // Allow plain digits if they look like a full international number without +
+  if (/^\d{10,15}$/.test(p)) return true;
+
   return false;
 }
 
@@ -47,10 +60,10 @@ export function RequestForm({ lang }: { lang: Lang }) {
     }
 
     const normalized = normalizePhone(phone);
-    if (!isValidSaudiPhone(normalized)) {
+    if (!isValidPhone(normalized)) {
       setPhoneError(lang === 'ar'
-        ? 'الرجاء إدخال رقم جوال سعودي صحيح (مثال: +9665xxxxxxxx أو 05xxxxxxxx)'
-        : 'Please enter a valid Saudi mobile number (e.g. +9665xxxxxxxx or 05xxxxxxxx)');
+        ? 'الرجاء إدخال رقم جوال صحيح (مثال: +9665xxxxxxxx أو 05xxxxxxxx أو +971xx...)'
+        : 'Please enter a valid mobile number (e.g. +9665xxxxxxxx, 05xxxxxxxx, or +971xx...)');
       setToast('');
       return;
     }
@@ -82,7 +95,8 @@ export function RequestForm({ lang }: { lang: Lang }) {
   };
 
   return (
-    <section id="request" className="py-16 sm:py-24 bg-surface">
+    <section id="request" className="py-16 sm:py-24 bg-dark relative overflow-hidden">
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gold-500/[0.03] rounded-full blur-[120px] pointer-events-none" />
       <div className="container-modern max-w-3xl">
         <SectionHeading kicker={t.request.kicker} title={t.request.title} description={t.request.desc} centered />
 
@@ -93,7 +107,7 @@ export function RequestForm({ lang }: { lang: Lang }) {
           className="mt-10 sm:mt-14 card-modern p-6 sm:p-10"
         >
           <div className="grid sm:grid-cols-2 gap-4">
-            <label className="block text-sm font-bold text-ink-800">
+            <label className="block text-sm font-bold text-cream">
               {t.request.serviceLabel}
               <select value={service} onChange={(e) => setService(e.target.value)} className="input-modern mt-2" required>
                 <option value="">{lang === 'ar' ? 'اختر' : 'Select'}</option>
@@ -102,11 +116,11 @@ export function RequestForm({ lang }: { lang: Lang }) {
                 ))}
               </select>
             </label>
-            <label className="block text-sm font-bold text-ink-800">
+            <label className="block text-sm font-bold text-cream">
               {t.request.cityLabel}
               <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder={lang === 'ar' ? 'مثال: جدة' : 'e.g. Jeddah'} className="input-modern mt-2" />
             </label>
-            <label className="block text-sm font-bold text-ink-800">
+            <label className="block text-sm font-bold text-cream">
               {t.request.clientTypeLabel}
               <select value={clientType} onChange={(e) => setClientType(e.target.value)} className="input-modern mt-2">
                 {t.request.clientTypes.map((o) => (
@@ -114,11 +128,11 @@ export function RequestForm({ lang }: { lang: Lang }) {
                 ))}
               </select>
             </label>
-            <label className="block text-sm font-bold text-ink-800">
+            <label className="block text-sm font-bold text-cream">
               {t.request.nameLabel}
               <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder={lang === 'ar' ? 'الاسم' : 'Name'} className="input-modern mt-2" />
             </label>
-            <label className="block text-sm font-bold text-ink-800 sm:col-span-2">
+            <label className="block text-sm font-bold text-cream sm:col-span-2">
               {t.request.phoneLabel}
               <input
                 type="tel"
@@ -129,14 +143,14 @@ export function RequestForm({ lang }: { lang: Lang }) {
                 }}
                 placeholder="+9665xxxxxxxx"
                 dir="ltr"
-                className={`input-modern mt-2 text-left ${phoneError ? 'border-red-500 focus:ring-red-200' : ''}`}
+                className={`input-modern mt-2 text-left ${phoneError ? 'border-red-400 focus:border-red-400' : ''}`}
                 required
               />
               {phoneError && (
-                <span className="block mt-1 text-xs text-red-600 font-medium">{phoneError}</span>
+                <span className="block mt-1 text-xs text-red-400 font-medium">{phoneError}</span>
               )}
             </label>
-            <label className="block text-sm font-bold text-ink-800 sm:col-span-2">
+            <label className="block text-sm font-bold text-cream sm:col-span-2">
               {t.request.detailsLabel}
               <textarea value={details} onChange={(e) => setDetails(e.target.value)} rows={4} placeholder={lang === 'ar' ? 'اكتب وصف الخدمة باختصار' : 'Briefly describe the service needed'} className="input-modern mt-2 resize-none" />
             </label>
@@ -152,12 +166,12 @@ export function RequestForm({ lang }: { lang: Lang }) {
           </div>
 
           {toast && (
-            <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4 text-sm font-bold text-saudi-700 bg-saudi-50 px-5 py-3 rounded-xl border border-saudi-200">
+            <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4 text-sm font-bold text-gold-400 bg-gold-500/10 px-5 py-3 rounded-xl border border-gold-500/20">
               {toast}
             </motion.p>
           )}
 
-          <p className="mt-4 text-xs text-ink-400">{t.request.legalNote}</p>
+          <p className="mt-4 text-xs text-cream/30">{t.request.legalNote}</p>
         </motion.div>
       </div>
     </section>

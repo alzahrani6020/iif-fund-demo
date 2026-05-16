@@ -9,7 +9,7 @@ export function Formation({ lang }: { lang: Lang }) {
   const t = translations[lang];
 
   return (
-    <section id="company-formation" className="py-16 sm:py-24 bg-surface">
+    <section id="company-formation" className="py-16 sm:py-24 bg-dark-800/50">
       <div className="container-modern">
         <SectionHeading kicker={t.formation.kicker} title={t.formation.title} description={t.formation.desc} />
 
@@ -21,10 +21,10 @@ export function Formation({ lang }: { lang: Lang }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="card-modern p-7 group hover:border-saudi-400"
+              className="card-modern p-7 group hover:border-gold-500/40"
             >
-              <h3 className="text-lg font-bold text-ink-900">{card.title}</h3>
-              <p className="mt-3 text-ink-500 text-sm leading-relaxed">{card.desc}</p>
+              <h3 className="text-lg font-bold text-cream">{card.title}</h3>
+              <p className="mt-3 text-cream/50 text-sm leading-relaxed">{card.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -33,12 +33,12 @@ export function Formation({ lang }: { lang: Lang }) {
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-5 sm:mt-6 card-modern p-7 bg-white"
+          className="mt-5 sm:mt-6 card-modern p-7 bg-dark"
         >
           <ul className="grid sm:grid-cols-2 gap-4">
             {t.formation.checklist.map((item) => (
-              <li key={item} className="flex items-start gap-3 text-sm text-ink-700">
-                <span className="mt-0.5 w-5 h-5 rounded-full bg-saudi-50 text-saudi-600 flex items-center justify-center shrink-0 border border-saudi-200">
+              <li key={item} className="flex items-start gap-3 text-sm text-cream/70">
+                <span className="mt-0.5 w-5 h-5 rounded-full bg-gold-500/10 text-gold-400 flex items-center justify-center shrink-0 border border-gold-500/20">
                   <Check size={12} />
                 </span>
                 {item}

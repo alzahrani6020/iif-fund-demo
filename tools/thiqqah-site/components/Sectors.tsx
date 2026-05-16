@@ -18,7 +18,7 @@ export function Sectors({ lang }: { lang: Lang }) {
   const icons = [HardHat, Utensils, Factory, Plane];
 
   return (
-    <section id="sectors" className="py-16 sm:py-24 bg-surface">
+    <section id="sectors" className="py-16 sm:py-24 bg-dark-800/50">
       <div className="container-modern">
         <SectionHeading kicker={t.sectors.kicker} title={t.sectors.title} />
         <div className="mt-10 sm:mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
@@ -42,14 +42,14 @@ export function Sectors({ lang }: { lang: Lang }) {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     priority={i < 2}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 to-transparent" />
-                  <div className="absolute bottom-3 right-3 w-11 h-11 rounded-xl bg-white/95 text-saudi-600 flex items-center justify-center shadow-card">
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-900/60 to-transparent" />
+                  <div className="absolute bottom-3 right-3 w-11 h-11 rounded-xl bg-dark/95 text-gold-400 flex items-center justify-center shadow-card">
                     <Icon size={22} />
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-base font-bold text-ink-900">{item.title}</h3>
-                  <p className="mt-2 text-sm text-ink-500 leading-relaxed">{item.desc}</p>
+                  <h3 className="text-base font-bold text-cream">{item.title}</h3>
+                  <p className="mt-2 text-sm text-cream/50 leading-relaxed">{item.desc}</p>
                 </div>
               </motion.div>
             );

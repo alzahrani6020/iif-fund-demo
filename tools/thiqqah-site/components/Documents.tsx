@@ -32,16 +32,16 @@ export function Documents({ lang }: { lang: Lang }) {
   ];
 
   return (
-    <section id="documents" className="py-16 sm:py-24 bg-surface">
+    <section id="documents" className="py-16 sm:py-24 bg-dark-800/50">
       <div className="container-modern">
         <div className="grid md:grid-cols-2 gap-5 sm:gap-6">
           <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="card-modern p-7 sm:p-8">
             <span className="section-kicker mb-4 inline-flex">{t.documents.required.kicker}</span>
-            <h3 className="text-xl sm:text-2xl font-bold text-ink-900 mt-4">{t.documents.required.title}</h3>
+            <h3 className="text-xl sm:text-2xl font-bold text-cream mt-4">{t.documents.required.title}</h3>
             <ul className="mt-6 sm:mt-7 space-y-3.5">
               {required.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-ink-700 text-sm">
-                  <Check size={18} className="mt-0.5 text-saudi-600 shrink-0" />
+                <li key={item} className="flex items-start gap-3 text-cream/70 text-sm">
+                  <Check size={18} className="mt-0.5 text-gold-400 shrink-0" />
                   {item}
                 </li>
               ))}
@@ -50,10 +50,10 @@ export function Documents({ lang }: { lang: Lang }) {
 
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="card-modern p-7 sm:p-8">
             <span className="section-kicker mb-4 inline-flex">{t.documents.output.kicker}</span>
-            <h3 className="text-xl sm:text-2xl font-bold text-ink-900 mt-4">{t.documents.output.title}</h3>
+            <h3 className="text-xl sm:text-2xl font-bold text-cream mt-4">{t.documents.output.title}</h3>
             <ul className="mt-6 sm:mt-7 space-y-3.5">
               {outputs.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-ink-700 text-sm">
+                <li key={item} className="flex items-start gap-3 text-cream/70 text-sm">
                   <FileOutput size={18} className="mt-0.5 text-gold-600 shrink-0" />
                   {item}
                 </li>

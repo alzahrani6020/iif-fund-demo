@@ -48,6 +48,28 @@ const config: Config = {
         surface: {
           DEFAULT: '#f6faf8',
         },
+        // New Premium Dark Palette derived from logo
+        dark: {
+          DEFAULT: '#0A1628',
+          50: '#e6e9ed',
+          100: '#b3becd',
+          200: '#8094ad',
+          300: '#4d6a8d',
+          400: '#1a406d',
+          500: '#16345a',
+          600: '#122a4a',
+          700: '#0e203a',
+          800: '#0a1628',
+          900: '#060d1c',
+        },
+        cream: {
+          DEFAULT: '#F5F0E8',
+          50: '#fdfcfa',
+          100: '#faf6f0',
+          200: '#F5F0E8',
+          300: '#e8dcc8',
+          400: '#d4c4a8',
+        },
       },
       fontFamily: {
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],

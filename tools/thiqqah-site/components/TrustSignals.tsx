@@ -22,7 +22,7 @@ export function TrustSignals({ lang }: { lang: Lang }) {
   const data = signalsData[lang];
 
   return (
-    <section id="trust-signals" className="py-16 sm:py-24 bg-white">
+    <section id="trust-signals" className="py-16 sm:py-24 bg-dark">
       <div className="container-modern">
         <SectionHeading
           kicker={lang === 'ar' ? 'ثقة منظمة' : 'Organized Trust'}
@@ -42,11 +42,11 @@ export function TrustSignals({ lang }: { lang: Lang }) {
                 transition={{ delay: i * 0.1 }}
                 className="card-modern p-7 sm:p-8 text-center group"
               >
-                <div className="w-14 h-14 mx-auto rounded-2xl bg-saudi-50 text-saudi-600 flex items-center justify-center group-hover:bg-saudi-600 group-hover:text-white transition-all duration-300 mb-5">
+                <div className="w-14 h-14 mx-auto rounded-2xl bg-gold-500/10 text-gold-400 flex items-center justify-center group-hover:bg-gold-500 group-hover:text-white transition-all duration-300 mb-5">
                   <Icon size={28} />
                 </div>
-                <h3 className="text-base font-bold text-ink-900">{item.title}</h3>
-                <p className="mt-3 text-sm text-ink-500 leading-relaxed">{item.desc}</p>
+                <h3 className="text-base font-bold text-cream">{item.title}</h3>
+                <p className="mt-3 text-sm text-cream/50 leading-relaxed">{item.desc}</p>
               </motion.div>
             );
           })}

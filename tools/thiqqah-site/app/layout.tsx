@@ -90,7 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </>
         )}
       </head>
-      <body className="antialiased bg-white text-ink-900">
+      <body className="antialiased bg-[#0A1628] text-cream">
         {children}
       </body>
     </html>

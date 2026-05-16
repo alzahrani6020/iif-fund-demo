@@ -77,6 +77,15 @@
   letter-spacing: 0.1em;
 }
 
+.shared-nav__logo-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--color-accent-gold, #c9a227);
+  display: block;
+}
+
 .shared-nav__title {
   display: inline-flex;
   align-items: center;

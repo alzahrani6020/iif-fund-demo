@@ -252,6 +252,15 @@
   filter: drop-shadow(0 0 20px rgba(201, 162, 39, 0.25));
 }
 
+.hero__emblem-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 2px solid rgba(201, 162, 39, 0.35);
+  filter: drop-shadow(0 0 20px rgba(201, 162, 39, 0.25));
+}
+
 .hero__title {
   font-size: clamp(2.2rem, 5.5vw, 4rem);
   font-weight: 800;

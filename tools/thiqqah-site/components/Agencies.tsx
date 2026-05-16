@@ -38,7 +38,7 @@ export function Agencies({ lang }: { lang: Lang }) {
   const data = agenciesData[lang];
 
   return (
-    <section id="agencies" className="py-16 sm:py-24 bg-surface">
+    <section id="agencies" className="py-16 sm:py-24 bg-dark-800/50">
       <div className="container-modern">
         <SectionHeading
           kicker={lang === 'ar' ? 'جهات نخدمك أمامها' : 'Authorities We Serve'}
@@ -58,12 +58,12 @@ export function Agencies({ lang }: { lang: Lang }) {
                 transition={{ delay: i * 0.05 }}
                 className="card-modern p-6 sm:p-7 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-saudi-50 text-saudi-600 flex items-center justify-center group-hover:bg-saudi-600 group-hover:text-white transition-all duration-300 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-gold-500/10 text-gold-400 flex items-center justify-center group-hover:bg-gold-500 group-hover:text-white transition-all duration-300 mb-4">
                   <Icon size={24} />
                 </div>
-                <h3 className="text-base font-bold text-ink-900">{agency.title}</h3>
-                <p className="mt-2 text-sm text-ink-500 leading-relaxed">{agency.desc}</p>
-                <p className="mt-3 text-xs text-ink-400 leading-relaxed border-t border-ink-100 pt-3">{agency.hint}</p>
+                <h3 className="text-base font-bold text-cream">{agency.title}</h3>
+                <p className="mt-2 text-sm text-cream/50 leading-relaxed">{agency.desc}</p>
+                <p className="mt-3 text-xs text-cream/40 leading-relaxed border-t border-cream/10 pt-3">{agency.hint}</p>
               </motion.div>
             );
           })}

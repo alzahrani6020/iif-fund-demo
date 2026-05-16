@@ -49,12 +49,12 @@ export function Services({ lang }: { lang: Lang }) {
   }, [filter, query, lang]);
 
   return (
-    <section id="services" className="py-16 sm:py-24 bg-surface">
+    <section id="services" className="py-16 sm:py-24 bg-dark-800/50 relative">
       <div className="container-modern">
         <SectionHeading kicker={t.services.kicker} title={t.services.title} description={t.services.desc} />
 
         <div className="mt-8 sm:mt-10 relative max-w-xl">
-          <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-ink-400" size={20} />
+          <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-cream/30" size={20} />
           <input
             type="search"
             value={query}
@@ -71,8 +71,8 @@ export function Services({ lang }: { lang: Lang }) {
               onClick={() => setFilter(tab.key)}
               className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all ${
                 filter === tab.key
-                  ? 'bg-saudi-700 text-white shadow-soft'
-                  : 'bg-white text-ink-600 border border-ink-200 hover:border-saudi-400 hover:text-saudi-600'
+                  ? 'bg-gold-500 text-dark shadow-glow'
+                  : 'bg-dark/60 text-cream/70 border border-cream/10 hover:border-gold-500/30 hover:text-gold-400'
               }`}
             >
               {tab.label}
@@ -98,16 +98,16 @@ export function Services({ lang }: { lang: Lang }) {
                   className="card-modern p-6 sm:p-7 group"
                 >
                   <div className="flex items-center gap-3.5">
-                    <div className="w-11 h-11 rounded-xl bg-saudi-50 text-saudi-600 flex items-center justify-center group-hover:bg-saudi-600 group-hover:text-white transition-all duration-300">
+                    <div className="w-11 h-11 rounded-xl bg-gold-500/10 text-gold-400 flex items-center justify-center border border-gold-500/20 group-hover:bg-gold-500 group-hover:text-dark transition-all duration-300">
                       <Icon size={22} />
                     </div>
-                    <h3 className="text-sm sm:text-base font-bold text-ink-900">{title}</h3>
+                    <h3 className="text-sm sm:text-base font-bold text-cream">{title}</h3>
                   </div>
-                  <p className="mt-4 text-sm text-ink-500 leading-relaxed">{desc}</p>
+                  <p className="mt-4 text-sm text-cream/50 leading-relaxed">{desc}</p>
                   <ul className="mt-5 space-y-2.5">
                     {feats.slice(0, 4).map((f) => (
-                      <li key={f} className="flex items-center gap-2.5 text-xs text-ink-600">
-                        <span className="w-1.5 h-1.5 rounded-full bg-saudi-400 shrink-0" />
+                      <li key={f} className="flex items-center gap-2.5 text-xs text-cream/60">
+                        <span className="w-1.5 h-1.5 rounded-full bg-gold-500/60 shrink-0" />
                         {f}
                       </li>
                     ))}
@@ -119,7 +119,7 @@ export function Services({ lang }: { lang: Lang }) {
         </motion.div>
 
         {filtered.length === 0 && (
-          <p className="mt-10 text-center text-ink-400">{lang === 'ar' ? 'لا توجد نتائج' : 'No results found'}</p>
+          <p className="mt-10 text-center text-cream/40">{lang === 'ar' ? 'لا توجد نتائج' : 'No results found'}</p>
         )}
       </div>
     </section>

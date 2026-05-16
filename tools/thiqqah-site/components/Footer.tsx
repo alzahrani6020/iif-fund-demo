@@ -17,7 +17,7 @@ export function Footer({ lang }: { lang: Lang }) {
   ];
 
   return (
-    <footer className="bg-saudi-900 text-white/70 py-14 sm:py-16">
+    <footer className="bg-dark-900 text-cream/60 py-14 sm:py-16 border-t border-gold-500/10">
       <div className="container-modern">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-12">
           <div>
@@ -25,29 +25,29 @@ export function Footer({ lang }: { lang: Lang }) {
               <div className="relative w-10 h-10">
                 <Image src="/assets/thiqqah-logo.png" alt="شعار ثقة الذهبية" fill className="object-contain" />
               </div>
-              <h3 className="text-white font-bold text-base">{t.footer.title}</h3>
+              <h3 className="text-cream font-bold text-base">{t.footer.title}</h3>
             </div>
-            <p className="text-sm text-white/50 leading-relaxed">{t.footer.desc}</p>
+            <p className="text-sm text-cream/40 leading-relaxed">{t.footer.desc}</p>
           </div>
           <div>
-            <h4 className="text-white font-bold text-xs mb-5 uppercase tracking-wider">{t.footer.links}</h4>
+            <h4 className="text-cream font-bold text-xs mb-5 uppercase tracking-wider">{t.footer.links}</h4>
             <div className="space-y-2.5">
               {links.map((l) => (
-                <a key={l.href} href={l.href} className="block text-sm text-white/50 hover:text-white transition-colors">{l.label}</a>
+                <a key={l.href} href={l.href} className="block text-sm text-cream/40 hover:text-gold-400 transition-colors">{l.label}</a>
               ))}
             </div>
           </div>
           <div>
-            <h4 className="text-white font-bold text-xs mb-5 uppercase tracking-wider">{t.footer.data}</h4>
-            <div className="space-y-2.5 text-sm text-white/50">
+            <h4 className="text-cream font-bold text-xs mb-5 uppercase tracking-wider">{t.footer.data}</h4>
+            <div className="space-y-2.5 text-sm text-cream/40">
               <p>{t.footer.cr}</p>
-              <p>{lang === 'ar' ? 'الجوال:' : 'Phone:'} <a href={`tel:${siteConfig.phone}`} className="text-white/70 hover:text-white transition-colors" dir="ltr">{siteConfig.phoneDisplay}</a></p>
-              <p>{lang === 'ar' ? 'البريد:' : 'Email:'} <a href={`mailto:${siteConfig.email}`} className="text-white/70 hover:text-white transition-colors">{siteConfig.email}</a></p>
-              <p className="text-white/30 text-xs mt-5">{t.footer.publishNote}</p>
+              <p>{lang === 'ar' ? 'الجوال:' : 'Phone:'} <a href={`tel:${siteConfig.phone}`} className="text-cream/70 hover:text-gold-400 transition-colors" dir="ltr">{siteConfig.phoneDisplay}</a></p>
+              <p>{lang === 'ar' ? 'البريد:' : 'Email:'} <a href={`mailto:${siteConfig.email}`} className="text-cream/70 hover:text-gold-400 transition-colors">{siteConfig.email}</a></p>
+              <p className="text-cream/20 text-xs mt-5">{t.footer.publishNote}</p>
             </div>
           </div>
         </div>
-        <div className="mt-12 sm:mt-14 pt-8 border-t border-white/10 text-center text-xs text-white/30">
+        <div className="mt-12 sm:mt-14 pt-8 border-t border-cream/10 text-center text-xs text-cream/20">
           © {new Date().getFullYear()} {t.siteName}. {lang === 'ar' ? 'جميع الحقوق محفوظة.' : 'All rights reserved.'}
         </div>
       </div>

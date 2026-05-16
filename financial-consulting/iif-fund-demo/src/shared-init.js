@@ -29,7 +29,7 @@ function renderNav(lang, translations) {
   nav.innerHTML = `
     <div class="shared-nav__inner">
       <a href="index.html" class="shared-nav__brand" aria-label="FII Home">
-        <span class="shared-nav__logo">FII</span>
+        <img src="assets/logo-192.png" alt="FII" class="shared-nav__logo-img" width="36" height="36" />
         <span class="shared-nav__title">
           <span class="lang-en">International Investment Fund</span>
           <span class="lang-ar">صندوق الاستثمار الدولي</span>

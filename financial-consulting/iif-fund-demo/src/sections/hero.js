@@ -13,12 +13,7 @@ export function render(container, lang = "ar") {
       <span class="hero__status">${isAr ? 'نشط عالمياً' : 'Active globally'}</span>
     </div>
     <div class="hero__emblem" aria-hidden="true">
-      <svg viewBox="0 0 120 120" class="hero__emblem-svg">
-        <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(201,162,39,0.35)" stroke-width="1"/>
-        <circle cx="60" cy="60" r="44" fill="none" stroke="rgba(30,58,95,0.6)" stroke-width="1.5"/>
-        <circle cx="60" cy="60" r="34" fill="rgba(201,162,39,0.08)"/>
-        <text x="60" y="68" text-anchor="middle" fill="#e8c968" font-size="22" font-weight="700" font-family="system-ui,sans-serif" letter-spacing="0.15em">FII</text>
-      </svg>
+      <img src="assets/emblem.jpg" alt="International Investment Fund" class="hero__emblem-img" width="120" height="120" />
     </div>
     <h1 class="hero__title hero__title--gradient">
       <span class="lang-en">International Investment Fund</span>

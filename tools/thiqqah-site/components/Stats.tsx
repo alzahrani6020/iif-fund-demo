@@ -23,10 +23,10 @@ export function Stats({ lang }: { lang: Lang }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-white rounded-2xl p-5 sm:p-7 text-center shadow-float border border-saudi-100 hover:border-saudi-300 transition-colors"
+              className="bg-dark rounded-2xl p-5 sm:p-7 text-center shadow-float border border-gold-500/20 hover:border-gold-500/30 transition-colors"
             >
               <p className="text-2xl sm:text-4xl font-extrabold text-gradient">{item.value}</p>
-              <p className="mt-2 text-xs sm:text-sm text-ink-500 font-medium">{item.label}</p>
+              <p className="mt-2 text-xs sm:text-sm text-cream/50 font-medium">{item.label}</p>
             </motion.div>
           ))}
         </div>

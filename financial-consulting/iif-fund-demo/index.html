@@ -2,135 +2,95 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <title>تحت الصيانة · International Investment Fund</title>
+  <title>International Investment Fund · FII · Paris</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0e18" />
-  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="International Investment Fund (FII) — Financing for global prosperity." />
+  <meta name="keywords" content="investment fund, sovereign finance, BOT, government partnerships, Paris, EU" />
+  <meta property="og:title" content="International Investment Fund · FII · Paris" />
+  <meta property="og:description" content="Financing for global prosperity · Sovereign partnerships · Institutional capital" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://iiffund.com" />
+  <meta property="og:image" content="https://iiffund.com/assets/og-cover.svg" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="ar_SA" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="International Investment Fund · FII · Paris" />
+  <meta name="twitter:description" content="Financing for global prosperity · Sovereign partnerships · Institutional capital" />
+  <meta name="twitter:image" content="https://iiffund.com/assets/og-cover.svg" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230d0d0d' stroke='%23c9a227' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='10' fill='%231e3a5f' opacity='0.95'/%3E%3Ctext x='16' y='20' text-anchor='middle' fill='%23e8c968' font-size='9' font-weight='700' font-family='system-ui,sans-serif' letter-spacing='0.1em'%3EFII%3C/text%3E%3C/svg%3E" type="image/svg+xml" />
+  <link rel="canonical" href="https://iiffund.com/financial-consulting/iif-fund-demo/" />
+  <!-- Prefetch standalone pages for instant navigation -->
+  <link rel="prefetch" href="services" />
+  <link rel="prefetch" href="about" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #080d18;
-      --text: #f1f5f9;
-      --muted: #c8d4e5;
-      --gold: #c9a227;
-      --gold-soft: #e8d48a;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-    }
-    .emblem {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 1.5rem;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(201,162,39,0.35);
-      box-shadow: 0 0 40px rgba(201,162,39,0.15);
-    }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 1rem;
-      border-radius: 9999px;
-      background: rgba(201,162,39,0.12);
-      border: 1px solid rgba(201,162,39,0.25);
-      color: var(--gold);
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-    .badge::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--gold);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.8); }
-    }
-    h1 {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      font-weight: 800;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, var(--gold-soft) 0%, var(--gold) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    p { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin-bottom: 2rem; line-height: 1.7; }
-    .actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-    a {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    a:hover { transform: translateY(-2px); }
-    .btn-primary {
-      background: linear-gradient(135deg, rgba(201,162,39,0.2) 0%, rgba(201,162,39,0.08) 100%);
-      border: 1px solid rgba(201,162,39,0.35);
-      color: var(--gold-soft);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-    }
-    .btn-primary:hover { border-color: var(--gold); }
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.12);
-      color: var(--muted);
-    }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.25); color: var(--text); }
-    footer { position: absolute; bottom: 1.5rem; color: rgba(136,153,170,0.5); font-size: 0.8rem; }
-    .lang-en, .lang-ar { display: block; }
-  </style>
+  <!-- Design System — متغيرات وأساسيات -->
+  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/public-shell.css" />
+  <link rel="stylesheet" href="css/public-components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <!-- Fallback: styles.css القديم — سُيزال تدريجياً -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://iiffund.com/#organization",
+        "name": "International Investment Fund",
+        "alternateName": ["FII", "صندوق الاستثمار الدولي"],
+        "url": "https://iiffund.com",
+        "logo": "https://iiffund.com/assets/og-cover.svg",
+        "description": "International Investment Fund (FII) — Financing for global prosperity through sovereign partnerships and institutional capital.",
+        "foundingDate": "2019",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "13B Av de la Motte Picquet",
+          "addressLocality": "Paris",
+          "postalCode": "75007",
+          "addressCountry": "FR"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+966-56-756-6616",
+          "email": "info@iiffund.com",
+          "contactType": "General Inquiries",
+          "availableLanguage": ["English", "Arabic", "French"]
+        },
+        "sameAs": [
+          "https://github.com/alzahrani6020/iif-fund-demo"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://iiffund.com/#website",
+        "url": "https://iiffund.com",
+        "name": "International Investment Fund · FII · Paris",
+        "publisher": { "@id": "https://iiffund.com/#organization" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://iiffund.com/financial-consulting/iif-fund-demo/",
+        "url": "https://iiffund.com/financial-consulting/iif-fund-demo/",
+        "name": "International Investment Fund · FII · Paris",
+        "isPartOf": { "@id": "https://iiffund.com/#website" },
+        "about": { "@id": "https://iiffund.com/#organization" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-  <img class="emblem" src="assets/emblem.jpg" alt="International Investment Fund" />
-
-  <div class="badge">
-    <span class="lang-en">Under Maintenance</span>
-    <span class="lang-ar">تحت الصيانة</span>
-  </div>
-
-  <h1>
-    <span class="lang-en">We'll be back soon</span>
-    <span class="lang-ar">سنعود قريباً</span>
-  </h1>
-  <p>
-    <span class="lang-en">We are currently performing scheduled maintenance and upgrades to serve you better. Thank you for your patience.</span>
-    <span class="lang-ar">نقوم حالياً بأعمال الصيانة الدورية والتحديثات لتقديم خدمة أفضل. شكراً لتفهمكم.</span>
-  </p>
-
-  <div class="actions">
-    <a href="mailto:info@iiffund.com" class="btn-primary">
-      <span class="lang-en">Contact Us</span>
-      <span class="lang-ar">تواصل معنا</span>
-    </a>
-    <a href="https://github.com/alzahrani6020/iif-fund-demo" class="btn-ghost" target="_blank" rel="noopener">
-      GitHub
-    </a>
-  </div>
-
-  <footer>© 2026 International Investment Fund · All rights reserved</footer>
+  <div id="app"></div>
+  <script type="module" src="src/main.js"></script>
 </body>
 </html>
