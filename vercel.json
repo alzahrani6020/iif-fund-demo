@@ -1,6 +1,4 @@
 {
   "rootDirectory": "my-project",
-  "framework": "nextjs",
-  "buildCommand": "cd my-project && npm run build",
-  "outputDirectory": "my-project/.next"
+  "framework": "nextjs"
 }
