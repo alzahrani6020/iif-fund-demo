@@ -34,6 +34,7 @@ import { render as render_contact } from './contact.js';
 import { render as render_terms } from './terms.js';
 import { render as render_page_representative } from './page_representative.js';
 import { render as render_page_research_center } from './page_research_center.js';
+import { render as render_footer } from './footer.js';
 
 export const sections = {
   'hero': render_hero,
@@ -72,4 +73,5 @@ export const sections = {
   'terms': render_terms,
   'page_representative': render_page_representative,
   'page_research_center': render_page_research_center,
+  'footer': render_footer,
 };

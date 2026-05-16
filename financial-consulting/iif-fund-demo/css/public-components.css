@@ -4,15 +4,31 @@
  */
 
 .iif-public-card {
-  border: 1px solid rgba(201, 162, 39, 0.25);
-  border-radius: var(--radius-md, 12px);
-  padding: var(--space-4, 1rem) var(--space-5, 1.1rem);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-glass-border, rgba(201, 162, 39, 0.15));
+  border-radius: var(--radius-lg, 20px);
+  padding: var(--space-5, 1.25rem) var(--space-6, 1.5rem);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform var(--transition, 0.25s ease), box-shadow var(--transition, 0.25s ease), border-color var(--transition, 0.25s ease);
+}
+
+.iif-public-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201, 162, 39, 0.35);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 24px rgba(201, 162, 39, 0.1);
 }
 
 .iif-public-card--subtle {
   border-color: var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  background: rgba(255, 255, 255, 0.02);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.iif-public-card--subtle:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* <picture> لا يكسر تخطيط الفليكس/الأبعاد عند لف شعار emblem */

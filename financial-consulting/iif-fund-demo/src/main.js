@@ -33,7 +33,7 @@ async function init() {
     'feasibility_analysis', 'translation',
     'join_us', 'partners', 'customer_experience',
     'verification_tools', 'careers', 'terms',
-    'page_representative', 'page_research_center'
+    'page_representative', 'page_research_center', 'footer'
   ];
 
   for (const key of sectionOrder) {
