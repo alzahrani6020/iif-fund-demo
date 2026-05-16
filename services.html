@@ -2,141 +2,39 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <title>Services — International Investment Fund · FII</title>
+  <title>تحت الصيانة · International Investment Fund</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0e18" />
-  <meta name="description" content="IIF Services — Investment, advisory, BOT, and financing solutions for governments and institutions worldwide." />
-  <meta name="keywords" content="investment fund, sovereign finance, BOT, advisory, capital markets, Paris, EU" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Services — International Investment Fund · FII" />
-  <meta property="og:description" content="Structured investment and advisory solutions for governments, institutions, and global partners." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://iiffund.com/financial-consulting/iif-fund-demo/services.html" />
-  <meta property="og:image" content="https://iiffund.com/assets/og-cover.svg" />
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:locale:alternate" content="ar_SA" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Services — International Investment Fund · FII" />
-  <meta name="twitter:description" content="Structured investment and advisory solutions for governments and global partners." />
-  <meta name="twitter:image" content="https://iiffund.com/assets/og-cover.svg" />
-
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230d0d0d' stroke='%23c9a227' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='10' fill='%231e3a5f' opacity='0.95'/%3E%3Ctext x='16' y='20' text-anchor='middle' fill='%23e8c968' font-size='9' font-weight='700' font-family='system-ui,sans-serif' letter-spacing='0.1em'%3EFII%3C/text%3E%3C/svg%3E" type="image/svg+xml" />
-  <link rel="canonical" href="https://iiffund.com/financial-consulting/iif-fund-demo/services" />
+  <meta name="robots" content="noindex, nofollow" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/design-system.css" />
-  <link rel="stylesheet" href="css/public-shell.css" />
-  <link rel="stylesheet" href="css/public-components.css" />
-  <link rel="stylesheet" href="css/layout.css" />
-  <link rel="stylesheet" href="css/components.css" />
-  <link rel="stylesheet" href="css/pages.css" />
-  <link rel="stylesheet" href="css/sections.css" />
-  <link rel="stylesheet" href="css/buttons.css" />
-  <link rel="stylesheet" href="styles.css" />
   <style>
-    .page-header { text-align: center; padding: var(--space-20) var(--space-6) var(--space-12); }
-    .page-header h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; margin-bottom: var(--space-4); background: linear-gradient(135deg, #e8d48a 0%, #c9a227 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .page-header p { color: var(--color-text-muted); font-size: var(--font-size-lg); max-width: 600px; margin: 0 auto; }
-    .back-link { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--color-accent-gold); text-decoration: none; margin-bottom: var(--space-6); }
-    .back-link:hover { color: var(--color-accent-gold-soft); }
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); max-width: 1200px; margin: 0 auto; padding: 0 var(--space-6) var(--space-20); }
-    .service-card { composes: iif-public-card; }
-    .service-card h3 { color: var(--color-accent-gold-soft); font-size: var(--font-size-xl); margin-bottom: var(--space-3); }
-    .service-card p { color: var(--color-text-muted); line-height: 1.6; }
-    .service-number { display: inline-block; width: 32px; height: 32px; border-radius: 50%; background: rgba(201,162,39,0.15); color: var(--color-accent-gold); font-weight: 700; font-size: 0.875rem; line-height: 32px; text-align: center; margin-bottom: var(--space-3); }
+    :root { --bg: #080d18; --text: #f1f5f9; --muted: #c8d4e5; --gold: #c9a227; --gold-soft: #e8d48a; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Plus Jakarta Sans", system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; }
+    .emblem { width: 80px; height: 80px; margin-bottom: 2rem; }
+    .badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; border-radius: 9999px; background: rgba(201,162,39,0.12); border: 1px solid rgba(201,162,39,0.25); color: var(--gold); font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem; }
+    .badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+    h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; margin-bottom: 1rem; background: linear-gradient(135deg, var(--gold-soft) 0%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    p { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin-bottom: 2rem; line-height: 1.7; }
+    a { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.95rem; background: linear-gradient(135deg, rgba(201,162,39,0.2) 0%, rgba(201,162,39,0.08) 100%); border: 1px solid rgba(201,162,39,0.35); color: var(--gold-soft); box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+    a:hover { border-color: var(--gold); }
+    footer { position: absolute; bottom: 1.5rem; color: rgba(136,153,170,0.5); font-size: 0.8rem; }
   </style>
 </head>
 <body>
-  <div id="shared-header"></div>
-  <main id="main-content">
-    <div class="page-header">
-      <a href="./" class="back-link">← <span class="lang-en">Back to Home</span><span class="lang-ar">الرجوع للرئيسية</span></a>
-      <h1>
-        <span class="lang-en">Our Services</span>
-        <span class="lang-ar">خدماتنا</span>
-      </h1>
-      <p>
-        <span class="lang-en">Structured investment and advisory solutions for governments, institutions, and global partners.</span>
-        <span class="lang-ar">حلول استثمارية واستشارية منظمة للحكومات والمؤسسات والشركاء العالميين.</span>
-      </p>
-    </div>
-    <div class="services-grid">
-      <div class="service-card iif-public-card">
-        <div class="service-number">1</div>
-        <h3><span class="lang-en">Investment &amp; Capital</span><span class="lang-ar">الاستثمار والرأسمال</span></h3>
-        <p><span class="lang-en">Equity, sukuk, and bond listings aligned to applicable regulations.</span><span class="lang-ar">إدراج الأسهم والصكوك والسندات بما يتوافق مع الأنظمة المعمول بها.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">2</div>
-        <h3><span class="lang-en">Financial Advisory</span><span class="lang-ar">الاستشارة المالية</span></h3>
-        <p><span class="lang-en">Structured advice and studies — separate from free website tools.</span><span class="lang-ar">مشورة ودراسات منظمة — منفصلة عن أدوات الموقع المجانية.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">3</div>
-        <h3><span class="lang-en">Feasibility Studies</span><span class="lang-ar">دراسات الجدوى</span></h3>
-        <p><span class="lang-en">Request a comprehensive feasibility study for your project.</span><span class="lang-ar">اطلب دراسة جدوى شاملة لمشروعك.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">4</div>
-        <h3><span class="lang-en">Intermediation &amp; Deals</span><span class="lang-ar">الوساطة والصفقات</span></h3>
-        <p><span class="lang-en">Mediation between financiers and beneficiaries across borders.</span><span class="lang-ar">الوساطة بين الممولين والمستفيدين عبر الحدود.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">5</div>
-        <h3><span class="lang-en">Mergers &amp; Acquisitions</span><span class="lang-ar">الاندماج والاستحواذ</span></h3>
-        <p><span class="lang-en">Buy/sell-side, due diligence, and post-merger integration.</span><span class="lang-ar">جانب الشراء/البيع، العناية المهنية، والتكامل ما بعد الاندماج.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">6</div>
-        <h3><span class="lang-en">Governance &amp; Performance</span><span class="lang-ar">الحوكمة والأداء</span></h3>
-        <p><span class="lang-en">Corporate governance frameworks and institutional performance.</span><span class="lang-ar">إطارات الحوكمة المؤسسية والأداء المؤسسي.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">7</div>
-        <h3><span class="lang-en">Company &amp; Entity Setup</span><span class="lang-ar">تأسيس الشركات والكيانات</span></h3>
-        <p><span class="lang-en">Establish financing, industrial, agricultural, and tech entities.</span><span class="lang-ar">تأسيس كيانات تمويلية وصناعية وزراعية وتقنية.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">8</div>
-        <h3><span class="lang-en">Build, Operate &amp; Transfer</span><span class="lang-ar">البناء والتشغيل والنقل</span></h3>
-        <p><span class="lang-en">Government and multi-state BOT programs under the Fund's umbrella.</span><span class="lang-ar">برامج BOT الحكومية والمتعددة الدول تحت مظلة الصندوق.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">9</div>
-        <h3><span class="lang-en">Energy &amp; Water</span><span class="lang-ar">الطاقة والمياه</span></h3>
-        <p><span class="lang-en">Desalination, clean energy, grids, and efficiency investments.</span><span class="lang-ar">تحلية المياه، الطاقة النظيفة، الشبكات، واستثمارات الكفاءة.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">10</div>
-        <h3><span class="lang-en">Technology &amp; AI</span><span class="lang-ar">التكنولوجيا والذكاء الاصطناعي</span></h3>
-        <p><span class="lang-en">Digital transformation, cybersecurity, tech transfer, and R&amp;D.</span><span class="lang-ar">التحول الرقمي، الأمن السيبراني، نقل التقنية، والبحث والتطوير.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">11</div>
-        <h3><span class="lang-en">Listings &amp; Capital Markets</span><span class="lang-ar">الإدراجات وأسواق رأس المال</span></h3>
-        <p><span class="lang-en">Equities, sukuk, and bonds — aligned to applicable regulations.</span><span class="lang-ar">الأسهم والصكوك والسندات — بما يتوافق مع الأنظمة المعمول بها.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">12</div>
-        <h3><span class="lang-en">Funds &amp; Valuables Transfer</span><span class="lang-ar">نقل الأموال والمقتنيات</span></h3>
-        <p><span class="lang-en">Cross-border movement of funds and valuables under compliance.</span><span class="lang-ar">نقل الأموال والمقتنيات عبر الحدود بما يتوافق مع الامتثال.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">13</div>
-        <h3><span class="lang-en">Training &amp; Workforce</span><span class="lang-ar">التدريب وقوة العمل</span></h3>
-        <p><span class="lang-en">Training and upskilling to create jobs and reduce unemployment.</span><span class="lang-ar">التدريب والارتقاء بالمهارات لخلق فرص عمل وتقليل البطالة.</span></p>
-      </div>
-      <div class="service-card iif-public-card">
-        <div class="service-number">14</div>
-        <h3><span class="lang-en">Government BOT Umbrella</span><span class="lang-ar">مظلة BOT الحكومية</span></h3>
-        <p><span class="lang-en">Central umbrella for host states: structuring, managing delivery, and attracting financing.</span><span class="lang-ar">مظلة مركزية للدول المضيفة: الهيكلة وإدارة التسليم وجذب التمويل.</span></p>
-      </div>
-    </div>
-  </main>
-  <script type="module" src="src/shared-init.js"></script>
+  <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
+    <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(201,162,39,0.35)" stroke-width="1"/>
+    <circle cx="60" cy="60" r="44" fill="none" stroke="rgba(30,58,95,0.6)" stroke-width="1.5"/>
+    <circle cx="60" cy="60" r="34" fill="rgba(201,162,39,0.08)"/>
+    <text x="60" y="68" text-anchor="middle" fill="#e8c968" font-size="22" font-weight="700" font-family="system-ui,sans-serif" letter-spacing="0.15em">FII</text>
+  </svg>
+  <div class="badge">تحت الصيانة · Under Maintenance</div>
+  <h1>سنعود قريباً</h1>
+  <p>نقوم حالياً بأعمال الصيانة الدورية والتحديثات لتقديم خدمة أفضل. شكراً لتفهمكم.</p>
+  <a href="mailto:info@iiffund.com">تواصل معنا · Contact Us</a>
+  <footer>© 2026 International Investment Fund</footer>
 </body>
 </html>
