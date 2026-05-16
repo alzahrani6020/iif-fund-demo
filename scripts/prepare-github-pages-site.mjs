@@ -18,16 +18,27 @@ const IGNORE_DIR_NAMES = new Set([
   '.cursor',
   '.minimax',
   '.netlify',
+  '.next',            // Next.js build cache (can exceed Cloudflare Pages 26 MB limit)
+  'cache',            // Generic cache folders
+  'exports',          // Large PPTX files (not needed for web deployment)
+  '.uploads',         // Upload folder (not needed for web deployment)
+  '.venv_iif',        // Python virtual env (torch DLLs exceed 26 MB limit)
+  '.venv',            // Python virtual env
+  'venv',             // Python virtual env
 ]);
 
 const IGNORE_FILE_NAMES = new Set(['.env', '.env.local']);
+const IGNORE_FILE_EXTENSIONS = new Set(['.pack']); // Webpack cache packs can exceed 26 MB
 
 function shouldSkipDir(name) {
   return IGNORE_DIR_NAMES.has(name);
 }
 
 function shouldSkipFile(name) {
-  return IGNORE_FILE_NAMES.has(name);
+  if (IGNORE_FILE_NAMES.has(name)) return true;
+  const ext = path.extname(name);
+  if (ext && IGNORE_FILE_EXTENSIONS.has(ext)) return true;
+  return false;
 }
 
 async function copyTree(from, to, rel = '') {
