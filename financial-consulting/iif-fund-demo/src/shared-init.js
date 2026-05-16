@@ -36,19 +36,19 @@ function renderNav(lang, translations) {
         </span>
       </a>
       <div class="shared-nav__links">
-        <a href="index.html" class="shared-nav__link">
+        <a href="./" class="shared-nav__link">
           <span class="lang-en">Home</span>
           <span class="lang-ar">الرئيسية</span>
         </a>
-        <a href="about.html" class="shared-nav__link">
+        <a href="about" class="shared-nav__link">
           <span class="lang-en">About</span>
           <span class="lang-ar">عن الصندوق</span>
         </a>
-        <a href="services.html" class="shared-nav__link">
+        <a href="services" class="shared-nav__link">
           <span class="lang-en">Services</span>
           <span class="lang-ar">الخدمات</span>
         </a>
-        <a href="index.html#contact" class="shared-nav__link">
+        <a href="./#contact" class="shared-nav__link">
           <span class="lang-en">Contact</span>
           <span class="lang-ar">التواصل</span>
         </a>
@@ -65,19 +65,19 @@ function renderNav(lang, translations) {
       </button>
     </div>
     <div class="shared-nav__mobile" id="shared-nav-menu" hidden>
-      <a href="index.html" class="shared-nav__mobile-link">
+      <a href="./" class="shared-nav__mobile-link">
         <span class="lang-en">Home</span>
         <span class="lang-ar">الرئيسية</span>
       </a>
-      <a href="about.html" class="shared-nav__mobile-link">
+      <a href="about" class="shared-nav__mobile-link">
         <span class="lang-en">About</span>
         <span class="lang-ar">عن الصندوق</span>
       </a>
-      <a href="services.html" class="shared-nav__mobile-link">
+      <a href="services" class="shared-nav__mobile-link">
         <span class="lang-en">Services</span>
         <span class="lang-ar">الخدمات</span>
       </a>
-      <a href="index.html#contact" class="shared-nav__mobile-link">
+      <a href="./#contact" class="shared-nav__mobile-link">
         <span class="lang-en">Contact</span>
         <span class="lang-ar">التواصل</span>
       </a>
@@ -111,11 +111,11 @@ function renderFooter(lang) {
   footer.innerHTML = `
     <div class="footer-brand">International Investment Fund</div>
     <div class="footer-links">
-      <a href="index.html#about">${isAr ? 'عن الصندوق' : 'About'}</a>
-      <a href="index.html#services">${isAr ? 'الخدمات' : 'Services'}</a>
-      <a href="index.html#sectors">${isAr ? 'القطاعات' : 'Sectors'}</a>
-      <a href="index.html#contact">${isAr ? 'التواصل' : 'Contact'}</a>
-      <a href="index.html#terms">${isAr ? 'الشروط' : 'Terms'}</a>
+      <a href="./#about">${isAr ? 'عن الصندوق' : 'About'}</a>
+      <a href="./#services">${isAr ? 'الخدمات' : 'Services'}</a>
+      <a href="./#sectors">${isAr ? 'القطاعات' : 'Sectors'}</a>
+      <a href="./#contact">${isAr ? 'التواصل' : 'Contact'}</a>
+      <a href="./#terms">${isAr ? 'الشروط' : 'Terms'}</a>
       <a href="privacy.html">${isAr ? 'الخصوصية' : 'Privacy'}</a>
     </div>
     <div class="footer-copy">
