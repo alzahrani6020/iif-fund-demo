@@ -33,22 +33,12 @@ async function main() {
     {
       path: '/financial-consulting/iif-fund-demo/index.html',
       mustInclude: [
-        '<base id="iif-document-base"',
         'css/design-system.css',
         'css/public-shell.css',
         'css/public-components.css',
-        'Noto Sans Arabic',
-        'assets/emblem.jpg',
-        'id="dashboard-overlay"',
-        'iif-dashboard-fullpage-critical-head',
-        // Build marker (versioned). Accept any dashboard-fullpage marker.
-        'meta name="iif-build" content="dashboard-fullpage-',
-        // Dashboard root marker (stable)
-        'data-iif-dashboard-root="true"',
-        // Close / back-to-site control (stable)
-        'id="dashboard-close"',
-        // Deployment verification marker (stable comment)
-        'تحقق-النشر-iif-dashboard-fullpage',
+        'Plus+Jakarta+Sans',
+        'id="app"',
+        'src/main.js',
       ],
       label: 'واجهة الصندوق (index)',
     },
