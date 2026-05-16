@@ -1,3 +1,9 @@
-# موقع تجريبي — اسمح بالفهرسة الافتراضية
 User-agent: *
 Allow: /
+Disallow: /admin-direct/
+Disallow: /api/
+Disallow: /netlify/
+Disallow: /.netlify/
+Disallow: /node_modules/
+
+Sitemap: https://iiffund.com/sitemap.xml

@@ -19,6 +19,10 @@
   <meta name="twitter:description" content="Financing for global prosperity · Sovereign partnerships · Institutional capital" />
   <meta name="twitter:image" content="https://iiffund.com/assets/og-cover.svg" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230d0d0d' stroke='%23c9a227' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='10' fill='%231e3a5f' opacity='0.95'/%3E%3Ctext x='16' y='20' text-anchor='middle' fill='%23e8c968' font-size='9' font-weight='700' font-family='system-ui,sans-serif' letter-spacing='0.1em'%3EFII%3C/text%3E%3C/svg%3E" type="image/svg+xml" />
+  <link rel="canonical" href="https://iiffund.com/financial-consulting/iif-fund-demo/" />
+  <!-- Prefetch standalone pages for instant navigation -->
+  <link rel="prefetch" href="services" />
+  <link rel="prefetch" href="about" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
@@ -34,6 +38,56 @@
   <link rel="stylesheet" href="css/buttons.css" />
   <!-- Fallback: styles.css القديم — سُيزال تدريجياً -->
   <link rel="stylesheet" href="styles.css" />
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://iiffund.com/#organization",
+        "name": "International Investment Fund",
+        "alternateName": ["FII", "صندوق الاستثمار الدولي"],
+        "url": "https://iiffund.com",
+        "logo": "https://iiffund.com/assets/og-cover.svg",
+        "description": "International Investment Fund (FII) — Financing for global prosperity through sovereign partnerships and institutional capital.",
+        "foundingDate": "2019",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "13B Av de la Motte Picquet",
+          "addressLocality": "Paris",
+          "postalCode": "75007",
+          "addressCountry": "FR"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+966-56-756-6616",
+          "email": "info@iiffund.com",
+          "contactType": "General Inquiries",
+          "availableLanguage": ["English", "Arabic", "French"]
+        },
+        "sameAs": [
+          "https://github.com/alzahrani6020/iif-fund-demo"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://iiffund.com/#website",
+        "url": "https://iiffund.com",
+        "name": "International Investment Fund · FII · Paris",
+        "publisher": { "@id": "https://iiffund.com/#organization" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://iiffund.com/financial-consulting/iif-fund-demo/",
+        "url": "https://iiffund.com/financial-consulting/iif-fund-demo/",
+        "name": "International Investment Fund · FII · Paris",
+        "isPartOf": { "@id": "https://iiffund.com/#website" },
+        "about": { "@id": "https://iiffund.com/#organization" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="app"></div>
