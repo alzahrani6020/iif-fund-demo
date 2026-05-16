@@ -6,8 +6,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Ensure Vercel builds correctly with App Router
-  distDir: '.next',
+  // Disable Turbopack for Vercel compatibility
+  turbopack: {},
   poweredByHeader: false,
 }
 
