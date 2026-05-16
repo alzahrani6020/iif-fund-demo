@@ -166,18 +166,32 @@ async function api<T>(path: string, options?: RequestInit): Promise<T> {
     ? (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000')
     : ''
   const url = path.startsWith('http') ? path : `${baseUrl}${path}`
-  const res = await fetch(url, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options?.headers,
-    },
-  })
-  if (!res.ok) {
-    const text = await res.text()
-    throw new Error(`API ${path} failed: ${res.status} ${text}`)
+  try {
+    const res = await fetch(url, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers,
+      },
+    })
+    if (!res.ok) {
+      // During build, localhost API won't be available — return empty data gracefully
+      if (typeof window === 'undefined' && !process.env.NEXT_PUBLIC_APP_URL) {
+        console.warn(`API ${path} unavailable during build, returning empty`)
+        return [] as unknown as T
+      }
+      const text = await res.text()
+      throw new Error(`API ${path} failed: ${res.status} ${text}`)
+    }
+    return res.json()
+  } catch (err) {
+    // During build, localhost API won't be available — return empty data gracefully
+    if (typeof window === 'undefined' && !process.env.NEXT_PUBLIC_APP_URL) {
+      console.warn(`API ${path} unavailable during build, returning empty`)
+      return [] as unknown as T
+    }
+    throw err
   }
-  return res.json()
 }
 
 function normalizeId<T extends { _id?: string; id?: string }>(item: T): T & { id: string } {
