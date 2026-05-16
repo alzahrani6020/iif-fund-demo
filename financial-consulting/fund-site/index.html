@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صندوق الاستثمار الدولي — المنصة الحكومية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --iif-gold: #c9a227;
+            --iif-muted: #8d99ae;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(165deg, #0d1b2a 0%, #1b263b 45%, #415a77 100%);
+            min-height: 100vh;
+            color: #e0e1dd;
+        }
+        .shell {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.25rem 2rem;
+        }
+        header {
+            padding: 1rem 0 1.5rem;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.35);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .brand i { color: var(--iif-gold); font-size: 1.75rem; }
+        .brand h1 { font-size: 1.35rem; font-weight: 700; }
+        .brand span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--iif-muted);
+            font-weight: 400;
+            margin-top: 0.35rem;
+        }
+        .intro {
+            margin: 1.25rem 0 1rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #bfc4cc;
+        }
+        .intro code {
+            background: rgba(0,0,0,0.25);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        .embed-wrap {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+        }
+        .embed-toolbar {
+            padding: 0.65rem 1rem;
+            background: rgba(13, 27, 42, 0.85);
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+        }
+        iframe {
+            display: block;
+            width: 100%;
+            height: min(calc(100vh - 12rem), 920px);
+            min-height: 480px;
+            border: none;
+            background: #fff;
+        }
+        footer {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--iif-muted);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <header>
+            <div class="brand">
+                <i class="fas fa-landmark" aria-hidden="true"></i>
+                <div>
+                    <h1>صندوق الاستثمار الدولي</h1>
+                    <span>المنصة الحكومية — بحث الجهات (محرك الويب مشروع منفصل لاحقاً)</span>
+                </div>
+            </div>
+        </header>
+
+        <p class="intro">
+            المنصة المدمجة: بحث محلي في الجهات فقط. محرك SearXNG قيد البناء كمشروع منفصل
+            (<code>engines/searxng/</code>) ولا يُدمج حتى الانتهاء.
+        </p>
+
+        <p class="intro" style="border: 1px solid rgba(201, 162, 39, 0.45); border-radius: 10px; padding: 0.85rem 1rem; background: rgba(201, 162, 39, 0.08);">
+            <strong style="color: var(--iif-gold);">الواجهة الكاملة للصندوق:</strong>
+            استخدم
+            <a href="../iif-fund-demo/index.html" style="color: #e0e1dd; font-weight: 600; text-decoration: underline;">واجهة IIF الكاملة</a>
+            (لوحة، استثمار، ربط بالفهرس). هذه الصفحة مجرد <em>إطار تضمين</em> للمنصة الحكومية.
+        </p>
+
+        <div class="embed-wrap" id="platform">
+            <div class="embed-toolbar">
+                <span><i class="fas fa-plug" style="color: var(--iif-gold);"></i> منصة البحث الحكومي</span>
+            </div>
+            <iframe
+                title="المنصة الحكومية — بحث"
+                src="../government-search/SIMPLE-GOVERNMENT-PLATFORM.html"
+            ></iframe>
+        </div>
+
+        <footer>
+            <p>واجهة تجريبية للربط مع قالب الإنتاج.</p>
+            <p style="margin-top:0.75rem; font-size:0.88rem;">
+                <a href="../../executive-brief.html" style="color: #e0e1dd;">موجز للمستويات الرفيعة</a>
+                · <a href="../../sovereign-standards.html" style="color: #e0e1dd;">معايير سيادية</a>
+            </p>
+            <p style="margin-top:0.85rem; font-size:0.82rem; max-width:40rem; margin-inline:auto; line-height:1.55; color:#a8b0bc;">
+                أدوات المنصة والاستضافة ليست بحد ذاتها الخدمات المؤسسية للصندوق — انظر
+                <a href="../iif-fund-demo/index.html#terms" style="color: var(--iif-gold); font-weight:600;">الشروط</a>
+                في واجهة IIF الكاملة.
+            </p>
+            <p style="margin-top:0.75rem;">
+                <a href="/legal/" style="color: var(--iif-gold); font-weight:600;">الوثائق</a>
+                · <a href="/privacy" style="color: #bfc4cc;">الخصوصية</a>
+                · <a href="/disclaimer" style="color: #bfc4cc;">إخلاء المسؤولية</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

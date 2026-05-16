@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IIF Search (SearXNG + Translate)</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Arial; background:#05070c; color:#e9ddbf; }
+      .wrap { max-width: 1100px; margin: 0 auto; padding: 18px; }
+      .top { display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+      .card { border:1px solid rgba(201,162,39,.35); background: rgba(12,14,18,.82); border-radius: 16px; padding: 14px; }
+      a { color:#f5e7b6; }
+      .muted { opacity:.75; }
+      label { display:block; font-weight:700; margin-bottom: 6px; }
+      input, select { width:100%; box-sizing:border-box; border-radius: 12px; border:1px solid rgba(201,162,39,.35); background: rgba(255,255,255,.06); color:#f5e7b6; padding: 10px 12px; }
+      button { cursor:pointer; border-radius: 12px; border:1px solid rgba(201,162,39,.55); background: rgba(12,14,18,.82); color:#f5e7b6; padding:10px 12px; }
+      .row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; }
+      .row > * { flex: 1 1 220px; }
+      .ok { color:#8ff0b3; }
+      .bad { color:#ff9aa2; }
+      .result { padding: 12px 0; border-bottom: 1px solid rgba(201,162,39,.2); }
+      .title { font-weight: 700; }
+      .url { font-size: 12px; opacity: .7; word-break: break-all; }
+      .snippet { margin-top: 6px; opacity: .85; }
+      .pill { font-size:12px; border:1px solid rgba(201,162,39,.35); border-radius: 999px; padding:2px 8px; opacity:.85; display:inline-block; }
+      code { background: rgba(255,255,255,.06); padding:2px 6px; border-radius: 8px; }
+      .panel { border:1px solid rgba(201,162,39,.25); background: rgba(255,255,255,.03); border-radius: 14px; padding: 10px 12px; }
+      .grid { display:grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+      .grid > div { padding: 6px 8px; border: 1px solid rgba(201,162,39,.15); border-radius: 12px; background: rgba(12,14,18,.55); }
+      .grid .k { font-size: 12px; opacity:.75; }
+      .grid .v { font-weight: 700; margin-top: 2px; }
+      .langs { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+      .langs label { display:flex; gap:8px; align-items:center; font-weight: 600; margin:0; }
+      .langs input { width:auto; }
+      .sep { opacity:.35; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <div style="font-size:18px;font-weight:700">بحث الويب (SearXNG) + ترجمة</div>
+          <div class="muted">اكتب بأي لغة. نرسل استعلامًا مترجمًا للمحركات، ونُظهر النتائج بلغة الإدخال (عند توفر الترجمة).</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="/" class="muted">العودة</a>
+          <a href="/analysis.html" class="muted">Analysis</a>
+          <a href="/health.html" class="muted">Health</a>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="card">
+        <div class="row">
+          <div style="flex: 2 1 360px">
+            <label for="q">الاستعلام</label>
+            <input id="q" type="search" autocomplete="off" placeholder="اكتب الاستعلام هنا…" />
+          </div>
+          <div>
+            <label for="count">عدد النتائج</label>
+            <select id="count">
+              <option value="10">10</option>
+              <option value="20" selected>20</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+          <div>
+            <label for="translateMode">الترجمة</label>
+            <select id="translateMode">
+              <option value="auto" selected>تلقائي</option>
+              <option value="off">إيقاف</option>
+            </select>
+          </div>
+          <div>
+            <label for="multiMode">بحث متعدد اللغات</label>
+            <select id="multiMode">
+              <option value="off" selected>إيقاف</option>
+              <option value="on">تشغيل (دفعات)</option>
+            </select>
+          </div>
+          <div>
+            <label for="uiLang">لغة الإخراج</label>
+            <select id="uiLang">
+              <option value="arb_Arab" selected>العربية</option>
+              <option value="eng_Latn">English</option>
+              <option value="fra_Latn">Français</option>
+              <option value="tur_Latn">Türkçe</option>
+              <option value="spa_Latn">Español</option>
+            </select>
+          </div>
+          <div style="flex:0 0 auto">
+            <button id="go">ابحث</button>
+          </div>
+          <div style="flex:0 0 auto">
+            <button id="deeper" class="muted">بحث أعمق</button>
+          </div>
+          <div style="flex:0 0 auto">
+            <button id="stop" class="muted">إيقاف</button>
+          </div>
+        </div>
+        <div style="height:10px"></div>
+        <div class="panel">
+          <div class="muted" style="margin-bottom:8px">حالة البحث (لمعرفة هل النتائج ناقصة بسبب قيود)</div>
+          <div class="grid" id="metrics">
+            <div><div class="k">requests</div><div class="v" id="m_req">0</div></div>
+            <div><div class="k">ok</div><div class="v" id="m_ok">0</div></div>
+            <div><div class="k">timeouts</div><div class="v" id="m_to">0</div></div>
+            <div><div class="k">rate-limited</div><div class="v" id="m_rl">0</div></div>
+            <div><div class="k">errors</div><div class="v" id="m_err">0</div></div>
+            <div><div class="k">deduped</div><div class="v" id="m_dup">0</div></div>
+          </div>
+          <div style="height:10px"></div>
+            <div class="langs" style="margin-bottom:8px">
+              <span class="muted">ترجمة:</span>
+              <label><input type="checkbox" id="T_titles" checked /> العناوين</label>
+              <label><input type="checkbox" id="T_snips" /> الملخصات</label>
+              <span class="sep">|</span>
+              <label class="muted">حد الترجمة</label>
+              <select id="T_limit" style="width:auto">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+              <span class="muted" id="T_prog">—</span>
+            </div>
+          <div class="langs" id="langBox">
+            <span class="muted">لغات الاستعلام:</span>
+            <label><input type="checkbox" id="L_en" checked /> EN</label>
+            <label><input type="checkbox" id="L_fr" /> FR</label>
+            <label><input type="checkbox" id="L_es" /> ES</label>
+            <label><input type="checkbox" id="L_tr" /> TR</label>
+            <label><input type="checkbox" id="L_de" /> DE</label>
+            <span class="muted">• افتراضيًا: دفعة واحدة EN. “بحث أعمق” يضيف لغات/صفحات.</span>
+          </div>
+        </div>
+        <div style="height:10px"></div>
+        <div id="status" class="muted">جاهز.</div>
+        <div style="height:10px"></div>
+        <div id="meta" class="muted"></div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="card">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap">
+          <div style="font-weight:700">النتائج</div>
+          <div id="badges"></div>
+        </div>
+        <div style="height:10px"></div>
+        <div id="results" class="muted">—</div>
+      </div>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const looksArabic = (s) => /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/.test(String(s || ''));
+
+      function setStatus(msg, kind) {
+        const el = $('status');
+        el.textContent = msg;
+        el.className = kind === 'ok' ? 'ok' : kind === 'bad' ? 'bad' : 'muted';
+      }
+
+      const STATE = {
+        runId: 0,
+        stop: false,
+        session: null,
+        seen: new Set(),
+        counters: { req:0, ok:0, to:0, rl:0, err:0, dup:0 },
+      };
+
+      function resetCounters() {
+        STATE.counters = { req:0, ok:0, to:0, rl:0, err:0, dup:0 };
+        updateCounters();
+      }
+
+      function updateCounters() {
+        $('m_req').textContent = String(STATE.counters.req);
+        $('m_ok').textContent = String(STATE.counters.ok);
+        $('m_to').textContent = String(STATE.counters.to);
+        $('m_rl').textContent = String(STATE.counters.rl);
+        $('m_err').textContent = String(STATE.counters.err);
+        $('m_dup').textContent = String(STATE.counters.dup);
+      }
+
+      function normalizeUrl(u) {
+        try {
+          const x = new URL(String(u || ''));
+          x.hash = '';
+          x.username = '';
+          x.password = '';
+          // normalize obvious tracking params
+          const drop = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'];
+          for (const k of drop) x.searchParams.delete(k);
+          return x.toString();
+        } catch {
+          return String(u || '').trim();
+        }
+      }
+
+      function pickLangTargets() {
+        const langs = [];
+        if ($('L_en').checked) langs.push({ id:'en', nllb:'eng_Latn', searx:'en' });
+        if ($('L_fr').checked) langs.push({ id:'fr', nllb:'fra_Latn', searx:'fr' });
+        if ($('L_es').checked) langs.push({ id:'es', nllb:'spa_Latn', searx:'es' });
+        if ($('L_tr').checked) langs.push({ id:'tr', nllb:'tur_Latn', searx:'tr' });
+        if ($('L_de').checked) langs.push({ id:'de', nllb:'deu_Latn', searx:'de' });
+        return langs.length ? langs : [{ id:'en', nllb:'eng_Latn', searx:'en' }];
+      }
+
+      function chunk(arr, n) {
+        const out = [];
+        for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+        return out;
+      }
+
+      async function translateInto(items, targetUi, runId) {
+        // Progressive translation: batches + safe limits.
+        const doTitles = $('T_titles').checked;
+        const doSnips = $('T_snips').checked;
+        const limit = Math.max(1, Math.min(30, Number($('T_limit').value) || 10));
+        const take = items.slice(0, limit);
+        if (!doTitles && !doSnips) return;
+        if (!targetUi || targetUi === 'eng_Latn') return;
+
+        const maxSnippetChars = 260; // keep fast + avoid huge payload
+        const titles = doTitles ? take.map((r) => String(r.title || '')) : [];
+        const snips = doSnips ? take.map((r) => String(r.content || '').slice(0, maxSnippetChars)) : [];
+
+        const batches = Math.max(titles.length, snips.length);
+        $('T_prog').textContent = `0/${limit}`;
+
+        const titleChunks = doTitles ? chunk(titles, 4) : [];
+        const snipChunks = doSnips ? chunk(snips, 4) : [];
+        const maxSteps = Math.max(titleChunks.length, snipChunks.length);
+
+        for (let step = 0; step < maxSteps; step++) {
+          if (STATE.stop || runId !== STATE.runId) return;
+          setStatus(`ترجمة النتائج… (${Math.min(limit, (step+1)*4)}/${limit})`, '');
+          const tasks = [];
+          // Omit source_lang so translator can auto-detect (results can be multilingual).
+          if (doTitles && titleChunks[step]) tasks.push(translateMany(titleChunks[step], targetUi));
+          else tasks.push(Promise.resolve(null));
+          if (doSnips && snipChunks[step]) tasks.push(translateMany(snipChunks[step], targetUi));
+          else tasks.push(Promise.resolve(null));
+
+          const [tOut, sOut] = await Promise.all(tasks);
+          if (STATE.stop || runId !== STATE.runId) return;
+
+          // write back
+          const baseIdx = step * 4;
+          if (doTitles && Array.isArray(tOut)) {
+            for (let i = 0; i < tOut.length; i++) {
+              const idx = baseIdx + i;
+              if (take[idx] && tOut[i]) take[idx].title = tOut[i];
+            }
+          }
+          if (doSnips && Array.isArray(sOut)) {
+            for (let i = 0; i < sOut.length; i++) {
+              const idx = baseIdx + i;
+              if (take[idx] && sOut[i]) take[idx].content = sOut[i];
+            }
+          }
+          $('T_prog').textContent = `${Math.min(limit, (step+1)*4)}/${limit}`;
+          renderResults(items);
+        }
+
+        // Professional clarity: explicitly state what got translated and the limit.
+        const what = [
+          doTitles ? 'العناوين' : null,
+          doSnips ? 'الملخصات' : null,
+        ].filter(Boolean).join(' + ') || '—';
+        $('meta').innerHTML =
+          `<div class="muted">الترجمة: ${esc(what)} — تمت ترجمة أول ${esc(limit)} نتيجة للحفاظ على السرعة. (يمكن رفع الحد أو تفعيل ترجمة الملخصات)</div>` +
+          ($('meta').innerHTML || '');
+      }
+
+      async function translate(text, target_lang, source_lang) {
+        const body = { text, target_lang };
+        if (source_lang) body.source_lang = source_lang;
+        const r = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.ok) throw new Error(j.error || 'translate failed');
+        return j.result;
+      }
+
+      async function translateMany(texts, target_lang, source_lang) {
+        const r = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: texts, target_lang, source_lang }),
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.ok) throw new Error(j.error || 'translate failed');
+        return Array.isArray(j.result) ? j.result : texts.map(() => String(j.result || ''));
+      }
+
+      async function fetchWithTimeout(url, ms) {
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), ms);
+        try {
+          const r = await fetch(url, { method: 'GET', signal: ctrl.signal });
+          return r;
+        } finally {
+          clearTimeout(t);
+        }
+      }
+
+      async function searxSearch(q, count, searxLang, pageNo) {
+        // Use JSON output from SearXNG
+        const u = new URL('/api/searx/search', location.origin);
+        u.searchParams.set('format', 'json');
+        u.searchParams.set('q', q);
+        u.searchParams.set('categories', 'general');
+        u.searchParams.set('language', searxLang || 'all');
+        u.searchParams.set('safesearch', '0');
+        u.searchParams.set('pageno', String(pageNo || 1));
+        u.searchParams.set('time_range', '');
+        u.searchParams.set('count', String(count));
+        STATE.counters.req++; updateCounters();
+        let r;
+        try {
+          r = await fetchWithTimeout(u.toString(), 15000);
+        } catch (e) {
+          STATE.counters.to++; updateCounters();
+          throw new Error('timeout');
+        }
+        const txt = await r.text();
+        let j = null;
+        try { j = JSON.parse(txt); } catch { j = { ok:false, error:'invalid json', raw: txt.slice(0,200) }; }
+        if (!r.ok) {
+          if (r.status === 429) STATE.counters.rl++; else STATE.counters.err++;
+          updateCounters();
+          throw new Error(j && j.error ? j.error : ('searx failed: ' + r.status));
+        }
+        STATE.counters.ok++; updateCounters();
+        return j;
+      }
+
+      function renderResults(items) {
+        if (!items || !items.length) {
+          $('results').innerHTML = '<div class="muted">لا توجد نتائج.</div>';
+          return;
+        }
+        $('results').innerHTML = items.map((it) => {
+          const title = it.title || it._title || '';
+          const url = it.url || it.link || '';
+          const content = it.content || it.snippet || it.description || '';
+          return `<div class="result">
+            <div class="title"><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(title || url)}</a></div>
+            <div class="url">${esc(url)}</div>
+            <div class="snippet">${esc(content)}</div>
+          </div>`;
+        }).join('');
+      }
+
+      function setBadges(obj) {
+        const parts = [];
+        if (obj.queryLang) parts.push(`<span class="pill">input=${esc(obj.queryLang)}</span>`);
+        if (obj.sentQuery) parts.push(`<span class="pill">sent=${esc(obj.sentQuery)}</span>`);
+        if (obj.translated) parts.push(`<span class="pill">translated=on</span>`);
+        $('badges').innerHTML = parts.join(' ');
+      }
+
+      async function run() {
+        const runId = ++STATE.runId;
+        STATE.stop = false;
+        STATE.seen = new Set();
+        resetCounters();
+        const raw = String($('q').value || '').trim();
+        if (!raw) { setStatus('اكتب استعلامًا أولاً.', 'bad'); return; }
+        const translateMode = $('translateMode').value;
+        const uiLang = $('uiLang').value;
+        const count = Number($('count').value) || 20;
+        const multiMode = $('multiMode').value;
+
+        const inputLang = looksArabic(raw) ? 'arb_Arab' : 'eng_Latn';
+        if (translateMode === 'auto') $('uiLang').value = inputLang; // best-effort
+
+        setStatus('جاري البحث…', '');
+        $('meta').textContent = '';
+        $('results').textContent = '…';
+        setBadges({ queryLang: inputLang });
+
+        let usedTranslate = false;
+        const shouldTranslate = translateMode !== 'off';
+        const targetUi = (translateMode === 'auto') ? inputLang : uiLang;
+
+        const langs = (multiMode === 'on') ? pickLangTargets() : [{ id:'en', nllb:'eng_Latn', searx:'en' }];
+
+        const all = [];
+        const addDedup = (items, langId, pageNo) => {
+          for (const it of items) {
+            const url = normalizeUrl(it.url || it.link || '');
+            if (!url) continue;
+            if (STATE.seen.has(url)) { STATE.counters.dup++; continue; }
+            STATE.seen.add(url);
+            all.push({ ...it, url, _lang: langId, _page: pageNo });
+          }
+          updateCounters();
+        };
+
+        // Phase 1: quick batch (page 1 only)
+        for (const L of langs) {
+          if (STATE.stop || runId !== STATE.runId) return;
+          let qSend = raw;
+          let qLabel = 'raw';
+          if (shouldTranslate && inputLang !== L.nllb) {
+            try {
+              setStatus(`ترجمة الاستعلام (${L.id})…`, '');
+              qSend = await translate(raw, L.nllb, inputLang);
+              qLabel = L.id;
+              usedTranslate = true;
+            } catch (e) {
+              $('meta').innerHTML = `<div class="muted">تعذر ترجمة الاستعلام للغة ${esc(L.id)}: <code>${esc(e.message || String(e))}</code> — سنحاول بدون ترجمة.</div>`;
+              qSend = raw;
+            }
+          }
+          setBadges({ queryLang: inputLang, sentQuery: qLabel, translated: usedTranslate });
+          try {
+            setStatus(`بحث (${L.id})…`, '');
+            const data = await searxSearch(qSend, count, L.searx, 1);
+            const results = Array.isArray(data.results) ? data.results.slice(0, count) : [];
+            addDedup(results, L.id, 1);
+            renderResults(all);
+          } catch (e) {
+            // keep going
+            $('meta').innerHTML = `<div class="muted">ملاحظة: فشل جزء من البحث (${esc(L.id)}): <code>${esc(e.message || String(e))}</code>.</div>`;
+          }
+        }
+
+        // Translate displayed results to UI language (best-effort) progressively
+        if (shouldTranslate && targetUi && targetUi !== 'eng_Latn') {
+          try {
+            await translateInto(all, targetUi, runId);
+            usedTranslate = true;
+          } catch (e) {
+            $('meta').innerHTML = `<div class="muted">تعذر ترجمة النتائج: <code>${esc(e.message || String(e))}</code> — سنعرض النتائج كما هي.</div>`;
+          }
+        } else {
+          $('T_prog').textContent = '—';
+        }
+
+        $('meta').textContent = `تم عرض ${all.length} نتيجة (بعد إزالة التكرار).`;
+        // If we saw constraints, show friendly hint
+        if (STATE.counters.to || STATE.counters.rl || STATE.counters.err) {
+          $('meta').innerHTML += `<div class="muted" style="margin-top:6px">قد تكون النتائج ناقصة بسبب قيود (Timeout/Rate limit). جرّب زر <b>بحث أعمق</b> أو خفّض عدد اللغات/النتائج.</div>`;
+        }
+        setStatus('تم.', 'ok');
+        STATE.session = { raw, inputLang, shouldTranslate, targetUi, langs, count, all };
+      }
+
+      async function deeper() {
+        if (!STATE.session) { setStatus('ابدأ بالبحث أولاً.', 'bad'); return; }
+        const runId = STATE.runId;
+        const { raw, inputLang, shouldTranslate, targetUi, langs, count, all } = STATE.session;
+        if (!Array.isArray(all)) return;
+        const addDedup = (items, langId, pageNo) => {
+          for (const it of items) {
+            const url = normalizeUrl(it.url || it.link || '');
+            if (!url) continue;
+            if (STATE.seen.has(url)) { STATE.counters.dup++; continue; }
+            STATE.seen.add(url);
+            all.push({ ...it, url, _lang: langId, _page: pageNo });
+          }
+          updateCounters();
+        };
+
+        // Add page 2 for each selected language (small controlled expansion)
+        for (const L of langs) {
+          if (STATE.stop || runId !== STATE.runId) return;
+          let qSend = raw;
+          if (shouldTranslate && inputLang !== L.nllb) {
+            try { qSend = await translate(raw, L.nllb, inputLang); } catch { qSend = raw; }
+          }
+          try {
+            setStatus(`بحث أعمق (${L.id})…`, '');
+            const data = await searxSearch(qSend, count, L.searx, 2);
+            const results = Array.isArray(data.results) ? data.results.slice(0, count) : [];
+            addDedup(results, L.id, 2);
+            renderResults(all);
+          } catch {
+            // ignore
+          }
+        }
+
+        // Translate newly added items only (best-effort)
+        if (shouldTranslate && targetUi && targetUi !== 'eng_Latn') {
+          try {
+            await translateInto(all, targetUi, runId);
+          } catch {}
+        }
+
+        $('meta').textContent = `تم تحديث النتائج: ${all.length} نتيجة (بعد إزالة التكرار).`;
+        setStatus('تم التوسيع.', 'ok');
+      }
+
+      function stopNow() {
+        STATE.stop = true;
+        setStatus('تم الإيقاف.', 'bad');
+      }
+
+      $('go').addEventListener('click', run);
+      $('deeper').addEventListener('click', deeper);
+      $('stop').addEventListener('click', stopNow);
+      $('q').addEventListener('keydown', (e) => { if (e.key === 'Enter') run(); });
+    </script>
+  </body>
+</html>
+

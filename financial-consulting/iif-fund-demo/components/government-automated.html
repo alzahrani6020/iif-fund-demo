@@ -1,0 +1,256 @@
+<!-- Automated Government Search Interface -->
+<div class="government-automated-page">
+  <!-- Hero Section -->
+  <section class="automated-hero">
+    <div class="automated-hero__content">
+      <h1 class="automated-hero__title" data-i18n="automatedSearchTitle">
+        Automated Government Information System
+      </h1>
+      <p class="automated-hero__subtitle" data-i18n="automatedSearchSubtitle">
+        Just type a country name and get instant access to complete government information
+      </p>
+      
+      <!-- Automated Search Input -->
+      <div class="automated-search-container">
+        <div class="search-input-group">
+          <div class="search-input-wrapper">
+            <input 
+              type="text" 
+              id="country-search-input" 
+              class="automated-search-input"
+              placeholder="Type any country name (e.g., Saudi Arabia, USA, France)..."
+              data-i18n="automatedSearchPlaceholder"
+              autocomplete="off"
+              autofocus
+            >
+            <div class="search-icon">🤖</div>
+            <div class="search-status" id="search-status">
+              <span class="status-text">Ready to search</span>
+              <div class="status-indicator"></div>
+            </div>
+          </div>
+          <button type="button" class="btn btn--primary btn--large automated-search-btn" id="automated-search-btn">
+            <span class="search-btn-icon">🤖</span>
+            <span data-i18n="automatedSearch">Auto Search</span>
+          </button>
+        </div>
+        
+        <!-- Search Suggestions -->
+        <div class="automated-suggestions" id="automated-suggestions">
+          <div class="suggestions-header">
+            <span class="suggestions-title">Popular Searches:</span>
+          </div>
+          <div class="suggestions-list">
+            <button class="suggestion-item" data-country="Saudi Arabia">
+              <span class="suggestion-flag">🇸🇦</span>
+              <span class="suggestion-name">Saudi Arabia</span>
+            </button>
+            <button class="suggestion-item" data-country="United States">
+              <span class="suggestion-flag">🇺🇸</span>
+              <span class="suggestion-name">United States</span>
+            </button>
+            <button class="suggestion-item" data-country="United Kingdom">
+              <span class="suggestion-flag">🇬🇧</span>
+              <span class="suggestion-name">United Kingdom</span>
+            </button>
+            <button class="suggestion-item" data-country="France">
+              <span class="suggestion-flag">🇫🇷</span>
+              <span class="suggestion-name">France</span>
+            </button>
+            <button class="suggestion-item" data-country="Germany">
+              <span class="suggestion-flag">🇩🇪</span>
+              <span class="suggestion-name">Germany</span>
+            </button>
+            <button class="suggestion-item" data-country="Japan">
+              <span class="suggestion-flag">🇯🇵</span>
+              <span class="suggestion-name">Japan</span>
+            </button>
+            <button class="suggestion-item" data-country="China">
+              <span class="suggestion-flag">🇨🇳</span>
+              <span class="suggestion-name">China</span>
+            </button>
+            <button class="suggestion-item" data-country="United Arab Emirates">
+              <span class="suggestion-flag">🇦🇪</span>
+              <span class="suggestion-name">United Arab Emirates</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Results Section -->
+  <section class="automated-results-section" id="search-results-section" style="display: none;">
+    <div class="results-container">
+      <!-- Country Header -->
+      <div class="country-header" id="results-country-header">
+        <!-- Will be populated by JavaScript -->
+      </div>
+
+      <!-- Quick Facts -->
+      <div class="quick-facts-section">
+        <h2 class="section-title">Quick Facts</h2>
+        <div class="facts-grid" id="quick-facts">
+          <!-- Will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Leadership Section -->
+      <div class="leadership-section">
+        <h2 class="section-title">Government Leadership</h2>
+        <div class="leadership-grid" id="leadership-section">
+          <!-- Will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Ministries Section -->
+      <div class="ministries-section">
+        <h2 class="section-title">Government Ministries</h2>
+        <div class="ministries-grid" id="ministries-section">
+          <!-- Will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Important Contacts -->
+      <div class="contacts-section">
+        <h2 class="section-title">Important Contacts</h2>
+        <div class="contacts-grid" id="contacts-section">
+          <!-- Will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Emergency Contacts -->
+      <div class="emergency-section">
+        <h2 class="section-title">Emergency Contacts</h2>
+        <div class="emergency-grid" id="emergency-contacts">
+          <!-- Will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="additional-info-section">
+        <div class="info-tabs">
+          <button class="tab-btn active" data-tab="business">Business Resources</button>
+          <button class="tab-btn" data-tab="visa">Visa Information</button>
+          <button class="tab-btn" data-tab="hours">Business Hours</button>
+          <button class="tab-btn" data-tab="structure">Government Structure</button>
+        </div>
+        <div class="tab-content">
+          <div class="tab-pane active" id="business-tab">
+            <h3>Business Resources</h3>
+            <div class="business-resources" id="business-resources">
+              <!-- Will be populated by JavaScript -->
+            </div>
+          </div>
+          <div class="tab-pane" id="visa-tab">
+            <h3>Visa Information</h3>
+            <div class="visa-info" id="visa-info">
+              <!-- Will be populated by JavaScript -->
+            </div>
+          </div>
+          <div class="tab-pane" id="hours-tab">
+            <h3>Business Hours</h3>
+            <div class="business-hours" id="business-hours">
+              <!-- Will be populated by JavaScript -->
+            </div>
+          </div>
+          <div class="tab-pane" id="structure-tab">
+            <h3>Government Structure</h3>
+            <div class="government-structure" id="government-structure">
+              <!-- Will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="results-actions">
+        <button class="btn btn--primary" id="export-results">
+          <span class="action-icon">📥</span>
+          Export Results
+        </button>
+        <button class="btn btn--ghost" id="print-results">
+          <span class="action-icon">🖨</span>
+          Print
+        </button>
+        <button class="btn btn--ghost" id="share-results">
+          <span class="action-icon">📤</span>
+          Share
+        </button>
+        <button class="btn btn--ghost" id="add-to-favorites">
+          <span class="action-icon">❤️</span>
+          Add to Favorites
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading State -->
+  <div class="automated-loading" id="loading-overlay" style="display: none;">
+    <div class="loading-content">
+      <div class="loading-animation">
+        <div class="loading-robot">🤖</div>
+        <div class="loading-dots">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+      <p class="loading-text">Automated search in progress...</p>
+      <p class="loading-subtitle">Fetching government information from multiple sources</p>
+      <div class="loading-progress">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <span class="progress-text">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="automated-error" id="error-overlay" style="display: none;">
+    <div class="error-content">
+      <div class="error-robot">🤖</div>
+      <h3 class="error-title">Automated Search Error</h3>
+      <p class="error-message" id="error-message">
+        Unable to fetch government information. Please try again.
+      </p>
+      <div class="error-actions">
+        <button class="btn btn--primary" id="retry-search">
+          <span class="action-icon">🔄</span>
+          Retry Search
+        </button>
+        <button class="btn btn--ghost" id="report-error">
+          <span class="action-icon">📧</span>
+          Report Issue
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Notification -->
+  <div class="automated-success" id="success-notification" style="display: none;">
+    <div class="success-content">
+      <div class="success-robot">🤖</div>
+      <span class="success-message" id="success-message">
+        Search completed successfully!
+      </span>
+    </div>
+  </div>
+
+  <!-- Search History -->
+  <div class="search-history-section">
+    <h3 class="history-title">Recent Searches</h3>
+    <div class="history-list" id="history-list">
+      <!-- Will be populated by JavaScript -->
+    </div>
+  </div>
+
+  <!-- Favorites -->
+  <div class="favorites-section">
+    <h3 class="favorites-title">Favorite Countries</h3>
+    <div class="favorites-list" id="favorites-list">
+      <!-- Will be populated by JavaScript -->
+    </div>
+  </div>
+</div>

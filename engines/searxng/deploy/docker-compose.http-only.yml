@@ -1,0 +1,42 @@
+# HTTP فقط (منفذ 80) — للتجربة أو عندما لا يتوفر نطاق مع شهادة عامة.
+# لا تُنصح للإنتاج العلني بدون حماية إضافية.
+#
+#   docker compose -f docker-compose.http-only.yml up -d
+#
+# في config/settings.yml عيّن base_url إلى http://عنوان-السيرفر/
+
+services:
+  tor:
+    image: dperson/torproxy:latest
+    container_name: iif-tor-socks-prod-http
+    restart: unless-stopped
+    networks: [searxng_net]
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: iif-searxng-prod-http
+    depends_on:
+      - tor
+    restart: unless-stopped
+    environment:
+      FORCE_OWNERSHIP: "true"
+    volumes:
+      - ../config:/etc/searxng
+      - ../data:/var/cache/searxng
+    networks: [searxng_net]
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: iif-caddy-searxng-http
+    restart: unless-stopped
+    depends_on:
+      - searxng
+    ports:
+      - "80:80"
+    volumes:
+      - ./Caddyfile.http-only:/etc/caddy/Caddyfile:ro
+    networks: [searxng_net]
+
+networks:
+  searxng_net:
+    driver: bridge

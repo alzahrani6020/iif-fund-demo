@@ -1,0 +1,674 @@
+# Netlify — نشر الموقع الثابت من جذر المستودع (اختياري؛ عند تجاوز الحدود استخدم GitHub Pages).
+# وضعان لدومينين نظيفين في الشريط: انظر DOMINI-IIFFUND-THIQQAH.md (موقع جذر = iiffund.com، موقع thiqqah-site = thiqqah.live).
+# في واجهة Netlify: اترك Build command و Publish فارغين إن أمكن (يُقرأ من هنا).
+# قائمة تحقق: NETLIFY-CHECKLIST.md
+# صفحة 404: ضع ملف 404.html في الجذر — Netlify يخدمه تلقائياً للمسارات غير الموجودة.
+
+[build]
+  command = "npm ci --no-audit --fund=false && npm run build"
+  publish = "."
+  # إذا وُجدت `[skip netlify]` في آخر رسالة commit → لا يُنفَّذ بناء (توفير دقائق الطبقة المجانية)
+  # انظر: NETLIFY-FREE-TIER.md
+  ignore = "git log -1 --pretty=%B | grep -qF '[skip netlify]'"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NODE_ENV = "production"
+  CI = "true"
+  # بروكسي الدالة netlify/functions/searx.js — يمكن تجاوزه من لوحة Netlify لاحقاً
+  # ملاحظة Netlify: قيم [build.environment] لا تُتاح تلقائياً لدوال Lambda وقت التشغيل؛
+  # لضبط SearXNG للدوال أضف SEARXNG_URL من واجهة Netlify/CLI/API بنطاق يشمل Functions.
+  # الدالة searx.js: افتراضياً https://searx.tiekoetter.com؛ يمكن عدة مثيلات مفصولة بفاصلة لإعادة المحاولة عند 429/5xx.
+  SEARXNG_URL = "https://searx.tiekoetter.com"
+  # الترجمة: إن لم تُضبط IIF_TRANSLATE_URL (مترجم NLLB الذاتي) تستخدم الدالة LibreTranslate الاحتياطي (انظر netlify/functions/translate.js)
+
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/healthz"
+  to = "/.netlify/functions/healthz"
+  status = 200
+
+[[redirects]]
+  from = "/api/fetch"
+  to = "/.netlify/functions/fetch"
+  status = 200
+
+[[redirects]]
+  from = "/api/translate"
+  to = "/.netlify/functions/translate"
+  status = 200
+
+[[redirects]]
+  from = "/api/searx/*"
+  to = "/.netlify/functions/searx/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/news"
+  to = "/.netlify/functions/news"
+  status = 200
+
+[[redirects]]
+  from = "/api/check-content"
+  to = "/.netlify/functions/check-content"
+  status = 200
+
+[[redirects]]
+  from = "/diagnostics.json"
+  to = "/.netlify/functions/diagnostics"
+  status = 200
+
+# ثقة الذهبية — عند ربط الدومين thiqqah.live على **نفس** موقع نشر الجذر الكامل:
+#   الجذر ومسارات الصندوق على مضيفي thiqqah يُوجَّهون إلى /thiqqah-site/index.html.
+# تحقق من الإنتاج: npm run verify:thiqqah:live-domain — إن كان /thiqqah-site/index.html = 404 على الدومين،
+# فالتوجيهات هنا لا تكفي؛ إما النشر لا يتضمن المجلد أو الدومين على موقع Netlify آخر (انظر NETLIFY-THIQQAH-STANDALONE.md).
+# يجب إضافة thiqqah.live و www في لوحة Netlify يدوياً — الملف هنا لا يستطيع ربط الدومين بالحساب.
+[[redirects]]
+  from = "http://thiqqah.live"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+# نفس النشر يخدم الصندوق وثقة؛ على مضيفي thiqqah.live فقط نوجّه مسارات IIF/الاختصارات إلى موقع ثقة
+# (أي طلب تحت /thiqqah-site/* يبقى كما هو — ملفات ثابتة)
+[[redirects]]
+  from = "http://thiqqah.live/financial-consulting/*"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/financial-consulting/*"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/financial-consulting/*"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/financial-consulting/*"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/fund"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/fund"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/fund"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/fund"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/fund-admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/fund-admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/fund-admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/fund-admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/panel"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/panel"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/panel"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/panel"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/dashboard"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/dashboard"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/dashboard"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/dashboard"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/cp"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/cp"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/cp"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/cp"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/admin"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/gov"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/gov"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/gov"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/gov"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/web-search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/web-search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/web-search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/web-search"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://thiqqah.live/news-sources"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://thiqqah.live/news-sources"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "http://www.thiqqah.live/news-sources"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "https://www.thiqqah.live/news-sources"
+  to = "/thiqqah-site/index.html"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/"
+  to = "/financial-consulting/iif-fund-demo/index.html"
+  status = 200
+  # بدون force يُقدَّم index.html البوابة في الجذر فيغلب هذا السطر — فيبقى الشريط يتحول للمسار الطويل.
+  force = true
+
+[[redirects]]
+  from = "/index.html"
+  to = "/financial-consulting/iif-fund-demo/index.html"
+  status = 200
+  force = true
+
+# مسار المجلد بدون index.html (يظهر 404 على بعض الاستضافات/الروابط)
+[[redirects]]
+  from = "/financial-consulting/iif-fund-demo"
+  to = "/financial-consulting/iif-fund-demo/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/financial-consulting/iif-fund-demo/"
+  to = "/financial-consulting/iif-fund-demo/index.html"
+  status = 200
+
+# /search — يجب force لأن ملف search.html القديم كان يظلّ المسار (Pretty URLs) ويخفي web-search.html
+[[redirects]]
+  from = "/search"
+  to = "/financial-consulting/iif-fund-demo/web-search.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/search/"
+  to = "/financial-consulting/iif-fund-demo/web-search.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/web-search"
+  to = "/financial-consulting/iif-fund-demo/web-search.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/fund"
+  to = "/financial-consulting/iif-fund-demo/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/fund/"
+  to = "/financial-consulting/iif-fund-demo/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/fund-admin"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/fund-admin/"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/panel"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/panel/"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/dashboard/"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/cp"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/cp/"
+  to = "/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/admin"
+  to = "/financial-consulting/iif-fund-demo/admin.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/admin/"
+  to = "/financial-consulting/iif-fund-demo/admin.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/gov"
+  to = "/financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/gov/"
+  to = "/financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/legal"
+  to = "/legal/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/legal/"
+  to = "/legal/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/privacy"
+  to = "/legal/privacy.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/privacy/"
+  to = "/legal/privacy.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/disclaimer"
+  to = "/legal/disclaimer.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/disclaimer/"
+  to = "/legal/disclaimer.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/contact"
+  to = "/legal/contact.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/contact/"
+  to = "/legal/contact.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/executive"
+  to = "/executive-brief.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/executive/"
+  to = "/executive-brief.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/brief"
+  to = "/executive-brief.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/brief/"
+  to = "/executive-brief.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sovereign"
+  to = "/sovereign-standards.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sovereign/"
+  to = "/sovereign-standards.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/charter"
+  to = "/sovereign-standards.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/charter/"
+  to = "/sovereign-standards.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/news-sources"
+  to = "/financial-consulting/iif-fund-demo/news-sources.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/news-sources/"
+  to = "/financial-consulting/iif-fund-demo/news-sources.html"
+  status = 200
+  force = true
+
+# موقع ثقة الذهبية — مسارات قصيرة للاستعداد لربط الدومين الأساسي (thiqqah.live أو مسار على iiffund.com)
+[[redirects]]
+  from = "/thiqqah"
+  to = "/thiqqah-site/index.html"
+  status = 302
+
+[[redirects]]
+  from = "/thiqqah/"
+  to = "/thiqqah-site/index.html"
+  status = 302
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    # تقوية إضافية للعرض المؤسسي (HTTPS يفرضه Netlify)
+    Cross-Origin-Opener-Policy = "same-origin"
+
+[[headers]]
+  for = "/financial-consulting/government-search/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# أصول الواجهة (صور، خطوط ثابتة) — كاش أطول من HTML؛ راجع عند تغيير أسماء الملفات يدوياً
+[[headers]]
+  for = "/financial-consulting/iif-fund-demo/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# CSS/JS خارجي — كاش طويل مع immutable (تغيير الاسم عند التحديث)
+[[headers]]
+  for = "/financial-consulting/iif-fund-demo/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
+
+[[headers]]
+  for = "/financial-consulting/iif-fund-demo/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
+
+# HTML الواجهة — لا كاش (دائماً fresh)
+[[headers]]
+  for = "/financial-consulting/iif-fund-demo/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Vary = "Accept-Encoding"
+
+# موقع ثقة الذهبية — أصول ثابتة (صور webp/jpg، خطوط woff2)
+[[headers]]
+  for = "/thiqqah-site/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

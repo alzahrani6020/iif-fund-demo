@@ -1,0 +1,18 @@
+Options -Indexes
+
+# Serve the fund demo as the default document for this folder.
+DirectoryIndex index.html
+
+# Prefer the custom 404 page if Apache is configured to use it.
+ErrorDocument 404 /financial-consulting/iif-fund-demo/404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Normalize trailing slash for the folder root.
+  RewriteRule ^$ index.html [L]
+
+  # Convenience aliases used by the local dev server.
+  RewriteRule ^(cp|dashboard)/?$ index.html [L,QSA]
+</IfModule>
+

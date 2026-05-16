@@ -1,0 +1,49 @@
+# نشر SearXNG على VPS: Tor + SearXNG (داخل الشبكة) + Caddy (HTTPS على 80/443)
+# التشغيل من هذا المجلد بعد إعداد .env وضبط config/settings.yml — راجع README-VPS.md
+#
+#   docker compose up -d
+
+services:
+  tor:
+    image: dperson/torproxy:latest
+    container_name: iif-tor-socks-prod
+    restart: unless-stopped
+    networks: [searxng_net]
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: iif-searxng-prod
+    depends_on:
+      - tor
+    restart: unless-stopped
+    environment:
+      FORCE_OWNERSHIP: "true"
+    volumes:
+      - ../config:/etc/searxng
+      - ../data:/var/cache/searxng
+    networks: [searxng_net]
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: iif-caddy-searxng
+    restart: unless-stopped
+    depends_on:
+      - searxng
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      SEARXNG_HOST: ${SEARXNG_HOST:?Set SEARXNG_HOST in .env - see env.example}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks: [searxng_net]
+
+networks:
+  searxng_net:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:

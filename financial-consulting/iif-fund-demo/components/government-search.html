@@ -1,0 +1,252 @@
+<!-- Government Search Component -->
+<div class="government-search" id="government-search">
+  <div class="search-header">
+    <h2 class="search-title" data-i18n="govSearchTitle">Government Information Search</h2>
+    <p class="search-subtitle" data-i18n="govSearchSubtitle">Find contact information for any country's government ministries and departments</p>
+  </div>
+
+  <!-- Search Form -->
+  <div class="search-form">
+    <form id="gov-search-form">
+      <div class="search-input-group">
+        <div class="search-input-wrapper">
+          <input 
+            type="text" 
+            id="country-search-input" 
+            class="search-input"
+            placeholder="Enter country name..."
+            data-i18n="countrySearchPlaceholder"
+            autocomplete="off"
+            required
+          >
+          <div class="search-icon">🔍</div>
+        </div>
+        <button type="submit" class="btn btn--primary search-btn" id="search-btn">
+          <span data-i18n="search">Search</span>
+        </button>
+      </div>
+      
+      <!-- Auto-complete suggestions -->
+      <div class="search-suggestions" id="search-suggestions" style="display: none;">
+        <!-- Suggestions will be populated here -->
+      </div>
+    </form>
+  </div>
+
+  <!-- Search History -->
+  <div class="search-history" id="search-history" style="display: none;">
+    <h3 data-i18n="recentSearches">Recent Searches</h3>
+    <div class="history-list" id="history-list">
+      <!-- History items will be populated here -->
+    </div>
+    <button class="btn btn--ghost btn-sm" id="clear-history">
+      <span data-i18n="clearHistory">Clear History</span>
+    </button>
+  </div>
+
+  <!-- Trending Countries -->
+  <div class="trending-countries">
+    <h3 data-i18n="trendingCountries">Trending Countries</h3>
+    <div class="trending-grid" id="trending-grid">
+      <!-- Trending countries will be populated here -->
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" id="loading-state" style="display: none;">
+    <div class="spinner"></div>
+    <p data-i18n="searching">Searching government information...</p>
+  </div>
+
+  <!-- Search Results -->
+  <div class="search-results" id="search-results" style="display: none;">
+    <!-- Results will be populated here -->
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" id="error-state" style="display: none;">
+    <div class="error-icon">❌</div>
+    <h3 data-i18n="searchError">Search Error</h3>
+    <p id="error-message">Unable to fetch government information. Please try again.</p>
+    <button class="btn btn--primary" id="retry-search">
+      <span data-i18n="retry">Retry</span>
+    </button>
+  </div>
+</div>
+
+<!-- Government Info Template -->
+<template id="gov-info-template">
+  <div class="government-info">
+    <!-- Country Header -->
+    <div class="country-header">
+      <div class="country-flag">
+        <img src="{{flag}}" alt="{{country}} flag" id="country-flag">
+      </div>
+      <div class="country-info">
+        <h2 class="country-name">{{country}}</h2>
+        <p class="country-official-name">{{officialName}}</p>
+        <div class="country-meta">
+          <span class="country-capital">🏛️ {{capital}}</span>
+          <span class="country-region">🌍 {{region}}</span>
+          <span class="country-population">👥 {{population}}</span>
+        </div>
+      </div>
+      <div class="country-actions">
+        <button class="btn btn--ghost btn-sm favorite-btn" data-country="{{country}}">
+          <span class="favorite-icon">❤️</span>
+          <span class="favorite-text" data-i18n="addToFavorites">Add to Favorites</span>
+        </button>
+        <button class="btn btn--ghost btn-sm share-btn" data-country="{{country}}">
+          <span class="share-icon">📤</span>
+          <span data-i18n="share">Share</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Facts -->
+    <div class="quick-facts">
+      <h3 data-i18n="quickFacts">Quick Facts</h3>
+      <div class="facts-grid">
+        {{#each quickFacts}}
+        <div class="fact-item">
+          <span class="fact-icon">{{icon}}</span>
+          <div class="fact-content">
+            <h4 class="fact-title">{{title}}</h4>
+            <p class="fact-value">{{value}}</p>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <!-- Important Contacts -->
+    <div class="important-contacts">
+      <h3 data-i18n="importantContacts">Important Contacts</h3>
+      <div class="contacts-grid">
+        {{#each importantContacts}}
+        <div class="contact-card">
+          <div class="contact-header">
+            <span class="contact-type-icon">{{getContactIcon type}}</span>
+            <h4 class="contact-name">{{name}}</h4>
+            <span class="contact-type">{{type}}</span>
+          </div>
+          <div class="contact-details">
+            <div class="contact-item">
+              <span class="contact-label">📞</span>
+              <a href="tel:{{phone}}" class="contact-value">{{phone}}</a>
+            </div>
+            <div class="contact-item">
+              <span class="contact-label">📧</span>
+              <a href="mailto:{{email}}" class="contact-value">{{email}}</a>
+            </div>
+            <div class="contact-item">
+              <span class="contact-label">🌐</span>
+              <a href="{{website}}" target="_blank" class="contact-value">{{website}}</a>
+            </div>
+            <div class="contact-item">
+              <span class="contact-label">📍</span>
+              <span class="contact-value">{{address}}</span>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <!-- Ministries -->
+    <div class="ministries">
+      <h3 data-i18n="ministries">Government Ministries</h3>
+      <div class="ministries-grid">
+        {{#each ministries}}
+        <div class="ministry-card">
+          <h4 class="ministry-name">{{name}}</h4>
+          <p class="ministry-type">{{type}}</p>
+          <p class="ministry-description">{{description}}</p>
+          <div class="ministry-contacts">
+            <a href="tel:{{phone}}" class="ministry-phone">📞 {{phone}}</a>
+            <a href="mailto:{{email}}" class="ministry-email">📧 {{email}}</a>
+            <a href="{{website}}" target="_blank" class="ministry-website">🌐 Website</a>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <!-- Business Hours -->
+    <div class="business-hours">
+      <h3 data-i18n="businessHours">Business Hours</h3>
+      <div class="hours-grid">
+        {{#each businessHours}}
+        <div class="hours-item">
+          <span class="hours-day">{{@key}}</span>
+          <span class="hours-time">{{this}}</span>
+        </div>
+        {{/each}}
+      </div>
+      <div class="timezone-info">
+        <span class="timezone-label">🕐</span>
+        <span class="timezone-value">{{timezone}}</span>
+      </div>
+    </div>
+
+    <!-- Emergency Contacts -->
+    <div class="emergency-contacts">
+      <h3 data-i18n="emergencyContacts">Emergency Contacts</h3>
+      <div class="emergency-grid">
+        {{#each emergencyContacts}}
+        <div class="emergency-card emergency-{{type}}">
+          <span class="emergency-icon">{{getEmergencyIcon type}}</span>
+          <div class="emergency-info">
+            <h4 class="emergency-name">{{name}}</h4>
+            <a href="tel:{{number}}" class="emergency-number">{{number}}</a>
+            <p class="emergency-description">{{description}}</p>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <!-- Business Resources -->
+    <div class="business-resources">
+      <h3 data-i18n="businessResources">Business Resources</h3>
+      <div class="resources-grid">
+        <div class="resource-card">
+          <h4 class="resource-title">{{businessResources.investmentAuthority.name}}</h4>
+          <p class="resource-type">Investment Authority</p>
+          <a href="{{businessResources.investmentAuthority.website}}" target="_blank" class="resource-link">Visit Website</a>
+          <ul class="resource-services">
+            {{#each businessResources.investmentAuthority.services}}
+            <li>{{this}}</li>
+            {{/each}}
+          </ul>
+        </div>
+        <div class="resource-card">
+          <h4 class="resource-title">{{businessResources.chamberOfCommerce.name}}</h4>
+          <p class="resource-type">Chamber of Commerce</p>
+          <a href="{{businessResources.chamberOfCommerce.website}}" target="_blank" class="resource-link">Visit Website</a>
+          <ul class="resource-services">
+            {{#each businessResources.chamberOfCommerce.services}}
+            <li>{{this}}</li>
+            {{/each}}
+          </ul>
+        </div>
+        <div class="resource-card">
+          <h4 class="resource-title">{{businessResources.taxAuthority.name}}</h4>
+          <p class="resource-type">Tax Authority</p>
+          <a href="{{businessResources.taxAuthority.website}}" target="_blank" class="resource-link">Visit Website</a>
+          <ul class="resource-services">
+            {{#each businessResources.taxAuthority.services}}
+            <li>{{this}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Last Updated -->
+    <div class="last-updated">
+      <p data-i18n="lastUpdated">Last updated:</p>
+      <span class="update-time">{{lastUpdated}}</span>
+    </div>
+  </div>
+</template>

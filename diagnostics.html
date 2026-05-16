@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IIF Diagnostics</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Arial; background:#05070c; color:#e9ddbf; }
+      .wrap { max-width: 1100px; margin: 0 auto; padding: 18px; }
+      .top { display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+      .card { border:1px solid rgba(201,162,39,.35); background: rgba(12,14,18,.82); border-radius: 16px; padding: 14px; }
+      a { color:#f5e7b6; }
+      .muted { opacity:.75; }
+      button { cursor:pointer; border-radius: 12px; border:1px solid rgba(201,162,39,.55); background: rgba(12,14,18,.82); color:#f5e7b6; padding:10px 12px; }
+      pre { margin:0; overflow:auto; max-height: 65vh; }
+      code { background: rgba(255,255,255,.06); padding:2px 6px; border-radius: 8px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <div style="font-size:18px;font-weight:700">Diagnostics</div>
+          <div class="muted" id="ts">...</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="/" class="muted">العودة</a>
+          <a href="/health.html" class="muted">Health</a>
+          <button id="refresh">تحديث</button>
+          <button id="copy" class="muted">نسخ JSON</button>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="card">
+        <div class="muted">المصدر: <a href="/diagnostics.json" target="_blank" rel="noopener">`/diagnostics.json`</a></div>
+        <div style="height:10px"></div>
+        <pre class="muted"><code id="raw">[]</code></pre>
+      </div>
+    </div>
+
+    <script>
+      let lastJson = null;
+      async function load() {
+        const ts = document.getElementById('ts');
+        const raw = document.getElementById('raw');
+        try {
+          const r = await fetch('/diagnostics.json', { cache: 'no-store' });
+          const j = await r.json();
+          lastJson = j;
+          raw.textContent = JSON.stringify(j, null, 2);
+          ts.textContent = 'آخر تحديث: ' + new Date().toLocaleString() + ' — items=' + ((j && j.items && j.items.length) || 0);
+        } catch (e) {
+          raw.textContent = JSON.stringify({ ok:false, error: String(e && e.message || e) }, null, 2);
+          ts.textContent =
+            'تعذر التحميل — `npm start` على المنفذ 3333 مطلوب لقراءة `/diagnostics.json` محلياً.';
+        }
+      }
+      document.getElementById('refresh').addEventListener('click', load);
+      document.getElementById('copy').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(JSON.stringify(lastJson || {}, null, 2));
+        } catch (e) {}
+      });
+      load();
+      setInterval(load, 15000);
+    </script>
+  </body>
+</html>
+

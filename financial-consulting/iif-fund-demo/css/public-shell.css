@@ -1,0 +1,218 @@
+/**
+ * Public page shell — layout only (header/main/footer rhythm).
+ * Loaded after design-system.css; uses :root tokens from index.html inline :root.
+ * Do not add dashboard-overlay / .dashboard-* rules here.
+ */
+
+:root {
+  --iif-public-content-max: 1200px;
+  /* B1: حلقة تركيز واضحة على خلفية داكنة */
+  --iif-focus-ring: var(--color-accent-gold, #c9a227);
+  --iif-focus-ring-offset: 3px;
+}
+
+/* تخطي إلى المحتوى — القاعدة؛ استثناءات اللوحة/خدمة في index.html */
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: var(--space-4);
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--color-accent-gold);
+  color: #1b1b1b;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+  outline: 2px solid var(--color-accent-gold-soft);
+  outline-offset: 2px;
+}
+
+.skip-link:focus-visible {
+  top: var(--space-4);
+  outline: 2px solid var(--iif-focus-ring);
+  outline-offset: var(--iif-focus-ring-offset);
+}
+
+.skip-link:focus:not(:focus-visible) {
+  outline: none;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* يُضبط ديناميكياً من index.html؛ الاحتياطي للهيدر العريض. الهيدر يضمّ safe-area عبر padding في index */
+  scroll-padding-top: var(--header-height, clamp(11.5rem, 30vh, 24rem));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+[id],
+.section,
+section[id],
+main [id] {
+  scroll-margin-top: var(--header-height, clamp(11.5rem, 30vh, 24rem));
+}
+
+/* Public home only — dashboard uses main.dashboard-main inside #dashboard-overlay */
+main#main-content {
+  max-width: var(--iif-public-content-max);
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-4) var(--space-16);
+  position: relative;
+  z-index: 1;
+}
+
+footer {
+  border-top: 1px solid var(--color-glass-border, rgba(201, 162, 39, 0.12));
+  padding: var(--space-16) var(--space-6) var(--space-10);
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: linear-gradient(180deg, var(--color-bg) 0%, #020408 100%);
+  position: relative;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-accent-gold), transparent);
+  opacity: 0.5;
+}
+
+footer .footer-brand {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: var(--space-4);
+  letter-spacing: 0.05em;
+}
+
+footer .footer-links {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+footer .footer-links a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+footer .footer-links a:hover {
+  color: var(--color-accent-gold-soft);
+}
+
+footer .footer-copy {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-dim, #8899aa);
+  margin-top: var(--space-8);
+}
+
+/* B1: تركيز لوحة المفاتيح — الواجهة العامة والتذييل فقط */
+main#main-content a:focus-visible,
+footer a:focus-visible {
+  outline: 2px solid var(--iif-focus-ring);
+  outline-offset: var(--iif-focus-ring-offset);
+}
+
+main#main-content .btn:focus-visible {
+  outline: 2px solid var(--color-accent-gold-soft, #e8d48a);
+  outline-offset: 2px;
+}
+
+/* صفحات ثانوية بدون #main-content (خصوصية / عن الصندوق) */
+body:not(:has(#main-content)) a:focus-visible {
+  outline: 2px solid var(--iif-focus-ring);
+  outline-offset: var(--iif-focus-ring-offset);
+}
+
+/* شريط علوي خفيف أثناء أول تحميل — يُزال بواسطة js/iif-first-load-shell.js */
+.iif-first-load-shell {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 2147483646;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 162, 39, 0.45),
+    rgba(232, 212, 138, 0.35),
+    rgba(201, 162, 39, 0.45),
+    transparent
+  );
+  background-size: 220% 100%;
+  animation: iif-first-load-shimmer 1.15s ease-in-out infinite;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.iif-first-load-shell--hide {
+  opacity: 0;
+  visibility: hidden;
+  animation: none;
+}
+
+@keyframes iif-first-load-shimmer {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iif-first-load-shell {
+    animation: none;
+    background: rgba(201, 162, 39, 0.55);
+  }
+}
+
+/* Leaf / static pages — top shortcut row (unified look vs inline .back / .muted strips) */
+.iif-leaf-nav {
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.iif-leaf-nav__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 0.15rem;
+  row-gap: 0.35rem;
+}
+
+.iif-leaf-nav__list li {
+  display: flex;
+  align-items: center;
+}
+
+.iif-leaf-nav__list li + li::before {
+  content: '·';
+  color: #94a3b8;
+  margin: 0 0.35rem;
+  pointer-events: none;
+}

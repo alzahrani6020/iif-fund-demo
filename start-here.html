@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ابدأ هنا — IIF</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Arial; background:#05070c; color:#e9ddbf; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 18px; }
+      .top { display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+      .card { border:1px solid rgba(201,162,39,.35); background: rgba(12,14,18,.82); border-radius: 16px; padding: 14px; }
+      a { color:#f5e7b6; }
+      .muted { opacity:.75; }
+      .row { display:flex; gap:12px; flex-wrap:wrap; }
+      .row > .card { flex: 1 1 280px; }
+      .step { font-weight: 800; letter-spacing:.2px; }
+      button { cursor:pointer; border-radius: 12px; border:1px solid rgba(201,162,39,.55); background: rgba(12,14,18,.82); color:#f5e7b6; padding:10px 12px; }
+      code { background: rgba(255,255,255,.06); padding:2px 6px; border-radius: 8px; }
+      ul { margin: 8px 0 0; padding-inline-start: 1.25rem; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <div style="font-size:18px;font-weight:800">ابدأ هنا</div>
+          <div class="muted">مسار سريع للمبتدئين: اجلب بيانات → حلّل → راقب الحالة.</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="/" class="muted">الرئيسية</a>
+          <a href="/health.html" class="muted">Health</a>
+          <a href="/diagnostics.html" class="muted">Diagnostics</a>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="card">
+        <div style="font-weight:800;margin-bottom:6px">تشغيل سريع</div>
+        <div class="muted">
+          إذا تريد “وضع آمن” (SafeSearch + حدود طلبات أقوى)، شغّل: <code>START-IIF-SAFE.bat</code>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="row">
+        <div class="card">
+          <div class="step">1) Connect</div>
+          <div class="muted">اجلب CSV/JSON من رابط (عبر allowlist) ثم احفظ المصدر.</div>
+          <div style="height:10px"></div>
+          <a href="/connect.html">فتح Connect API</a>
+          <ul class="muted">
+            <li>اضغط “اختبار وجلب”.</li>
+            <li>سيتم حفظ آخر نتيجة تلقائيًا للتحليل.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="step">2) Analysis</div>
+          <div class="muted">تحليل تلقائي: أنواع + مقاييس + ارتباط + تجميع (اختياري).</div>
+          <div style="height:10px"></div>
+          <a href="/analysis.html?src=connect">فتح التحليل (آخر نتيجة من Connect)</a>
+          <ul class="muted">
+            <li>اختر K للتجميع (اختياري).</li>
+            <li>نزّل تقرير Markdown/JSON.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="step">3) Health</div>
+          <div class="muted">تأكد أن SearXNG والبروكسي والحدود تعمل.</div>
+          <div style="height:10px"></div>
+          <a href="/health.html">فتح Health</a>
+          <ul class="muted">
+            <li>إذا SearXNG غير متاح، شغّل Docker.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="card">
+        <div style="font-weight:800;margin-bottom:6px">روابط مفيدة</div>
+        <div class="row" style="margin:0">
+          <div style="flex:1 1 260px">
+            <a href="/financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html" class="muted">المنصة الحكومية</a>
+          </div>
+          <div style="flex:1 1 260px">
+            <a href="http://127.0.0.1:18080/" class="muted" target="_blank" rel="noopener">SearXNG</a>
+          </div>
+          <div style="flex:1 1 260px">
+            <a href="/diagnostics.html" class="muted">Diagnostics</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

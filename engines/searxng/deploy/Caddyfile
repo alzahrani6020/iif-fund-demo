@@ -1,0 +1,4 @@
+{$SEARXNG_HOST} {
+	encode gzip
+	reverse_proxy searxng:8080
+}

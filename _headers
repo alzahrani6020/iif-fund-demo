@@ -1,0 +1,17 @@
+# Cloudflare Pages — HTTP Headers
+# https://developers.cloudflare.com/pages/platform/headers/
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+/financial-consulting/iif-fund-demo/api/*
+  X-Frame-Options: SAMEORIGIN
+
+/admin.html
+  X-Robots-Tag: noindex, nofollow
+
+/admin-standalone.html
+  X-Robots-Tag: noindex, nofollow

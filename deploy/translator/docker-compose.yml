@@ -1,0 +1,14 @@
+services:
+  translator:
+    build:
+      context: ../..
+      dockerfile: deploy/translator/Dockerfile
+    container_name: iif-translator
+    restart: unless-stopped
+    ports:
+      - "7071:7071"
+    environment:
+      IIF_TRANSLATE_PORT: "7071"
+      # IIF_TRANSLATE_DEVICE: "cuda"   # set to cuda on GPU hosts
+      # IIF_TRANSLATE_MODEL: "facebook/nllb-200-distilled-600M"
+

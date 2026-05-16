@@ -1,0 +1,18 @@
+Self-hosted fonts — IIF demo
+=============================
+
+Automatic (recommended)
+-----------------------
+1) Run `npm install` — `postinstall` copies WOFF2 from `@fontsource/plus-jakarta-sans` and
+   `@fontsource/noto-sans-arabic` into this folder with names expected by `css/fonts-hosted.css`.
+
+2) Or run manually: `npm run fonts:vendor`
+
+3) Commit `assets/fonts/*.woff2` if you deploy static hosting without running npm (e.g. GitHub Pages).
+
+Licenses: see LICENSE-plus-jakarta-sans.txt and LICENSE-noto-sans-arabic.txt (OFL).
+
+Manual override
+---------------
+To replace files or add Latin-Extended for Plus Jakarta, drop your own `.woff2` here using the
+exact filenames listed in the header comment of `css/fonts-hosted.css`.

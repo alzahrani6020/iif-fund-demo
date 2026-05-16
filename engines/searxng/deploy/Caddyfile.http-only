@@ -1,0 +1,7 @@
+# للتجربة بدون نطاق (HTTP فقط على المنفذ 80) — لا تستخدم للإنتاج العلني
+# استخدم مع: docker compose -f docker-compose.yml -f docker-compose.http-only.yml up -d
+
+:80 {
+	encode gzip
+	reverse_proxy searxng:8080
+}

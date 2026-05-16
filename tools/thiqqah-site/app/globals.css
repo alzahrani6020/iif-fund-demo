@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Noto Naskh Arabic', 'Tajawal', system-ui, sans-serif;
+  --font-body: 'Noto Naskh Arabic', 'Inter', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #ffffff;
+  color: #1a1a1a;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: #006c35;
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f3f5;
+}
+::-webkit-scrollbar-thumb {
+  background: #ced4da;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #006c35;
+}
+
+/* Container */
+.container-modern {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 640px) {
+  .container-modern {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .container-modern {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Section kicker */
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #006c35;
+}
+.section-kicker::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, #006c35, #d4a017);
+  border-radius: 2px;
+}
+
+/* Card */
+.card-modern {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 1.25rem;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-modern:hover {
+  border-color: #006c35;
+  box-shadow: 0 20px 40px rgba(0, 108, 53, 0.12);
+  transform: translateY(-4px);
+}
+
+/* Input */
+.input-modern {
+  width: 100%;
+  background: #ffffff;
+  border: 1.5px solid #e9ecef;
+  border-radius: 1rem;
+  padding: 0.875rem 1.125rem;
+  font-size: 0.9375rem;
+  color: #1a1a1a;
+  transition: all 0.2s ease;
+  outline: none;
+}
+.input-modern:focus {
+  border-color: #006c35;
+  box-shadow: 0 0 0 3px rgba(0, 108, 53, 0.1);
+}
+.input-modern::placeholder {
+  color: #adb5bd;
+}
+
+/* Primary button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #006c35 0%, #004d26 100%);
+  border-radius: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(0, 108, 53, 0.25);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 108, 53, 0.35);
+}
+
+/* Outline button */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #006c35;
+  background: transparent;
+  border: 1.5px solid #006c35;
+  border-radius: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-outline:hover {
+  background: #006c35;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 108, 53, 0.2);
+}
+
+/* Ghost button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #006c35;
+  background: rgba(0, 108, 53, 0.06);
+  border: 1.5px solid transparent;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+.btn-ghost:hover {
+  background: rgba(0, 108, 53, 0.12);
+  border-color: #006c35;
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #006c35 0%, #004d26 50%, #b8860b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Tag */
+.tag-green {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #006c35;
+  background: rgba(0, 108, 53, 0.08);
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 108, 53, 0.15);
+}
+
+/* Surface background */
+.bg-surface {
+  background-color: #f6faf8;
+}
+
+/* Hero decorative gradient */
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* Touch target */
+@media (max-width: 640px) {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}

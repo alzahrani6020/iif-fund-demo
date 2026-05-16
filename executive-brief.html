@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="موجز للمستويات الرفيعة — منصة الاستعلام المرجعية والفهرس الحكومي ضمن بيئة IIF. طبيعة مؤسسية، شفافية في الحدود، احترام الخصوصية.">
+  <meta name="robots" content="index, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ar">
+  <meta property="og:title" content="Executive Brief — IIF Reference Platform">
+  <meta property="og:description" content="Institutional inquiry interface and government reference index — scope, governance, and limitations.">
+  <link rel="canonical" href="/executive-brief.html">
+  <link rel="alternate" hreflang="ar" href="/executive-brief.html">
+  <link rel="alternate" hreflang="en" href="/executive-brief.html">
+  <title>موجز للمستويات الرفيعة — منصة المرجعية | Executive Brief — IIF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0f172a;
+      --navy-soft: #1e293b;
+      --gold: #b8952e;
+      --gold-line: #c9a227;
+      --paper: #fafbfc;
+      --ink: #1e293b;
+      --muted: #64748b;
+      --font-ar: "Noto Naskh Arabic", "Segoe UI", Tahoma, sans-serif;
+      --font-en: "Noto Serif", Georgia, "Times New Roman", serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-ar);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.75;
+      font-size: 1.05rem;
+    }
+    .skip-link {
+      position: absolute;
+      inset-inline-start: 1rem;
+      top: -100px;
+      padding: 0.5rem 0.85rem;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 600;
+      border-radius: 6px;
+      z-index: 1000;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 1rem; outline: 2px solid var(--gold-line); outline-offset: 2px; }
+    .shell { max-width: 46rem; margin: 0 auto; padding: 2rem 1.35rem 3.5rem; }
+    .masthead {
+      border-bottom: 4px solid var(--gold-line);
+      padding-bottom: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .masthead .line-ar {
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.35rem;
+    }
+    .masthead h1 {
+      font-size: clamp(1.35rem, 3.5vw, 1.75rem);
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      color: var(--navy);
+      line-height: 1.35;
+    }
+    .masthead .subtitle-en {
+      font-family: var(--font-en);
+      font-size: 1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--muted);
+      margin: 0;
+      direction: ltr;
+      text-align: start;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .meta-row time { font-variant-numeric: tabular-nums; }
+    article section {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    article section:last-of-type { border-bottom: none; }
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy-soft);
+      margin: 0 0 0.75rem;
+      padding-inline-start: 0.65rem;
+      border-inline-start: 3px solid var(--gold-line);
+    }
+    h2 .en { font-family: var(--font-en); font-weight: 600; font-size: 0.95rem; color: var(--muted); display: block; margin-top: 0.25rem; }
+    p { margin: 0 0 0.85rem; }
+    ul { margin: 0 0 0.85rem; padding-inline-start: 1.35rem; }
+    li { margin-bottom: 0.4rem; }
+    .block-en {
+      font-family: var(--font-en);
+      direction: ltr;
+      text-align: left;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin-top: 0.75rem;
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: #334155;
+    }
+    .callout {
+      background: linear-gradient(180deg, #fffbeb 0%, #fff 100%);
+      border: 1px solid rgba(201, 162, 39, 0.35);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    .callout strong { color: var(--navy); }
+    nav.actions {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #e2e8f0;
+    }
+    nav.actions a {
+      display: inline-block;
+      margin-inline-end: 0.75rem;
+      margin-bottom: 0.5rem;
+      color: #1e3a5f;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    nav.actions a:hover, nav.actions a:focus-visible {
+      border-bottom-color: var(--gold-line);
+      outline: none;
+    }
+    footer.doc-foot {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--navy);
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff; font-size: 11pt; }
+      .shell { max-width: 100%; padding: 0; }
+      a[href]::after { content: " (" attr(href) ")"; font-size: 0.75em; color: #666; }
+      nav.actions a::after { content: ""; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+
+  <div class="shell">
+    <header class="masthead" role="banner">
+      <p class="line-ar">وثيقة مؤسسية — للاطلاع الرسمي</p>
+      <h1>موجز للمستويات الرفيعة<br><span style="font-weight: 500; font-size: 0.92em; color: var(--muted);">منصة الاستعلام المرجعية والفهرس الحكومي</span></h1>
+      <p class="subtitle-en" lang="en">Executive Brief — Reference inquiry platform and institutional transparency boundaries</p>
+      <div class="meta-row">
+        <span>الإصدار: مرجعي</span>
+        <time datetime="2026-03-19">١٩ مارس ٢٠٢٦</time>
+      </div>
+    </header>
+
+    <main id="main">
+      <article>
+        <section aria-labelledby="s1">
+          <h2 id="s1">الغرض والنطاق <span class="en" lang="en">Purpose and scope</span></h2>
+          <p>تقدّم بيئة <strong>صندوق الاستثمار الدولي (IIF)</strong> واجهات استعلامية وفهرساً مرجعياً للجهات الحكومية، بهدف دعم الشفافية المؤسسية والاطلاع المنظم دون أن تغني عن المراسلات الرسمية أو الالتزامات القانونية في أي بلد.</p>
+          <div class="block-en" lang="en">
+            This environment provides <strong>inquiry interfaces</strong> and a <strong>reference government index</strong> to support institutional transparency and structured access. It does <em>not</em> replace official correspondence, statutory filings, or jurisdiction-specific legal obligations.
+          </div>
+        </section>
+
+        <section aria-labelledby="s2">
+          <h2 id="s2">طبيعة البيانات <span class="en" lang="en">Nature of data</span></h2>
+          <p>الفهرس المحلي مبني على بيانات مشروع قابلة للتحديث؛ الروابط الخارجية قد تتغيّر. أي تكامل مع بحث الويب (عند التشغيل المحلي) يكمّل السياق ولا يُعتبر إقراراً رسمياً من المشغّل.</p>
+          <ul>
+            <li>البيانات المعروضة <strong>استعلامية ومرجعية</strong>، لا تشغيلية بالمعنى الحكومي الضيق.</li>
+            <li>يُفضّل التحقق دائماً من المصادر الرسمية للجهة المعنية.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="s3">
+          <h2 id="s3">الخصوصية والحوكمة <span class="en" lang="en">Privacy and governance</span></h2>
+          <p>يُراعى احترام الخصوصية والامتثال حيثما ينطبق. تفاصيل جمع البيانات واستخدامها مبيّنة في وثائق المشروع القانونية.</p>
+          <div class="callout" role="note">
+            <strong>للزائر الرسمي:</strong> الاطلاع عبر هذه الواجهة لا يخلق علاقة قانونية إضافية؛ يرجى الاعتماد على القنوات الدبلوماسية والمؤسسية المعتمدة لبلدكم أو لمؤسستكم.
+          </div>
+        </section>
+
+        <section aria-labelledby="s4">
+          <h2 id="s4">إخلاء المسؤولية المؤسسي <span class="en" lang="en">Institutional disclaimer</span></h2>
+          <p>المشروع يُقدَّم «كما هو» ضمن حدود تقنية ومحتوى قابلة للتطوير. لا تُضمن اكتمال القوائم أو دقة كل البنود في كل الأوقات. راجع صفحة إخلاء المسؤولية الكاملة.</p>
+        </section>
+
+        <section aria-labelledby="s5">
+          <h2 id="s5">معايير المستوى السيادي <span class="en" lang="en">Sovereign-tier standards</span></h2>
+          <p>للاطلاع على إطار الجودة والحوكمة الذي تستهدفه الواجهات لتليق بمستوى القيادات الرسمية — مع تنويه واضح حول طبيعة «العضوية» والإفصاح الرسمي — راجع الوثيقة المخصصة.</p>
+          <p><a href="/sovereign-standards.html" style="color: #1e3a5f; font-weight: 700;">معايير المستوى السيادي — Sovereign-tier standards</a></p>
+          <div class="block-en" lang="en">
+            See the <a href="/sovereign-standards.html" style="color: #1e3a5f; font-weight: 600;">sovereign-tier standards</a> page for quality intent and membership disclaimers.
+          </div>
+        </section>
+
+        <nav class="actions no-print" aria-label="روابط معتمدة">
+          <h2 style="border: none; padding: 0; margin-bottom: 0.75rem; font-size: 1rem;">روابط معتمدة / Approved entry points</h2>
+          <a href="/sovereign-standards.html">معايير المستوى السيادي · Sovereign-tier standards</a>
+          <a href="/financial-consulting/iif-fund-demo/index.html">واجهة الصندوق الكاملة · Full fund interface</a>
+          <a href="/financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html">الفهرس الحكومي المرجعي · Government reference index</a>
+          <a href="/legal/index.html">الوثائق القانونية · Legal documents</a>
+        </nav>
+      </article>
+    </main>
+
+    <footer class="doc-foot" role="contentinfo">
+      <p>وثيقة للاطلاع — لا تُستخدم وحدها كأساس لقرارات استثمارية أو سيادية دون مراجعة مستقلة.</p>
+      <p lang="en" style="font-family: var(--font-en); font-size: 0.88rem; margin-top: 0.5rem;">For briefing purposes only — not a sole basis for investment or sovereign decisions without independent review.</p>
+    </footer>
+  </div>
+</body>
+</html>

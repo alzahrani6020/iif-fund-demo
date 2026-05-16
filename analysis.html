@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IIF Automated Analysis Assistant</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Arial; background:#05070c; color:#e9ddbf; }
+      .wrap { max-width: 1200px; margin: 0 auto; padding: 18px; }
+      .top { display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+      .card { border:1px solid rgba(201,162,39,.35); background: rgba(12,14,18,.82); border-radius: 16px; padding: 14px; }
+      a { color:#f5e7b6; }
+      .muted { opacity:.75; }
+      .hide { display:none !important; }
+      label { display:block; font-weight:700; margin-bottom: 6px; }
+      input, select, textarea { width:100%; box-sizing:border-box; border-radius: 12px; border:1px solid rgba(201,162,39,.35); background: rgba(255,255,255,.06); color:#f5e7b6; padding: 10px 12px; }
+      textarea { min-height: 170px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      button { cursor:pointer; border-radius: 12px; border:1px solid rgba(201,162,39,.55); background: rgba(12,14,18,.82); color:#f5e7b6; padding:10px 12px; }
+      .row { display:flex; gap:12px; flex-wrap:wrap; align-items:stretch; }
+      .row > .card { flex: 1 1 360px; }
+      .ok { color:#8ff0b3; }
+      .bad { color:#ff9aa2; }
+      code { background: rgba(255,255,255,.06); padding:2px 6px; border-radius: 8px; }
+      table { width:100%; border-collapse: collapse; }
+      th, td { border-bottom: 1px solid rgba(201,162,39,.2); padding: 8px 10px; text-align: start; vertical-align: top; }
+      th { position: sticky; top: 0; background: rgba(12,14,18,.92); }
+      .table-wrap { overflow:auto; max-height: 52vh; border:1px solid rgba(201,162,39,.2); border-radius: 12px; }
+      .pill { font-size:12px; border:1px solid rgba(201,162,39,.35); border-radius: 999px; padding:2px 8px; opacity:.85; display:inline-block; }
+      pre { margin:0; overflow:auto; max-height: 52vh; }
+      .warn { border: 1px solid rgba(255,180,90,.35); background: rgba(40,20,0,.25); border-radius: 12px; padding: 10px 12px; }
+      .hint { border: 1px solid rgba(120,200,255,.28); background: rgba(20,30,60,.22); border-radius: 12px; padding: 10px 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <div style="font-size:18px;font-weight:700">مساعد التحليل التلقائي</div>
+          <div class="muted">CSV/JSON → فحص الأنواع + مقاييس + ارتباط + تجميع (خفيف) + تقرير.</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="/" class="muted">العودة</a>
+          <a href="/connect.html" class="muted">Connect</a>
+          <a href="/health.html" class="muted">Health</a>
+          <a href="/diagnostics.html" class="muted">Diagnostics</a>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="row">
+        <div class="card">
+          <label for="mode">الوضع</label>
+          <select id="mode">
+            <option value="basic">أساسي (مناسب للمبتدئ)</option>
+            <option value="advanced">متقدم (ارتباط/تجميع/خيارات)</option>
+          </select>
+          <div style="height:10px"></div>
+
+          <label for="src">المصدر</label>
+          <select id="src">
+            <option value="paste">لصق بيانات (CSV/JSON)</option>
+            <option value="connect-last">آخر نتيجة من Connect (localStorage)</option>
+          </select>
+          <div style="height:10px"></div>
+          <label for="format">التنسيق</label>
+          <select id="format">
+            <option value="auto">تلقائي</option>
+            <option value="csv">CSV</option>
+            <option value="json">JSON (array of objects)</option>
+          </select>
+          <div style="height:10px"></div>
+          <div class="row" style="margin:0">
+            <div style="flex:1 1 160px">
+              <label for="rowLimit">حد الصفوف للتحليل</label>
+              <input id="rowLimit" type="number" min="50" max="5000" value="1000" />
+            </div>
+            <div style="flex:1 1 160px" class="adv">
+              <label for="k">التجميع K (اختياري)</label>
+              <select id="k">
+                <option value="off">إيقاف</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div>
+          <div style="height:12px"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button id="run">حلّل الآن</button>
+            <button id="report-md" class="muted">تقرير Markdown</button>
+            <button id="report-json" class="muted">تقرير JSON</button>
+            <button id="report-translate" class="muted">ترجمة التقرير</button>
+            <button id="clear" class="muted">مسح</button>
+          </div>
+          <div style="height:10px"></div>
+          <div class="row" style="margin:0">
+            <div style="flex:1 1 220px">
+              <label for="reportLang">لغة التقرير (للترجمة)</label>
+              <select id="reportLang">
+                <option value="arb_Arab">العربية</option>
+                <option value="eng_Latn">English</option>
+                <option value="fra_Latn">Français</option>
+                <option value="tur_Latn">Türkçe</option>
+                <option value="spa_Latn">Español</option>
+              </select>
+              <div class="muted" style="margin-top:6px">الترجمة تعمل محليًا فقط.</div>
+            </div>
+            <div style="flex:1 1 220px">
+              <label for="autoTranslate">ترجمة تلقائية بعد التحليل</label>
+              <select id="autoTranslate">
+                <option value="on">تشغيل</option>
+                <option value="off">إيقاف</option>
+              </select>
+              <div class="muted" style="margin-top:6px">مفيد للمبتدئ لتكون النتائج دائمًا بلغته.</div>
+            </div>
+            <div style="flex:1 1 220px" class="adv">
+              <label for="corrExplain">شرح الارتباط</label>
+              <select id="corrExplain">
+                <option value="simple">مبسّط</option>
+                <option value="math">تقني</option>
+              </select>
+            </div>
+          </div>
+          <div style="height:10px"></div>
+          <div id="status" class="muted">جاهز.</div>
+          <div style="height:10px"></div>
+          <div id="warnings" class="warn hide"></div>
+          <div style="height:10px"></div>
+          <div class="muted">
+            ملاحظة: هذا التحليل **خفيف** ومناسب للعرض/الاستكشاف. التحليلات الثقيلة تحتاج باك‑إند لاحقًا.
+          </div>
+        </div>
+
+        <div class="card">
+          <label for="input">البيانات</label>
+          <textarea id="input" spellcheck="false" placeholder="الصق CSV أو JSON هنا..."></textarea>
+          <div style="height:10px"></div>
+          <div class="muted">
+            إن اخترت “آخر نتيجة من Connect”، سيتم تعبئة هذا الحقل تلقائيًا.
+          </div>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="row">
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <div style="font-weight:700">ملخص</div>
+            <div id="badges"></div>
+          </div>
+          <div style="height:10px"></div>
+          <div id="quick" class="hint">
+            <div style="font-weight:700">نتائج سريعة (أساسي)</div>
+            <div class="muted" style="margin-top:6px" id="quickText">—</div>
+          </div>
+          <div style="height:10px"></div>
+          <div class="table-wrap">
+            <table>
+              <thead id="sumHead"></thead>
+              <tbody id="sumBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card adv">
+          <div style="font-weight:700">الارتباط (Pearson) — للأعمدة الرقمية</div>
+          <div class="muted" style="margin-top:6px">يُظهر أقوى العلاقات (موجب/سالب). لا يعني “سببية”.</div>
+          <div style="height:10px"></div>
+          <div class="table-wrap">
+            <table>
+              <thead id="corrHead"></thead>
+              <tbody id="corrBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="row">
+        <div class="card adv">
+          <div style="font-weight:700">التجميع (K-means) — اختياري</div>
+          <div class="muted" style="margin-top:6px">يعمل على أعمدة رقمية فقط (صفوف ≤ 1000 عادة).</div>
+          <div style="height:10px"></div>
+          <pre class="muted"><code id="clusterOut">K=off</code></pre>
+        </div>
+        <div class="card">
+          <div style="font-weight:700">التقرير</div>
+          <div class="muted" style="margin-top:6px">انسخ/شارك أو نزّل التقرير.</div>
+          <div style="height:10px"></div>
+          <pre class="muted"><code id="report">—</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const LS_CONNECT_LAST = 'iif-connect-last-output-v1';
+      const $ = (id) => document.getElementById(id);
+      const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const isLocalHost = () => {
+        const host = (typeof location !== 'undefined' && location.hostname) ? String(location.hostname) : '';
+        return host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
+      };
+      const looksArabic = (s) => /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/.test(String(s || ''));
+
+      function setStatus(msg, kind) {
+        const el = $('status');
+        el.textContent = msg;
+        el.className = kind === 'ok' ? 'ok' : kind === 'bad' ? 'bad' : 'muted';
+      }
+
+      function setWarnings(items) {
+        const box = $('warnings');
+        if (!items || !items.length) {
+          box.classList.add('hide');
+          box.innerHTML = '';
+          return;
+        }
+        box.classList.remove('hide');
+        box.innerHTML = `<div style="font-weight:700;margin-bottom:6px">ملاحظات جودة البيانات</div>` +
+          `<ul style="margin:0; padding-inline-start: 18px">` +
+          items.map((x) => `<li class="muted">${esc(x)}</li>`).join('') +
+          `</ul>`;
+      }
+
+      function parseCsv(text) {
+        const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(l => l.trim().length);
+        if (!lines.length) return null;
+        function splitLine(line) {
+          const out = [];
+          let cur = '';
+          let q = false;
+          for (let i = 0; i < line.length; i++) {
+            const ch = line[i];
+            if (q) {
+              if (ch === '"' && line[i + 1] === '"') { cur += '"'; i++; continue; }
+              if (ch === '"') { q = false; continue; }
+              cur += ch;
+            } else {
+              if (ch === '"') { q = true; continue; }
+              if (ch === ',') { out.push(cur); cur = ''; continue; }
+              cur += ch;
+            }
+          }
+          out.push(cur);
+          return out;
+        }
+        const header = splitLine(lines[0]).map(s => s.trim() || 'col');
+        const rows = [];
+        for (const line of lines.slice(1)) {
+          const parts = splitLine(line);
+          const row = {};
+          for (let i = 0; i < header.length; i++) row[header[i]] = (parts[i] ?? '').trim();
+          rows.push(row);
+        }
+        return { cols: header, rows };
+      }
+
+      function parseJsonRows(text) {
+        const j = JSON.parse(text);
+        if (!Array.isArray(j)) return null;
+        const rows = j.filter(x => x && typeof x === 'object');
+        const colsSet = new Set();
+        for (const r of rows) Object.keys(r).forEach(k => colsSet.add(k));
+        const cols = Array.from(colsSet);
+        const normRows = rows.map(r => {
+          const out = {};
+          for (const c of cols) {
+            const v = r[c];
+            out[c] = (v == null) ? '' : (typeof v === 'object' ? JSON.stringify(v) : String(v));
+          }
+          return out;
+        });
+        return { cols, rows: normRows };
+      }
+
+      function detectFormat(text) {
+        const t = text.trim();
+        if (!t) return null;
+        if (t.startsWith('[') || t.startsWith('{')) return 'json';
+        return 'csv';
+      }
+
+      function toNumberMaybe(v) {
+        const s = String(v ?? '').trim();
+        if (!s) return { ok:false };
+        const n = Number(s.replace(/,/g,''));
+        if (!Number.isFinite(n)) return { ok:false };
+        return { ok:true, n };
+      }
+
+      function isDateMaybe(v) {
+        const s = String(v ?? '').trim();
+        if (!s) return false;
+        const d = new Date(s);
+        return !Number.isNaN(d.getTime());
+      }
+
+      function summarize(tab) {
+        const rows = tab.rows;
+        const cols = tab.cols;
+        const summary = [];
+        let numericCols = [];
+        let dateCols = [];
+        for (const c of cols) {
+          let missing = 0;
+          let numCount = 0, textCount = 0, dateCount = 0;
+          let min = Infinity, max = -Infinity, sum = 0;
+          const valuesNum = [];
+          for (const r of rows) {
+            const v = r[c];
+            if (v == null || String(v).trim() === '') { missing++; continue; }
+            const nm = toNumberMaybe(v);
+            if (nm.ok) {
+              numCount++;
+              sum += nm.n;
+              if (nm.n < min) min = nm.n;
+              if (nm.n > max) max = nm.n;
+              valuesNum.push(nm.n);
+              continue;
+            }
+            if (isDateMaybe(v)) { dateCount++; }
+            textCount++;
+          }
+          let kind = 'text';
+          if (numCount >= Math.max(5, Math.floor((rows.length - missing) * 0.7))) kind = 'number';
+          else if (dateCount >= Math.max(5, Math.floor((rows.length - missing) * 0.7))) kind = 'date';
+          if (kind === 'number') numericCols.push(c);
+          if (kind === 'date') dateCols.push(c);
+          const avg = (kind === 'number' && numCount) ? (sum / numCount) : null;
+          let stdev = null;
+          if (kind === 'number' && valuesNum.length >= 2) {
+            const m = avg;
+            let v = 0;
+            for (const x of valuesNum) v += (x - m) * (x - m);
+            stdev = Math.sqrt(v / (valuesNum.length - 1));
+          }
+          summary.push({
+            column: c,
+            type: kind,
+            missing,
+            count: rows.length - missing,
+            min: kind === 'number' ? min : '',
+            max: kind === 'number' ? max : '',
+            mean: kind === 'number' ? avg : '',
+            stdev: kind === 'number' ? stdev : '',
+          });
+        }
+        return { summary, numericCols, dateCols };
+      }
+
+      function dataQuality(tab, sum) {
+        const issues = [];
+        if (!tab || !tab.rows || !tab.rows.length) return issues;
+        if (tab.rows.length >= 4000) issues.push('عدد الصفوف كبير؛ قد يصبح التحليل أبطأ. جرّب خفض “حد الصفوف للتحليل”.');
+
+        // duplicate / empty column names
+        const seen = new Set();
+        const dups = new Set();
+        for (const c of tab.cols) {
+          const k = String(c || '').trim().toLowerCase();
+          if (!k) continue;
+          if (seen.has(k)) dups.add(c);
+          seen.add(k);
+        }
+        if (dups.size) issues.push(`أسماء أعمدة مكررة: ${Array.from(dups).slice(0, 5).join('، ')}${dups.size > 5 ? '…' : ''}`);
+
+        // missing-heavy columns
+        const missHeavy = sum.summary
+          .filter((it) => (it.missing || 0) / Math.max(1, tab.rows.length) >= 0.5)
+          .map((it) => it.column);
+        if (missHeavy.length) issues.push(`أعمدة فيها فراغات كثيرة (≥50%): ${missHeavy.slice(0, 5).join('، ')}${missHeavy.length > 5 ? '…' : ''}`);
+
+        // constant columns (low variety)
+        const constant = [];
+        for (const c of tab.cols) {
+          const values = new Set();
+          for (const r of tab.rows) {
+            const v = String(r[c] ?? '').trim();
+            if (!v) continue;
+            values.add(v);
+            if (values.size >= 3) break;
+          }
+          if (values.size <= 1) constant.push(c);
+        }
+        if (constant.length) issues.push(`أعمدة شبه ثابتة (غير مفيدة للتحليل): ${constant.slice(0, 5).join('، ')}${constant.length > 5 ? '…' : ''}`);
+
+        // numeric columns with many non-numeric cells
+        const numeric = sum.numericCols || [];
+        const noisyNumeric = [];
+        for (const c of numeric) {
+          let ok = 0, bad = 0;
+          for (const r of tab.rows) {
+            const s = String(r[c] ?? '').trim();
+            if (!s) continue;
+            const nm = toNumberMaybe(s);
+            if (nm.ok) ok++; else bad++;
+          }
+          const total = ok + bad;
+          if (total >= 10 && bad / total >= 0.25) noisyNumeric.push(c);
+        }
+        if (noisyNumeric.length) issues.push(`أعمدة رقمية فيها قيم غير رقمية كثيرة (≥25%): ${noisyNumeric.slice(0, 5).join('، ')}${noisyNumeric.length > 5 ? '…' : ''}`);
+
+        return issues;
+      }
+
+      function pearson(xs, ys) {
+        const n = Math.min(xs.length, ys.length);
+        if (n < 3) return null;
+        let sx=0, sy=0;
+        for (let i=0;i<n;i++){ sx+=xs[i]; sy+=ys[i]; }
+        const mx = sx/n, my = sy/n;
+        let num=0, dx=0, dy=0;
+        for (let i=0;i<n;i++){
+          const a=xs[i]-mx, b=ys[i]-my;
+          num += a*b; dx += a*a; dy += b*b;
+        }
+        const den = Math.sqrt(dx*dy);
+        if (!den) return null;
+        return num/den;
+      }
+
+      function correlationTop(tab, numericCols) {
+        const rows = tab.rows;
+        const pairs = [];
+        const colData = {};
+        for (const c of numericCols) {
+          const xs = [];
+          for (const r of rows) {
+            const nm = toNumberMaybe(r[c]);
+            if (nm.ok) xs.push(nm.n);
+          }
+          colData[c] = xs;
+        }
+        for (let i=0;i<numericCols.length;i++){
+          for (let j=i+1;j<numericCols.length;j++){
+            const a = numericCols[i], b = numericCols[j];
+            const r = pearson(colData[a], colData[b]);
+            if (r == null) continue;
+            pairs.push({ a, b, r });
+          }
+        }
+        pairs.sort((p,q)=>Math.abs(q.r)-Math.abs(p.r));
+        return pairs.slice(0, 12);
+      }
+
+      function kmeans(tab, numericCols, k) {
+        const rows = tab.rows;
+        const data = [];
+        for (const r of rows) {
+          const vec = [];
+          let ok = true;
+          for (const c of numericCols) {
+            const nm = toNumberMaybe(r[c]);
+            if (!nm.ok) { ok=false; break; }
+            vec.push(nm.n);
+          }
+          if (ok) data.push(vec);
+          if (data.length >= 1000) break;
+        }
+        if (data.length < k * 3) return { ok:false, note:'Not enough numeric rows' };
+
+        const dim = numericCols.length;
+        // standardize
+        const mean = Array(dim).fill(0);
+        for (const v of data) for (let d=0;d<dim;d++) mean[d]+=v[d];
+        for (let d=0;d<dim;d++) mean[d]/=data.length;
+        const sd = Array(dim).fill(0);
+        for (const v of data) for (let d=0;d<dim;d++) sd[d]+=(v[d]-mean[d])**2;
+        for (let d=0;d<dim;d++) sd[d]=Math.sqrt(sd[d]/Math.max(1,(data.length-1))) || 1;
+        const X = data.map(v => v.map((x,d)=>(x-mean[d])/sd[d]));
+
+        // init centroids from first k
+        let C = X.slice(0, k).map(v => v.slice());
+        let assign = new Array(X.length).fill(0);
+        for (let iter=0; iter<15; iter++) {
+          // assign
+          let changed = 0;
+          for (let i=0;i<X.length;i++){
+            let best=0, bestDist=Infinity;
+            for (let ci=0;ci<k;ci++){
+              let dist=0;
+              for (let d=0;d<dim;d++){
+                const dd = X[i][d]-C[ci][d];
+                dist += dd*dd;
+              }
+              if (dist < bestDist) { bestDist=dist; best=ci; }
+            }
+            if (assign[i] !== best) { assign[i]=best; changed++; }
+          }
+          // recompute
+          const sums = Array.from({length:k}, ()=>Array(dim).fill(0));
+          const counts = Array(k).fill(0);
+          for (let i=0;i<X.length;i++){
+            counts[assign[i]]++;
+            for (let d=0;d<dim;d++) sums[assign[i]][d]+=X[i][d];
+          }
+          for (let ci=0;ci<k;ci++){
+            if (!counts[ci]) continue;
+            for (let d=0;d<dim;d++) C[ci][d]=sums[ci][d]/counts[ci];
+          }
+          if (changed === 0) break;
+        }
+        const counts = Array(k).fill(0);
+        for (const a of assign) counts[a]++;
+        // de-standardize centroids for readability
+        const centroids = C.map(vec => vec.map((x,d)=> x*sd[d]+mean[d]));
+        return { ok:true, k, rows: X.length, counts, centroids };
+      }
+
+      function renderSummary(sum) {
+        $('badges').innerHTML = [
+          `<span class="pill">cols=${sum.cols}</span>`,
+          `<span class="pill">rows=${sum.rows}</span>`,
+          `<span class="pill">numeric=${sum.numeric}</span>`,
+          `<span class="pill">date=${sum.dates}</span>`
+        ].join(' ');
+        $('sumHead').innerHTML = '<tr><th>Column</th><th>Type</th><th>Count</th><th>Missing</th><th>Min</th><th>Mean</th><th>Max</th><th>Std</th></tr>';
+        $('sumBody').innerHTML = sum.items.map(it => {
+          const fmt = (x) => (typeof x === 'number' && Number.isFinite(x)) ? (Math.abs(x) >= 1000 ? x.toFixed(2) : x.toFixed(4)) : (x ?? '');
+          return `<tr>
+            <td>${esc(it.column)}</td>
+            <td>${esc(it.type)}</td>
+            <td>${esc(it.count)}</td>
+            <td>${esc(it.missing)}</td>
+            <td>${esc(fmt(it.min))}</td>
+            <td>${esc(fmt(it.mean))}</td>
+            <td>${esc(fmt(it.max))}</td>
+            <td>${esc(fmt(it.stdev))}</td>
+          </tr>`;
+        }).join('');
+      }
+
+      function renderCorr(pairs) {
+        $('corrHead').innerHTML = '<tr><th>A</th><th>B</th><th>r</th><th>strength</th></tr>';
+        $('corrBody').innerHTML = pairs.map(p => {
+          const r = p.r;
+          const strength = Math.abs(r) >= 0.8 ? 'strong' : Math.abs(r) >= 0.5 ? 'medium' : 'weak';
+          return `<tr><td>${esc(p.a)}</td><td>${esc(p.b)}</td><td>${esc(r.toFixed(4))}</td><td>${esc(strength)}</td></tr>`;
+        }).join('') || '<tr><td colspan="4" class="muted">لا توجد علاقات كافية.</td></tr>';
+      }
+
+      function quickInsights(meta, sumItems, pairs) {
+        const lines = [];
+        lines.push(`تم اكتشاف ${meta.cols} عمود و ${meta.rows} صف (تم تحليل أول ${meta.rows} صف).`);
+        const numeric = sumItems.filter(x => x.type === 'number');
+        if (numeric.length) {
+          const top = numeric
+            .slice()
+            .sort((a,b)=> (Number(b.count)||0)-(Number(a.count)||0))
+            .slice(0,3)
+            .map(x => x.column);
+          lines.push(`أعمدة رقمية مهمة: ${top.join('، ')}${numeric.length>3?'…':''}`);
+        } else {
+          lines.push('لم يتم العثور على أعمدة رقمية كافية للحسابات.');
+        }
+        if (pairs && pairs.length) {
+          const p = pairs[0];
+          const dir = p.r >= 0 ? 'إيجابية' : 'سلبية';
+          const strength = Math.abs(p.r) >= 0.8 ? 'قوية' : Math.abs(p.r) >= 0.5 ? 'متوسطة' : 'ضعيفة';
+          lines.push(`أقوى علاقة رقمية: ${p.a} ↔ ${p.b} (${dir}، ${strength}).`);
+        } else {
+          lines.push('لا توجد علاقات رقمية واضحة (قد تكون البيانات قليلة/غير رقمية).');
+        }
+        return lines.join(' ');
+      }
+
+      function buildReport(meta) {
+        const lines = [];
+        lines.push('IIF Automated Analysis Report');
+        lines.push('');
+        lines.push(`- Rows: ${meta.rows}`);
+        lines.push(`- Columns: ${meta.cols}`);
+        lines.push(`- Numeric columns: ${meta.numeric}`);
+        lines.push(`- Date-like columns: ${meta.dates}`);
+        lines.push('');
+        lines.push('## Top correlations');
+        if (meta.corr.length) {
+          for (const p of meta.corr) lines.push(`- ${p.a} vs ${p.b}: r=${p.r.toFixed(4)}`);
+        } else {
+          lines.push('- (none)');
+        }
+        lines.push('');
+        lines.push('## Notes');
+        lines.push('- Correlation is not causation.');
+        lines.push('- Clustering is exploratory; validate with domain knowledge.');
+        return lines.join('\n');
+      }
+
+      function download(name, content, mime) {
+        const blob = new Blob([content], { type: (mime || 'text/plain') + ';charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = name;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+      }
+
+      async function run() {
+        setWarnings([]);
+        const src = $('src').value;
+        if (src === 'connect-last') {
+          const last = localStorage.getItem(LS_CONNECT_LAST) || '';
+          $('input').value = last;
+        }
+        const text = $('input').value.trim();
+        if (!text) { setStatus('ضع بيانات أولاً.', 'bad'); return; }
+        const fmtPick = $('format').value;
+        const fmt = fmtPick === 'auto' ? detectFormat(text) : fmtPick;
+        if (!fmt) { setStatus('تعذر اكتشاف التنسيق.', 'bad'); return; }
+
+        let tab = null;
+        try {
+          tab = (fmt === 'csv') ? parseCsv(text) : parseJsonRows(text);
+        } catch (e) {
+          setStatus('فشل parsing: ' + (e && e.message ? e.message : String(e)), 'bad');
+          return;
+        }
+        if (!tab || !tab.rows || !tab.rows.length) { setStatus('لا توجد صفوف قابلة للتحليل.', 'bad'); return; }
+
+        const limit = Math.max(50, Math.min(5000, Number($('rowLimit').value) || 1000));
+        tab.rows = tab.rows.slice(0, limit);
+
+        const s = summarize(tab);
+        setWarnings(dataQuality(tab, s));
+        const mode = $('mode').value;
+        const pairs = (mode === 'advanced') ? correlationTop(tab, s.numericCols) : correlationTop(tab, s.numericCols).slice(0, 3);
+        renderSummary({ rows: tab.rows.length, cols: tab.cols.length, numeric: s.numericCols.length, dates: s.dateCols.length, items: s.summary });
+        if (mode === 'advanced') renderCorr(pairs);
+
+        const kPick = (mode === 'advanced') ? $('k').value : 'off';
+        let cluster = { ok:false, note:'K=off' };
+        if (kPick !== 'off' && s.numericCols.length >= 2) {
+          cluster = kmeans(tab, s.numericCols.slice(0, 8), Number(kPick));
+        } else if (kPick !== 'off') {
+          cluster = { ok:false, note:'Need at least 2 numeric columns' };
+        }
+        $('clusterOut').textContent = cluster.ok ? JSON.stringify(cluster, null, 2) : String(cluster.note || 'K=off');
+
+        const meta = { rows: tab.rows.length, cols: tab.cols.length, numeric: s.numericCols.length, dates: s.dateCols.length, corr: pairs, cluster };
+        const md = buildReport(meta);
+        $('report').textContent = md;
+        $('report-md').onclick = () => download('iif-analysis-report.md', md, 'text/markdown');
+        $('report-json').onclick = () => download('iif-analysis-report.json', JSON.stringify(meta, null, 2), 'application/json');
+        const quick = quickInsights(meta, s.summary, pairs);
+        $('quickText').textContent = quick;
+
+        // Optional auto-translate (local only)
+        const autoTranslate = $('autoTranslate').value === 'on';
+        if (autoTranslate && isLocalHost()) {
+          const target = $('reportLang').value;
+          try {
+            setStatus('تم التحليل — جاري ترجمة النتائج…', '');
+            const [mdOut, quickOut] = await Promise.all([
+              translateText(md, target),
+              translateText(quick, target),
+            ]);
+            $('report').textContent = mdOut;
+            $('quickText').textContent = quickOut;
+            setStatus('OK — تم التحليل والترجمة.', 'ok');
+            return;
+          } catch (e) {
+            setStatus('تم التحليل، لكن الترجمة تعذرت: ' + (e && e.message ? e.message : String(e)), 'bad');
+            return;
+          }
+        }
+
+        setStatus('OK — تم التحليل.', 'ok');
+      }
+
+      async function translateText(text, target_lang) {
+        if (!isLocalHost()) throw new Error('Translation service is local-only in this demo.');
+        const r = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text, target_lang })
+        });
+        const j = await r.json();
+        if (!r.ok || !j.ok) throw new Error(j.error || 'translate failed');
+        return j.result;
+      }
+
+      function applyMode() {
+        const mode = $('mode').value;
+        const adv = document.querySelectorAll('.adv');
+        for (const el of adv) {
+          if (mode === 'advanced') el.classList.remove('hide');
+          else el.classList.add('hide');
+        }
+        if (mode !== 'advanced') {
+          $('corrHead').innerHTML = '';
+          $('corrBody').innerHTML = '';
+          $('clusterOut').textContent = 'K=off';
+        }
+      }
+
+      $('run').addEventListener('click', run);
+      $('mode').addEventListener('change', applyMode);
+      $('clear').addEventListener('click', () => { $('input').value=''; $('report').textContent='—'; $('clusterOut').textContent='K=off'; $('sumHead').innerHTML=''; $('sumBody').innerHTML=''; $('corrHead').innerHTML=''; $('corrBody').innerHTML=''; $('badges').innerHTML=''; setStatus('جاهز.', ''); });
+      $('src').addEventListener('change', () => {
+        if ($('src').value === 'connect-last') {
+          $('input').value = localStorage.getItem(LS_CONNECT_LAST) || '';
+          setStatus('تم تحميل آخر نتيجة من Connect.', '');
+        }
+      });
+
+      // Optional: auto-load from query ?src=connect
+      (function init() {
+        const u = new URL(location.href);
+        if (u.searchParams.get('src') === 'connect') {
+          $('src').value = 'connect-last';
+          $('input').value = localStorage.getItem(LS_CONNECT_LAST) || '';
+        }
+        applyMode();
+        // Prefer report language based on input (best-effort)
+        const seed = String($('input').value || '');
+        $('reportLang').value = looksArabic(seed) ? 'arb_Arab' : 'eng_Latn';
+      })();
+
+      $('report-translate').addEventListener('click', async () => {
+        const cur = String($('report').textContent || '').trim();
+        if (!cur || cur === '—') { setStatus('لا يوجد تقرير لترجمته.', 'bad'); return; }
+        const target = $('reportLang').value;
+        try {
+          setStatus('جاري الترجمة… (أول مرة قد تكون أبطأ)', '');
+          const out = await translateText(cur, target);
+          $('report').textContent = out;
+          setStatus('تمت الترجمة.', 'ok');
+        } catch (e) {
+          setStatus('تعذر الترجمة: ' + (e && e.message ? e.message : String(e)), 'bad');
+        }
+      });
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,183 @@
+<!-- Dashboard Page Component -->
+<div class="dashboard" id="dashboard-page">
+  <div class="dashboard__header">
+    <h1 class="dashboard__title" data-i18n="dashboardTitle">Dashboard</h1>
+    <p class="dashboard__subtitle" data-i18n="dashboardSubtitle">
+      Welcome to your investment management center
+    </p>
+  </div>
+
+  <!-- System Status (local dev diagnostics) -->
+  <div class="dashboard__statusbar" id="dashboard-statusbar" role="status" aria-live="polite">
+    <span class="lang-en">System status: loading…</span>
+    <span class="lang-ar">حالة النظام: جارٍ التحميل…</span>
+  </div>
+
+  <!-- Quick Stats -->
+  <div class="dashboard__stats">
+    <div class="stat-card">
+      <div class="stat-card__icon">📊</div>
+      <div class="stat-card__content">
+        <h3 class="stat-card__title" data-i18n="statInvestments">Total Investments</h3>
+        <p class="stat-card__value" id="total-investments">$0</p>
+        <p class="stat-card__change positive" data-i18n="statChangePositive">+12.5%</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card__icon">👥</div>
+      <div class="stat-card__content">
+        <h3 class="stat-card__title" data-i18n="statClients">Active Clients</h3>
+        <p class="stat-card__value" id="active-clients">0</p>
+        <p class="stat-card__change positive" data-i18n="statChangePositive">+8.3%</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card__icon">📈</div>
+      <div class="stat-card__content">
+        <h3 class="stat-card__title" data-i18n="statReturns">Returns</h3>
+        <p class="stat-card__value" id="returns">0%</p>
+        <p class="stat-card__change positive" data-i18n="statChangePositive">+5.7%</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card__icon">🌍</div>
+      <div class="stat-card__content">
+        <h3 class="stat-card__title" data-i18n="statCountries">Countries</h3>
+        <p class="stat-card__value" id="countries">0</p>
+        <p class="stat-card__change neutral" data-i18n="statChangeNeutral">0%</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Grid -->
+  <div class="dashboard__grid">
+    <!-- Recent Activities -->
+    <div class="dashboard__card">
+      <div class="card__header">
+        <h2 class="card__title" data-i18n="recentActivities">Recent Activities</h2>
+        <p class="card__subtitle" data-i18n="recentActivitiesSubtitle">Latest updates and actions</p>
+      </div>
+      <div class="card__content">
+        <div class="activities-list" id="activities-list">
+          <!-- Activities will be populated by JavaScript -->
+        </div>
+      </div>
+      <div class="card__actions">
+        <button class="btn btn--ghost btn-sm" id="view-all-activities">
+          <span data-i18n="viewAll">View All</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Portfolio Overview -->
+    <div class="dashboard__card">
+      <div class="card__header">
+        <h2 class="card__title" data-i18n="portfolioOverview">Portfolio Overview</h2>
+        <p class="card__subtitle" data-i18n="portfolioOverviewSubtitle">Your investment distribution</p>
+      </div>
+      <div class="card__content">
+        <div class="portfolio-chart" id="portfolio-chart">
+          <!-- Chart will be rendered by JavaScript -->
+        </div>
+      </div>
+      <div class="card__actions">
+        <button class="btn btn--primary btn-sm" id="view-portfolio">
+          <span data-i18n="viewDetails">View Details</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="dashboard__card">
+      <div class="card__header">
+        <h2 class="card__title" data-i18n="quickActions">Quick Actions</h2>
+        <p class="card__subtitle" data-i18n="quickActionsSubtitle">Common tasks and tools</p>
+      </div>
+      <div class="card__content">
+        <div class="quick-actions-grid">
+          <button class="quick-action-btn" data-action="new-investment">
+            <span class="quick-action-icon">💰</span>
+            <span class="quick-action-label" data-i18n="newInvestment">New Investment</span>
+          </button>
+          <button class="quick-action-btn" data-action="send-letter">
+            <span class="quick-action-icon">📧</span>
+            <span class="quick-action-label" data-i18n="sendLetter">Send Letter</span>
+          </button>
+          <button class="quick-action-btn" data-action="view-reports">
+            <span class="quick-action-icon">📊</span>
+            <span class="quick-action-label" data-i18n="viewReports">View Reports</span>
+          </button>
+          <button class="quick-action-btn" data-action="team-management">
+            <span class="quick-action-icon">👥</span>
+            <span class="quick-action-label" data-i18n="teamManagement">Team Management</span>
+          </button>
+          <button class="quick-action-btn" data-action="client-portal">
+            <span class="quick-action-icon">🔐</span>
+            <span class="quick-action-label" data-i18n="clientPortal">Client Portal</span>
+          </button>
+          <button class="quick-action-btn" data-action="settings">
+            <span class="quick-action-icon">⚙️</span>
+            <span class="quick-action-label" data-i18n="settings">Settings</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="dashboard__card">
+      <div class="card__header">
+        <h2 class="card__title" data-i18n="notifications">Notifications</h2>
+        <p class="card__subtitle" data-i18n="notificationsSubtitle">Important updates and alerts</p>
+      </div>
+      <div class="card__content">
+        <div class="notifications-list" id="notifications-list">
+          <!-- Notifications will be populated by JavaScript -->
+        </div>
+      </div>
+      <div class="card__actions">
+        <button class="btn btn--ghost btn-sm" id="view-all-notifications">
+          <span data-i18n="viewAll">View All</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Market Overview -->
+    <div class="dashboard__card">
+      <div class="card__header">
+        <h2 class="card__title" data-i18n="marketOverview">Market Overview</h2>
+        <p class="card__subtitle" data-i18n="marketOverviewSubtitle">Global market trends</p>
+      </div>
+      <div class="card__content">
+        <div class="market-ticker" id="market-ticker">
+          <!-- Market data will be populated by JavaScript -->
+        </div>
+      </div>
+      <div class="card__actions">
+        <button class="btn btn--ghost btn-sm" id="view-markets">
+          <span data-i18n="viewDetails">View Details</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Recent Documents -->
+    <div class="dashboard__card">
+      <div class="card__header">
+        <h2 class="card__title" data-i18n="recentDocuments">Recent Documents</h2>
+        <p class="card__subtitle" data-i18n="recentDocumentsSubtitle">Latest files and reports</p>
+      </div>
+      <div class="card__content">
+        <div class="documents-list" id="documents-list">
+          <!-- Documents will be populated by JavaScript -->
+        </div>
+      </div>
+      <div class="card__actions">
+        <button class="btn btn--primary btn-sm" id="view-all-documents">
+          <span data-i18n="viewAll">View All</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

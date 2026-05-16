@@ -1,0 +1,25 @@
+# موقع ثقة الذهبية — نشر Next.js ثابت (Static Export)
+#
+# في لوحة Netlify لهذا الموقع:
+#   Repository: نفس مستودع iif-web
+#   Base directory: thiqqah-site
+#   Build command: npm run build
+#   Publish directory: dist
+#
+# اربط الدومين thiqqah.live + www هنا فقط.
+
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[functions]
+  directory = "netlify/functions"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    Cross-Origin-Opener-Policy = "same-origin"

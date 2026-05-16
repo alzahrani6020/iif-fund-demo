@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محمد عيضة الزهراني - منصة ثقافية متكاملة</title>
+    <meta name="description" content="منصة ثقافية متكاملة للشاعر السعودي محمد عيضة الزهراني، تضم ديوانه الشعري الكامل، معجم الهجة الزهرانية، مكتبة صوتية وفيديو">
+    <meta name="keywords" content="محمد عيضة الزهراني، شعر سعودي، شعر عربي، الهجة الزهرانية، ثقافة سعودية">
+    <meta name="author" content="محمد عيضة الزهراني">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="محمد عيضة الزهراني - منصة ثقافية متكاملة">
+    <meta property="og:description" content="منصة ثقافية متكاملة للشاعر السعودي محمد عيضة الزهراني">
+    <meta property="og:image" content="assets/images/og-image.jpg">
+    <meta property="og:url" content="https://alzahrani.com">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="محمد عيضة الزهراني - منصة ثقافية متكاملة">
+    <meta name="twitter:description" content="منصة ثقافية متكاملة للشاعر السعودي محمد عيضة الزهراني">
+    <meta name="twitter:image" content="assets/images/twitter-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/dictionary-advanced.css">
+    <link rel="stylesheet" href="css/video-player.css">
+    <link rel="stylesheet" href="css/cultural-search.css">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "محمد عيضة الزهراني",
+        "jobTitle": "شاعر سعودي",
+        "description": "شاعر سعودي معروف بالشعر النبطي واللهجة الزهرانية والتراث الجنوبي",
+        "url": "https://alzahrani.com",
+        "sameAs": [
+            "https://twitter.com/alzahrani",
+            "https://instagram.com/alzahrani",
+            "https://facebook.com/alzahrani"
+        ],
+        "knowsAbout": [
+            "الشعر النبطي",
+            "الشعر الشعبي",
+            "اللهجة الزهرانية",
+            "التراث الجنوبي",
+            "مفردات اللهجات السعودية",
+            "الثقافة السعودية"
+        ],
+        "specializesIn": "الشعر النبطي والتراث السعودي"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "موقع محمد عيضة الزهراني الشعري",
+        "description": "موقع يختص بالشعر النبطي واللهجة الزهرانية والتراث الجنوبي",
+        "url": "https://alzahrani.com",
+        "inLanguage": "ar",
+        "keywords": [
+            "الشعر النبطي",
+            "الشعر الشعبي",
+            "اللهجة الزهرانية",
+            "التراث الجنوبي",
+            "مفردات اللهجات السعودية",
+            "شعر سعودي",
+            "ثقافة جنوب السعودية",
+            "زهران",
+            "محمد عيضة الزهراني"
+        ],
+        "about": [
+            {
+                "@type": "Thing",
+                "name": "الشعر النبطي",
+                "description": "فن شعري أصيل في الجزيرة العربية"
+            },
+            {
+                "@type": "Thing", 
+                "name": "اللهجة الزهرانية",
+                "description": "لهجة منطقة زهران في جنوب السعودية"
+            },
+            {
+                "@type": "Thing",
+                "name": "التراث الجنوبي",
+                "description": "التراث الثقافي لمنطقة جنوب السعودية"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-feather-alt"></i>
+            </div>
+            <h2>محمد عيضة الزهراني</h2>
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+
+    <!-- Header Component -->
+    <div id="header-component"></div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-pattern"></div>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <i class="fas fa-star"></i>
+                    <span>شاعر نظم وأدب</span>
+                </div>
+                <h1 class="hero-title">محمد عيضة الزهراني</h1>
+                <p class="hero-subtitle">حارس التراث الزهراني وصوت الشعر الأصيل</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">83.5K</span>
+                        <span class="stat-label">متابع</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">167.7K</span>
+                        <span class="stat-label">إعجاب</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">قصيدة</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#diwan" class="btn btn-primary">
+                        <i class="fas fa-book-open"></i>
+                        ابدأ بالديوان
+                    </a>
+                    <a href="#about" class="btn btn-secondary">
+                        <i class="fas fa-user"></i>
+                        تعرف عليّ
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="poet-avatar">
+                    <img src="https://picsum.photos/seed/poet-avatar/400/400" alt="محمد عيضة الزهراني">
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Quick Access Section -->
+    <section class="quick-access">
+        <div class="container">
+            <div class="quick-grid">
+                <a href="#diwan" class="quick-card">
+                    <div class="quick-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>الديوان الشعري</h3>
+                    <p>مجموعة قصائدي الكاملة</p>
+                </a>
+                <a href="#dictionary" class="quick-card">
+                    <div class="quick-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3>معجم زهران</h3>
+                    <p>مفردات اللهجة الزهرانية</p>
+                </a>
+                <a href="#videos" class="quick-card">
+                    <div class="quick-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>الفيديوهات</h3>
+                    <p>شاهد الأمسيات واللقاءات</p>
+                </a>
+                <a href="#audio" class="quick-card">
+                    <div class="quick-icon">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <h3>المكتبة الصوتية</h3>
+                    <p>استمع للقصائد الصوتية</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diwan Section -->
+    <section id="diwan" class="diwan">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">الديوان الشعري</h2>
+                <p class="section-subtitle">مجموعة القصائد الكاملة مصنفة حسب الموضوع والزمن</p>
+                <div class="section-actions">
+                    <div class="filter-tabs">
+                        <button class="tab-btn active" data-filter="all">الكل</button>
+                        <button class="tab-btn" data-filter="heritage">تراثي</button>
+                        <button class="tab-btn" data-filter="love">عشقي</button>
+                        <button class="tab-btn" data-filter="patriotic">وطني</button>
+                        <button class="tab-btn" data-filter="social">اجتماعي</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="poems-grid" id="poemsGrid">
+                <article class="poem-card" data-category="heritage">
+                    <div class="poem-header">
+                        <div class="poem-meta">
+                            <h3 class="poem-title">مشران</h3>
+                            <span class="poem-date">١٤٤٥ هـ</span>
+                        </div>
+                        <div class="poem-category">
+                            <span class="category-tag heritage">تراثي</span>
+                        </div>
+                    </div>
+                    <div class="poem-content">
+                        <div class="poem-excerpt">
+                            <p>يا مشران يا بو خروش بن علاس</p>
+                            <p>في تاريخ زهران الساطع المشرق</p>
+                            <p>حكايات الأجداد في كل رواية</p>
+                            <p>تخلد مجداً لا يضيع ولا يندثر</p>
+                        </div>
+                    </div>
+                    <div class="poem-footer">
+                        <div class="poem-stats">
+                            <span class="stat"><i class="fas fa-eye"></i> 17.8K</span>
+                            <span class="stat"><i class="fas fa-heart"></i> 3.2K</span>
+                        </div>
+                        <div class="poem-actions">
+                            <button class="btn-read-more" data-poem-id="1">قراءة</button>
+                            <button class="btn-audio" data-audio="mashran.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="btn-share">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="poem-card" data-category="love">
+                    <div class="poem-header">
+                        <div class="poem-meta">
+                            <h3 class="poem-title">ورد تنامى في فصول الرتابة</h3>
+                            <span class="poem-date">١٤٤٤ هـ</span>
+                        </div>
+                        <div class="poem-category">
+                            <span class="category-tag love">عشقي</span>
+                        </div>
+                    </div>
+                    <div class="poem-content">
+                        <div class="poem-excerpt">
+                            <p>ورد تنامى في فصول الرتابة</p>
+                            <p>وشموخ يعلو فوق هام السحابة</p>
+                            <p>أحبك حباً ليس فيه كذابة</p>
+                            <p>كحب الجبال للأنهار السائبة</p>
+                        </div>
+                    </div>
+                    <div class="poem-footer">
+                        <div class="poem-stats">
+                            <span class="stat"><i class="fas fa-eye"></i> 45.2K</span>
+                            <span class="stat"><i class="fas fa-heart"></i> 8.7K</span>
+                        </div>
+                        <div class="poem-actions">
+                            <button class="btn-read-more" data-poem-id="2">قراءة</button>
+                            <button class="btn-audio" data-audio="ward.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="btn-share">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="poem-card" data-category="patriotic">
+                    <div class="poem-header">
+                        <div class="poem-meta">
+                            <h3 class="poem-title">زهران ووادي رهاوة</h3>
+                            <span class="poem-date">١٤٤٥ هـ</span>
+                        </div>
+                        <div class="poem-category">
+                            <span class="category-tag patriotic">وطني</span>
+                        </div>
+                    </div>
+                    <div class="poem-content">
+                        <div class="poem-excerpt">
+                            <p>زهران بشأن وادي رهاوة</p>
+                            <p>ومشاركة بني حسن وأحلاف دوقة</p>
+                            <p>أرض الأجداد وكرم الضيافة</p>
+                            <p>رحمة الله على كل من ساهم فيها</p>
+                        </div>
+                    </div>
+                    <div class="poem-footer">
+                        <div class="poem-stats">
+                            <span class="stat"><i class="fas fa-eye"></i> 73.5K</span>
+                            <span class="stat"><i class="fas fa-heart"></i> 12.1K</span>
+                        </div>
+                        <div class="poem-actions">
+                            <button class="btn-read-more" data-poem-id="3">قراءة</button>
+                            <button class="btn-audio" data-audio="zahran.mp3">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="btn-share">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="load-more-container">
+                <button class="btn btn-outline" id="loadMorePoems">تحميل المزيد</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dictionary Section -->
+    <section id="dictionary" class="dictionary">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">معجم الهجة الزهرانية</h2>
+                <p class="section-subtitle">مفردات وتعبيرات من تراث زهران</p>
+            </div>
+            
+            <div class="dictionary-search">
+                <input type="text" id="dictSearch" placeholder="ابحث عن كلمة في المعجم...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+
+            <div class="dictionary-grid" id="dictionaryGrid">
+                <div class="dictionary-card">
+                    <div class="word-header">
+                        <h3 class="arabic-word">مشران</h3>
+                        <span class="word-type">اسم علم</span>
+                    </div>
+                    <div class="word-meaning">
+                        <p><strong>المعنى:</strong> اسم تاريخي لشخصية بارزة في تاريخ زهران</p>
+                        <p><strong>الاستخدام:</strong> يُستخدم في الشعر والقصص التراثية</p>
+                        <p><strong>مثال:</strong> "يا مشران يا بو خروش بن علاس"</p>
+                    </div>
+                    <div class="word-actions">
+                        <button class="btn-audio-pronunciation" data-word="مشران">
+                            <i class="fas fa-volume-up"></i>
+                            استمع
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dictionary-card">
+                    <div class="word-header">
+                        <h3 class="arabic-word">بخروش</h3>
+                        <span class="word-type">اسم</span>
+                    </div>
+                    <div class="word-meaning">
+                        <p><strong>المعنى:</strong> اسم شخصية تاريخية، جزء من اسم "مشران بخروش بن علاس"</p>
+                        <p><strong>الاستخدام:</strong> في الملاحم والسير الشعبية</p>
+                        <p><strong>مثال:</strong> "مشران بخروش بن علاس"</p>
+                    </div>
+                    <div class="word-actions">
+                        <button class="btn-audio-pronunciation" data-word="بخروش">
+                            <i class="fas fa-volume-up"></i>
+                            استمع
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dictionary-card">
+                    <div class="word-header">
+                        <h3 class="arabic-word">رهاوة</h3>
+                        <span class="word-type">اسم مكان</span>
+                    </div>
+                    <div class="word-meaning">
+                        <p><strong>المعنى:</strong> وادٍ تاريخي في منطقة زهران</p>
+                        <p><strong>الاستخدام:</strong> يُذكر في الشعر والتراث</p>
+                        <p><strong>مثال:</strong> "زهران بشأن وادي رهاوة"</p>
+                    </div>
+                    <div class="word-actions">
+                        <button class="btn-audio-pronunciation" data-word="رهاوة">
+                            <i class="fas fa-volume-up"></i>
+                            استمع
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dictionary-card">
+                    <div class="word-header">
+                        <h3 class="arabic-word">دوقة</h3>
+                        <span class="word-type">اسم قبيلة</span>
+                    </div>
+                    <div class="word-meaning">
+                        <p><strong>المعنى:</strong> اسم قبيلة من قبائل زهران</p>
+                        <p><strong>الاستخدام:</strong> في السياقات التاريخية والقبلية</p>
+                        <p><strong>مثال:</strong> "أحلاف دوقة رحمة الله عليهم"</p>
+                    </div>
+                    <div class="word-actions">
+                        <button class="btn-audio-pronunciation" data-word="دوقة">
+                            <i class="fas fa-volume-up"></i>
+                            استمع
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section id="videos" class="videos">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">الفيديوهات</h2>
+                <p class="section-subtitle">أمسيات شعرية ولقاءات ومحتوى ثقافي</p>
+                <div class="section-actions">
+                    <div class="filter-tabs">
+                        <button class="tab-btn active" data-filter="all">الكل</button>
+                        <button class="tab-btn" data-filter="evenings">أمسيات</button>
+                        <button class="tab-btn" data-filter="interviews">لقاءات</button>
+                        <button class="tab-btn" data-filter="heritage">تراث</button>
+                        <button class="tab-btn" data-filter="poetry">شعر</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="videos-grid" id="videosGrid">
+                <div class="video-card" data-category="heritage">
+                    <div class="video-thumbnail">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-duration">١٥:٤٢</div>
+                        <img src="https://picsum.photos/seed/mashran-video/400/225" alt="مشران / بخروش بن علاس">
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">مشران / بخروش بن علاس / انكسار الفرس</h3>
+                        <p class="video-description">تاريخ زهران في قصة مشران وبخروش بن علاس</p>
+                        <div class="video-meta">
+                            <span class="video-views">17.8K مشاهدة</span>
+                            <span class="video-date">منذ شهر</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card" data-category="poetry">
+                    <div class="video-thumbnail">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-duration">٨:٣٥</div>
+                        <img src="https://picsum.photos/seed/ward-video/400/225" alt="ورد تنامى في فصول الرتابة">
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">ورد تنامى في فصول الرتابة</h3>
+                        <p class="video-description">قصيدة عشق من الديوان الصوتي</p>
+                        <div class="video-meta">
+                            <span class="video-views">45.2K مشاهدة</span>
+                            <span class="video-date">منذ شهرين</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card" data-category="heritage">
+                    <div class="video-thumbnail">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-duration">١٢:١٨</div>
+                        <img src="https://picsum.photos/seed/zahran-video/400/225" alt="زهران ووادي رهاوة">
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">زهران بشأن وادي رهاوة</h3>
+                        <p class="video-description">مشاركة بني حسن وأحلاف دوقة</p>
+                        <div class="video-meta">
+                            <span class="video-views">73.5K مشاهدة</span>
+                            <span class="video-date">منذ 3 أشهر</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-card" data-category="evenings">
+                    <div class="video-thumbnail">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-duration">٤٥:٢٠</div>
+                        <img src="https://picsum.photos/seed/evening1/400/225" alt="أمسية شعرية">
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">أمسية شعرية - الرياض</h3>
+                        <p class="video-description">أمسية ثقافية في نادي الرياض الأدبي</p>
+                        <div class="video-meta">
+                            <span class="video-views">28.3K مشاهدة</span>
+                            <span class="video-date">منذ 4 أشهر</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="load-more-container">
+                <button class="btn btn-outline" id="loadMoreVideos">تحميل المزيد</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio Library Section -->
+    <section id="audio" class="audio-library">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">المكتبة الصوتية</h2>
+                <p class="section-subtitle">الديوان الصوتي الكامل</p>
+            </div>
+            
+            <div class="audio-player-container">
+                <div class="current-audio">
+                    <div class="audio-cover">
+                        <img src="https://picsum.photos/seed/audio-cover/300/300" alt="الديوان الصوتي">
+                    </div>
+                    <div class="audio-info">
+                        <h3 id="currentAudioTitle">ورد تنامى في فصول الرتابة</h3>
+                        <p id="currentAudioArtist">محمد عيضة الزهراني</p>
+                        <div class="audio-controls">
+                            <button class="control-btn" id="prevBtn">
+                                <i class="fas fa-backward"></i>
+                            </button>
+                            <button class="control-btn play-pause" id="playPauseBtn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="control-btn" id="nextBtn">
+                                <i class="fas fa-forward"></i>
+                            </button>
+                        </div>
+                        <div class="progress-container">
+                            <span id="currentTime">0:00</span>
+                            <div class="progress-bar">
+                                <div class="progress" id="progress"></div>
+                            </div>
+                            <span id="duration">0:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="audio-playlist">
+                <h3>قائمة التشغيل</h3>
+                <div class="playlist-items" id="playlistItems">
+                    <div class="playlist-item active" data-audio="ward.mp3">
+                        <div class="item-info">
+                            <h4>ورد تنامى في فصول الرتابة</h4>
+                            <span>٥:٣٢</span>
+                        </div>
+                        <button class="play-item">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="playlist-item" data-audio="mashran.mp3">
+                        <div class="item-info">
+                            <h4>مشران</h4>
+                            <span>٧:١٥</span>
+                        </div>
+                        <button class="play-item">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="playlist-item" data-audio="zahran.mp3">
+                        <div class="item-info">
+                            <h4>زهران ووادي رهاوة</h4>
+                            <span>٦:٤٨</span>
+                        </div>
+                        <button class="play-item">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="events">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">الأمسيات والمجالس</h2>
+                <p class="section-subtitle">الفعاليات الثقافية والشعرية</p>
+            </div>
+            
+            <div class="events-grid">
+                <div class="event-card upcoming">
+                    <div class="event-date">
+                        <span class="day">٢٥</span>
+                        <span class="month">صفر</span>
+                        <span class="year">١٤٤٦</span>
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title">أمسية شعرية - جدة</h3>
+                        <p class="event-description">أمسية ثقافية في نادي جدة الأدبي</p>
+                        <div class="event-details">
+                            <span class="event-time"><i class="fas fa-clock"></i> ٨:٠٠ مساءً</span>
+                            <span class="event-location"><i class="fas fa-map-marker-alt"></i> نادي جدة الأدبي</span>
+                        </div>
+                        <button class="btn btn-primary">حجز المكان</button>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="day">١٥</span>
+                        <span class="month">محرم</span>
+                        <span class="year">١٤٤٦</span>
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title">مجلس شعري - الرياض</h3>
+                        <p class="event-description">مجلس شعري ثقافي مفتوح</p>
+                        <div class="event-details">
+                            <span class="event-time"><i class="fas fa-clock"></i> ٧:٠٠ مساءً</span>
+                            <span class="event-location"><i class="fas fa-map-marker-alt"></i> الرياض</span>
+                        </div>
+                        <button class="btn btn-outline" disabled>انتهى</button>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="day">١٠</span>
+                        <span class="month">ذو الحجة</span>
+                        <span class="year">١٤٤٥</span>
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title">مهرجان زهران الثقافي</h3>
+                        <p class="event-description">مهرجان ثقافي وتراثي</p>
+                        <div class="event-details">
+                            <span class="event-time"><i class="fas fa-clock"></i> ٦:٠٠ مساءً</span>
+                            <span class="event-location"><i class="fas fa-map-marker-alt"></i> أبها</span>
+                        </div>
+                        <button class="btn btn-outline" disabled>انتهى</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quotes Section -->
+    <section id="quotes" class="quotes">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">الاقتباسات</h2>
+                <p class="section-subtitle">أجمل ما قيل في الشعر والتراث</p>
+            </div>
+            
+            <div class="quotes-container">
+                <div class="quote-card featured">
+                    <div class="quote-content">
+                        <blockquote>
+                            "الشعر هو لغة الروح التي لا تفهمها إلا القلوب النقية"
+                        </blockquote>
+                        <cite>محمد عيضة الزهراني</cite>
+                    </div>
+                    <div class="quote-actions">
+                        <button class="btn-share-quote">
+                            <i class="fas fa-share"></i>
+                        </button>
+                        <button class="btn-copy-quote">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="quotes-grid">
+                    <div class="quote-card">
+                        <div class="quote-content">
+                            <blockquote>
+                                "التراث ليس ماضياً نتذكره، بل حاضر نعيشه ومستقبل نبنيه"
+                            </blockquote>
+                            <cite>محمد عيضة الزهراني</cite>
+                        </div>
+                    </div>
+
+                    <div class="quote-card">
+                        <div class="quote-content">
+                            <blockquote>
+                                "زهران ليست مجرد أرض، بل هي روح تسري في عروق أبنائها"
+                            </blockquote>
+                            <cite>محمد عيضة الزهراني</cite>
+                        </div>
+                    </div>
+
+                    <div class="quote-card">
+                        <div class="quote-content">
+                            <blockquote>
+                                "الشعر الحقيقي هو الذي يخرج من القلب ليدخل القلب"
+                            </blockquote>
+                            <cite>محمد عيضة الزهراني</cite>
+                        </div>
+                    </div>
+
+                    <div class="quote-card">
+                        <div class="quote-content">
+                            <blockquote>
+                                "الكلمة الطيبة تبقى وإن مات قائلها"
+                            </blockquote>
+                            <cite>محمد عيضة الزهراني</cite>
+                        </div>
+                    </div>
+
+                    <div class="quote-card">
+                        <div class="quote-content">
+                            <blockquote>
+                                "الأصالة هي الجذور، والحداثة هي الأغصان، وكلاهما ضروري للشجرة"
+                            </blockquote>
+                            <cite>محمد عيضة الزهراني</cite>
+                        </div>
+                    </div>
+
+                    <div class="quote-card">
+                        <div class="quote-content">
+                            <blockquote>
+                                "الثقافة هي هوية الشعوب وحصنها الأمين"
+                            </blockquote>
+                            <cite>محمد عيضة الزهراني</cite>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">محمد عيضة الزهراني</h2>
+                    <div class="about-bio">
+                        <p>
+                            شاعر سعودي من أبرز شعراء المنطقة الجنوبية، متخصص في الشعر النظمي والتراثي.
+                            ولد ونشأ في منطقة زهران، وتأثر بثقافتها الغنية وموروثها الشعري العريق.
+                        </p>
+                        <p>
+                            يتميز شعره بالأصالة والعمق، حيث يجمع بين التراث والمعاصرة، وينقل صورة
+                            حقيقية لثقافة زهران وتاريخها المجيد.
+                        </p>
+                    </div>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">قصيدة</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">83.5K</span>
+                            <span class="stat-label">متابع</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">15+</span>
+                            <span class="stat-label">سنة خبرة</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">أمسية</span>
+                        </div>
+                    </div>
+
+                    <div class="about-achievements">
+                        <h3>الإنجازات والمشاركات</h3>
+                        <ul>
+                            <li>إصدار ديوان "ورد تنامى في فصول الرتابة" الصوتي</li>
+                            <li>المشاركة في أكثر من 50 أمسية شعرية</li>
+                            <li>الحفاظ على تراث زهران الشعري</li>
+                            <li>نشر ثقافة الشعر النظمي في وسائل التواصل الاجتماعي</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="about-media">
+                    <div class="about-image">
+                        <img src="https://picsum.photos/seed/poet-profile/400/500" alt="محمد عيضة الزهراني">
+                    </div>
+                    
+                    <div class="social-links">
+                        <h3>تابعني على</h3>
+                        <div class="social-grid">
+                            <a href="https://tiktok.com/@mohd_eidah" class="social-link" target="_blank">
+                                <i class="fab fa-tiktok"></i>
+                                <span>TikTok</span>
+                            </a>
+                            <a href="https://youtube.com/@mohd3z" class="social-link" target="_blank">
+                                <i class="fab fa-youtube"></i>
+                                <span>YouTube</span>
+                            </a>
+                            <a href="https://snapchat.com/add/mohd33z" class="social-link" target="_blank">
+                                <i class="fab fa-snapchat"></i>
+                                <span>Snapchat</span>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">تواصل معي</h2>
+                <p class="section-subtitle">يسعدني التواصل معك للاستفسارات والمشاركات</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-details">
+                            <h3>البريد الإلكتروني</h3>
+                            <p>mohd.eidah@example.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-details">
+                            <h3>واتساب</h3>
+                            <p>+٩٦٦ ٥٠ ١٢٣ ٤٥٦٧</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="contact-details">
+                            <h3>الموقع</h3>
+                            <p>المنطقة الجنوبية، المملكة العربية السعودية</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="الاسم الكامل" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="البريد الإلكتروني" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" placeholder="الموضوع">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="رسالتك" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">إرسال الرسالة</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-feather-alt"></i>
+                        <h3>محمد عيضة الزهراني</h3>
+                    </div>
+                    <p>شاعر نظم وأدب، حارس التراث الزهراني</p>
+                    <div class="footer-social">
+                        <a href="https://tiktok.com/@mohd_eidah" target="_blank"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://youtube.com/@mohd3z" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://snapchat.com/add/mohd33z" target="_blank"><i class="fab fa-snapchat"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#diwan">الديوان الشعري</a></li>
+                        <li><a href="#dictionary">معجم زهران</a></li>
+                        <li><a href="#videos">الفيديوهات</a></li>
+                        <li><a href="#audio">المكتبة الصوتية</a></li>
+                        <li><a href="#events">الأمسيات</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>المحتوى</h4>
+                    <ul>
+                        <li><a href="#quotes">الاقتباسات</a></li>
+                        <li><a href="#about">التعريف بالشاعر</a></li>
+                        <li><a href="#contact">تواصل معي</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>النشرة البريدية</h4>
+                    <p>اشترك للحصول على آخر القصائد والأخبار</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="بريدك الإلكتروني">
+                        <button type="submit">اشترك</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; ١٤٤٦ هـ جميع الحقوق محفوظة. صُمم بـ ❤️ للشعر والثقافة الزهرانية</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Poem Modal -->
+    <div class="modal" id="poemModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalPoemTitle">عنوان القصيدة</h2>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="poem-full-content" id="poemFullContent">
+                    <!-- Poem content will be loaded here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="modal-actions">
+                    <button class="btn btn-outline" id="modalAudioBtn">
+                        <i class="fas fa-play"></i>
+                        استمع
+                    </button>
+                    <button class="btn btn-outline" id="modalShareBtn">
+                        <i class="fas fa-share"></i>
+                        مشاركة
+                    </button>
+                    <button class="btn btn-primary" id="modalDownloadBtn">
+                        <i class="fas fa-download"></i>
+                        تحميل
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script type="module" src="js/components-loader.js"></script>
+    <script type="module" src="js/main.js"></script>
+    
+    <!-- Component Loading Script -->
+    <script type="module">
+        import { ComponentsLoader } from './js/components-loader.js';
+        
+        // Initialize and load all components
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loader = new ComponentsLoader();
+            await loader.injectAllComponents();
+        });
+    </script>
+    
+    <!-- Fallback for browsers that don't support modules -->
+    <script nomodule>
+        console.warn('Your browser does not support ES6 modules. Please upgrade to a modern browser.');
+    </script>
+</body>
+</html>

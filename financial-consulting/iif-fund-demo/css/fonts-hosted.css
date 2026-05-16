@@ -1,0 +1,81 @@
+/**
+ * Self-hosted webfonts — drop matching .woff2 files into assets/fonts/
+ * (see assets/fonts/HOWTO.txt). Link this stylesheet before design-system.css.
+ *
+ * Required files (rename downloads from Google Webfonts Helper / official releases):
+ *   assets/fonts/plus-jakarta-sans-400.woff2
+ *   assets/fonts/plus-jakarta-sans-500.woff2
+ *   assets/fonts/plus-jakarta-sans-600.woff2
+ *   assets/fonts/plus-jakarta-sans-700.woff2
+ *   assets/fonts/noto-sans-arabic-400.woff2
+ *   assets/fonts/noto-sans-arabic-500.woff2
+ *   assets/fonts/noto-sans-arabic-600.woff2
+ *   assets/fonts/noto-sans-arabic-700.woff2
+ *
+ * Plus Jakarta: Latin subset (npm @fontsource/plus-jakarta-sans).
+ * Noto Sans Arabic: Arabic-script subset only; Latin UI uses Plus Jakarta via the font stack.
+ */
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/plus-jakarta-sans-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../assets/fonts/plus-jakarta-sans-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/plus-jakarta-sans-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/plus-jakarta-sans-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans Arabic";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/noto-sans-arabic-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans Arabic";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../assets/fonts/noto-sans-arabic-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans Arabic";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/noto-sans-arabic-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans Arabic";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/noto-sans-arabic-700.woff2") format("woff2");
+}

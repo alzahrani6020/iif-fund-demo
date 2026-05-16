@@ -1,0 +1,8 @@
+# نسخ إلى الخادم (مثلاً /etc/caddy/Caddyfile) واستبدل search.example.com بنطاقك.
+# المتطلبات: DNS يشير إلى الـ VPS، المنافذ 80 و443 مفتوحة لـ Let's Encrypt.
+#
+# بعد docker compose up -d في engines/searxng يستمع SearXNG على 127.0.0.1:18080
+
+search.example.com {
+	reverse_proxy 127.0.0.1:18080
+}

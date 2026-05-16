@@ -1,0 +1,236 @@
+// Enhanced Government Search Page
+<div class="government-search-page">
+  <!-- Hero Section -->
+  <section class="search-hero">
+    <div class="search-hero__content">
+      <h1 class="search-hero__title" data-i18n="govSearchHeroTitle">
+        Government Information Portal
+      </h1>
+      <p class="search-hero__subtitle" data-i18n="govSearchHeroSubtitle">
+        Instant access to government ministries and contact information for any country
+      </p>
+      
+      <!-- Enhanced Search Bar -->
+      <div class="enhanced-search-bar">
+        <form id="enhanced-search-form" class="search-form">
+          <div class="search-input-group">
+            <div class="search-input-wrapper">
+              <input 
+                type="text" 
+                id="country-search-input" 
+                class="search-input search-input--large"
+                placeholder="Search for any country..."
+                data-i18n="countrySearchPlaceholder"
+                autocomplete="off"
+                required
+              >
+              <div class="search-icon">🔍</div>
+              <div class="search-suggestions" id="search-suggestions">
+                <!-- Suggestions will be populated here -->
+              </div>
+            </div>
+            <button type="submit" class="btn btn--primary btn--large search-btn">
+              <span class="search-btn-icon">🔍</span>
+              <span data-i18n="search">Search</span>
+            </button>
+          </div>
+          
+          <!-- Quick Filters -->
+          <div class="quick-filters">
+            <button type="button" class="filter-btn" data-region="middle-east">
+              <span class="filter-icon">🌍</span>
+              <span>Middle East</span>
+            </button>
+            <button type="button" class="filter-btn" data-region="europe">
+              <span class="filter-icon">🏰</span>
+              <span>Europe</span>
+            </button>
+            <button type="button" class="filter-btn" data-region="asia">
+              <span class="filter-icon">🏯</span>
+              <span>Asia</span>
+            </button>
+            <button type="button" class="filter-btn" data-region="americas">
+              <span class="filter-icon">🗽</span>
+              <span>Americas</span>
+            </button>
+            <button type="button" class="filter-btn" data-region="africa">
+              <span class="filter-icon">🦁</span>
+              <span>Africa</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Animated Background -->
+    <div class="search-hero__background">
+      <div class="search-hero__particle search-hero__particle--1"></div>
+      <div class="search-hero__particle search-hero__particle--2"></div>
+      <div class="search-hero__particle search-hero__particle--3"></div>
+      <div class="search-hero__particle search-hero__particle--4"></div>
+      <div class="search-hero__particle search-hero__particle--5"></div>
+    </div>
+  </section>
+
+  <!-- Quick Access Section -->
+  <section class="quick-access">
+    <div class="quick-access__container">
+      <h2 class="quick-access__title" data-i18n="quickAccessTitle">
+        Quick Access
+      </h2>
+      
+      <div class="quick-access__grid">
+        <!-- Search History -->
+        <div class="quick-access-card">
+          <div class="quick-access__header">
+            <h3 class="quick-access__card-title">
+              <span class="quick-access__icon">🕐</span>
+              <span data-i18n="recentSearches">Recent Searches</span>
+            </h3>
+            <button class="quick-access__action" id="clear-history">
+              <span data-i18n="clearAll">Clear All</span>
+            </button>
+          </div>
+          <div class="quick-access__content">
+            <div class="history-list" id="history-list">
+              <!-- History items will be populated here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Trending Countries -->
+        <div class="quick-access-card">
+          <div class="quick-access__header">
+            <h3 class="quick-access__card-title">
+              <span class="quick-access__icon">🔥</span>
+              <span data-i18n="trendingCountries">Trending Countries</span>
+            </h3>
+            <button class="quick-access__action" id="refresh-trending">
+              <span data-i18n="refresh">Refresh</span>
+            </button>
+          </div>
+          <div class="quick-access__content">
+            <div class="trending-grid" id="trending-grid">
+              <!-- Trending countries will be populated here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Favorites -->
+        <div class="quick-access-card">
+          <div class="quick-access__header">
+            <h3 class="quick-access__card-title">
+              <span class="quick-access__icon">❤️</span>
+              <span data-i18n="favoriteCountries">Favorite Countries</span>
+            </h3>
+            <button class="quick-access__action" id="manage-favorites">
+              <span data-i18n="manage">Manage</span>
+            </button>
+          </div>
+          <div class="quick-access__content">
+            <div class="favorites-list" id="favorites-list">
+              <!-- Favorites will be populated here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Results Section -->
+  <section class="search-results-section" id="search-results-section" style="display: none;">
+    <div class="search-results__container">
+      <!-- Results Header -->
+      <div class="results-header">
+        <h2 class="results-title">
+          <span class="results-icon">🏛️</span>
+          <span id="results-country-name">Country Name</span>
+        </h2>
+        <div class="results-actions">
+          <button class="btn btn--ghost btn-sm" id="export-results">
+            <span class="results-action-icon">📥</span>
+            <span data-i18n="export">Export</span>
+          </button>
+          <button class="btn btn--ghost btn-sm" id="print-results">
+            <span class="results-action-icon">🖨</span>
+            <span data-i18n="print">Print</span>
+          </button>
+          <button class="btn btn--ghost btn-sm" id="share-results">
+            <span class="results-action-icon">📤</span>
+            <span data-i18n="share">Share</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Content -->
+      <div class="results-content" id="results-content">
+        <!-- Government information will be populated here -->
+      </div>
+
+      <!-- Results Navigation -->
+      <div class="results-navigation">
+        <nav class="results-nav">
+          <a href="#overview" class="results-nav-link results-nav-link--active">
+            <span class="nav-icon">📋</span>
+            <span data-i18n="overview">Overview</span>
+          </a>
+          <a href="#contacts" class="results-nav-link">
+            <span class="nav-icon">📞</span>
+            <span data-i18n="contacts">Contacts</span>
+          </a>
+          <a href="#ministries" class="results-nav-link">
+            <span class="nav-icon">🏢</span>
+            <span data-i18n="ministries">Ministries</span>
+          </a>
+          <a href="#emergency" class="results-nav-link">
+            <span class="nav-icon">🚨</span>
+            <span data-i18n="emergency">Emergency</span>
+          </a>
+          <a href="#business" class="results-nav-link">
+            <span class="nav-icon">💼</span>
+            <span data-i18n="business">Business</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading State -->
+  <div class="loading-overlay" id="loading-overlay" style="display: none;">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <p class="loading-text" data-i18n="searchingGovernment">
+        Searching government information...
+      </p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-overlay" id="error-overlay" style="display: none;">
+    <div class="error-content">
+      <div class="error-icon">❌</div>
+      <h3 class="error-title" data-i18n="searchError">Search Error</h3>
+      <p class="error-message" id="error-message">
+        Unable to fetch government information. Please try again.
+      </p>
+      <div class="error-actions">
+        <button class="btn btn--primary" id="retry-search">
+          <span data-i18n="retry">Retry</span>
+        </button>
+        <button class="btn btn--ghost" id="report-error">
+          <span data-i18n="reportError">Report Error</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Notification -->
+  <div class="success-notification" id="success-notification" style="display: none;">
+    <div class="success-content">
+      <span class="success-icon">✅</span>
+      <span class="success-message" id="success-message">
+        Operation completed successfully!
+      </span>
+    </div>
+  </div>
+</div>

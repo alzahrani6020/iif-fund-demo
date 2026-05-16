@@ -1,0 +1,4 @@
+
+> netlify:build:trigger
+> node scripts/trigger-netlify-build.cjs
+

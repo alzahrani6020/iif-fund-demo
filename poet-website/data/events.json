@@ -1,0 +1,128 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "title": "أمسية شعرية في الرياض",
+      "description": "أمسية ثقافية بمناسبة اليوم الوطني، تضم قصائد وطنية وتراثية، مع مشاركة نخبة من شعراء المملكة",
+      "date": "2024-09-23",
+      "time": "8:00 مساءً",
+      "location": "قصر الثقافة بالرياض",
+      "type": "upcoming",
+      "capacity": 200,
+      "booked": 45,
+      "price": "مجاني",
+      "image": "event1.jpg",
+      "organizer": "وزارة الثقافة",
+      "contact": "0501234567",
+      "requirements": ["حجز مسبق", "بطاقة هوية"]
+    },
+    {
+      "id": 2,
+      "title": "مهرجان الزهراني الشعري",
+      "description": "مهرجان سنوي يجمع شعراء المنطقة في أمسية شعرية مميزة، مع تكريم الشاعر محمد عيضة الزهراني",
+      "date": "2024-10-15",
+      "time": "7:30 مساءً",
+      "location": "مركز الأمير فيصل الثقافي",
+      "type": "upcoming",
+      "capacity": 500,
+      "booked": 234,
+      "price": "50 ريال",
+      "image": "event2.jpg",
+      "organizer": "جمعية الثقافة والفنون",
+      "contact": "0509876543",
+      "requirements": ["حجز مسبق", "دخول مدفوع"]
+    },
+    {
+      "id": 3,
+      "title": "ورشة الشعر العروضي",
+      "description": "ورشة تعليمية في فن الشعر العروضي والقافية، يقدمها الشاعر محمد عيضة الزهراني شخصياً",
+      "date": "2024-11-01",
+      "time": "4:00 عصراً",
+      "location": "المكتبة العامة",
+      "type": "workshop",
+      "capacity": 30,
+      "booked": 28,
+      "price": "100 ريال",
+      "image": "event3.jpg",
+      "organizer": "المكتبة العامة",
+      "contact": "0504567891",
+      "requirements": ["تسجيل مسبق", "خبرة شعرية"]
+    },
+    {
+      "id": 4,
+      "title": "أمسية الشاعر الكبير",
+      "description": "أمسية خاصة بتكريم الشاعر وإلقاء أجمل قصائده، بحضور الشخصيات الثقافية والفنية",
+      "date": "2024-08-20",
+      "time": "8:00 مساءً",
+      "location": "قصر المؤتمرات",
+      "type": "past",
+      "capacity": 300,
+      "booked": 300,
+      "price": "مجاني",
+      "image": "event4.jpg",
+      "organizer": "أمانة الرياض",
+      "contact": "0502345678",
+      "requirements": ["دعوة خاصة"]
+    },
+    {
+      "id": 5,
+      "title": "مؤتمر الشعر السعودي",
+      "description": "مؤتمر علمي يناقش مستقبل الشعر السعودي، بمشاركة باحثين ونقاد من المملكة",
+      "date": "2024-12-10",
+      "time": "9:00 صباحاً",
+      "location": "جامعة الملك سعود",
+      "type": "upcoming",
+      "capacity": 150,
+      "booked": 67,
+      "price": "200 ريال",
+      "image": "event5.jpg",
+      "organizer": "جامعة الملك سعود",
+      "contact": "0503456789",
+      "requirements": ["تسجيل أكاديمي", "بطاقة جامعية"]
+    },
+    {
+      "id": 6,
+      "title": "ليلة شعرية رمضانية",
+      "description": "سهرات شعرية رمضانية تجمع بين الشعر الديني والتراثي، مع إفطار جماعي",
+      "date": "2024-03-15",
+      "time": "6:30 مساءً",
+      "location": "النادي الأدبي",
+      "type": "past",
+      "capacity": 100,
+      "booked": 95,
+      "price": "75 ريال",
+      "image": "event6.jpg",
+      "organizer": "النادي الأدبي",
+      "contact": "0506789012",
+      "requirements": ["حجز إفطار", "ملابس محتشمة"]
+    }
+  ],
+  "types": [
+    {
+      "id": "upcoming",
+      "name": "قادم",
+      "color": "#27ae60",
+      "icon": "fa-calendar-check"
+    },
+    {
+      "id": "past",
+      "name": "منتهي",
+      "color": "#95a5a6",
+      "icon": "fa-calendar-times"
+    },
+    {
+      "id": "workshop",
+      "name": "ورشة عمل",
+      "color": "#f39c12",
+      "icon": "fa-chalkboard-teacher"
+    }
+  ],
+  "stats": {
+    "total_events": 6,
+    "upcoming_events": 3,
+    "past_events": 2,
+    "workshops": 1,
+    "total_capacity": 1280,
+    "total_booked": 769
+  }
+}

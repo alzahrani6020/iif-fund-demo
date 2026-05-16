@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IIF Connect API</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Arial; background:#05070c; color:#e9ddbf; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 18px; }
+      .top { display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+      .card { border:1px solid rgba(201,162,39,.35); background: rgba(12,14,18,.82); border-radius: 16px; padding: 14px; }
+      label { display:block; font-weight:700; margin-bottom: 6px; }
+      input, select, textarea { width:100%; box-sizing:border-box; border-radius: 12px; border:1px solid rgba(201,162,39,.35); background: rgba(255,255,255,.06); color:#f5e7b6; padding: 10px 12px; }
+      textarea { min-height: 180px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .row { display:flex; gap:12px; flex-wrap:wrap; }
+      .row > div { flex: 1 1 320px; }
+      button { cursor:pointer; border-radius: 12px; border:1px solid rgba(201,162,39,.55); background: rgba(12,14,18,.82); color:#f5e7b6; padding:10px 12px; }
+      .muted { opacity:.75; }
+      .ok { color:#8ff0b3; }
+      .bad { color:#ff9aa2; }
+      code { background: rgba(255,255,255,.06); padding:2px 6px; border-radius: 8px; }
+      a { color:#f5e7b6; }
+      .list { display:flex; flex-direction:column; gap:10px; }
+      .item { display:flex; gap:10px; align-items:flex-start; justify-content:space-between; }
+      .pill { font-size:12px; border:1px solid rgba(201,162,39,.35); border-radius: 999px; padding:2px 8px; opacity:.85; }
+      table { width:100%; border-collapse: collapse; }
+      th, td { border-bottom: 1px solid rgba(201,162,39,.2); padding: 8px 10px; text-align: start; vertical-align: top; }
+      th { position: sticky; top: 0; background: rgba(12,14,18,.92); }
+      .table-wrap { overflow:auto; max-height: 46vh; border:1px solid rgba(201,162,39,.2); border-radius: 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <div style="font-size:18px;font-weight:700">ربط مصدر (API / JSON / CSV / RSS)</div>
+          <div class="muted">يستخدم <code>/api/fetch</code> عبر allowlist آمن على السيرفر المحلي.</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="/" class="muted">العودة للرئيسية</a>
+          <a href="/health.html" class="muted">Health</a>
+          <a href="/diagnostics.html" class="muted">Diagnostics</a>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="row">
+        <div class="card">
+          <label for="url">رابط المصدر</label>
+          <input id="url" type="url" placeholder="https://api.worldbank.org/v2/country/sa?format=json" />
+          <div style="height:10px"></div>
+          <div class="row" style="margin:0">
+            <div style="flex:1 1 180px">
+              <label for="name">اسم (اختياري)</label>
+              <input id="name" type="text" placeholder="World Bank — Saudi Arabia" />
+            </div>
+            <div style="flex:1 1 180px">
+              <label for="type">النوع</label>
+              <select id="type">
+                <option value="auto">تلقائي</option>
+                <option value="json">JSON</option>
+                <option value="csv">CSV</option>
+                <option value="rss">RSS/Atom</option>
+                <option value="text">Text</option>
+              </select>
+            </div>
+          </div>
+          <div style="height:12px"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button id="test">اختبار وجلب</button>
+            <button id="save" title="يحفظ المصدر في هذا المتصفح فقط">حفظ</button>
+            <button id="share" class="muted" title="ينشئ رابط مشاركة لنفس الإعدادات">مشاركة</button>
+            <button id="to-analysis" class="muted" title="يفتح التحليل على آخر نتيجة (بعد الجلب)">تحليل الآن</button>
+            <button id="clear" class="muted">مسح</button>
+          </div>
+          <div style="height:10px"></div>
+          <div class="muted" id="status">جاهز.</div>
+          <div style="height:10px"></div>
+          <div class="muted">
+            ملاحظة: إذا ظهر <code>Host not allowed</code> أضف الدومين إلى allowlist عبر المتغير
+            <code>IIF_FETCH_ALLOWLIST</code> ثم أعد تشغيل <code>npm start</code>.
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <div style="font-weight:700">Profiles</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button id="profile-save" class="muted" title="يحفظ الملف الحالي كـ Profile">حفظ Profile</button>
+              <button id="profiles-wipe" class="muted" title="حذف كل الـProfiles">حذف Profiles</button>
+            </div>
+          </div>
+          <div style="height:10px"></div>
+          <div class="muted">Profile = مجموعة مصادر. تحفظ محليًا في هذا المتصفح.</div>
+          <div style="height:10px"></div>
+          <div id="profiles" class="list muted"></div>
+
+          <div style="height:14px"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <div style="font-weight:700">المصادر (سريع)</div>
+            <button id="wipe" class="muted" title="يحذف المصادر من هذا المتصفح">حذف الكل</button>
+          </div>
+          <div style="height:10px"></div>
+          <div id="saved" class="list muted"></div>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+          <div style="font-weight:700">النتيجة + معاينة جدول</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button id="copy" class="muted">نسخ</button>
+            <button id="download-txt" class="muted">تنزيل TXT</button>
+            <button id="download-json" class="muted">تنزيل JSON</button>
+            <button id="download-csv" class="muted">تنزيل CSV</button>
+          </div>
+        </div>
+        <div style="height:10px"></div>
+        <textarea id="out" spellcheck="false" placeholder="سيظهر المحتوى هنا..."></textarea>
+        <div style="height:10px"></div>
+        <div class="table-wrap" id="tableWrap" style="display:none">
+          <table>
+            <thead id="thead"></thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const LS_KEY = 'iif-connectors-v1';
+      const LS_PROFILES = 'iif-connectors-profiles-v1';
+      const $ = (id) => document.getElementById(id);
+      const status = (msg, kind) => {
+        const el = $('status');
+        el.textContent = msg;
+        el.className = kind === 'ok' ? 'ok' : kind === 'bad' ? 'bad' : 'muted';
+      };
+      const loadSaved = () => {
+        try { return JSON.parse(localStorage.getItem(LS_KEY) || '[]') || []; } catch (e) { return []; }
+      };
+      const saveSaved = (items) => {
+        try { localStorage.setItem(LS_KEY, JSON.stringify(items.slice(0, 50))); } catch (e) {}
+      };
+      const loadProfiles = () => {
+        try { return JSON.parse(localStorage.getItem(LS_PROFILES) || '[]') || []; } catch (e) { return []; }
+      };
+      const saveProfiles = (items) => {
+        try { localStorage.setItem(LS_PROFILES, JSON.stringify(items.slice(0, 25))); } catch (e) {}
+      };
+      const renderSaved = () => {
+        const box = $('saved');
+        const items = loadSaved();
+        if (!items.length) { box.textContent = 'لا يوجد.'; return; }
+        box.innerHTML = '';
+        items.forEach((it, idx) => {
+          const row = document.createElement('div');
+          row.className = 'item';
+          row.innerHTML = `
+            <div style="min-width:0">
+              <div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(it.name || it.url)}</div>
+              <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.8">${escapeHtml(it.url)}</div>
+              <div class="pill">type: ${escapeHtml(it.type || 'auto')}</div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+              <button data-act="use" data-idx="${idx}">استخدام</button>
+              <button data-act="del" data-idx="${idx}" class="muted">حذف</button>
+            </div>
+          `;
+          box.appendChild(row);
+        });
+      };
+      const escapeHtml = (s) => String(s || '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+      async function fetchViaProxy(url) {
+        const r = await fetch('/api/fetch?url=' + encodeURIComponent(url), { cache: 'no-store' });
+        const ct = r.headers.get('content-type') || 'application/octet-stream';
+        const txt = await r.text();
+        if (!r.ok) {
+          let msg = txt;
+          try { msg = JSON.parse(txt).error || msg; } catch (e) {}
+          throw new Error(msg);
+        }
+        return { ct, text: txt, status: r.status };
+      }
+
+      function hideTable() {
+        $('tableWrap').style.display = 'none';
+        $('thead').innerHTML = '';
+        $('tbody').innerHTML = '';
+      }
+
+      function renderTable(columns, rows) {
+        const max = 50;
+        const cols = columns.slice(0, 20);
+        const head = '<tr>' + cols.map(c => `<th>${escapeHtml(c)}</th>`).join('') + '</tr>';
+        $('thead').innerHTML = head;
+        const body = rows.slice(0, max).map(r => {
+          return '<tr>' + cols.map(c => `<td>${escapeHtml(r[c])}</td>`).join('') + '</tr>';
+        }).join('');
+        $('tbody').innerHTML = body;
+        $('tableWrap').style.display = '';
+      }
+
+      function toRowsFromJson(text) {
+        const j = JSON.parse(text);
+        let arr = null;
+        if (Array.isArray(j)) arr = j;
+        else if (j && typeof j === 'object') {
+          for (const k of Object.keys(j)) {
+            if (Array.isArray(j[k])) { arr = j[k]; break; }
+          }
+        }
+        if (!arr) return null;
+        const rows = arr.filter(x => x && typeof x === 'object').slice(0, 200);
+        const colsSet = new Set();
+        for (const r of rows) Object.keys(r).forEach(k => colsSet.add(k));
+        const cols = Array.from(colsSet);
+        const normRows = rows.map(r => {
+          const out = {};
+          for (const c of cols) {
+            const v = r[c];
+            out[c] = (v == null) ? '' : (typeof v === 'object' ? JSON.stringify(v) : String(v));
+          }
+          return out;
+        });
+        return { cols, rows: normRows };
+      }
+
+      function parseCsv(text) {
+        const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(l => l.trim().length);
+        if (!lines.length) return null;
+        function splitLine(line) {
+          const out = [];
+          let cur = '';
+          let q = false;
+          for (let i = 0; i < line.length; i++) {
+            const ch = line[i];
+            if (q) {
+              if (ch === '"' && line[i + 1] === '"') { cur += '"'; i++; continue; }
+              if (ch === '"') { q = false; continue; }
+              cur += ch;
+            } else {
+              if (ch === '"') { q = true; continue; }
+              if (ch === ',') { out.push(cur); cur = ''; continue; }
+              cur += ch;
+            }
+          }
+          out.push(cur);
+          return out;
+        }
+        const header = splitLine(lines[0]).map(s => s.trim() || 'col');
+        const rows = [];
+        for (const line of lines.slice(1, 201)) {
+          const parts = splitLine(line);
+          const row = {};
+          for (let i = 0; i < header.length; i++) row[header[i]] = (parts[i] ?? '').trim();
+          rows.push(row);
+        }
+        return { cols: header, rows };
+      }
+
+      function toCsv(cols, rows) {
+        const esc = (v) => {
+          const s = String(v ?? '');
+          if (/[",\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+          return s;
+        };
+        const head = cols.map(esc).join(',');
+        const body = rows.map(r => cols.map(c => esc(r[c])).join(',')).join('\n');
+        return head + '\n' + body;
+      }
+
+      function download(filename, content, mime) {
+        const blob = new Blob([content], { type: (mime || 'text/plain') + ';charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+      }
+
+      function getState() {
+        return { url: $('url').value.trim(), name: $('name').value.trim(), type: $('type').value };
+      }
+
+      function applyState(st) {
+        if (!st) return;
+        if (st.url) $('url').value = st.url;
+        if (typeof st.name === 'string') $('name').value = st.name;
+        if (st.type) $('type').value = st.type;
+      }
+
+      async function test() {
+        const url = $('url').value.trim();
+        if (!url) { status('أدخل رابطاً أولاً.', 'bad'); return; }
+        status('جاري الجلب...', '');
+        $('out').value = '';
+        hideTable();
+        try {
+          const { ct, text } = await fetchViaProxy(url);
+          $('out').value = text;
+          try { localStorage.setItem('iif-connect-last-output-v1', text); } catch (e) {}
+          status('OK — ' + ct, 'ok');
+          const picked = $('type').value;
+          const isJson = picked === 'json' || (picked === 'auto' && /json/i.test(ct));
+          const isCsv = picked === 'csv' || (picked === 'auto' && /csv|text\/csv/i.test(ct));
+          if (isJson) {
+            try {
+              const tab = toRowsFromJson(text);
+              if (tab) renderTable(tab.cols, tab.rows);
+            } catch (e) { }
+          } else if (isCsv) {
+            const tab = parseCsv(text);
+            if (tab) renderTable(tab.cols, tab.rows);
+          }
+        } catch (e) {
+          status('فشل: ' + (e && e.message ? e.message : String(e)), 'bad');
+        }
+      }
+
+      function saveCurrent() {
+        const url = $('url').value.trim();
+        if (!url) { status('أدخل رابطاً ثم احفظ.', 'bad'); return; }
+        const items = loadSaved();
+        const it = { url, name: $('name').value.trim(), type: $('type').value };
+        const dedup = items.filter(x => x.url !== url);
+        dedup.unshift(it);
+        saveSaved(dedup);
+        renderSaved();
+        status('تم الحفظ (محلياً).', 'ok');
+      }
+
+      function clearForm() {
+        $('url').value = '';
+        $('name').value = '';
+        $('type').value = 'auto';
+        $('out').value = '';
+        hideTable();
+        status('جاهز.', '');
+      }
+
+      $('test').addEventListener('click', test);
+      $('save').addEventListener('click', saveCurrent);
+      $('to-analysis').addEventListener('click', () => {
+        window.location.href = '/analysis.html?src=connect';
+      });
+      $('share').addEventListener('click', async () => {
+        const st = getState();
+        if (!st.url) { status('ضع رابطاً أولاً ثم شارك.', 'bad'); return; }
+        const u = new URL(location.href);
+        u.searchParams.set('url', st.url);
+        if (st.name) u.searchParams.set('name', st.name);
+        if (st.type && st.type !== 'auto') u.searchParams.set('type', st.type);
+        try {
+          await navigator.clipboard.writeText(u.toString());
+          status('تم نسخ رابط المشاركة.', 'ok');
+        } catch (e) {
+          status('انسخ الرابط من شريط العنوان.', '');
+          history.replaceState(null, '', u.toString());
+        }
+      });
+      $('clear').addEventListener('click', clearForm);
+      $('wipe').addEventListener('click', () => { localStorage.removeItem(LS_KEY); renderSaved(); status('تم حذف الكل.', 'ok'); });
+      $('saved').addEventListener('click', async (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const idx = Number(btn.getAttribute('data-idx'));
+        const act = btn.getAttribute('data-act');
+        const items = loadSaved();
+        const it = items[idx];
+        if (!it) return;
+        if (act === 'use') {
+          $('url').value = it.url;
+          $('name').value = it.name || '';
+          $('type').value = it.type || 'auto';
+          await test();
+        } else if (act === 'del') {
+          items.splice(idx, 1);
+          saveSaved(items);
+          renderSaved();
+          status('تم حذف المصدر.', 'ok');
+        }
+      });
+
+      $('copy').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText($('out').value || '');
+          status('تم النسخ.', 'ok');
+        } catch (e) {
+          status('تعذر النسخ — انسخ يدوياً.', 'bad');
+        }
+      });
+      $('download-txt').addEventListener('click', () => download('iif-connector-output.txt', $('out').value || '', 'text/plain'));
+      $('download-json').addEventListener('click', () => {
+        const t = $('out').value || '';
+        try { JSON.parse(t); download('iif-connector-output.json', t, 'application/json'); }
+        catch { status('المحتوى ليس JSON صالحًا.', 'bad'); }
+      });
+      $('download-csv').addEventListener('click', () => {
+        const t = $('out').value || '';
+        let tab = null;
+        try { tab = toRowsFromJson(t); } catch (e) {}
+        if (!tab) tab = parseCsv(t);
+        if (!tab) { status('لا يمكن تحويل المحتوى إلى CSV.', 'bad'); return; }
+        download('iif-connector-output.csv', toCsv(tab.cols, tab.rows.slice(0, 200)), 'text/csv');
+      });
+
+      function renderProfiles() {
+        const box = $('profiles');
+        const items = loadProfiles();
+        if (!items.length) { box.textContent = 'لا يوجد Profiles.'; return; }
+        box.innerHTML = '';
+        items.forEach((p, idx) => {
+          const row = document.createElement('div');
+          row.className = 'item';
+          row.innerHTML = `
+            <div style="min-width:0">
+              <div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(p.name || ('Profile ' + (idx+1)))}</div>
+              <div style="opacity:.8">sources=${(p.sources && p.sources.length) || 0}</div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+              <button data-act="run" data-idx="${idx}">تشغيل</button>
+              <button data-act="del" data-idx="${idx}" class="muted">حذف</button>
+            </div>
+          `;
+          box.appendChild(row);
+        });
+      }
+
+      $('profile-save').addEventListener('click', () => {
+        const current = loadSaved();
+        if (!current.length) { status('احفظ مصدرًا واحدًا على الأقل أولاً.', 'bad'); return; }
+        const name = prompt('اسم الـProfile؟', 'My Profile') || '';
+        const items = loadProfiles();
+        items.unshift({ name: name.trim() || 'My Profile', createdAt: new Date().toISOString(), sources: current.slice(0, 20) });
+        saveProfiles(items);
+        renderProfiles();
+        status('تم حفظ الـProfile.', 'ok');
+      });
+      $('profiles-wipe').addEventListener('click', () => { localStorage.removeItem(LS_PROFILES); renderProfiles(); status('تم حذف Profiles.', 'ok'); });
+      $('profiles').addEventListener('click', async (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const idx = Number(btn.getAttribute('data-idx'));
+        const act = btn.getAttribute('data-act');
+        const items = loadProfiles();
+        const p = items[idx];
+        if (!p) return;
+        if (act === 'del') {
+          items.splice(idx, 1);
+          saveProfiles(items);
+          renderProfiles();
+          status('تم حذف الـProfile.', 'ok');
+          return;
+        }
+        if (act === 'run') {
+          const src = (p.sources && p.sources[0]) ? p.sources[0] : null;
+          if (!src) { status('Profile فارغ.', 'bad'); return; }
+          applyState(src);
+          await test();
+        }
+      });
+
+      (function initFromQuery() {
+        const u = new URL(location.href);
+        const st = {
+          url: u.searchParams.get('url') || '',
+          name: u.searchParams.get('name') || '',
+          type: u.searchParams.get('type') || 'auto',
+        };
+        if (st.url) applyState(st);
+      })();
+
+      renderSaved();
+      renderProfiles();
+      status('جاهز. احفظ مصادر ثم أنشئ Profile أو شارك الرابط.', '');
+    </script>
+  </body>
+</html>
+

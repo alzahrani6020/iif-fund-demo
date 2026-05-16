@@ -1,0 +1,5 @@
+#!/bin/sh
+# IIF — التثبيت: npm run install:git-hooks (أو تلقائياً بعد npm install عبر prepare)
+# تعطيل الكل: SKIP_GIT_HOOKS=1
+if [ -n "$SKIP_GIT_HOOKS" ]; then exit 0; fi
+cd "$(git rev-parse --show-toplevel)" && node scripts/git-hooks/pre-commit.js
