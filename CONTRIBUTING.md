@@ -1,95 +1,271 @@
-# المساهمة والتشغيل — iif-fund-demo
+# 🤝 المساهمة في IIF Fund Platform
 
-## المتطلبات
+شكراً لاهتمامك بالمساهمة في منصة IIF Fund! نرحب بجميع أنواع المساهمات التي تساعد في تحسين المشروع.
 
-- Node.js **22+** (مطابق لـ `engines` في `package.json`)
+## 📋 كيفية المساهمة
 
-## التثبيت
+### 1. 🔀 Fork المستودع
+```bash
+# اذهب إلى صفحة المشروع على GitHub
+# اضغط على زر "Fork"
+# سيتم نسخ المشروع إلى حسابك
+```
+
+### 2. 📥 استنساخ المستودع
+```bash
+git clone https://github.com/your-username/iif-fund-demo.git
+cd iif-fund-demo
+```
+
+### 3. 🌿 إنشاء فرع جديد
+```bash
+git checkout -b feature/your-feature-name
+# أو
+git checkout -b fix/your-bug-fix
+```
+
+### 4. ✨ إجراء التغييرات
+- أضف المميزات الجديدة
+- أصلح الأخطاء
+- حسّن الوثائق
+- اتبع معايير الكود
+
+### 5. 📝 التزام بالتغييرات
+```bash
+git add .
+git commit -m "feat: add new fund analysis feature"
+# أو
+git commit -m "fix: resolve chart rendering issue"
+```
+
+### 6. 🚤 رفع التغييرات
+```bash
+git push origin feature/your-feature-name
+```
+
+### 7. 🔄 إنشاء Pull Request
+- اذهب إلى صفحة المشروع على GitHub
+- اضغط على "New Pull Request"
+- اكتب وصفاً مفصلاً للتغييرات
+- انتظر المراجعة
+
+## 📝 معايير الكود
+
+### JavaScript
+```javascript
+// استخدم ES6+ دائماً
+const analyzeFund = (fundData) => {
+    // الكود هنا
+    return analysis;
+};
+
+// استخدم const و let بدلاً من var
+const API_URL = 'https://api.iif-fund.com';
+let currentFund = null;
+
+// أضف تعليقات للكود المعقد
+/**
+ * تحليل أداء الصندوق
+ * @param {Object} fund - بيانات الصندوق
+ * @returns {Object} - نتائج التحليل
+ */
+const analyzeFundPerformance = (fund) => {
+    return {
+        performance: fund.performance,
+        risk: calculateRisk(fund),
+        recommendation: getRecommendation(fund)
+    };
+};
+```
+
+### CSS
+```css
+/* استخدم BEM methodology */
+.fund-card {
+    /* أنماط المكون */
+}
+
+.fund-card__header {
+    /* أنماط العنصر */
+}
+
+.fund-card--featured {
+    /* أنماط التعديل */
+}
+
+/* استخدم متغيرات CSS */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --success-color: #27ae60;
+}
+```
+
+### HTML
+```html
+<!-- استخدم HTML5 دائماً -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIF Fund Platform</title>
+</head>
+<body>
+    <!-- المحتوى هنا -->
+</body>
+</html>
+```
+
+## 🎯 أنواع المساهمات المطلوبة
+
+### 📊 تحليلات مالية
+- إضافة مؤشرات تحليل جديدة
+- تحسين دقة البيانات
+- إضافة تقارير متقدمة
+- تحسين الرسوم البيانية
+
+### 🎨 تحسينات في التصميم
+- تحسين تجربة المستخدم
+- إضافة تأثيرات بصرية
+- تحسين الاستجابة
+- تحسين الأداء البصري
+
+### 🔍 تحسينات في البحث
+- تحسين خوارزميات البحث
+- إضافة فلترات جديدة
+- تحسين سرعة البحث
+- إضافة اقتراحات ذكية
+
+### 📱 تحسينات للموبايل
+- تحسين تجربة الموبايل
+- إضافة إشعارات فورية
+- تحسين الأداء
+- إضافة ميزات خاصة بالموبايل
+
+### 📝 تحسينات في الوثائق
+- تحسين README.md
+- إضافة أمثلة استخدام
+- توثيق الكود
+- إضافة دروس تعليمية
+
+## 📋 قائمة التحقق قبل الرفع
+
+### ✅ الكود
+- [ ] الكود يعمل بشكل صحيح
+- [ ] لا يوجد أخطاء في JavaScript Console
+- [ ] الكود متوافق مع جميع المتصفحات
+- [ ] الكود متجاوب مع جميع الأجهزة
+
+### ✅ التصميم
+- [ ] الواجهة تعرض بشكل صحيح
+- [ ] الألوان والخطوط متناسقة
+- [ ] الرسوم البيانية تعمل
+- [ ] التصميم متجاوب
+
+### ✅ البيانات
+- [ ] البيانات دقيقة ومحدثة
+- [ ] التحليلات صحيحة
+- [ ] التقارير مكتملة
+- [ ] الروابط تعمل
+
+### ✅ GitHub
+- [ ] Commit message واضح ومفهوم
+- [ ] Pull description مفصل
+- [ ] تم إضافة الاختبارات إذا لزم
+- [ ] تم تحديث الوثائق
+
+## 🏷️ أنواع Commit Messages
+
+استخدم [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```bash
-npm ci
+feat: add fund comparison feature
+fix: resolve chart rendering issue
+docs: update API documentation
+style: improve dashboard layout
+refactor: optimize data processing
+test: add unit tests for analysis
+chore: update dependencies
 ```
 
-## التطوير المحلي
+## 🐛 الإبلاغ عن الأخطاء
 
-1. تشغيل الخادم:
+عند الإبلاغ عن خطأ، يرجى تضمين:
+- **الوصف**: وصف مفصل للمشكلة
+- **الخطوات**: خطوات إعادة المشكلة
+- **المتوقع**: النتيجة المتوقعة
+- **الفعلية**: النتيجة الفعلية
+- **البيئة**: المتصفح ونظام التشغيل
+- **الصور**: لقطات شاشة إذا أمكن
 
-   ```bash
-   npm start
-   ```
+## 💡 اقتراحات المميزات
 
-   يعمل عادة على `http://127.0.0.1:3333`.
+عند اقتراح ميزة جديدة، يرجى تضمين:
+- **الوصف**: وصف الميزة المقترحة
+- **السبب**: لماذا هذه الميزة مهمة
+- **الحل**: كيف يمكن تنفيذها
+- **البديل**: حلول بديلة إذا وجدت
 
-2. اختصارات مفيدة:
+## 📊 معايير إضافة بيانات الصناديق
 
-   - واجهة الصندوق الرئيسية: `/` أو  
-     `/financial-consulting/iif-fund-demo/index.html`
-   - لوحة التحكم (محلي): `/cp` أو `/dashboard` أو ملف  
-     `OPEN-ADMIN-DASHBOARD.bat` في جذر المشروع.
-
-## فحوصات الجودة (قبل الدمج أو النشر)
-
-| الأمر | الوظيفة |
-|--------|---------|
-| `npm run verify` | بناء `government-data` + التحقق من صياغة السكربتات |
-| `npm run maintenance:audit` | صياغة JS + JSON + روابط داخلية (بدون خادم) |
-| `npm run health` | يتطلب `npm start` في نافذة أخرى: تدقيق + `check-urls` + `smoke` |
-| `npm run maintenance:full` | `verify` + تدقيق كامل + `smoke-with-server` + `check-urls` |
-
-### روابط خارجية (اختياري، يعتمد على الشبكة)
-
-```bash
-node scripts/maintenance-full-audit.mjs --external
+### **هيكل بيانات الصندوق**
+```javascript
+const fundData = {
+    id: 'unique-fund-id',
+    name: 'اسم الصندوق',
+    type: 'نوع الصندوق',
+    manager: 'مدير الصندوق',
+    inception: 'YYYY-MM-DD',
+    assets: 1000000,
+    performance: {
+        annual: 15.5,
+        monthly: 1.2,
+        risk: 2.3,
+        sharpe: 1.8
+    },
+    details: {
+        description: 'وصف الصندوق',
+        strategy: 'استراتيجية الاستثمار',
+        objectives: ['هدف 1', 'هدف 2'],
+        sectors: ['قطاع 1', 'قطاع 2']
+    }
+};
 ```
 
-لجعل فشل أي رابط خارجي يوقف الخروج بخطأ:
+### **التحقق من البيانات**
+- [ ] جميع الحقول المطلوبة موجودة
+- [ ] البيانات صحيحة ومتسقة
+- [ ] الأرقام في النطاق الصحيح
+- [ ] التواريخ صحيحة
 
-```bash
-# Linux / macOS
-EXTERNAL_URL_STRICT=1 node scripts/maintenance-full-audit.mjs --external
-```
+## 📧 التواصل
 
-```powershell
-# Windows PowerShell
-$env:EXTERNAL_URL_STRICT='1'; node scripts/maintenance-full-audit.mjs --external
-```
+### 🎯 القنوات الرسمية
+- **GitHub Issues**: للمشاكل والاقتراحات
+- **GitHub Discussions**: للنقاشات العامة
+- **Email**: info@iif-fund.com
 
-## مسار الإنتاج
+### 📱 وسائل التواصل
+- **Twitter/X**: @iif_fund_platform
+- **LinkedIn**: IIF Fund Platform
 
-الواجهة المعتمدة: **`financial-consulting/iif-fund-demo/index.html`** مع الأصول تحت  
-`financial-consulting/iif-fund-demo/assets/`.
+## 🏆 المساهمون
 
-مجلد **`archive/`** يحتوي نسخ HTML قديمة للمرجع فقط — لا يُستخدم في النشر.
+نشكر جميع المساهمين في المشروع:
+- [@your-username](https://github.com/your-username) - المؤسس والمطور الرئيسي
+- [@contributor1](https://github.com/contributor1) - تحليلات مالية
+- [@contributor2](https://github.com/contributor2) - تحسينات في التصميم
+- [@cascade-ai](https://github.com/cascade-ai) - مساعد برمجي ذكي
 
-## CI
+## 📜 الترخيص
 
-عند الدفع إلى `main` أو `master` أو عند فتح Pull Request، يعمل GitHub Actions  
-(`.github/workflows/ci.yml`).
+بالمساهمة في هذا المشروع، فإنك توافق على أن مساهماتك سيتم ترخيصها تحت نفس ترخيص المشروع.
 
-### فحوصات مطلوبة على الفرع `main`
+## 🎁 الشكر
 
-قبل دمج Pull Request يجب أن تنجح المهمتان التاليتان (مفعّلة في **Branch protection**):
+شكراً جزيلاً لمساهمتك! كل مساهمة مهمة وتساعد في جعل منصة IIF Fund أفضل للمستثمرين.
 
-| الفحص | الوصف |
-|--------|--------|
-| **`CI / verify`** | `npm ci` في الجذر، ثم `npm run verify`، `maintenance-full-audit`، مزامنة حزم i18n، `check:deploy`، تدقيق SearX، و`check-i18n-keys --strict`. |
-| **`CI / IIF public site (anchors + Playwright + a11y)`** | بعد نجاح `verify`: في `financial-consulting/iif-fund-demo` يُشغَّل `npm run test:site` (مراسي ثابتة، E2E، وaxe محدود النطاق على `#trust-entry` و`#contact` و`#partners-trust`). |
+---
 
-تشغيل محلي مكافئ لاختبارات موقع الصندوق (من جذر المستودع):
-
-```bash
-npm run test:iif-site
-```
-
-أو من المجلد الفرعي:
-
-```bash
-cd financial-consulting/iif-fund-demo
-npm run test:site
-```
-
-متغيرات مفيدة: `SKIP_PLAYWRIGHT_INSTALL=1` عند `npm ci` إن كنت تثبّت المتصفحات يدوياً؛ `PLAYWRIGHT_BASE_URL` لتوجيه E2E نحو خادم محلي غير الافتراضي (انظر `playwright.config.cjs`).
-
-**حماية الفرع `main`:** اضبط فحصين مطلوبين كما في [docs/BRANCH-PROTECTION.md](./docs/BRANCH-PROTECTION.md).
-
-**Lighthouse (إعلامي):** سير العمل [`.github/workflows/lighthouse-scheduled.yml`](./.github/workflows/lighthouse-scheduled.yml) يشغّل تقريراً شهرياً على URL نشر GitHub Pages ويرفع `reports/lh-latest.html` كـ artifact — لا يُشترط لدمج PR.
+**💰 معاً نحو منصة استثمارية أفضل للجميع! 🚀**

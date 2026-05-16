@@ -1,72 +1,42 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>IIF Diagnostics</title>
-    <style>
-      :root { color-scheme: dark; }
-      body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Arial; background:#05070c; color:#e9ddbf; }
-      .wrap { max-width: 1100px; margin: 0 auto; padding: 18px; }
-      .top { display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
-      .card { border:1px solid rgba(201,162,39,.35); background: rgba(12,14,18,.82); border-radius: 16px; padding: 14px; }
-      a { color:#f5e7b6; }
-      .muted { opacity:.75; }
-      button { cursor:pointer; border-radius: 12px; border:1px solid rgba(201,162,39,.55); background: rgba(12,14,18,.82); color:#f5e7b6; padding:10px 12px; }
-      pre { margin:0; overflow:auto; max-height: 65vh; }
-      code { background: rgba(255,255,255,.06); padding:2px 6px; border-radius: 8px; }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <div class="top">
-        <div>
-          <div style="font-size:18px;font-weight:700">Diagnostics</div>
-          <div class="muted" id="ts">...</div>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <a href="/" class="muted">العودة</a>
-          <a href="/health.html" class="muted">Health</a>
-          <button id="refresh">تحديث</button>
-          <button id="copy" class="muted">نسخ JSON</button>
-        </div>
-      </div>
-
-      <div style="height:12px"></div>
-
-      <div class="card">
-        <div class="muted">المصدر: <a href="/diagnostics.json" target="_blank" rel="noopener">`/diagnostics.json`</a></div>
-        <div style="height:10px"></div>
-        <pre class="muted"><code id="raw">[]</code></pre>
-      </div>
-    </div>
-
-    <script>
-      let lastJson = null;
-      async function load() {
-        const ts = document.getElementById('ts');
-        const raw = document.getElementById('raw');
-        try {
-          const r = await fetch('/diagnostics.json', { cache: 'no-store' });
-          const j = await r.json();
-          lastJson = j;
-          raw.textContent = JSON.stringify(j, null, 2);
-          ts.textContent = 'آخر تحديث: ' + new Date().toLocaleString() + ' — items=' + ((j && j.items && j.items.length) || 0);
-        } catch (e) {
-          raw.textContent = JSON.stringify({ ok:false, error: String(e && e.message || e) }, null, 2);
-          ts.textContent =
-            'تعذر التحميل — `npm start` على المنفذ 3333 مطلوب لقراءة `/diagnostics.json` محلياً.';
-        }
-      }
-      document.getElementById('refresh').addEventListener('click', load);
-      document.getElementById('copy').addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(JSON.stringify(lastJson || {}, null, 2));
-        } catch (e) {}
-      });
-      load();
-      setInterval(load, 15000);
-    </script>
-  </body>
+<html lang="en" data-iif-leaf-static="1">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Diagnostics · International Investment Fund</title>
+  <meta name="description" content="Diagnostics JSON endpoint reference for local IIF dev server." />
+  <link rel="icon" href="assets/emblem.webp" type="image/webp" />
+  <link rel="icon" href="assets/emblem.jpg" type="image/jpeg" />
+  <link rel="stylesheet" href="css/fonts-hosted.css" />
+  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/public-shell.css" />
+  <style>
+    :root { color-scheme: dark; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #0a0e18; color: #e8eef8; max-width: 44rem; margin: 0 auto; padding: 1.5rem clamp(1rem, 4vw, 1.75rem) 3rem; line-height: 1.55; }
+    a { color: #e8d48a; text-decoration: underline; text-underline-offset: 2px; }
+    h1 { font-size: 1.35rem; margin: 0 0 0.5rem; color: #f5e9b8; }
+    p { margin: 0.45rem 0; }
+    .muted { color: #94a3b8; font-size: 0.9rem; }
+    code { font-size: 0.9em; background: rgba(255,255,255,0.06); padding: 0.1em 0.35em; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <nav class="iif-leaf-nav" data-i18n-aria-label="leafNavA11ySiteShortcuts" aria-label="Site shortcuts">
+    <ul class="iif-leaf-nav__list">
+      <li><a href="index.html"><span data-i18n="leafNavHome">← Home</span></a></li>
+      <li><a href="privacy.html"><span data-i18n="navPrivacyPage">Privacy</span></a></li>
+      <li><a href="transparency.html"><span data-i18n="leafNavTransparency">Transparency</span></a></li>
+      <li><a href="about-institution.html"><span data-i18n="navAbout">About</span></a></li>
+      <li><a href="index.html#terms"><span data-i18n="footerTerms">Terms</span></a></li>
+    </ul>
+  </nav>
+  <h1>Diagnostics</h1>
+  <p>With the repository dev server running, open <code>GET /diagnostics.json</code> for a small JSON snapshot (buffer sizes, etc.).</p>
+  <p class="muted">Not intended for public production monitoring without hardening.</p>
+  <script src="js/iif-static-host-banner.js" defer></script>
+  <script src="i18n-service-packs-all.js" defer></script>
+  <script src="i18n.js" defer></script>
+  <script src="js/iif-leaf-i18n-boot.js" defer></script>
+</body>
 </html>
-

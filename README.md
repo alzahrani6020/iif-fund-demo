@@ -1,197 +1,358 @@
-# IIF Fund Demo — المنصة الحكومية + الصندوق
+# 💰 IIF Fund Platform
 
-> **محرك البحث (SearXNG)** في `engines/searxng/` — يشغّل **Tor + SearXNG** عبر Docker؛ على **جهاز التطوير** (`npm start`) يُربَط بالمنصة عبر **`/api/searx`**. على **Netlify** يبقى **بحث الجهات محلياً** ما لم يُضف لاحقاً خادم/بروكسي للمحرك.
+منصة متكاملة لإدارة الصناديق الاستثمارية والتحليل المالي المتقدم.
 
-## الرؤية / Vision
+> **لا تبحث في Google عن** `financial-consulting/...` — هذا **مسار داخل المشروع** وليس موقعاً. افتح الملف من Cursor أو من GitHub. التفاصيل: [**PATHS-NOT-GOOGLE.md**](../../PATHS-NOT-GOOGLE.md).
 
-**العربية:** نعمل لخدمة المستخدمين في مختلف أنحاء العالم، مع احترام تنوّع الثقافات والأنظمة القانونية، ونسعى لتقديم خدمة تُفيد البشرية بشفافية ومسؤولية — بما يتوافق مع الخصوصية والامتثال حيثما ينطبق.
+> **موقع هذا الملف في المستودع:** `financial-consulting/iif-fund-demo/README.md`  
+> الروابط إلى **جذر المستودع** تستخدم **`../../`** (مستويان للأعلى: `iif-fund-demo` ← `financial-consulting` ← جذر الريبو).  
+> **لا** تستخدم `../README.md` وحدها — سيشير خطأً إلى مجلد `financial-consulting` وليس إلى `README.md` في الجذر.
 
-**English:** We build for people everywhere, honoring diverse cultures and legal frameworks, and we strive to deliver services that serve humanity with transparency and responsibility — aligned with privacy and compliance where it applies.
+| يهمك | رابط |
+|------|------|
+| مسارات الملفات ≠ Google | [`../../PATHS-NOT-GOOGLE.md`](../../PATHS-NOT-GOOGLE.md) |
+| README الرئيسي للمستودع | [`../../README.md`](../../README.md) |
+| قائمة الجاهزية (لوحة / إدارة) | [`./QA-PRE-RELEASE.md`](./QA-PRE-RELEASE.md) |
+| فحص HTML الآلي | [`../../scripts/smoke-html-check.mjs`](../../scripts/smoke-html-check.mjs) |
+| قبل النشر (عام) | [`../../قبل-النشر.md`](../../قبل-النشر.md) |
 
-**ماذا تفعل أنت على جهازك وحساباتك حتى يكون كل شيء جاهزاً للبدء:** [للبدء-ما-عليك-أنت.md](./للبدء-ما-عليك-أنت.md)
+## 🎯 **المشروع**
 
-**للمبتدئين — رفع المشروع إلى GitHub ثم Netlify (بدون مصطلحات معقدة):** [دليل-المبتدئ-النشر.md](./دليل-المبتدئ-النشر.md)
+منصة IIF Fund هي منصة شاملة لإدارة الصناديق الاستثمارية مع تحليلات متقدمة وواجهة مستخدم احترافية.
 
-**قبل إصدار أو رابط رسمي:** [docs/PRE-RELEASE-CHECKLIST.md](./docs/PRE-RELEASE-CHECKLIST.md) · **حماية الفرع `main`:** [docs/BRANCH-PROTECTION.md](./docs/BRANCH-PROTECTION.md) · **CI وفحوصات الدمج:** [CONTRIBUTING.md#ci](./CONTRIBUTING.md#ci) · **مراقبة توفر المواقع:** سير العمل **Uptime ping** في Actions (جدول + تشغيل يدوي).
+## ضمن مستودع IIF (الموصى به)
 
-**المستودع على GitHub:** [alzahrani6020/iif-web](https://github.com/alzahrani6020/iif-web)
+هذا المجلد جزء من **[المشروع في الجذر](../../README.md)**. التشغيل الموحّد من **جذر المستودع**:
 
-**للمساعد الذكاء الاصطناعي (Cursor / غيره):** اقرأ [AGENTS.md](./AGENTS.md) ومجلد `.cursor/rules/`.
+1. **`npm start`** — خادم التطوير على **http://127.0.0.1:3333/** (مع بروكسي **`/api/searx`** إذا كان SearXNG يعمل على `18080`).
+2. **واجهة الصندوق (هذا المجلد):**  
+   **http://127.0.0.1:3333/financial-consulting/iif-fund-demo/index.html**
+3. **المنصة الحكومية (بحث محلي + ويب اختياري):**  
+   **http://127.0.0.1:3333/financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html**
+4. **SearXNG** (اختياري): من `engines/searxng` نفّذ `docker compose up -d` — راجع [engines/searxng/README.md](../../engines/searxng/README.md).
 
-**تعريف «أكمل اللازم» (للمساعد وللمستخدم):** [اكمل-اللازم-قائمة.md](./اكمل-اللازم-قائمة.md)
+**الرؤية والاتجاه العام:** [README الجذر](../../README.md) (قسم الرؤية / Vision).
 
-**مسارات الملفات ليست روابط ويب — لا تُدخلها في Google:** [PATHS-NOT-GOOGLE.md](./PATHS-NOT-GOOGLE.md)
+### الجاهزية قبل النشر (مسارات حرجة)
 
-**متابعة التطوير (أولويات مقترحة):** [تطوير-الخطوات-التالية.md](./تطوير-الخطوات-التالية.md)  
+- **[QA-PRE-RELEASE.md](./QA-PRE-RELEASE.md)** — قائمة تحقق: `npm run smoke:html` بعد `npm start`، فحص يدوي لمسار اللوحة المعتمد `#dashboard`، ونشر Vercel.
+- أي تعديل على **`index.html`** يمس لوحة التحكم أو وضع الإدارة: شغّل **`npm run health`** (خادم يعمل) قبل الدمج.
 
-**عندما يكتمل المحتوى — قبل النشر:** [قبل-النشر.md](./قبل-النشر.md)
+### ما هي «صفحة الأدمن» في هذا المشروع؟
 
-**فهرسة Cursor أسرع:** يوجد [`.cursorignore`](./.cursorignore) في الجذر (يمكن التخصيص انطلاقاً من [cursorignore.example](./cursorignore.example)).
+- **لا يوجد** ملف منفصل اسمه `admin` يعرض واجهة مختلفة عن الموقع. **لوحة الإدارة = لوحة التحكم** داخل نفس **`index.html`** (`#dashboard-overlay`).
+- **الرابط المعتمد لفتح اللوحة:** على **`https://iiffund.com/`** استخدم **`/fund-admin`** أو معاملات الاستعلام كما في [CANONICAL-URLS.md](../../CANONICAL-URLS.md)؛ على Vercel (معاينة): `https://iif-fund-dr-talal.vercel.app/index.html#dashboard`.
+- أي روابط أخرى مثل معاملات `?iif_admin_embed=1` تعتبر **غير معتمدة** (قد تُترك لأسباب توافق/اختبار، لكن لا تُستخدم كرابط لوحة).
 
-## موقع المشروع (اتفاق)
+### نشر Vercel — رابط اللوحة (المعتمد)
+
+يعتمد الرابط على **إعداد Root Directory** في مشروع Vercel:
+
+| إعداد Vercel (Root Directory) | روابط تعمل عادةً |
+|------------------------------|-------------------|
+| **`financial-consulting/iif-fund-demo`** (المجلد الذي يحتوي `index.html` الكبير و`vercel.json`) | **الواجهة:** `https://<نطاقك>/index.html` · **اللوحة (المعتمد):** `https://<نطاقك>/index.html#dashboard` |
+| **جذر المستودع الكامل** | قد يعمل **`/financial-consulting/iif-fund-demo/index.html`** إذا كان الملف مُرفوعاً على النطاق؛ إن ظهر **404** للمسار الطويل فالنشر يُعامل كالصفحة السابقة (فقط محتوى `iif-fund-demo` في الجذر). |
+
+**تحقق على إنتاج Vercel (`iif-fund-dr-talal.vercel.app`):**  
+- `/` و `/index.html` → **200** (واجهة الصندوق).  
+- `/index.html#dashboard` → **يفتح لوحة التحكم** (المعتمد).  
+- `/financial-consulting/iif-fund-demo/index.html` → غالباً **404** إذا كان **Root Directory** = `iif-fund-demo` وليس المستودع كاملاً.
+
+**لا تعتمد** على المسار الطويل إلا إذا تأكدت أن الملفات تحت `financial-consulting/...` مُنشرة على نفس النطاق.
+
+**إن ظهرت اللوحة كنافذة في المنتصف:** غالباً `position: fixed` يُحسب داخل حاوية ضيقة لأن أحد الأسلاف له `transform`/`filter`. في الكود يُلغى ذلك على `html`/`body` عند `iif-dashboard-open`، ويُستدعى `IIF_assertDashboardFullViewport` لإعادة فرض العرض إذا كان صندوق اللوحة أضيق من النافذة.
+
+`<base>` في `index.html` يُضبط **تلقائياً** من مسار الصفحة (`#iif-document-base`) حتى تعمل روابط **`assets/`** (الشعار والصور) من جذر النطاق **أو** من مجلد فرعي دون اختفاء الشعار.
+
+**لوحة مباشرة (إنتاج رسمي):**  
+- **`https://iiffund.com/fund-admin`** (أو الصندوق + معاملات الاستعلام كما في CANONICAL-URLS)
+
+**لوحة على Vercel (معاينة):**  
+- `https://iif-fund-dr-talal.vercel.app/index.html#dashboard`
+
+**ملاحظة — اسم `iif-fund.vercel.app`:** قد يكون مربوطاً بمشروع Vercel آخر؛ الإنتاج المحدَّث من فريق **`dr-talal`** يظهر على **`iif-fund-dr-talal.vercel.app`**. لاستخدام الاسم القصير `iif-fund.vercel.app` انقل الـ alias من المشروع القديم في لوحة Vercel.
+
+**تنبيه — روابط معاينة أو حماية نشر:**  
+بعض نطاقات `*.vercel.app` قد تكون عليها **Deployment Protection** فيعيد الطلب **401**. للمشاركة استخدم **`https://iiffund.com/`**؛ لمعاينة Vercel راجع إعدادات الحماية هناك.
+
+**لوحة التحكم بملء الشاشة (إخفاء هيدر الموقع):**  
+تُخفى واجهة الموقع العامة عبر CSS + دوال `IIF_hidePublicSiteChrome` / `IIF_restorePublicSiteChrome` في أوائل `<body>`. بعد كل تحديث على Vercel: **أعد النشر** ثم جرّب **تحديثاً قوياً** (Ctrl+F5) أو نافذة خاصة حتى لا يُخدم `index.html` من الكاش.
+
+**كيف تتأكد أن النشر يضم آخر التعديلات؟**  
+- **ليس** عبر البحث في Google أو Bing.  
+- افتح **`https://iiffund.com/financial-consulting/iif-fund-demo/`** (أو رابط المعاينة على Vercel) في المتصفح، ثم اضغط **Ctrl+U** (عرض المصدر / View Page Source)، وابحث داخل الصفحة عن النص: **`تحقق-النشر-iif-dashboard-fullpage`**.  
+- إن **لم** يظهر، فإما الكاش أو أن **Root Directory** في Vercel لا يشير إلى مجلد `financial-consulting/iif-fund-demo`.
+
+### ملخص التعديلات (لوحة ملء الشاشة / `#dashboard`)
+
+| الموضوع | ماذا يفعل |
+|--------|-----------|
+| **CSS** | قفل `#dashboard-overlay` بملء الشاشة، إخفاء `#main-content` والهيدر في وضع الإدارة، وخلفية `body` داكنة؛ إخفاء عناصر `body` عند فتح اللوحة (`:has` + إخفاء إضافي). |
+| **JS** | `IIF_applyDashboardFullpageLayout` يضبط أبعاد اللوحة inline وينقل العقدة لآخر `body`؛ `IIF_hidePublicSiteChrome` يخفي العناصر العامة ويضع `data-iif-dash-bg-suppress` عند فتح اللوحة؛ `IIF_scheduleDashboardFullpageRetries` يعيد التطبيق بعد 350/900/1600 ms. |
+| **إغلاق** | `closeAuth` عند فتح اللوحة؛ بعد الإغلاق استدعاء `IIF_hidePublicSiteChrome` لتنظيف الحالة؛ `IIF_restorePublicSiteChrome` يزيل `data-iif-dash-bg-suppress`. |
+| **تعليق HTML** | تعليق `تحقق-النشر-iif-dashboard-fullpage` للتحقق من أن الملف المنشور هو نفس المستودع (ليس للبحث في محركات). |
+
+### هل «المحاولات الفاشلة» تتراكم على الموقع؟
+
+**لا.** كل نشر على Vercel يستبدل الملفات بالكامل؛ لا يوجد «تراكم» لمحاولات قديمة على الخادم.  
+إن نُشر كود فيه خطأ، يكفي **إعادة نشر نسخة صحيحة** أو **`git revert`** للكومِت المناسب.  
+**التأثير الوحيد** المحتمل: لقطات كاش لدى الزوار حتى تنتهي صلاحية الكاش أو يعملوا **تحديثاً قوياً** (Ctrl+F5).
+
+إذا لم تفتح اللوحة على `#dashboard`: جرّب تحديثاً قوياً (Ctrl+F5) وتأكد أن **Root Directory** في Vercel يشير للمجلد الصحيح الذي يحتوي `index.html`.
+
+### وثائق المستويات الرفيعة (من جذر المستودع)
+
+صفحات ثابتة في **الجذر** وليست داخل هذا المجلد — تُفتح عبر الخادم الموحّد:
 
 | | |
 |---|---|
-| **العمل والتخزين (مفضّل)** | **`D:\iif-fund-demo`** — لا تكرّر المشروع على **C:** بلا داعٍ (توفير مساحة). |
-| **نسخة على C: (مثلاً Cursor)** | **`C:\Users\...\iif-fund-demo`** مقبولة إن كان هذا المجلد المفتوح في Cursor — نعمل على **المجلد المفتوح فعلياً**. |
-| **البرامج** | استخدم **Node، Docker، Cursor، Git**… كالمعتاد؛ تثبيتها على C: طبيعي. |
-| **Cursor** | **Open Folder** → مجلد المشروع (D: أو C: حسب نسختك). |
-| **Git** | من مجلد المشروع. تفاصيل: [WORKSPACE-D-DRIVE.md](./WORKSPACE-D-DRIVE.md). |
-| **نسخة قديمة على C:** | بعد التأكد من النسخة الصحيحة — [scripts/optional-remove-c-copy.bat](./scripts/optional-remove-c-copy.bat) (قالب آمن، لا يحذف تلقائياً). |
+| موجز تنفيذي | [`/executive-brief.html`](../../executive-brief.html) · اختصار `/executive` |
+| معايير المستوى السيادي | [`/sovereign-standards.html`](../../sovereign-standards.html) · `/sovereign` أو `/charter` |
+| دليل استضافة العرض | [`EXECUTIVE-HOSTING-GUIDE.md`](../../EXECUTIVE-HOSTING-GUIDE.md) |
 
-**نقاط الدخول المعتمدة:** واجهة الصندوق [`financial-consulting/iif-fund-demo/index.html`](./financial-consulting/iif-fund-demo/index.html)؛ الفهرس الحكومي المرجعي [`financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html`](./financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html). نسخ `index-*.html` التجريبية القديمة مؤرشفة في [`financial-consulting/iif-fund-demo/archive/previous-index-variants/`](./financial-consulting/iif-fund-demo/archive/previous-index-variants/).
+في **هذه الواجهة** يظهر في الهيدر رابط «Executive Brief» و«معايير سيادية» يشيران إلى نفس المسارات أعلاه.
 
-**للاطلاع الرسمي / المستويات الرفيعة:** [`executive-brief.html`](./executive-brief.html) (أو `/executive`) — موجز مؤسسي ثنائي اللغة؛ [`sovereign-standards.html`](./sovereign-standards.html) (أو `/sovereign`) — معايير الجودة والحوكمة بما يليق بالقيادات السيادية؛ دليل الاستضافة: [`EXECUTIVE-HOSTING-GUIDE.md`](./EXECUTIVE-HOSTING-GUIDE.md).
+## ✨ **المميزات الرئيسية**
 
-### أين أقرأ ماذا؟
+### 📊 **تحليلات مالية متقدمة**
+- تحليل الأداء التاريخي للصناديق
+- مقارنات بين الصناديق المختلفة
+- توقعات الأداء المستقبلية
+- مؤشرات المخاطر والعائد
 
-| إن كنت تبحث عن… | ابدأ من |
-|------------------|---------|
-| عرض للمستويات الرفيعة / موجز مؤسسي | [`executive-brief.html`](./executive-brief.html) و [`EXECUTIVE-HOSTING-GUIDE.md`](./EXECUTIVE-HOSTING-GUIDE.md) |
-| معايير الجودة بما يليق بالقيادات السيادية | [`sovereign-standards.html`](./sovereign-standards.html) و [`SOVEREIGN-STANDARDS.md`](./SOVEREIGN-STANDARDS.md) |
-| تشغيل المشروع وروابط التطوير | هذا الملف (README) — قسم **التشغيل السريع** |
-| قائمة قبل النشر (محتوى + تقنية) | [`قبل-النشر.md`](./قبل-النشر.md) |
-| **روابط الإنتاج المعتمدة** (Vercel / Netlify / GitHub Pages) | [`CANONICAL-URLS.md`](./CANONICAL-URLS.md) |
-| **قبل الدمج** — أخطاء، ازدواجية، انسجام مع المنصات والمساعد | [`قائمة-تحقق-قبل-الدمج.md`](./قائمة-تحقق-قبل-الدمج.md) |
-| مسارات الملفات ≠ بحث Google | [`PATHS-NOT-GOOGLE.md`](./PATHS-NOT-GOOGLE.md) |
-| خطوات Netlify والاختصارات `/fund` و `/gov` | [`NETLIFY-CHECKLIST.md`](./NETLIFY-CHECKLIST.md) و [`netlify.toml`](./netlify.toml) |
-| ربط المنصة الحكومية بالصندوق | [`financial-consulting/government-search/README-IIF-INTEGRATION.md`](./financial-consulting/government-search/README-IIF-INTEGRATION.md) |
-| واجهة الصندوق (تفاصيل المجلد) | [`financial-consulting/iif-fund-demo/README.md`](./financial-consulting/iif-fund-demo/README.md) |
-| إطار مبسّط + iframe للمنصة الحكومية | [`financial-consulting/fund-site/index.html`](./financial-consulting/fund-site/index.html) — **للمعاينة**؛ الإنتاج يفضّل الواجهة الكاملة أعلاه |
-| تعليمات للمساعد (Cursor) | [`AGENTS.md`](./AGENTS.md) |
+### 🎨 **واجهة مستخدم احترافية**
+- تصميم عصري ومتجاوب
+- دعم كامل للغة العربية
+- رسوم بيانية تفاعلية
+- تقارير مخصصة
 
----
+### 🔍 **بحث وفلترة متقدم**
+- بحث فوري في الصناديق
+- فلترة حسب المعايير المختلفة
+- حفظ البحث المفضل
+- تصدير البيانات
 
-## التشغيل السريع
+### 📱 **تجربة مستخدم متكاملة**
+- متوافق مع جميع الأجهزة
+- تطبيق ويب تقدمي
+- إشعارات فورية
+- لوحة تحكم شخصية
 
-### ويندوز — «كل شيء» بنقرة واحدة
+## 🚀 **التقنيات المستخدمة**
 
-1. شغّل **Docker Desktop** وانتظر حتى يصبح جاهزاً.
-2. انقر نقراً مزدوجاً **[`START-IIF-FULL.bat`](./START-IIF-FULL.bat)** في جذر المشروع.  
-   يشغّل **SearXNG + Tor** (`engines/searxng`)، ثم **خادم التطوير** على **3333** في نافذة منفصلة، ثم يفتح **المنصة الحكومية** في المتصفح.
-3. للتحقق من المحرك من الطرفية: `npm run verify:searx` (يجب أن يطبع `OK`).
+### **الواجهة الأمامية**
+- **HTML5** - هيكل الصفحات
+- **CSS3** - التصميم والأنماط
+- **JavaScript** - الوظائف والتفاعل
+- **Chart.js** - الرسوم البيانية
+- **Bootstrap** - إطار التصميم
 
-**بدون Docker** (واجهات فقط): **[`START-IIF-DEMO.bat`](./START-IIF-DEMO.bat)** — يشغّل `npm start` ويفتح **http://127.0.0.1:3333/** (المجلد الصحيح مضمون عبر `/D`).
+### **البيانات والتحليل**
+- **Data Manager** - إدارة البيانات
+- **Analytics Engine** - محرك التحليلات
+- **Report Generator** - مولد التقارير
+- **Export Tools** - أدوات التصدير
 
-### 1) خادم التطوير (الواجهات الثابتة)
+### **البنية التحتية**
+- **Netlify** - الاستضافة والتوزيع
+- **Vercel** - الخوادم الخلفية
+- **GitHub** - إدارة الإصدارات
+- **API Integration** - تكامل واجهات برمجية
 
-يتطلب **Node.js 22+** (انظر `.nvmrc` و`.node-version` — نفس الإصدار في CI وNetlify):
+## 📁 **هيكل المشروع**
 
+```
+iif-fund-demo/
+├── 📄 README.md                    # وثائق المشروع
+├── 📄 index.html                   # الصفحة الرئيسية (المسار الوحيد المعتمد)
+├── 📁 archive/previous-index-variants/  # نسخ قديمة من index (مرجع فقط)
+├── 📁 assets/                      # الموارد الثابتة
+│   ├── 📁 css/                     # ملفات التصميم
+│   ├── 📁 js/                      # ملفات JavaScript
+│   └── 📁 images/                  # الصور والأيقونات
+├── 📁 components/                  # المكونات
+├── 📁 data/                        # بيانات الصناديق
+├── 📁 api/                         # واجهات برمجية
+├── 📁 functions/                   # دوال الخادم
+├── 📄 package.json                 # إعدادات المشروع
+├── 📄 netlify.toml                 # إعدادات Netlify
+└── 📄 vercel.json                  # إعدادات Vercel
+```
+
+## 🎯 **الاستخدام**
+
+### **التشغيل المحلي (ضمن جذر IIF)**
 ```bash
-npm run verify   # بناء + فحص صياغة السكربتات (اختياري قبل الدفع)
-npm run verify:local   # verify + فحص صيانة الروابط في الملفات (بدون خادم؛ أو VERIFY-IIF-LOCAL.bat)
+# من جذر المستودع (ليس من داخل iif-fund-demo فقط)
+cd /path/to/iif-fund-demo
 npm start
 ```
+ثم افتح **http://127.0.0.1:3333/financial-consulting/iif-fund-demo/index.html**
 
-**MiniMax API (اختياري):** لضبط المفتاح من ويندوز بدون أوامر معقّدة، انقر **`MINIMAX-KEY-SETUP.bat`** ثم **`MINIMAX-TEST.bat`** (تفاصيل في [AGENTS.md](./AGENTS.md)).
-
-**قبل فتح الروابط في المتصفح** (في طرفية أخرى):
-
+### **تشغيل معزول لهذا المجلد (بديل)**
 ```bash
-npm run check-urls
-# أو فحصاً أوسع (نفس المتطلبات — الخادم يعمل على 3333):
-npm run health
+# من مجلد iif-fund-demo — قد لا يوفّر بروكسي SearXNG
+node server.js
+# أو
+python -m http.server 8080
 ```
-(`health` = `check-urls` + `smoke:html`: التحقق من محتوى الصفحات الحرجة وروابط iframe والمعرّفات العميقة.)
+المنفذ يعتمد على السكربت؛ راجع `server.js` إن وُجد.
 
-ثم افتح:
+### **الوصول عبر Netlify (إن وُجد النشر)**
+راجع **[netlify.toml](../../netlify.toml)** في الجذر واختصارات مثل `/fund` و`/gov` في [README الجذر](../../README.md).
 
-- **الجذر:** [http://localhost:3333/](http://localhost:3333/)  
-- **الصندوق الكامل (الأصلية):** [http://localhost:3333/financial-consulting/iif-fund-demo/index.html](http://localhost:3333/financial-consulting/iif-fund-demo/index.html)
+### **واجهة مبسّطة (`fund-site`)**
+[`../fund-site/index.html`](../fund-site/index.html) يعرض المنصة الحكومية داخل iframe — للمعاينة السريعة. **الواجهة المعتمدة للصندوق** هي `index.html` في هذا المجلد.
 
-> **للمطورين:** المنصة الحكومية مباشرة:  
-> `…/financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html`  
-> (بحث **محلي** دائماً؛ **نتائج الويب** عبر SearXNG عند تشغيل **`START-IIF-FULL.bat`** أو `engines/searxng` + `npm start` — انظر [README-IIF-INTEGRATION.md](./financial-consulting/government-search/README-IIF-INTEGRATION.md).)
+### **الاطلاع الرسمي (رؤساء دول / وفود)**
+[`../../executive-brief.html`](../../executive-brief.html) — موجز ثنائي اللغة؛ دليل الاستضافة: [`../../EXECUTIVE-HOSTING-GUIDE.md`](../../EXECUTIVE-HOSTING-GUIDE.md).
 
-### 2) محرك البحث (اختياري — مشروع مستقل)
+## 📊 **البيانات المتاحة**
 
-من **`engines/searxng/`** (ليس من جذر IIF):
+### **أنواع الصناديق**
+- 🏦 **الصناديق البنكية**
+- 📈 **صناديق الأسهم**
+- 💰 **الصناديق النقدية**
+- 🏭 **الصناديق الصناعية**
+- 🌍 **الصناديق الدولية**
+- 🏛️ **الصناديق الحكومية**
 
+### **المؤشرات المالية**
+- 📊 **العائد السنوي**
+- 📉 **مؤشر المخاطرة**
+- 📈 **نمو الأصول**
+- 💹 **معدل التوزيع**
+- 🔄 **معدل الدوران**
+
+## 🔧 **التخصيص والتطوير**
+
+### **إضافة صندوق جديد**
+```javascript
+const newFund = {
+    id: 'fund-001',
+    name: 'اسم الصندوق',
+    type: 'نوع الصندوق',
+    performance: {
+        annual: 15.5,
+        risk: 2.3,
+        growth: 12.8
+    },
+    details: {
+        manager: 'مدير الصندوق',
+        inception: '2020-01-01',
+        assets: 1000000
+    }
+};
+```
+
+### **تعديل التصميم**
+```css
+.custom-style {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+}
+```
+
+## 🌐 **النشر والتوزيع**
+
+### **Netlify**
 ```bash
-cd engines/searxng
-docker compose up -d
+# بناء ونشر
+netlify build
+netlify deploy --prod
 ```
 
-- الواجهة: [http://127.0.0.1:18080](http://127.0.0.1:18080) (المضيف؛ داخل الحاوية 8080)  
-- التفاصيل: [engines/searxng/README.md](./engines/searxng/README.md)
+### **Vercel**
+```bash
+# نشر تلقائي
+git push origin main
+```
 
-### 3) ويندوز — تشغيل ومتصفح
+### **GitHub Pages**
+```bash
+gh-pages -d dist
+```
 
-- **`START-IIF-FULL.bat`** — Docker + الخادم + فتح المنصة الحكومية (موصى به للبحث الويب).  
-- **`START-IIF-DEMO.bat`** — الخادم + الصفحة الرئيسية فقط.
+## 📈 **الأداء والتحسين**
+
+### **تحسينات السرعة**
+- تحميل بطيء للصور
+- ضغط الملفات
+- تخزين مؤقت ذكي
+- CDN للتوزيع
+
+### **مقاييس الأداء**
+- وقت التحميل: < 2 ثانية
+- أول رسم: < 1 ثانية
+- تفاعل: < 100 مللي ثانية
+- حجم الصفحة: < 2 ميجابايت
+
+## 🤝 **المساهمة في المشروع**
+
+### **كيف تساهم**
+1. Fork المستودع
+2. أنشئ فرعًا جديدًا
+3. قم بالتغييرات
+4. قم بالالتزام
+5. افتح Pull Request
+
+### **أنواع المساهمات**
+- 🐛 إصلاح الأخطاء
+- ✨ إضافة مميزات جديدة
+- 📝 تحسين الوثائق
+- 🎨 تحسين التصميم
+- 📊 تحسين الأداء
+
+## 📞 **الاتصال والدعم**
+
+### **فريق التطوير**
+- **المطور**: فريق IIF Fund
+- **البريد**: info@iif-fund.com
+- **الموقع (Netlify)**: https://fluffy-meerkat-eff966.netlify.app
+- **GitHub**: https://github.com/your-username/iif-fund-demo
+
+### **الدعم الفني**
+- 📋 **تقارير الأخطاء**: GitHub Issues
+- 💬 **النقاشات**: GitHub Discussions
+- 📧 **الاستفسارات**: البريد الإلكتروني
+
+## 📄 **الترخيص**
+
+هذا المشروع مرخص تحت ترخيص MIT License.
+
+## 🙏 **الشكر والتقدير**
+
+- **Chart.js** - للرسوم البيانية
+- **Bootstrap** - لإطار التصميم
+- **Netlify** - للاستضافة
+- **Vercel** - للخوادم
+
+## 📝 **سجل التغييرات**
+
+### **الإصدار 2.0.0 (2024-03-13)**
+- 🎉 **إضافة Cascade AI** - مساعد برمجي ذكي
+- ✨ **تحسينات في الأداء** - سرعة واستجابة أفضل
+- 🎨 **تصميم محسّن** - واجهة عصرية احترافية
+- 📊 **تحليلات متقدمة** - مؤشرات وتقارير جديدة
+- 🌐 **نشر متعدد** - Netlify و Vercel
+
+### **الإصدار 1.0.0 (2024-03-12)**
+- 🚀 **الإصدار الأول** - منصة أساسية
+- ✨ **وظائف أساسية** - إدارة الصناديق
+- 🎨 **تصميم أولي** - واجهة مستخدم
+- 📊 **بيانات أولية** - معلومات الصناديق
 
 ---
 
-## الملفات المهمة
+## 🚀 **الخطوات التالية**
 
-| المسار | الوظيفة |
-|--------|---------|
-| `قبل-النشر.md` | قائمة تحقق قبل النشر العام (محتوى + تقنية) |
-| `PREPUBLISH-COMPLETE.md` | ملخص ما أُعدّ للنشر (وثائق، اختصارات، فحص روابط) |
-| [فحص-الأداء-خطوة-بخطوة.md](./فحص-الأداء-خطوة-بخطوة.md) | دليل فحص الواجهات والأداء والمحرك خطوة بخطوة |
-| `legal/` | صفحات الخصوصية وإخلاء المسؤولية والتواصل + فهرس |
-| `financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html` | المنصة الحكومية (بحث محلي؛ محرك الويب لاحقاً) |
-| `financial-consulting/government-search/SITE-GLOBAL-STANDARDS.md` | معايير الجودة العالمية للمنصة الحكومية (SEO، a11y، أداء) |
-| `financial-consulting/government-search/government-data.json` | بيانات الجهات |
-| `financial-consulting/government-search/government-data.js` | يُولَّد من JSON |
-| `financial-consulting/government-search/iif-config.js` | يُحمَّل من المنصة — تفعيل بحث الويب على `localhost`/`127.0.0.1` |
-| `financial-consulting/iif-fund-demo/` | **واجهة الصندوق الأصلية** |
-| `financial-consulting/fund-site/index.html` | واجهة تجريبية أبسط |
-| `scripts/dev-server.js` | خادم تطوير (`3333`) + بروكسي **`/api/searx`** → SearXNG على `18080` |
-| `engines/searxng/` | **Docker (Tor + SearXNG) + توثيق المحرك** |
-
-تفاصيل الربط المستقبلي: [financial-consulting/government-search/README-IIF-INTEGRATION.md](./financial-consulting/government-search/README-IIF-INTEGRATION.md).
-
-### تحديث بيانات الجهات
-
-1. عدّل `government-data.json` (أو استخدم `npm run expand:gov-un195` لتغطية دول إضافية وفق نموذج الأمم المتحدة).
-2. من جذر المشروع: `npm run build:gov-data` لتوليد `government-data.js`.
-3. **إكمال السياق:** الفهرس المحلي لا يُغني عن الويب؛ مع `npm start` + SearXNG يُكمّل المحرك النتائج (راجع [README-IIF-INTEGRATION.md](./financial-consulting/government-search/README-IIF-INTEGRATION.md)).
-4. **روابط البنك الدولي:** إن تغيّرت صيغة الموقع، شغّل `npm run fix:worldbank-urls` لتحديث مسارات `data.worldbank.org/country/*`.
-5. أعد تحميل الصفحة.
+### **التطوير المستقبلي**
+- 📱 **تطبيق موبايل** - iOS و Android
+- 🔍 **بحث ذكي** - AI-powered search
+- 🌍 **دول متعددة** - أسواق عالمية
+- 📊 **تحليلات متقدمة** - ML predictions
 
 ---
 
-## Netlify (ربط GitHub)
-
-- **قبل أول نشر عام:** راجع [قبل-النشر.md](./قبل-النشر.md) (محتوى + تقنية + توقّعات بحث الويب).
-- الإعدادات في **`netlify.toml`** (أمر البناء: `npm ci && npm run build`، النشر: **`.`**).
-- **قائمة خطوات جاهزة:** [NETLIFY-CHECKLIST.md](./NETLIFY-CHECKLIST.md)
-- لصق حقول الواجهة يدوياً: [NETLIFY-UI-SETTINGS.md](./NETLIFY-UI-SETTINGS.md)
-- **اختصارات بعد النشر:** `/fund` → واجهة الصندوق، `/gov` → المنصة الحكومية، `/legal` → الوثائق، `/privacy` / `/disclaimer` / `/contact` → صفحات قانونية (انظر `netlify.toml`)
-- نشر يدوي من GitHub: workflow **`Deploy Netlify`** (اختياري) يحتاج الأسرار `NETLIFY_AUTH_TOKEN` و `NETLIFY_SITE_ID`.
-
-> **ملاحظة:** إذا ربطت Netlify بمستودع `iif-web` على الفرع `main`، كل **push** يُعيد بناء الموقع تلقائياً — لا تحتاج أسرار Actions لذلك.
-
-**توفير الطبقة المجانية (Netlify / Actions):** [NETLIFY-FREE-TIER.md](./NETLIFY-FREE-TIER.md)
-
-**أمان (أسرار، مفاتيح):** [SECURITY.md](./SECURITY.md)
-
-### GitHub Pages (بديل عند توقف Netlify أو للمعاينة العامة)
-
-- سير العمل: [`.github/workflows/github-pages.yml`](./.github/workflows/github-pages.yml) — ينشر **`financial-consulting/iif-fund-demo/`** كموقع ثابت.
-- **تفعيل لمرة واحدة:** المستودع على GitHub → **Settings** → **Pages** → **Build and deployment** → المصدر: **GitHub Actions** (وليس Branch). إذا ظهرت صفحة 404 «لا يوجد موقع» رغم وجود الـ workflow، غالباً لم يُنشَأ موقع Pages بعد: من الطرفية مع [GitHub CLI](https://cli.github.com) بعد `gh auth login` نفّذ `gh api -X POST repos/alzahrani6020/iif-web/pages -f build_type=workflow` أو شغّل `.\scripts\enable-github-pages.ps1` من جذر المشروع.
-- بعد نجاح التشغيل: الرابط يكون `https://<user>.github.io/<repo>/` (مثال للمستودع المرتبط: [alzahrani6020/iif-web](https://github.com/alzahrani6020/iif-web)).
-- يوجد ملف [`.nojekyll`](./financial-consulting/iif-fund-demo/.nojekyll) في مجلد الواجهة لتعطيل معالج Jekyll الافتراضي.
-- **دفع التغييرات:** `git push origin main` يشغّل النشر تلقائياً عند تعديل ملفات داخل `financial-consulting/iif-fund-demo/` أو سير العمل نفسه؛ أو من تبويب **Actions** → **Deploy GitHub Pages** → **Run workflow**.
-- **ما لا يعمل على Pages وحدها (موقع ثابت):** مسارات مثل **`/healthz`** و**`/diagnostics.json`** و**`/api/*`** يوفّرها **`npm start`** (تطوير) أو **دوال Netlify** عند النشر هناك — وليست ملفاتاً ثابتة في كل البيئات.
-
-### Vercel وNetlify من Actions
-
-- **Deploy Netlify** و**Deploy Vercel (optional):** تشغيل **يدوي** من تبويب **Actions** → **Run workflow** بعد إضافة الأسرار في **Settings → Secrets and variables → Actions** (انظر تعليقات ملفات الـ workflow و[VERCEL-DEPLOY.md](./VERCEL-DEPLOY.md)).
-- النشر التلقائي عند **push** يمكن ضبطه من **لوحة Netlify / Vercel** عند ربط المستودع بـ Git هناك.
-
----
-
-## متغيرات اختيارية
-
-| المتغير | المعنى |
-|---------|--------|
-| `PORT` | منفذ خادم التطوير (افتراضي `3333`) |
-| `MINIMAX_API_KEY` | مفتاح **MiniMax Platform API** (اختياري) لتشغيل `npm run minimax:ask` — انسخ `.env.example` إلى `.env` |
-| `MINIMAX_MODEL` | نموذج النص (افتراضي `MiniMax-M2.7` في السكربت) |
-
-```bash
-set PORT=4000
-npm start
-```
+**💰 صُنع ب ❤️ لخدمة المستثمرين**

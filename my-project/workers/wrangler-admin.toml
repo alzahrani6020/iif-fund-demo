@@ -1,8 +1,0 @@
-name = "mzahrani-admin-proxy"
-main = "admin-protection.js"
-compatibility_date = "2026-05-14"
-
-routes = [
-  { pattern = "mzahrani.com/admin/*", zone_name = "mzahrani.com" },
-  { pattern = "mzahrani.com/admin", zone_name = "mzahrani.com" }
-]

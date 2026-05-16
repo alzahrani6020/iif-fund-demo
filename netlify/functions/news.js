@@ -1,64 +1,70 @@
 /**
- * Netlify wrapper for financial-consulting/iif-fund-demo/api/news.js (ESM GET handler).
- * Invoked as /.netlify/functions/news — matches IIF_FUNCS_PREFIX + '/news' on production.
+ * Netlify serverless function: fetch financial news from public RSS feeds
+ * and return JSON for the site's headlines widget.
+ * Endpoint: /.netlify/functions/news
  */
 
-function buildQueryString(event) {
-  const raw = event.rawQuery;
-  if (raw) return raw.startsWith('?') ? raw : '?' + raw;
-  const p = event.multiValueQueryStringParameters || event.queryStringParameters;
-  if (!p || typeof p !== 'object') return '';
-  const u = new URLSearchParams();
-  for (const [k, val] of Object.entries(p)) {
-    if (val == null) continue;
-    if (Array.isArray(val)) val.forEach((v) => u.append(k, String(v)));
-    else u.append(k, String(val));
+const RSS_FEEDS = [
+  { url: 'https://feeds.bbci.co.uk/news/business/rss.xml', name: 'BBC Business' },
+  { url: 'https://feeds.bbci.co.uk/news/world/rss.xml', name: 'BBC World' }
+];
+
+function parseRssItems(xml) {
+  const items = [];
+  const itemRegex = /<item>([\s\S]*?)<\/item>/gi;
+  let match;
+  while ((match = itemRegex.exec(xml)) !== null) {
+    const block = match[1];
+    const titleMatch = block.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) || block.match(/<title>(.*?)<\/title>/);
+    const linkMatch = block.match(/<link>(.*?)<\/link>/);
+    const title = titleMatch ? titleMatch[1].replace(/&amp;/g, '&').replace(/&#39;/g, "'").trim() : '';
+    const link = linkMatch ? linkMatch[1].trim() : '';
+    if (title && link) items.push({ title, link });
   }
-  const s = u.toString();
-  return s ? '?' + s : '';
+  return items;
 }
 
-exports.handler = async function (event) {
-  const baseHeaders = {
-    'Access-Control-Allow-Origin': '*',
+exports.handler = async function (event, context) {
+  const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
+  const allowedList = (process.env.ALLOWED_ORIGINS || process.env.ALLOWED_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean);
+  let allowOrigin = '*';
+  if (allowedList.length) {
+    allowOrigin = origin && allowedList.includes(origin) ? origin : allowedList[0];
+  }
+  const headers = {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Access-Control-Allow-Origin': allowOrigin,
     'Access-Control-Allow-Headers': 'Content-Type',
+    'Vary': 'Origin',
+    'Cache-Control': 'public, max-age=300, stale-while-revalidate=600'
   };
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 204, headers: baseHeaders, body: '' };
+  if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers, body: '' };
+
+  const all = [];
+  for (const feed of RSS_FEEDS) {
+    try {
+      const res = await fetch(feed.url, {
+        headers: { 'User-Agent': 'IIF-News-Widget/1.0' }
+      });
+      if (!res.ok) continue;
+      const xml = await res.text();
+      const items = parseRssItems(xml).slice(0, 8).map(({ title, link }) => ({
+        title,
+        link,
+        source: feed.name
+      }));
+      all.push(...items);
+    } catch (e) {
+      console.warn('RSS fetch failed:', feed.url, e.message);
+    }
   }
-  if (event.httpMethod !== 'GET' && event.httpMethod !== 'HEAD') {
-    return {
-      statusCode: 405,
-      headers: { ...baseHeaders, 'Content-Type': 'application/json; charset=utf-8' },
-      body: JSON.stringify({ items: [] }),
-    };
-  }
-  const host = (event.headers && event.headers.host) || 'localhost';
-  const qs = buildQueryString(event);
-  const absUrl = `https://${host}/api/news${qs}`;
-  try {
-    const { GET } = await import('../../financial-consulting/iif-fund-demo/api/news.js');
-    const webRes = await GET(new Request(absUrl, { method: event.httpMethod }));
-    const buf = Buffer.from(await webRes.arrayBuffer());
-    const outHeaders = {};
-    webRes.headers.forEach((v, k) => {
-      outHeaders[k] = v;
-    });
-    return {
-      statusCode: webRes.status,
-      headers: outHeaders,
-      body: buf.toString('utf8'),
-    };
-  } catch (e) {
-    console.error('netlify news function:', e);
-    return {
-      statusCode: 200,
-      headers: {
-        ...baseHeaders,
-        'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': 'public, max-age=300, stale-while-revalidate=600',
-      },
-      body: JSON.stringify({ items: [] }),
-    };
-  }
+
+  const uniqueByLink = [...new Map(all.map((i) => [i.link, i])).values()];
+  const list = uniqueByLink.slice(0, 15);
+
+  return {
+    statusCode: 200,
+    headers,
+    body: JSON.stringify({ items: list })
+  };
 };

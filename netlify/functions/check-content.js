@@ -129,7 +129,7 @@ async function checkWithVisionApi(base64, apiKey) {
   return { safe: true };
 }
 
-exports.handler = async function (event, _context) {
+exports.handler = async function (event, context) {
   const origin = (event.headers && (event.headers.origin || event.headers.Origin)) || '';
   const allowedList = (process.env.ALLOWED_ORIGINS || process.env.ALLOWED_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean);
   let allowOrigin = '*';

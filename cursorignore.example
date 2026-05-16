@@ -1,4 +1,0 @@
-# انسخ هذا الملف وسمّه .cursorignore في جذر المشروع (لتسريع فهرسة Cursor)
-node_modules/
-.netlify/
-.git/

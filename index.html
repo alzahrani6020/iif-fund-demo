@@ -1,186 +1,96 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <script>
-      (function () {
-        try {
-          var h = location.hostname || '';
-          if (!h.endsWith('github.io')) return;
-          var parts = (location.pathname || '/').split('/').filter(Boolean);
-          if (parts.length < 1) return;
-          var el = document.createElement('base');
-          el.href = '/' + parts[0] + '/';
-          document.head.appendChild(el);
-        } catch (e) { }
-      })();
-    </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#0f172a">
-    <meta name="description" content="صندوق الاستثمار الدولي (IIF) — بوابة الوصول إلى واجهة الصندوق والمنصة الحكومية المرجعية.">
-    <meta name="robots" content="index, follow">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>صندوق الاستثمار الدولي (IIF) — توجيه</title>
-    <link rel="stylesheet" href="gateway.css" />
-    <!-- لا تستخدم meta refresh إلى مسار فرعي ثابت: على Vercel غالباً يُنشر مجلد iif-fund-demo كجذر فيصبح المسار الطويل 404 -->
-    <script>
-      (function () {
-        /*
-          دومين ثقة (thiqqah.live): يُنشر كموقع Netlify منفصل — انظر NETLIFY-THIQQAH-STANDALONE.md
-          و thiqqah-site/netlify.toml (Base directory = thiqqah-site). لا توجيه هنا إلى دومين آخر.
-        */
-        /** مطابقة netlify.toml + vercel.json + اختصارات التطوير المحلي — توجيه كامل حسب المسار */
-        function siteBase() {
-          try {
-            var h = location.hostname || '';
-            if (h.endsWith('github.io')) {
-              var parts = (location.pathname || '/').split('/').filter(Boolean);
-              if (parts.length >= 1) return '/' + parts[0] + '/';
-            }
-          } catch (e) { }
-          return '/';
-        }
-        function absPath(p) {
-          if (!p || p.charAt(0) !== '/') return p;
-          var b = siteBase();
-          if (b === '/') return p;
-          return b.replace(/\/$/, '') + p;
-        }
-        var SUB = absPath('/financial-consulting/iif-fund-demo/index.html');
-        var GOV = absPath('/financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html');
-        var ADMIN = absPath('/financial-consulting/iif-fund-demo/admin.html');
-
-        function routeKind(seg) {
-          var s = (seg || '').toLowerCase();
-          if (!s || s === 'fund') return 'fund';
-          if (s === 'dashboard' || s === 'cp' || s === 'panel' || s === 'fund-admin') return 'dash';
-          if (s === 'gov') return 'gov';
-          if (s === 'admin') return 'admin';
-          if (s === 'legal') return 'legal';
-          if (s === 'privacy') return 'privacy';
-          if (s === 'disclaimer') return 'disclaimer';
-          if (s === 'contact') return 'contact';
-          if (s === 'executive' || s === 'brief') return 'executive';
-          if (s === 'sovereign' || s === 'charter') return 'sovereign';
-          return 'fund';
-        }
-
-        function pathForKind(kind) {
-          if (kind === 'gov') return GOV;
-          if (kind === 'admin') return ADMIN;
-          if (kind === 'legal') return absPath('/legal/index.html');
-          if (kind === 'privacy') return absPath('/legal/privacy.html');
-          if (kind === 'disclaimer') return absPath('/legal/disclaimer.html');
-          if (kind === 'contact') return absPath('/legal/contact.html');
-          if (kind === 'executive') return absPath('/executive-brief.html');
-          if (kind === 'sovereign') return absPath('/sovereign-standards.html');
-          return SUB;
-        }
-
-        function segmentFromPathname(p) {
-          var parts = String(p || '/').replace(/\/+$/, '').split('/').filter(Boolean);
-          var last = parts.length ? parts[parts.length - 1].toLowerCase() : '';
-          if (last === 'index.html') {
-            parts.pop();
-            last = parts.length ? parts[parts.length - 1].toLowerCase() : '';
-          }
-          return last || '';
-        }
-
-        function buildTarget() {
-          var q = (window.location && window.location.search) ? window.location.search : '';
-          var h = (window.location && window.location.hash) ? window.location.hash : '';
-          var p = (window.location && window.location.pathname) ? window.location.pathname : '/';
-          var segLower = segmentFromPathname(p);
-          var kind = routeKind(segLower);
-
-          if (kind === 'dash') {
-            var sp = new URLSearchParams(q || '');
-            sp.set('iif_admin_portal', '1');
-            sp.set('open_dashboard', '1');
-            return SUB + '?' + sp.toString() + (h || '');
-          }
-          var base = pathForKind(kind);
-          return base + (q || '') + (h || '');
-        }
-
-        function headPathToVerify(url) {
-          var s = String(url || '').split('#')[0].split('?')[0];
-          if (!s.startsWith('/')) return '/' + s;
-          return s;
-        }
-
-        function showManual(reason) {
-          document.body.classList.add('gateway-manual');
-          var h1 = document.getElementById('gateway-title');
-          var lead = document.getElementById('gateway-lead');
-          var box = document.getElementById('gateway-manual-reason');
-          if (h1) h1.textContent = 'اختر الوجهة';
-          if (lead) {
-            lead.textContent =
-              'لم يُعاد التوجيه تلقائياً. استخدم الروابط أدناه أو افتح المسار الصحيح من جهازك.';
-          }
-          if (box) {
-            var map = {
-              'no-fetch': 'المتصفح لا يدعم التحقق التلقائي (fetch). لا مشكلة — الروابط التالية تعمل مباشرة.',
-              'head-fail': 'تعذّر التأكد من وجود الملف على هذا المسار (استجابة HTTP غير ناجحة).',
-              'net': 'تعذّر الاتصال بالخادم أو أنت تفتح الملف مباشرة من القرص بدون خادم محلي.',
-              'default': 'يمكنك المتابعة يدوياً من القائمة أدناه.'
-            };
-            box.textContent = map[reason] || map['default'];
-          }
-        }
-
-        function go(url) {
-          window.location.replace(url);
-        }
-
-        var target = buildTarget();
-        var verifyPath = headPathToVerify(target);
-
-        if (typeof fetch === 'undefined') {
-          showManual('no-fetch');
-          return;
-        }
-        fetch(verifyPath, { method: 'HEAD', cache: 'no-store' })
-          .then(function (r) {
-            if (r.ok) {
-              go(target);
-            } else {
-              showManual('head-fail');
-            }
-          })
-          .catch(function () {
-            showManual('net');
-          });
-      })();
-    </script>
+  <meta charset="utf-8" />
+  <title>International Investment Fund · FII · Paris</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0e18" />
+  <meta name="description" content="International Investment Fund (FII) — Financing for global prosperity." />
+  <meta name="keywords" content="investment fund, sovereign finance, BOT, government partnerships, Paris, EU" />
+  <meta property="og:title" content="International Investment Fund · FII · Paris" />
+  <meta property="og:description" content="Financing for global prosperity · Sovereign partnerships · Institutional capital" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://iiffund.com" />
+  <meta property="og:image" content="https://iiffund.com/assets/og-cover.svg" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="ar_SA" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="International Investment Fund · FII · Paris" />
+  <meta name="twitter:description" content="Financing for global prosperity · Sovereign partnerships · Institutional capital" />
+  <meta name="twitter:image" content="https://iiffund.com/assets/og-cover.svg" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230d0d0d' stroke='%23c9a227' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='10' fill='%231e3a5f' opacity='0.95'/%3E%3Ctext x='16' y='20' text-anchor='middle' fill='%23e8c968' font-size='9' font-weight='700' font-family='system-ui,sans-serif' letter-spacing='0.1em'%3EFII%3C/text%3E%3C/svg%3E" type="image/svg+xml" />
+  <link rel="canonical" href="https://iiffund.com/financial-consulting/iif-fund-demo/" />
+  <!-- Prefetch standalone pages for instant navigation -->
+  <link rel="prefetch" href="services" />
+  <link rel="prefetch" href="about" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Design System — متغيرات وأساسيات -->
+  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/public-shell.css" />
+  <link rel="stylesheet" href="css/public-components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <!-- Fallback: styles.css القديم — سُيزال تدريجياً -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://iiffund.com/#organization",
+        "name": "International Investment Fund",
+        "alternateName": ["FII", "صندوق الاستثمار الدولي"],
+        "url": "https://iiffund.com",
+        "logo": "https://iiffund.com/assets/og-cover.svg",
+        "description": "International Investment Fund (FII) — Financing for global prosperity through sovereign partnerships and institutional capital.",
+        "foundingDate": "2019",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "13B Av de la Motte Picquet",
+          "addressLocality": "Paris",
+          "postalCode": "75007",
+          "addressCountry": "FR"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+966-56-756-6616",
+          "email": "info@iiffund.com",
+          "contactType": "General Inquiries",
+          "availableLanguage": ["English", "Arabic", "French"]
+        },
+        "sameAs": [
+          "https://github.com/alzahrani6020/iif-fund-demo"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://iiffund.com/#website",
+        "url": "https://iiffund.com",
+        "name": "International Investment Fund · FII · Paris",
+        "publisher": { "@id": "https://iiffund.com/#organization" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://iiffund.com/financial-consulting/iif-fund-demo/",
+        "url": "https://iiffund.com/financial-consulting/iif-fund-demo/",
+        "name": "International Investment Fund · FII · Paris",
+        "isPartOf": { "@id": "https://iiffund.com/#website" },
+        "about": { "@id": "https://iiffund.com/#organization" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-    <main id="main">
-        <h1 id="gateway-title">جاري التوجيه…</h1>
-        <p id="gateway-lead" class="lead">يتم التحقق من المسار ثم توجيهك إلى الوجهة المناسبة (واجهة الصندوق، لوحة التحكم، المنصة الحكومية، إلخ).</p>
-        <p id="gateway-manual-reason" class="lead" aria-live="polite"></p>
-        <nav aria-label="روابط رئيسية">
-            <ul>
-                <li><a href="executive-brief.html">موجز للمستويات الرفيعة (Executive Brief)</a> — <span dir="ltr">/executive</span>، <span dir="ltr">/brief</span></li>
-                <li><a href="sovereign-standards.html">معايير المستوى السيادي (Sovereign-tier standards)</a> — <span dir="ltr">/sovereign</span>، <span dir="ltr">/charter</span></li>
-                <li><a href="financial-consulting/iif-fund-demo/index.html">الواجهة الرئيسية للصندوق</a> — <span dir="ltr">/fund</span></li>
-                <li><a href="financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&amp;open_dashboard=1">لوحة التحكم (مباشرة)</a> — <span dir="ltr">/dashboard</span>، <span dir="ltr">/cp</span>، <span dir="ltr">/panel</span>، <span dir="ltr">/fund-admin</span></li>
-                <li><a href="financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html">الفهرس الحكومي المرجعي</a> — <span dir="ltr">/gov</span></li>
-                <li><a href="financial-consulting/iif-fund-demo/admin.html">لوحة الإدارة (ملف admin)</a> — <span dir="ltr">/admin</span> (عند Netlify/الخادم)</li>
-                <li><a href="financial-consulting/fund-site/index.html">بوابة fund-site</a></li>
-                <li><a href="legal/index.html">الوثائق (خصوصية · إخلاء مسؤولية · تواصل)</a> — <span dir="ltr">/legal</span></li>
-                <li><a href="legal/privacy.html">الخصوصية</a> — <span dir="ltr">/privacy</span></li>
-                <li><a href="legal/disclaimer.html">إخلاء المسؤولية</a> — <span dir="ltr">/disclaimer</span></li>
-                <li><a href="legal/contact.html">التواصل</a> — <span dir="ltr">/contact</span></li>
-                <li><a href="index.html">هذه الصفحة (بوابة التوجيه) — جذر المستودع</a></li>
-            </ul>
-        </nav>
-    </main>
-    <noscript>
-        <p style="padding:1rem;font-family:system-ui,sans-serif;"><a href="financial-consulting/iif-fund-demo/index.html">متابعة إلى واجهة الصندوق (تفعّل JavaScript لأفضل توجيه)</a></p>
-    </noscript>
+  <div id="app"></div>
+  <script type="module" src="src/main.js"></script>
 </body>
 </html>
