@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ترويسة مطبوعة — صندوق الاستثمار الدولي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0a0e18;
+      --muted: #4a5568;
+      --navy: #0f1a2e;
+      --navy-2: #1a2a4a;
+      --gold: #c9a227;
+      --gold-2: #e8d48a;
+      --gold-3: #f0e5b8;
+      --paper: #faf8f3;
+      --cream: #f5f0e6;
+      --line: rgba(10, 14, 24, 0.10);
+      --header-pad-logo: 44mm;
+      --watermark-opacity: 0.12;
+      --watermark-opacity-print: 0.10;
+      --watermark-bg-width-pct: 32%;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Noto Naskh Arabic", "Tahoma", serif;
+      background: #d8dce4;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .hint-screen {
+      max-width: 210mm;
+      margin: 8mm auto;
+      padding: 12px 16px;
+      background: var(--ink);
+      color: #e2e8f0;
+      font-family: system-ui, sans-serif;
+      font-size: 12px;
+      direction: rtl;
+      border-radius: 10px;
+      line-height: 1.55;
+      border: 1px solid rgba(201, 162, 39, 0.35);
+    }
+
+    html[lang="en"] .hint-screen { direction: ltr; }
+
+    .hint-screen code {
+      background: rgba(15, 26, 46, 0.55);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .hint-screen--warn {
+      border-color: #b84848;
+      background: #3a1c1c;
+    }
+
+    .sheet {
+      width: 210mm;
+      height: 297mm;
+      min-height: 297mm;
+      margin: 0 auto 12mm;
+      display: flex;
+      flex-direction: column;
+      background:
+        radial-gradient(ellipse 90% 40% at 50% 10%, rgba(201, 162, 39, 0.06), transparent 55%),
+        var(--paper);
+      position: relative;
+      border-radius: 5mm;
+      overflow: hidden;
+      border: 1px solid var(--gold);
+      box-shadow:
+        0 0 0 1px var(--navy),
+        0 0 0 3px var(--paper),
+        0 0 0 5px var(--gold),
+        0 16px 40px rgba(10, 14, 24, 0.10);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .sheet-inner {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      width: 100%;
+      padding: 11mm 13mm 15mm 13mm;
+      z-index: 1;
+      box-sizing: border-box;
+    }
+
+    .sheet-inner-watermark {
+      position: absolute;
+      inset: 0;
+      box-sizing: border-box;
+      z-index: 0;
+      pointer-events: none;
+      background-image: url("assets/emblem.jpg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: var(--watermark-bg-width-pct) auto;
+      background-origin: padding-box;
+      opacity: var(--watermark-opacity);
+      filter: contrast(1.1) brightness(0.92) grayscale(0.3);
+      mix-blend-mode: multiply;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .sheet-inner > .corner-ornament {
+      position: absolute;
+      width: 11mm;
+      height: 11mm;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0.85;
+      border-color: var(--gold);
+    }
+
+    .corner-ornament.tr {
+      top: 5.5mm;
+      right: 5.5mm;
+      border-top: 2.5px solid;
+      border-right: 2.5px solid;
+      border-radius: 0 10px 0 0;
+    }
+
+    html[lang="en"] .corner-ornament.tr {
+      right: auto;
+      left: 5.5mm;
+      border-right: none;
+      border-left: 2.5px solid;
+      border-radius: 10px 0 0 0;
+    }
+
+    .corner-ornament.bl {
+      bottom: 11mm;
+      left: 5.5mm;
+      border-bottom: 2.5px solid;
+      border-left: 2.5px solid;
+      border-radius: 0 0 0 10px;
+    }
+
+    html[lang="en"] .corner-ornament.bl {
+      left: auto;
+      right: 5.5mm;
+      border-left: none;
+      border-right: 2.5px solid;
+      border-radius: 0 0 10px 0;
+    }
+
+    .top-rule {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--navy), var(--navy-2) 38%, var(--gold) 100%);
+      z-index: 2;
+    }
+
+    .brand-ribbon {
+      position: relative;
+      z-index: 3;
+      min-height: 28mm;
+      padding: 0 0 2.8mm 0;
+      margin-bottom: 2.5mm;
+      border-bottom: 3px double var(--gold);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(250, 248, 243, 0.15) 100%);
+    }
+
+    .brand-logo-corner {
+      position: absolute;
+      top: -0.5mm;
+      right: -2mm;
+      z-index: 3;
+    }
+
+    html[lang="en"] .brand-logo-corner {
+      right: auto;
+      left: -2mm;
+    }
+
+    .brand-logo-wrap {
+      position: relative;
+      padding: 1.5mm 1.2mm;
+      background: #fff;
+      border-radius: 10px;
+      border: 2px solid var(--gold);
+      box-shadow: 0 2px 8px rgba(10, 14, 24, 0.10);
+    }
+
+    .brand-logo-xl {
+      position: relative;
+      z-index: 1;
+      width: 38mm;
+      height: auto;
+      max-height: 26mm;
+      max-width: none;
+      object-fit: contain;
+      display: block;
+      border-radius: 6px;
+      filter:
+        contrast(1.12)
+        saturate(1.15)
+        drop-shadow(0 1px 0 rgba(255, 255, 255, 1))
+        drop-shadow(0 0 2px rgba(201, 162, 39, 0.35));
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .brand-text-columns {
+      display: flex;
+      flex-direction: row;
+      direction: ltr;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 4mm 5mm;
+      padding-inline-end: var(--header-pad-logo);
+      padding-inline-start: 1mm;
+      padding-top: 0.5mm;
+      min-height: 25mm;
+    }
+
+    html[lang="en"] .brand-text-columns {
+      padding-inline-start: var(--header-pad-logo);
+      padding-inline-end: 1mm;
+    }
+
+    .brand-block--ar {
+      flex: 1 1 0;
+      min-width: 0;
+      direction: rtl;
+      text-align: justify;
+      text-align-last: right;
+      text-justify: inter-word;
+      hyphens: manual;
+    }
+
+    .brand-block--en {
+      flex: 0 1 42%;
+      min-width: 0;
+      text-align: left;
+      text-align-last: left;
+      direction: ltr;
+      font-family: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+      padding-top: 0.8mm;
+      border-right: 2px solid var(--gold);
+      padding-right: 4mm;
+      margin-right: 1mm;
+    }
+
+    .brand-block--ar .name {
+      font-family: "Noto Naskh Arabic", serif;
+      font-size: 14pt;
+      font-weight: 700;
+      line-height: 1.38;
+      color: var(--navy);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.96);
+      letter-spacing: 0.04em;
+      word-spacing: 0.10em;
+    }
+
+    .brand-block--ar .name span.gold { color: var(--gold); }
+
+    .brand-block--ar .tagline {
+      margin-top: 1.1mm;
+      font-size: 9pt;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      word-spacing: 0.06em;
+      line-height: 1.45;
+    }
+
+    .brand-block--ar .tagline strong { color: var(--ink); }
+
+    .brand-block--ar .city {
+      margin-top: 0.9mm;
+      font-size: 8.4pt;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      word-spacing: 0.06em;
+      line-height: 1.45;
+    }
+
+    .brand-block--en .name-en {
+      font-size: 10.5pt;
+      font-weight: 600;
+      line-height: 1.28;
+      color: var(--navy);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .brand-block--en .tagline-en {
+      margin-top: 1.1mm;
+      font-size: 8.2pt;
+      color: var(--muted);
+      font-style: italic;
+      letter-spacing: 0.03em;
+      white-space: pre-line;
+      line-height: 1.4;
+    }
+
+    .writing-surface {
+      position: relative;
+      z-index: 1;
+      min-height: 192mm;
+      margin-top: 2mm;
+      margin-bottom: 16mm;
+      border-radius: 3mm;
+      background: rgba(250, 248, 243, 0.35);
+      border: 1px dashed rgba(15, 26, 46, 0.10);
+    }
+
+    @media print {
+      .writing-surface {
+        background: transparent;
+        border: none;
+      }
+    }
+
+    .footer-zone {
+      position: absolute;
+      left: 9mm;
+      right: 9mm;
+      bottom: 4.5mm;
+      z-index: 4;
+    }
+
+    .footer-rule {
+      width: 100%;
+      padding-top: 2mm;
+      border-top: 2px solid var(--gold);
+      box-shadow: 0 -1px 0 0 var(--navy);
+    }
+
+    .footer-line {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 4mm;
+      flex-wrap: wrap;
+      padding: 1.4mm 0 0.6mm;
+    }
+
+    .footer-contacts-inline {
+      flex: 1 1 auto;
+      order: 1;
+      min-width: 0;
+      text-align: center;
+      text-align-last: center;
+      font-family: "Noto Naskh Arabic", "Segoe UI", system-ui, sans-serif;
+      font-size: 8.1pt;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.03em;
+      direction: rtl;
+      line-height: 1.35;
+    }
+
+    html[dir="rtl"] .footer-contacts-inline { order: 2; }
+
+    html[lang="en"] .footer-contacts-inline {
+      direction: ltr;
+      text-align-last: center;
+    }
+
+    .footer-contacts-inline .footer-name-ar {
+      font-weight: 700;
+      color: var(--navy-2);
+      white-space: normal;
+      unicode-bidi: isolate;
+      font-family: "Noto Naskh Arabic", "Tahoma", "Segoe UI", sans-serif;
+    }
+
+    .footer-contacts-inline a {
+      color: var(--navy-2);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .footer-contacts-inline .dot {
+      margin: 0 0.45em;
+      color: var(--gold);
+      opacity: 0.9;
+    }
+
+    .footer-qr-inline {
+      flex: 0 0 auto;
+      order: 2;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    html[dir="rtl"] .footer-qr-inline { order: 1; }
+
+    .footer-qr-inline img {
+      width: 11mm;
+      height: 11mm;
+      display: block;
+      border-radius: 4px;
+      border: 2px solid var(--gold);
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(10, 14, 24, 0.07);
+    }
+
+    @media print {
+      body { background: #fff; }
+      .hint-screen { display: none !important; }
+      .sheet {
+        margin: 0;
+        height: 297mm;
+        min-height: 297mm;
+        display: flex;
+        flex-direction: column;
+        border-radius: 4mm;
+        overflow: hidden;
+        border: 1pt solid var(--gold);
+        box-shadow:
+          0 0 0 1pt var(--paper),
+          0 0 0 3pt var(--navy),
+          0 0 0 4pt var(--gold);
+      }
+      .sheet-inner { padding: 11mm 13mm 15mm; }
+      .footer-contacts-inline a,
+      .footer-contacts-inline .footer-name-ar { color: var(--navy-2); }
+      .sheet-inner-watermark {
+        opacity: var(--watermark-opacity-print);
+        filter: contrast(1.12) brightness(0.90) grayscale(0.25);
+        --watermark-bg-width-pct: 30%;
+      }
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hint-screen" id="letterhead-hint">
+    <strong>معاينة فقط:</strong> ورقة هيدر ليتر لـ <strong>صندوق الاستثمار الدولي</strong>. لا تُطبع هذا المربع.
+    <br>
+    للطباعة: <strong>Ctrl+P</strong> — A4 و<strong>تفعيل «رسومات الخلفية»</strong>. حجم الشعار المائي: <code>--watermark-bg-width-pct</code> (مثلاً 28–36). للإنجليزية غيّر <code>&lt;html&gt;</code> إلى <code>lang=&quot;en&quot; dir=&quot;ltr&quot;</code>.
+  </div>
+
+  <div class="sheet">
+    <div class="top-rule" aria-hidden="true"></div>
+
+    <div class="sheet-inner">
+      <div class="sheet-inner-watermark" aria-hidden="true"></div>
+      <span class="corner-ornament tr" aria-hidden="true"></span>
+      <span class="corner-ornament bl" aria-hidden="true"></span>
+
+      <header class="brand-ribbon">
+        <div class="brand-logo-corner">
+          <div class="brand-logo-wrap">
+            <img
+              class="brand-logo-xl"
+              src="assets/emblem.jpg"
+              alt="شعار صندوق الاستثمار الدولي"
+              width="280"
+              height="280">
+          </div>
+        </div>
+
+        <div class="brand-text-columns">
+          <div class="brand-block--en" lang="en" dir="ltr">
+            <p class="name-en">International<br>Investment Fund</p>
+            <p class="tagline-en">Financing for Global Prosperity
+Kingdom of Saudi Arabia</p>
+          </div>
+          <div class="brand-block--ar" lang="ar">
+            <h1 class="name">
+              <span class="gold">صندوق</span> الاستثمار الدولي
+            </h1>
+            <p class="tagline"><strong>التمويل من أجل الازدهار العالمي</strong></p>
+            <p class="city">المملكة العربية السعودية</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="writing-surface" role="region" aria-label="مساحة كتابة فارغة للخطابات والعقود"></div>
+
+      <div class="footer-zone">
+        <div class="footer-rule"></div>
+        <div class="footer-line">
+          <div class="footer-contacts-inline">
+            <span class="footer-name-ar" dir="rtl">صندوق الاستثمار الدولي</span>
+            <span class="dot">·</span>
+            <a href="https://iiffund.com/" dir="ltr">iiffund.com</a>
+            <span class="dot">·</span>
+            <a href="mailto:info@iiffund.com" dir="ltr">info@iiffund.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

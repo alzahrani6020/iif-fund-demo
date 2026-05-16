@@ -32,11 +32,14 @@
       padding: 2rem;
     }
     .emblem {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 2rem;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 1.5rem;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(201,162,39,0.35);
+      box-shadow: 0 0 40px rgba(201,162,39,0.15);
     }
-    .emblem circle { fill: none; }
     .badge {
       display: inline-flex;
       align-items: center;
@@ -102,12 +105,7 @@
   </style>
 </head>
 <body>
-  <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
-    <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(201,162,39,0.35)" stroke-width="1"/>
-    <circle cx="60" cy="60" r="44" fill="none" stroke="rgba(30,58,95,0.6)" stroke-width="1.5"/>
-    <circle cx="60" cy="60" r="34" fill="rgba(201,162,39,0.08)"/>
-    <text x="60" y="68" text-anchor="middle" fill="#e8c968" font-size="22" font-weight="700" font-family="system-ui,sans-serif" letter-spacing="0.15em">FII</text>
-  </svg>
+  <img class="emblem" src="assets/emblem.jpg" alt="International Investment Fund" />
 
   <div class="badge">
     <span class="lang-en">Under Maintenance</span>
