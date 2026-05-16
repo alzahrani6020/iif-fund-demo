@@ -7,6 +7,27 @@ import { translations, Lang } from '@/lib/i18n';
 import { siteConfig } from '@/lib/data';
 import { SectionHeading } from './SectionHeading';
 
+function normalizePhone(input: string): string {
+  // Convert Arabic numerals to Western
+  const arToEn: Record<string, string> = {
+    '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
+    '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9',
+  };
+  let cleaned = input.split('').map(c => arToEn[c] || c).join('');
+  // Remove everything except digits and leading +
+  cleaned = cleaned.replace(/[^0-9+]/g, '');
+  return cleaned;
+}
+
+function isValidSaudiPhone(phone: string): boolean {
+  const p = phone.replace(/\+/g, '');
+  // Patterns: +9665xxxxxxxx, 9665xxxxxxxx, 05xxxxxxxx
+  if (/^9665\d{8}$/.test(p)) return true;
+  if (/^05\d{8}$/.test(p)) return true;
+  if (/^5\d{8}$/.test(p)) return true; // after +966
+  return false;
+}
+
 export function RequestForm({ lang }: { lang: Lang }) {
   const t = translations[lang];
   const [service, setService] = useState('');
@@ -16,6 +37,7 @@ export function RequestForm({ lang }: { lang: Lang }) {
   const [phone, setPhone] = useState('');
   const [details, setDetails] = useState('');
   const [toast, setToast] = useState('');
+  const [phoneError, setPhoneError] = useState('');
 
   const handleSubmit = (mode: 'whatsapp' | 'email') => {
     if (!service || !phone) {
@@ -24,6 +46,16 @@ export function RequestForm({ lang }: { lang: Lang }) {
       return;
     }
 
+    const normalized = normalizePhone(phone);
+    if (!isValidSaudiPhone(normalized)) {
+      setPhoneError(lang === 'ar'
+        ? 'الرجاء إدخال رقم جوال سعودي صحيح (مثال: +9665xxxxxxxx أو 05xxxxxxxx)'
+        : 'Please enter a valid Saudi mobile number (e.g. +9665xxxxxxxx or 05xxxxxxxx)');
+      setToast('');
+      return;
+    }
+    setPhoneError('');
+
     const lines = [
       `*${t.siteName} — ${t.request.kicker}*`,
       '',
@@ -31,7 +63,7 @@ export function RequestForm({ lang }: { lang: Lang }) {
       `*${t.request.cityLabel}:* ${city || '-'}`,
       `*${t.request.clientTypeLabel}:* ${clientType}`,
       `*${t.request.nameLabel}:* ${name || '-'}`,
-      `*${t.request.phoneLabel}:* ${phone}`,
+      `*${t.request.phoneLabel}:* ${normalized}`,
       `*${t.request.detailsLabel}:* ${details || '-'}`,
     ];
     const body = lines.join('\n');
@@ -88,7 +120,21 @@ export function RequestForm({ lang }: { lang: Lang }) {
             </label>
             <label className="block text-sm font-bold text-ink-800 sm:col-span-2">
               {t.request.phoneLabel}
-              <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+9665xxxxxxxx" dir="ltr" className="input-modern mt-2 text-left" required />
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => {
+                  setPhone(normalizePhone(e.target.value));
+                  if (phoneError) setPhoneError('');
+                }}
+                placeholder="+9665xxxxxxxx"
+                dir="ltr"
+                className={`input-modern mt-2 text-left ${phoneError ? 'border-red-500 focus:ring-red-200' : ''}`}
+                required
+              />
+              {phoneError && (
+                <span className="block mt-1 text-xs text-red-600 font-medium">{phoneError}</span>
+              )}
             </label>
             <label className="block text-sm font-bold text-ink-800 sm:col-span-2">
               {t.request.detailsLabel}

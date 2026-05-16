@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.mzahrani.com"
+        }
+      ],
+      "destination": "https://mzahrani.com/:path*",
+      "permanent": true
+    }
+  ]
+}

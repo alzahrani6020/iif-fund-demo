@@ -341,7 +341,7 @@ export function Navigation() {
               <div className="hidden sm:block">
                 <motion.h1
                   className="text-2xl font-bold leading-tight tracking-wide"
-                  style={{ fontFamily: "'Amiri', serif" }}
+                  style={{ fontFamily: "var(--font-amiri), 'Amiri', serif" }}
                   whileHover={{ scale: 1.02 }}
                 >
                   <span className="animated-gradient">محمد عيضة الزهراني</span>

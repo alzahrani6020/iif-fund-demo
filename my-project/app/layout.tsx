@@ -1,8 +1,30 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/toaster'
 import { TypographyControls } from '@/components/typography-controls'
+import { Tajawal, Amiri } from 'next/font/google'
 import './globals.css'
+
+const tajawal = Tajawal({
+  subsets: ['arabic'],
+  weight: ['300', '400', '500', '700', '800', '900'],
+  variable: '--font-tajawal',
+  display: 'swap',
+})
+
+const amiri = Amiri({
+  subsets: ['arabic'],
+  weight: ['400', '700'],
+  variable: '--font-amiri',
+  display: 'swap',
+})
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#2e1065',
+}
 
 export const metadata: Metadata = {
   title: 'محمد عيضة الزهراني | شاعر وباحث في التراث الشعبي',
@@ -36,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className="bg-background">
-      <body className="font-sans antialiased">
+      <body className={`${tajawal.variable} ${amiri.variable} font-sans antialiased`}>
         {children}
         <TypographyControls />
         <Toaster />

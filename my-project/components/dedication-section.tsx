@@ -56,7 +56,7 @@ export default function DedicationSection() {
           </div>
           <h2 
             className="text-3xl md:text-4xl font-bold gold-gradient"
-            style={{ fontFamily: "'Amiri', serif" }}
+            style={{ fontFamily: "var(--font-amiri), 'Amiri', serif" }}
           >
             إهداء
           </h2>
@@ -158,7 +158,7 @@ export default function DedicationSection() {
                       ? "text-amber-100 font-bold" 
                       : "text-purple-200/80 italic font-serif"
                   }`}
-                  style={{ fontFamily: quote.style === "italic" ? "'Amiri', serif" : "'Tajawal', sans-serif" }}
+                  style={{ fontFamily: quote.style === "italic" ? "var(--font-amiri), 'Amiri', serif" : "'Tajawal', sans-serif" }}
                 >
                   {quote.text}
                 </motion.p>
@@ -173,7 +173,7 @@ export default function DedicationSection() {
               transition={{ delay: 1.5 }}
               className="mt-8 pt-6 border-t border-amber-500/10"
             >
-              <h3 className="text-center text-lg font-bold text-amber-200 mb-4" style={{ fontFamily: "'Amiri', serif" }}>
+              <h3 className="text-center text-lg font-bold text-amber-200 mb-4" style={{ fontFamily: "var(--font-amiri), 'Amiri', serif" }}>
                 معلومات الموقع
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">

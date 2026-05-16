@@ -149,7 +149,7 @@ export default function AghrazPage() {
             </div>
             <h1
               className="text-4xl sm:text-5xl font-bold gold-gradient mb-4"
-              style={{ fontFamily: "'Amiri', serif" }}
+              style={{ fontFamily: "var(--font-amiri), 'Amiri', serif" }}
             >
               أغراض الشعر
             </h1>
@@ -185,7 +185,7 @@ export default function AghrazPage() {
                       <div className="flex-1">
                         <h2
                           className="text-2xl font-bold text-foreground mb-1 group-hover:text-accent transition-colors"
-                          style={{ fontFamily: "'Amiri', serif" }}
+                          style={{ fontFamily: "var(--font-amiri), 'Amiri', serif" }}
                         >
                           {form.title}
                         </h2>
@@ -204,7 +204,7 @@ export default function AghrazPage() {
                     <div className="bg-secondary/30 rounded-xl p-4 border-r-2 border-accent/30">
                       <p
                         className="text-foreground font-serif text-xl leading-loose italic"
-                        style={{ fontFamily: "'Amiri', serif" }}
+                        style={{ fontFamily: "var(--font-amiri), 'Amiri', serif" }}
                       >
                         {form.example}
                       </p>

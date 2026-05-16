@@ -53,10 +53,9 @@ export default function Hero() {
         >
           <div className="w-full h-full rounded-full overflow-hidden border-2 border-accent/40 purple-glow relative">
             <img
-              src={config.poetImage || "/poet.jpg?v=2"}
+              src="/poet.jpg?v=3"
               alt="صورة الشاعر"
               className="w-full h-full object-cover object-top"
-              onError={(e) => { (e.target as HTMLImageElement).src = "/poet.jpg" }}
             />
             <div className="absolute inset-0 ring-2 ring-inset ring-accent/20 rounded-full" />
           </div>
@@ -68,7 +67,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
           className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-wide"
-          style={{ fontFamily: "'Amiri', serif" }}
+          style={{ fontFamily: "var(--font-amiri), 'Amiri', serif" }}
         >
           <span className="gold-gradient">{config.poetName}</span>
         </motion.h1>

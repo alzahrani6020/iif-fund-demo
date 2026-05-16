@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Protect API routes
-  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/auth/') && !pathname.startsWith('/api/comments')) {
+  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/auth/') && !pathname.startsWith('/api/comments') && pathname !== '/api/site-config') {
     const token = request.cookies.get('auth-token')?.value
     let isAdmin = false
 

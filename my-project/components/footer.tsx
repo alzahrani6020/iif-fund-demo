@@ -197,7 +197,7 @@ export function Footer() {
           >
             <p
               className="text-2xl md:text-3xl text-accent/40 font-bold select-none"
-              style={{ fontFamily: "'Amiri', serif" }}
+              style={{ fontFamily: "var(--font-amiri), 'Amiri', serif" }}
             >
               محمد عيضة الزهراني
             </p>
@@ -227,7 +227,7 @@ export function Footer() {
                     className="w-8 h-8 object-contain"
                     onError={(e) => { const t = e.target as HTMLImageElement; t.style.display = 'none' }}
                   />
-                  <span className="text-sm font-bold text-amber-300/80 group-hover:text-amber-200 transition-colors" style={{ fontFamily: "'Amiri', serif" }}>
+                  <span className="text-sm font-bold text-amber-300/80 group-hover:text-amber-200 transition-colors" style={{ fontFamily: "var(--font-amiri), 'Amiri', serif" }}>
                     آفاق إبداعية
                   </span>
                 </div>
