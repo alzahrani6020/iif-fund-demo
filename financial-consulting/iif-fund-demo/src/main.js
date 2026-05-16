@@ -1,5 +1,6 @@
 import { sections } from './sections/index.js';
 import { loadLang } from './i18n/loader.js';
+import { injectLangToggle } from './lang-toggle.js';
 
 const DEFAULT_LANG = 'ar';
 const LANG_STORAGE_KEY = 'iif-lang';
@@ -73,6 +74,8 @@ async function init() {
       el.textContent = translations[key];
     }
   });
+
+  injectLangToggle();
 }
 
 if (document.readyState === 'loading') {
