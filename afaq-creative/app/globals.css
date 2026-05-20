@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
+
+body {
+  font-family: 'Tajawal', 'Poppins', system-ui, sans-serif;
+  background-color: #0A0E1A;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #c5a259;
+  color: #0A0E1A;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0A0E1A; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #0b5aa2, #c5a259); border-radius: 4px; }
