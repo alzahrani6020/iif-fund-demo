@@ -7,9 +7,11 @@ const SOV_NAV_LINKS = [
   { href: './', labelAr: 'الرئيسية', labelEn: 'Home' },
   { href: 'about', labelAr: 'من نحن', labelEn: 'About' },
   { href: 'strategy', labelAr: 'الاستراتيجية', labelEn: 'Strategy' },
+  { href: 'services', labelAr: 'الخدمات', labelEn: 'Services' },
   { href: 'partnerships', labelAr: 'الشراكات', labelEn: 'Partnerships' },
   { href: 'press', labelAr: 'الإعلام', labelEn: 'Press' },
   { href: 'contact', labelAr: 'التواصل', labelEn: 'Contact' },
+  { href: 'apply', labelAr: 'طلب عضوية', labelEn: 'Apply' },
 ];
 
 const SOV_LANGS = [
