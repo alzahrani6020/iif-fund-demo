@@ -8,8 +8,12 @@ const SOV_NAV_LINKS = [
   { href: 'about', labelAr: 'من نحن', labelEn: 'About' },
   { href: 'strategy', labelAr: 'الاستراتيجية', labelEn: 'Strategy' },
   { href: 'services', labelAr: 'الخدمات', labelEn: 'Services' },
+  { href: 'portfolio', labelAr: 'المحفظة', labelEn: 'Portfolio' },
   { href: 'partnerships', labelAr: 'الشراكات', labelEn: 'Partnerships' },
   { href: 'press', labelAr: 'الإعلام', labelEn: 'Press' },
+  { href: 'reports', labelAr: 'التقارير', labelEn: 'Reports' },
+  { href: 'careers', labelAr: 'الوظائف', labelEn: 'Careers' },
+  { href: 'faq', labelAr: 'الأسئلة الشائعة', labelEn: 'FAQ' },
   { href: 'contact', labelAr: 'التواصل', labelEn: 'Contact' },
   { href: 'apply', labelAr: 'طلب عضوية', labelEn: 'Apply' },
 ];

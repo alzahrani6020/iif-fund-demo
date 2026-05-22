@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <title>Portfolio · IIF · International Investment Fund</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#060a12" />
+  <meta name="description" content="IIF investment portfolio across sovereign markets and strategic sectors." />
+  <link rel="icon" type="image/svg+xml" href="assets/logo-v2.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/sovereign-system.css" />
+  <link rel="stylesheet" href="css/sovereign-components.css" />
+  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/public-shell.css" />
+  <link rel="stylesheet" href="css/public-components.css" />
+  <style>
+    .sov-project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-6); }
+    .sov-project { background: var(--color-surface-elevated); border: 1px solid var(--color-glass-border); border-radius: var(--radius-lg); overflow: hidden; transition: all var(--transition-normal); }
+    .sov-project:hover { border-color: var(--color-border-strong); box-shadow: var(--shadow-card-hover); transform: translateY(-4px); }
+    .sov-project__img { width: 100%; height: 180px; background: linear-gradient(135deg, var(--sov-navy-800), var(--sov-navy-700)); display: flex; align-items: center; justify-content: center; font-size: var(--text-3xl); color: var(--sov-gold-500); opacity: 0.7; }
+    .sov-project__body { padding: var(--space-5); }
+    .sov-project__title { font-size: var(--text-lg); font-weight: 600; color: var(--color-text-main); margin-bottom: var(--space-2); }
+    .sov-project__meta { font-size: var(--text-xs); color: var(--sov-gold-300); margin-bottom: var(--space-3); }
+    .sov-project__desc { font-size: var(--text-sm); color: var(--color-text-muted); line-height: var(--leading-relaxed); }
+  </style>
+</head>
+<body>
+  <div id="shared-header"></div>
+
+  <section class="sov-section" style="padding-top: calc(var(--space-24) + 80px); text-align:center;">
+    <div class="sov-container">
+      <span class="sov-section-header__label"><span class="lang-en">Portfolio</span><span class="lang-ar">المحفظة</span></span>
+      <h1 class="sov-section-header__title" style="font-size:var(--text-4xl);margin-bottom:var(--space-6);">
+        <span class="lang-en">Our Projects</span>
+        <span class="lang-ar">مشاريعنا</span>
+      </h1>
+      <p class="sov-section-header__desc" style="max-width:720px;margin-inline:auto;">
+        <span class="lang-en">Active investments across infrastructure, energy, technology, and strategic industries in 50+ markets.</span>
+        <span class="lang-ar">استثمارات نشطة عبر البنية التحتية والطاقة والتقنية والصناعات الاستراتيجية في أكثر من 50 سوقاً.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="sov-section" style="background:var(--sov-navy-900);">
+    <div class="sov-container">
+      <div class="sov-project-grid">
+        <article class="sov-project sov-reveal">
+          <div class="sov-project__img">&#9874;</div>
+          <div class="sov-project__body">
+            <div class="sov-project__meta">North Africa · $400M</div>
+            <h3 class="sov-project__title"><span class="lang-en">Transport & Energy Corridor</span><span class="lang-ar">ممر النقل والطاقة</span></h3>
+            <p class="sov-project__desc"><span class="lang-en">BOT agreements for rail and renewable energy infrastructure across three nations.</span><span class="lang-ar">اتفاقيات BOT للسكك الحديدية والبنية التحتية للطاقة المتجددة عبر ثلاث دول.</span></p>
+          </div>
+        </article>
+        <article class="sov-project sov-reveal sov-reveal-delay-1">
+          <div class="sov-project__img">&#9889;</div>
+          <div class="sov-project__body">
+            <div class="sov-project__meta">Southeast Asia · $250M</div>
+            <h3 class="sov-project__title"><span class="lang-en">Smart Grid Initiative</span><span class="lang-ar">مبادرة الشبكة الذكية</span></h3>
+            <p class="sov-project__desc"><span class="lang-en">Technology transfer and co-investment in modernizing national power distribution.</span><span class="lang-ar">نقل التقنية والاستثمار المشترك في تحديث توزيع الطاقة الوطني.</span></p>
+          </div>
+        </article>
+        <article class="sov-project sov-reveal sov-reveal-delay-2">
+          <div class="sov-project__img">&#127970;</div>
+          <div class="sov-project__body">
+            <div class="sov-project__meta">Middle East · $180M</div>
+            <h3 class="sov-project__title"><span class="lang-en">Urban Development Zone</span><span class="lang-ar">منطقة التنمية الحضرية</span></h3>
+            <p class="sov-project__desc"><span class="lang-en">Mixed-use sovereign development with residential, commercial, and logistics hubs.</span><span class="lang-ar">تنمية سيادية متعددة الاستخدامات مع مراكز سكنية وتجارية ولوجستية.</span></p>
+          </div>
+        </article>
+        <article class="sov-project sov-reveal">
+          <div class="sov-project__img">&#128187;</div>
+          <div class="sov-project__body">
+            <div class="sov-project__meta">Global · $120M</div>
+            <h3 class="sov-project__title"><span class="lang-en">AI Research Consortium</span><span class="lang-ar">تحالف البحث في الذكاء الاصطناعي</span></h3>
+            <p class="sov-project__desc"><span class="lang-en">Cross-border partnership with universities and labs for sovereign AI capabilities.</span><span class="lang-ar">شراكة عابرة للحدود مع الجامعات والمختبرات لقدرات الذكاء الاصطناعي السيادية.</span></p>
+          </div>
+        </article>
+        <article class="sov-project sov-reveal sov-reveal-delay-1">
+          <div class="sov-project__img">&#128167;</div>
+          <div class="sov-project__body">
+            <div class="sov-project__meta">Africa · $90M</div>
+            <h3 class="sov-project__title"><span class="lang-en">Water Security Program</span><span class="lang-ar">برنامج الأمن المائي</span></h3>
+            <p class="sov-project__desc"><span class="lang-en">Desalination and distribution infrastructure for coastal population centers.</span><span class="lang-ar">بنية تحتية لتحلية المياه وتوزيعها لمراكز السكان الساحلية.</span></p>
+          </div>
+        </article>
+        <article class="sov-project sov-reveal sov-reveal-delay-2">
+          <div class="sov-project__img">&#9992;</div>
+          <div class="sov-project__body">
+            <div class="sov-project__meta">Europe · $75M</div>
+            <h3 class="sov-project__title"><span class="lang-en">Aviation Logistics Hub</span><span class="lang-ar">مركز اللوجستيات الجوية</span></h3>
+            <p class="sov-project__desc"><span class="lang-en">Cold-chain and cargo terminal serving as regional distribution gateway.</span><span class="lang-ar">محطة سلسلة التبريد والشحن كبوابة توزيع إقليمية.</span></p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div id="shared-footer"></div>
+  <script src="src/shared-nav.js"></script>
+  <script src="src/shared-footer.js"></script>
+  <script src="src/sov-reveal.js"></script>
+  <script>
+    (function(){ const lang = localStorage.getItem('iif-lang') || 'ar'; document.documentElement.setAttribute('data-lang', lang); document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr'); document.documentElement.setAttribute('lang', lang); })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <title>Build, Operate & Transfer · Services · IIF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#060a12" />
+  <meta name="description" content="BOT framework agreements for infrastructure projects" />
+  <link rel="icon" type="image/svg+xml" href="../assets/logo-v2.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/sovereign-system.css" />
+  <link rel="stylesheet" href="../css/sovereign-components.css" />
+  <link rel="stylesheet" href="../css/design-system.css" />
+  <link rel="stylesheet" href="../css/public-shell.css" />
+  <link rel="stylesheet" href="../css/public-components.css" />
+</head>
+<body>
+  <div id="shared-header"></div>
+
+  <section class="sov-section" style="padding-top: calc(var(--space-24) + 80px); text-align:center;">
+    <div class="sov-container">
+      <span class="sov-section-header__label"><span class="lang-en">Services</span><span class="lang-ar">الخدمات</span></span>
+      <h1 class="sov-section-header__title" style="font-size:var(--text-4xl);margin-bottom:var(--space-6);">
+        <span class="lang-en">Build, Operate & Transfer</span>
+        <span class="lang-ar">البناء والتشغيل والنقل</span>
+      </h1>
+      <p class="sov-section-header__desc" style="max-width:720px;margin-inline:auto;">
+        <span class="lang-en">BOT framework agreements for infrastructure projects. Contact us for a tailored consultation.</span>
+        <span class="lang-ar">خدمة البناء والتشغيل والنقل من IIF. تواصل معنا لاستشارة مخصصة.</span>
+      </p>
+      <a href="../services" class="sov-btn sov-btn--ghost sov-btn--sm" style="margin-top:var(--space-6);"><span class="lang-en">← All Services</span><span class="lang-ar">جميع الخدمات →</span></a>
+    </div>
+  </section>
+
+  <div id="shared-footer"></div>
+  <script src="../src/shared-nav.js"></script>
+  <script src="../src/shared-footer.js"></script>
+  <script src="../src/sov-reveal.js"></script>
+  <script>
+    (function(){ const lang = localStorage.getItem('iif-lang') || 'ar'; document.documentElement.setAttribute('data-lang', lang); document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr'); document.documentElement.setAttribute('lang', lang); })();
+  </script>
+</body>
+</html>
