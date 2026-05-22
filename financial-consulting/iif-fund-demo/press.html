@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
+  <style>
+    .lang-en, .lang-fr, .lang-zh { display: none; }
+    html[data-lang="en"] .lang-en { display: block; }
+    html[data-lang="en"] .lang-ar { display: none; }
+    html[data-lang="ar"] .lang-en,
+    html[data-lang="ar"] .lang-fr,
+    html[data-lang="ar"] .lang-zh { display: none; }
+    html[data-lang="ar"] .lang-ar { display: block; }
+  </style>
   <meta charset="utf-8" />
   <title>Press & Media · IIF · International Investment Fund</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
