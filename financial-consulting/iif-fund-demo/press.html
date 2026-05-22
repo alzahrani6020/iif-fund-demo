@@ -206,6 +206,13 @@
       .sov-press-hero__title { font-size: var(--text-3xl); }
     }
   </style>
+  <style id="inline-lang-style">
+    .lang-ar, [data-i18n] { display: none !important; }
+    [data-lang="ar"] .lang-en { display: none !important; }
+    [data-lang="ar"] .lang-ar { display: inline !important; }
+    [data-lang="en"] .lang-ar { display: none !important; }
+    [data-lang="en"] .lang-en { display: inline !important; }
+  </style>
 </head>
 <body>
   <div id="shared-header"></div>
