@@ -1,217 +1,34 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <style>
-    .lang-en, .lang-fr, .lang-zh { display: none; }
-    html[data-lang="en"] .lang-en { display: block; }
-    html[data-lang="en"] .lang-ar { display: none; }
-    html[data-lang="ar"] .lang-en,
-    html[data-lang="ar"] .lang-fr,
-    html[data-lang="ar"] .lang-zh { display: none; }
-    html[data-lang="ar"] .lang-ar { display: block; }
-  </style>
   <meta charset="utf-8" />
   <title>Press & Media · IIF · International Investment Fund</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#060a12" />
   <meta name="description" content="Latest press releases, media coverage, and publications from the International Investment Fund (IIF)." />
-  <meta name="robots" content="index, follow" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Press & Media · IIF" />
-  <meta property="og:description" content="Latest press releases and media coverage from IIF." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://iiffund.com/press" />
-  <meta property="og:image" content="https://iiffund.com/assets/og-image.png" />
-
   <link rel="icon" type="image/svg+xml" href="assets/logo-v2.svg" />
-  <link rel="apple-touch-icon" href="assets/logo-192.png" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Sovereign styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/sovereign-system.css" />
   <link rel="stylesheet" href="css/sovereign-components.css" />
-  <link rel="stylesheet" href="css/sovereign-animations.css" />
   <link rel="stylesheet" href="css/design-system.css" />
   <link rel="stylesheet" href="css/public-shell.css" />
   <link rel="stylesheet" href="css/public-components.css" />
-  <link rel="stylesheet" href="css/sections.css" />
-
   <style>
-    .sov-press-hero {
-      position: relative;
-      padding: calc(var(--space-24) + 60px) var(--section-px) var(--space-16);
-      text-align: center;
-      background: linear-gradient(180deg, var(--sov-navy-900), var(--sov-navy-800));
-      border-bottom: 1px solid var(--color-border);
-    }
-
-    .sov-press-hero__title {
-      font-family: var(--font-en-display);
-      font-size: var(--text-4xl);
-      font-weight: 600;
-      margin-bottom: var(--space-4);
-      background: linear-gradient(135deg, var(--sov-ivory) 0%, var(--sov-gold-300) 50%, var(--sov-ivory) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .sov-press-hero__subtitle {
-      font-size: var(--text-lg);
-      color: var(--color-text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .sov-press-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-3);
-      justify-content: center;
-      padding: var(--space-6) var(--section-px);
-      background: var(--sov-navy-900);
-      border-bottom: 1px solid var(--color-border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .sov-press-filter {
-      padding: var(--space-2) var(--space-4);
-      border-radius: var(--radius-full);
-      border: 1px solid var(--color-glass-border);
-      background: var(--color-glass);
-      color: var(--color-text-muted);
-      font-size: var(--text-sm);
-      cursor: pointer;
-      transition: all var(--transition-normal);
-    }
-
-    .sov-press-filter:hover,
-    .sov-press-filter.is-active {
-      border-color: var(--sov-gold-500);
-      color: var(--sov-gold-300);
-      background: rgba(201,162,39,0.08);
-    }
-
-    .sov-press-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: var(--space-6);
-      padding: var(--space-10) var(--section-px);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .sov-press-card {
-      display: flex;
-      flex-direction: column;
-      background: var(--color-surface-elevated);
-      border: 1px solid var(--color-glass-border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: all var(--transition-normal);
-    }
-
-    .sov-press-card:hover {
-      border-color: var(--color-border-strong);
-      box-shadow: var(--shadow-card-hover);
-      transform: translateY(-4px);
-    }
-
-    .sov-press-card__image {
-      width: 100%;
-      height: 200px;
-      background: linear-gradient(135deg, var(--sov-navy-800), var(--sov-navy-700));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: var(--text-5xl);
-      color: var(--sov-gold-500);
-      opacity: 0.6;
-    }
-
-    .sov-press-card__body {
-      padding: var(--space-5);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-      flex: 1;
-    }
-
-    .sov-press-card__meta {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      font-size: var(--text-xs);
-      color: var(--color-text-dim);
-    }
-
-    .sov-press-card__tag {
-      padding: 2px 10px;
-      border-radius: var(--radius-full);
-      background: rgba(201,162,39,0.1);
-      color: var(--sov-gold-300);
-      font-weight: 500;
-    }
-
-    .sov-press-card__title {
-      font-family: var(--font-en-display);
-      font-size: var(--text-xl);
-      font-weight: 600;
-      color: var(--color-text-main);
-      line-height: var(--leading-snug);
-    }
-
-    .sov-press-card__excerpt {
-      font-size: var(--text-sm);
-      color: var(--color-text-muted);
-      line-height: var(--leading-relaxed);
-      flex: 1;
-    }
-
-    .sov-press-card__link {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      font-size: var(--text-sm);
-      font-weight: 500;
-      color: var(--sov-gold-300);
-      text-decoration: none;
-      margin-top: var(--space-2);
-    }
-
-    .sov-press-card__link:hover {
-      color: var(--sov-gold-500);
-    }
-
-    .sov-press-empty {
-      text-align: center;
-      padding: var(--space-20) var(--space-6);
-      color: var(--color-text-dim);
-    }
-
-    .sov-press-empty__icon {
-      font-size: var(--text-5xl);
-      margin-bottom: var(--space-4);
-      opacity: 0.4;
-    }
-
-    @media (max-width: 640px) {
-      .sov-press-grid { grid-template-columns: 1fr; padding: var(--space-6); }
-      .sov-press-hero__title { font-size: var(--text-3xl); }
-    }
-  </style>
-  <style id="inline-lang-style">
-    .lang-ar, [data-i18n] { display: none !important; }
-    [data-lang="ar"] .lang-en { display: none !important; }
-    [data-lang="ar"] .lang-ar { display: inline !important; }
-    [data-lang="en"] .lang-ar { display: none !important; }
-    [data-lang="en"] .lang-en { display: inline !important; }
+    .sov-press-hero { position: relative; padding: calc(var(--space-24) + 60px) var(--section-px) var(--space-16); text-align: center; background: linear-gradient(180deg, var(--sov-navy-900), var(--sov-navy-800)); border-bottom: 1px solid var(--color-border); }
+    .sov-press-hero__title { font-size: var(--text-4xl); font-weight: 600; margin-bottom: var(--space-4); background: linear-gradient(135deg, var(--sov-ivory) 0%, var(--sov-gold-300) 50%, var(--sov-ivory) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .sov-press-hero__subtitle { font-size: var(--text-lg); color: var(--color-text-muted); max-width: 600px; margin: 0 auto; }
+    .sov-press-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: var(--space-6); padding: var(--space-10) var(--section-px); max-width: 1200px; margin: 0 auto; }
+    .sov-press-card { display: flex; flex-direction: column; background: var(--color-surface-elevated); border: 1px solid var(--color-glass-border); border-radius: var(--radius-lg); overflow: hidden; transition: all var(--transition-normal); }
+    .sov-press-card:hover { border-color: var(--color-border-strong); box-shadow: var(--shadow-card-hover); transform: translateY(-4px); }
+    .sov-press-card__body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); flex: 1; }
+    .sov-press-card__meta { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-xs); color: var(--color-text-dim); }
+    .sov-press-card__tag { padding: 2px 10px; border-radius: var(--radius-full); background: rgba(201,162,39,0.1); color: var(--sov-gold-300); font-weight: 500; }
+    .sov-press-card__title { font-size: var(--text-xl); font-weight: 600; color: var(--color-text-main); line-height: var(--leading-snug); }
+    .sov-press-card__excerpt { font-size: var(--text-sm); color: var(--color-text-muted); line-height: var(--leading-relaxed); flex: 1; }
+    .sov-press-card__link { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); font-weight: 500; color: var(--sov-gold-300); text-decoration: none; margin-top: var(--space-2); }
+    .sov-press-card__link:hover { color: var(--sov-gold-500); }
+    .sov-press-empty { text-align: center; padding: var(--space-20) var(--space-6); color: var(--color-text-dim); }
+    @media (max-width: 640px) { .sov-press-grid { grid-template-columns: 1fr; padding: var(--space-6); } .sov-press-hero__title { font-size: var(--text-3xl); } }
   </style>
 </head>
 <body>
@@ -219,43 +36,12 @@
 
   <section class="sov-press-hero">
     <div class="sov-container">
-      <h1 class="sov-press-hero__title">
-        <span class="lang-en">Press & Media</span>
-        <span class="lang-ar">الإعلام والصحافة</span>
-      </h1>
-      <p class="sov-press-hero__subtitle">
-        <span class="lang-en">Official statements, press releases, and media resources from IIF.</span>
-        <span class="lang-ar">البيانات الرسمية والنشرات الصحفية والموارد الإعلامية من IIF.</span>
-      </p>
+      <h1 class="sov-press-hero__title"><span class="lang-en">Press & Media</span><span class="lang-ar">الإعلام والصحافة</span></h1>
+      <p class="sov-press-hero__subtitle"><span class="lang-en">Official statements, press releases, and media resources from IIF.</span><span class="lang-ar">البيانات الرسمية والنشرات الصحفية والموارد الإعلامية من IIF.</span></p>
     </div>
   </section>
 
-  <div class="sov-press-filters">
-    <button class="sov-press-filter is-active" data-filter="all">
-      <span class="lang-en">All</span>
-      <span class="lang-ar">الكل</span>
-    </button>
-    <button class="sov-press-filter" data-filter="press-release">
-      <span class="lang-en">Press Releases</span>
-      <span class="lang-ar">بيانات صحفية</span>
-    </button>
-    <button class="sov-press-filter" data-filter="report">
-      <span class="lang-en">Reports</span>
-      <span class="lang-ar">تقارير</span>
-    </button>
-    <button class="sov-press-filter" data-filter="media">
-      <span class="lang-en">Media Coverage</span>
-      <span class="lang-ar">تغطية إعلامية</span>
-    </button>
-    <button class="sov-press-filter" data-filter="event">
-      <span class="lang-en">Events</span>
-      <span class="lang-ar">فعاليات</span>
-    </button>
-  </div>
-
-  <main class="sov-press-grid" id="press-grid">
-    <!-- Press cards will be injected here -->
-  </main>
+  <main class="sov-press-grid" id="press-grid"></main>
 
   <div id="shared-footer"></div>
 
@@ -264,127 +50,23 @@
 
   <script>
   (function() {
-    // Language init
     const lang = localStorage.getItem('iif-lang') || 'ar';
     document.documentElement.setAttribute('data-lang', lang);
     document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
     document.documentElement.setAttribute('lang', lang);
 
-    // Press data — EDIT THIS ARRAY with real articles
-    const pressData = [
-      {
-        id: 1,
-        type: 'press-release',
-        date: '2026-05-15',
-        tag: { en: 'Press Release', ar: 'بيان صحفي' },
-        title: {
-          en: 'IIF Expands Infrastructure Portfolio into North Africa',
-          ar: 'الصندوق يوسع محفظة البنية التحتية إلى شمال أفريقيا'
-        },
-        excerpt: {
-          en: 'New BOT agreements signed with three governments for transport and energy projects valued at $400M.',
-          ar: 'اتفاقيات بناء وتشغيل ونقل جديدة موقعة مع ثلاث حكومات لمشاريع نقل وطاقة بقيمة 400 مليون دولار.'
-        },
-        icon: '&#9874;',
-        link: '#'
-      },
-      {
-        id: 2,
-        type: 'report',
-        date: '2025-12-20',
-        tag: { en: 'Annual Report', ar: 'التقرير السنوي' },
-        title: {
-          en: 'Annual Sovereign Investment Report 2025',
-          ar: 'التقرير السنوي للاستثمار السيادي 2025'
-        },
-        excerpt: {
-          en: 'Comprehensive review of portfolio performance, ESG metrics, and strategic outlook for 2026–2028.',
-          ar: 'مراجعة شاملة لأداء المحفظة ومعايير البيئة والمجتمع والحوكمة والنظرة الاستراتيجية 2026–2028.'
-        },
-        icon: '&#128196;',
-        link: '#'
-      },
-      {
-        id: 3,
-        type: 'press-release',
-        date: '2025-09-10',
-        tag: { en: 'Press Release', ar: 'بيان صحفي' },
-        title: {
-          en: 'Strategic Partnership with Asian Development Corridor',
-          ar: 'شراكة استراتيجية مع ممر التنمية الآسيوي'
-        },
-        excerpt: {
-          en: 'Co-investment framework established for technology and renewable energy projects across Southeast Asia.',
-          ar: 'إنشاء إطار استثمار مشترك لمشاريع التقنية والطاقة المتجددة عبر جنوب شرق آسيا.'
-        },
-        icon: '&#129309;',
-        link: '#'
-      },
-      {
-        id: 4,
-        type: 'event',
-        date: '2025-11-05',
-        tag: { en: 'Event', ar: 'فعالية' },
-        title: {
-          en: 'IIF at the Paris Sovereign Finance Summit',
-          ar: 'IIF في قمة باريس للتمويل السيادي'
-        },
-        excerpt: {
-          en: 'Dr. Talal Al-Zahrani delivered the keynote on patient capital and cross-border infrastructure.',
-          ar: 'ألقى د. طلال الزهراني الكلمة الرئيسية حول رأس المال الصبور والبنية التحتية العابرة للحدود.'
-        },
-        icon: '&#127897;',
-        link: '#'
-      },
-      {
-        id: 5,
-        type: 'media',
-        date: '2025-07-22',
-        tag: { en: 'Media', ar: 'تغطية إعلامية' },
-        title: {
-          en: 'Reuters: Sovereign Funds Eye African Infrastructure Boom',
-          ar: 'رويترز: صناديق سيادية تراقب طفرة البنية التحتية الأفريقية'
-        },
-        excerpt: {
-          en: 'IIF featured among leading institutional investors increasing allocation to African transport and energy.',
-          ar: 'ظهر IIF بين المستثمرين المؤسسيين الرائدين الذين يزيدون تخصيصهم لقطاع النقل والطاقة الأفريقي.'
-        },
-        icon: '&#128240;',
-        link: '#'
-      },
-      {
-        id: 6,
-        type: 'report',
-        date: '2025-04-15',
-        tag: { en: 'ESG Report', ar: 'تقرير البيئة والمجتمع' },
-        title: {
-          en: 'ESG Impact Report Q1 2025',
-          ar: 'تقرير تأثير البيئة والمجتمع والحوكمة الربع الأول 2025'
-        },
-        excerpt: {
-          en: 'Measurable environmental and social outcomes across the infrastructure portfolio.',
-          ar: 'نتائج بيئية واجتماعية قابلة للقياس عبر محفظة البنية التحتية.'
-        },
-        icon: '&#9851;',
-        link: '#'
-      }
-    ];
-
-    function renderCards(filter) {
-      const grid = document.getElementById('press-grid');
-      const filtered = filter === 'all' ? pressData : pressData.filter(p => p.type === filter);
-
-      if (filtered.length === 0) {
-        grid.innerHTML = '<div class="sov-press-empty" style="grid-column:1/-1;"><div class="sov-press-empty__icon">&#128196;</div><p>No articles found.</p></div>';
-        return;
-      }
-
-      grid.innerHTML = filtered.map(function(item) {
-        const d = new Date(item.date);
-        const dateStr = d.toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-        return (
-          '<article class="sov-press-card sov-reveal" data-type="' + item.type + '">' +
-            '<div class="sov-press-card__image">' + item.icon + '</div>' +
+    fetch('data/news.json')
+      .then(r => r.json())
+      .then(data => {
+        const grid = document.getElementById('press-grid');
+        if (!data.items || data.items.length === 0) {
+          grid.innerHTML = '<div class="sov-press-empty" style="grid-column:1/-1;"><div style="font-size:var(--text-5xl);margin-bottom:var(--space-4);opacity:0.4;">&#128196;</div><p>No articles found.</p></div>';
+          return;
+        }
+        grid.innerHTML = data.items.map(item => {
+          const d = new Date(item.date);
+          const dateStr = d.toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+          return '<article class="sov-press-card sov-reveal">' +
             '<div class="sov-press-card__body">' +
               '<div class="sov-press-card__meta">' +
                 '<span class="sov-press-card__tag">' + (lang === 'ar' ? item.tag.ar : item.tag.en) + '</span>' +
@@ -403,21 +85,12 @@
                 '<span class="lang-ar">اقرأ المزيد &larr;</span>' +
               '</a>' +
             '</div>' +
-          '</article>'
-        );
-      }).join('');
-    }
-
-    // Filter buttons
-    document.querySelectorAll('.sov-press-filter').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.sov-press-filter').forEach(function(b) { b.classList.remove('is-active'); });
-        btn.classList.add('is-active');
-        renderCards(btn.dataset.filter);
+          '</article>';
+        }).join('');
+      })
+      .catch(() => {
+        document.getElementById('press-grid').innerHTML = '<div class="sov-press-empty" style="grid-column:1/-1;"><p>Failed to load news. Please try again later.</p></div>';
       });
-    });
-
-    renderCards('all');
   })();
   </script>
 </body>

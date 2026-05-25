@@ -25,6 +25,7 @@ export function Navbar({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => vo
     { href: '#faq', label: t.nav.faq },
     { href: '#request', label: t.nav.request },
     { href: '#contact', label: t.nav.contact },
+    { href: '/letterhead.html', label: 'ترويسة مطبوعة' },
   ];
 
   return (

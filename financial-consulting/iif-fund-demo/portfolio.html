@@ -43,56 +43,7 @@
 
   <section class="sov-section" style="background:var(--sov-navy-900);">
     <div class="sov-container">
-      <div class="sov-project-grid">
-        <article class="sov-project sov-reveal">
-          <div class="sov-project__img">&#9874;</div>
-          <div class="sov-project__body">
-            <div class="sov-project__meta">North Africa · $400M</div>
-            <h3 class="sov-project__title"><span class="lang-en">Transport & Energy Corridor</span><span class="lang-ar">ممر النقل والطاقة</span></h3>
-            <p class="sov-project__desc"><span class="lang-en">BOT agreements for rail and renewable energy infrastructure across three nations.</span><span class="lang-ar">اتفاقيات BOT للسكك الحديدية والبنية التحتية للطاقة المتجددة عبر ثلاث دول.</span></p>
-          </div>
-        </article>
-        <article class="sov-project sov-reveal sov-reveal-delay-1">
-          <div class="sov-project__img">&#9889;</div>
-          <div class="sov-project__body">
-            <div class="sov-project__meta">Southeast Asia · $250M</div>
-            <h3 class="sov-project__title"><span class="lang-en">Smart Grid Initiative</span><span class="lang-ar">مبادرة الشبكة الذكية</span></h3>
-            <p class="sov-project__desc"><span class="lang-en">Technology transfer and co-investment in modernizing national power distribution.</span><span class="lang-ar">نقل التقنية والاستثمار المشترك في تحديث توزيع الطاقة الوطني.</span></p>
-          </div>
-        </article>
-        <article class="sov-project sov-reveal sov-reveal-delay-2">
-          <div class="sov-project__img">&#127970;</div>
-          <div class="sov-project__body">
-            <div class="sov-project__meta">Middle East · $180M</div>
-            <h3 class="sov-project__title"><span class="lang-en">Urban Development Zone</span><span class="lang-ar">منطقة التنمية الحضرية</span></h3>
-            <p class="sov-project__desc"><span class="lang-en">Mixed-use sovereign development with residential, commercial, and logistics hubs.</span><span class="lang-ar">تنمية سيادية متعددة الاستخدامات مع مراكز سكنية وتجارية ولوجستية.</span></p>
-          </div>
-        </article>
-        <article class="sov-project sov-reveal">
-          <div class="sov-project__img">&#128187;</div>
-          <div class="sov-project__body">
-            <div class="sov-project__meta">Global · $120M</div>
-            <h3 class="sov-project__title"><span class="lang-en">AI Research Consortium</span><span class="lang-ar">تحالف البحث في الذكاء الاصطناعي</span></h3>
-            <p class="sov-project__desc"><span class="lang-en">Cross-border partnership with universities and labs for sovereign AI capabilities.</span><span class="lang-ar">شراكة عابرة للحدود مع الجامعات والمختبرات لقدرات الذكاء الاصطناعي السيادية.</span></p>
-          </div>
-        </article>
-        <article class="sov-project sov-reveal sov-reveal-delay-1">
-          <div class="sov-project__img">&#128167;</div>
-          <div class="sov-project__body">
-            <div class="sov-project__meta">Africa · $90M</div>
-            <h3 class="sov-project__title"><span class="lang-en">Water Security Program</span><span class="lang-ar">برنامج الأمن المائي</span></h3>
-            <p class="sov-project__desc"><span class="lang-en">Desalination and distribution infrastructure for coastal population centers.</span><span class="lang-ar">بنية تحتية لتحلية المياه وتوزيعها لمراكز السكان الساحلية.</span></p>
-          </div>
-        </article>
-        <article class="sov-project sov-reveal sov-reveal-delay-2">
-          <div class="sov-project__img">&#9992;</div>
-          <div class="sov-project__body">
-            <div class="sov-project__meta">Europe · $75M</div>
-            <h3 class="sov-project__title"><span class="lang-en">Aviation Logistics Hub</span><span class="lang-ar">مركز اللوجستيات الجوية</span></h3>
-            <p class="sov-project__desc"><span class="lang-en">Cold-chain and cargo terminal serving as regional distribution gateway.</span><span class="lang-ar">محطة سلسلة التبريد والشحن كبوابة توزيع إقليمية.</span></p>
-          </div>
-        </article>
-      </div>
+      <div class="sov-project-grid" id="project-grid"></div>
     </div>
   </section>
 
@@ -102,6 +53,30 @@
   <script src="src/sov-reveal.js"></script>
   <script>
     (function(){ const lang = localStorage.getItem('iif-lang') || 'ar'; document.documentElement.setAttribute('data-lang', lang); document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr'); document.documentElement.setAttribute('lang', lang); })();
+
+    fetch('data/projects.json')
+      .then(r => r.json())
+      .then(data => {
+        const grid = document.getElementById('project-grid');
+        if (!data.items) return;
+        const lang = localStorage.getItem('iif-lang') || 'ar';
+        grid.innerHTML = data.items.map(item =>
+          '<article class="sov-project sov-reveal">' +
+            '<div class="sov-project__img">' + item.icon + '</div>' +
+            '<div class="sov-project__body">' +
+              '<div class="sov-project__meta">' + item.region + ' · ' + item.value + '</div>' +
+              '<h3 class="sov-project__title">' +
+                '<span class="lang-en">' + item.title.en + '</span>' +
+                '<span class="lang-ar">' + item.title.ar + '</span>' +
+              '</h3>' +
+              '<p class="sov-project__desc">' +
+                '<span class="lang-en">' + item.desc.en + '</span>' +
+                '<span class="lang-ar">' + item.desc.ar + '</span>' +
+              '</p>' +
+            '</div>' +
+          '</article>'
+        ).join('');
+      });
   </script>
 </body>
 </html>

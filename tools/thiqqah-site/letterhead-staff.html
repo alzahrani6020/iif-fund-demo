@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>ترويسة موظفين — مكتب ثقة الذهبية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&family=Almarai:wght@400;700;800&family=Scheherazade+New:wght@400;700&family=Reem+Kufi:wght@400;500;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=El+Messiri:wght@400;500;600;700&family=Kufam:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jomhuria&family=Lateef:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #12243a;
+      --muted: #5f6d7f;
+      --green: #073f3a;
+      --green-2: #0a665d;
+      --emerald: #0f7a68;
+      --gold: #bd9144;
+      --gold-2: #efd89c;
+      --gold-3: #d4a85c;
+      --paper: #fffaf0;
+      --paper-2: #fdf8ed;
+      --sand: #f2eadb;
+      --line: rgba(18, 36, 58, 0.10);
+      --header-pad-logo: 44mm;
+      --watermark-opacity: 0.045;
+      --watermark-opacity-print: 0.035;
+      --watermark-bg-width-pct: 26%;
+    }
+    .dark-mode {
+      --ink: #e2e8f0;
+      --muted: #94a3b8;
+      --green: #10b981;
+      --green-2: #34d399;
+      --emerald: #6ee7b7;
+      --gold: #fbbf24;
+      --gold-2: #fde68a;
+      --gold-3: #f59e0b;
+      --paper: #0f172a;
+      --paper-2: #1e293b;
+      --sand: #334155;
+      --line: rgba(148, 163, 184, 0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Noto Naskh Arabic", "Tahoma", serif;
+      background: #dfe5e8;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s;
+    }
+    body.dark-mode { background: #0b1120; }
+
+    .toolbar {
+      max-width: 220mm;
+      margin: 6mm auto 4mm;
+      padding: 10px 14px;
+      background: linear-gradient(135deg, #0f1a2e 0%, #1a2a4a 100%);
+      color: #e8edf5;
+      font-family: system-ui, sans-serif;
+      font-size: 12px;
+      direction: rtl;
+      border-radius: 10px;
+      line-height: 1.55;
+      border: 1px solid rgba(189, 145, 68, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .toolbar-title {
+      flex: 1;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .toolbar button, .toolbar .tool-btn, .toolbar select {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-block;
+      line-height: 1.4;
+    }
+    .toolbar button:hover, .toolbar .tool-btn:hover {
+      background: rgba(255,255,255,0.2);
+      border-color: #bd9144;
+    }
+    .toolbar button.primary, .toolbar .tool-btn.primary {
+      background: linear-gradient(135deg, #bd9144, #0f7a68);
+      border-color: transparent;
+    }
+    .toolbar button.primary:hover, .toolbar .tool-btn.primary:hover { opacity: 0.9; }
+    .toolbar button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .toolbar select { appearance: auto; padding: 4px 8px; font-weight: 600; }
+    .toolbar select option { color: #12243a; background: #fff; }
+
+    .toolbar-divider {
+      width: 1px;
+      height: 22px;
+      background: rgba(255,255,255,0.15);
+      margin: 0 2px;
+    }
+
+    .dropdown-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 170px;
+      background: #fff;
+      color: #12243a;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      padding: 6px 0;
+      z-index: 1000;
+      direction: rtl;
+      text-align: right;
+      font-size: 12px;
+    }
+    .dropdown-wrap.open .dropdown-menu { display: block; }
+    .dropdown-menu button {
+      display: block;
+      width: 100%;
+      text-align: right;
+      background: none;
+      border: none;
+      color: #12243a;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 0;
+    }
+    .dropdown-menu button:hover { background: #f2eadb; color: #0a665d; }
+
+    .toolbar-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #efd89c;
+      cursor: pointer;
+      user-select: none;
+    }
+    .toolbar-check input { cursor: pointer; }
+
+    /* === SHEET: ورقة فاخرة === */
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 12mm;
+      display: flex;
+      flex-direction: column;
+      background:
+        radial-gradient(ellipse 80% 30% at 50% 8%, rgba(212, 168, 92, 0.06), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 90%, rgba(15, 122, 104, 0.04), transparent 50%),
+        linear-gradient(180deg, var(--paper-2) 0%, var(--paper) 40%, var(--paper) 100%);
+      position: relative;
+      border-radius: 6mm;
+      overflow: hidden;
+      border: 1.5px solid var(--gold-3);
+      box-shadow:
+        inset 0 0 0 3px #fffaf0,
+        inset 0 0 0 4.5px var(--gold),
+        0 20px 50px rgba(18, 36, 58, 0.10);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .sheet::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 0.8px solid rgba(189, 145, 68, 0.25);
+      border-radius: 4mm;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .sheet-inner {
+      position: relative;
+      flex: 1 1 auto;
+      width: 100%;
+      padding: 14mm 16mm 18mm 16mm;
+      z-index: 1;
+      box-sizing: border-box;
+    }
+
+    .sheet-inner-watermark {
+      position: absolute;
+      inset: 0;
+      box-sizing: border-box;
+      z-index: 0;
+      pointer-events: none;
+      background-image: url("assets/thiqqah-logo-emblem.png");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: var(--watermark-bg-width-pct) auto;
+      background-origin: padding-box;
+      opacity: var(--watermark-opacity);
+      filter: contrast(1.05) brightness(0.95);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* زخارف الزوايا الفاخرة */
+    .corner-ornament {
+      position: absolute;
+      width: 14mm;
+      height: 14mm;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0.85;
+    }
+    .corner-ornament.tr {
+      top: 4mm;
+      right: 4mm;
+      border-top: 2.5px solid var(--gold);
+      border-right: 2.5px solid var(--gold);
+      border-radius: 0 12px 0 0;
+    }
+    .corner-ornament.tl {
+      top: 4mm;
+      left: 4mm;
+      border-top: 2.5px solid var(--gold);
+      border-left: 2.5px solid var(--gold);
+      border-radius: 12px 0 0 0;
+    }
+    .corner-ornament.br {
+      bottom: 10mm;
+      right: 4mm;
+      border-bottom: 2.5px solid var(--gold);
+      border-right: 2.5px solid var(--gold);
+      border-radius: 0 0 12px 0;
+    }
+    .corner-ornament.bl {
+      bottom: 10mm;
+      left: 4mm;
+      border-bottom: 2.5px solid var(--gold);
+      border-left: 2.5px solid var(--gold);
+      border-radius: 0 0 0 12px;
+    }
+
+    .top-rule {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--green), var(--emerald) 35%, var(--gold-3) 70%, var(--gold) 100%);
+      z-index: 2;
+    }
+
+    /* === الترويسة الفاخرة === */
+    .brand-ribbon {
+      position: relative;
+      z-index: 3;
+      min-height: 30mm;
+      padding: 0 0 3mm 0;
+      margin-bottom: 3mm;
+      border-bottom: 2.5px solid var(--gold);
+      background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, transparent 100%);
+    }
+    .brand-logo-corner {
+      position: absolute;
+      top: -1mm;
+      right: -1mm;
+      z-index: 3;
+    }
+    .brand-logo-wrap {
+      position: relative;
+      padding: 2mm 1.5mm;
+      background: #fff;
+      border-radius: 12px;
+      border: 2.5px solid var(--green);
+      box-shadow: 0 4px 12px rgba(18,36,58,0.12);
+    }
+    .brand-logo-xl {
+      position: relative;
+      z-index: 1;
+      width: 30mm;
+      height: auto;
+      max-height: 22mm;
+      max-width: none;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+      filter: contrast(1.2) saturate(1.25) drop-shadow(0 1px 0 rgba(255,255,255,1)) drop-shadow(0 0 3px rgba(189,145,68,0.4));
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .brand-text-columns {
+      display: flex;
+      flex-direction: row;
+      direction: ltr;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 4mm 5mm;
+      padding-inline-end: 36mm;
+      padding-inline-start: 1mm;
+      padding-top: 1mm;
+      min-height: 22mm;
+    }
+    .brand-block--ar {
+      flex: 1 1 0;
+      min-width: 0;
+      direction: rtl;
+      text-align: right;
+    }
+    .brand-block--en {
+      flex: 0 1 40%;
+      min-width: 0;
+      text-align: left;
+      direction: ltr;
+      font-family: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+      padding-top: 1mm;
+      border-right: 2px solid var(--green);
+      padding-right: 4mm;
+      margin-right: 1mm;
+    }
+    .brand-block--ar .name {
+      font-family: "El Messiri", "Aref Ruqaa", "Noto Naskh Arabic", serif;
+      font-size: 16pt;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--green);
+      text-shadow: 0 1px 0 rgba(255,255,255,0.96);
+      letter-spacing: 0.04em;
+    }
+    .brand-block--ar .name span.gold { color: var(--gold-3); }
+    .brand-block--ar .cr {
+      margin-top: 1.2mm;
+      font-size: 9.2pt;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    .brand-block--ar .cr strong { color: var(--ink); }
+    .brand-block--ar .city {
+      margin-top: 0.8mm;
+      font-size: 8.2pt;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .brand-block--en .name-en {
+      font-size: 10.5pt;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--green);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .brand-block--en .tagline-en {
+      margin-top: 1mm;
+      font-size: 8.5pt;
+      color: var(--muted);
+      font-style: italic;
+      white-space: pre-line;
+      line-height: 1.4;
+    }
+
+    /* === خانات جاهزة === */
+    .meta-fields {
+      display: block;
+      margin: 2mm 0 2.5mm auto;
+      padding: 1.5mm 2.5mm;
+      background: rgba(7, 63, 58, 0.03);
+      border-radius: 2mm;
+      border-right: 2px solid var(--gold-3);
+      z-index: 3;
+      position: relative;
+      width: fit-content;
+      max-width: 55%;
+      text-align: right;
+    }
+    .meta-row {
+      display: block;
+      font-size: 9.5pt;
+      direction: rtl;
+      text-align: right;
+      margin-bottom: 1.5mm;
+      width: 100%;
+    }
+    .meta-row:last-child { margin-bottom: 0; }
+    .meta-row .meta-label {
+      font-weight: 700;
+      color: var(--green);
+      font-family: "Noto Naskh Arabic", system-ui, sans-serif;
+      text-align: right;
+      white-space: nowrap;
+      display: inline;
+    }
+    .meta-row .meta-value {
+      border-bottom: 0.8px solid var(--line);
+      padding-bottom: 0.5px;
+      color: var(--ink);
+      font-family: "Noto Naskh Arabic", serif;
+      min-width: 60px;
+      max-width: 180px;
+      text-align: right;
+      display: inline-block;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
+      line-height: 1.5;
+      vertical-align: top;
+    }
+    .meta-row .meta-value:empty::before {
+      content: '\200B';
+      display: inline-block;
+      min-width: 40px;
+    }
+    .meta-row.ref-row .meta-value { color: #c0392b; font-weight: 700; }
+    .meta-row.ref-row .meta-label { color: var(--green); font-weight: 700; }
+
+    /* === مساحة الكتابة === */
+    .writing-surface {
+      position: relative;
+      z-index: 1;
+      min-height: 170mm;
+      margin-bottom: 14mm;
+      border-radius: 3mm;
+    }
+    .writing-surface.lined {
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 27px,
+        rgba(18, 36, 58, 0.06) 27px,
+        rgba(18, 36, 58, 0.06) 28px
+      );
+      background-attachment: local;
+    }
+    .doc-content {
+      width: 100%;
+      min-height: 170mm;
+      padding: 4mm 2mm;
+      font-family: "Noto Naskh Arabic", Tahoma, serif;
+      font-size: 12.5pt;
+      line-height: 28px;
+      color: var(--ink);
+      outline: none;
+      direction: rtl;
+      text-align: justify;
+    }
+    .doc-content:empty::before {
+      content: 'اكتب نصك هنا...';
+      color: #aaa;
+      pointer-events: none;
+    }
+    .doc-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 11.5pt;
+      line-height: 1.6;
+    }
+    .doc-content table th,
+    .doc-content table td {
+      border: 1.5px solid var(--green-2);
+      padding: 7px 12px;
+      text-align: right;
+      direction: rtl;
+    }
+    .doc-content table th {
+      background: rgba(7, 63, 58, 0.07);
+      font-weight: 700;
+      color: var(--green);
+    }
+    .doc-content p { margin-bottom: 0.5em; }
+    .doc-content[dir="ltr"] {
+      text-align: left;
+      direction: ltr;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    /* === ختم إلكتروني === */
+    .stamp {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border: 3px solid #c0392b;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: "Noto Naskh Arabic", system-ui, sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      color: #c0392b;
+      background: rgba(255,255,255,0.85);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      cursor: move;
+      user-select: none;
+      z-index: 50;
+      right: 20mm;
+      bottom: 35mm;
+      transform: rotate(-12deg);
+      opacity: 0.92;
+      line-height: 1.35;
+    }
+    .stamp .stamp-inner {
+      border: 1px dashed #c0392b;
+      border-radius: 50%;
+      width: 78px;
+      height: 78px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+    .stamp .stamp-title { font-size: 10px; }
+    .stamp .stamp-sub { font-size: 7.5px; opacity: 0.85; margin-top: 2px; }
+    .stamp .stamp-date { font-size: 7px; opacity: 0.7; margin-top: 2px; }
+
+    /* === توقيع === */
+    .signature-wrap {
+      margin-top: 8mm;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2mm;
+      z-index: 3;
+      position: relative;
+    }
+    .signature-wrap .sig-label {
+      font-size: 10pt;
+      font-weight: 700;
+      color: var(--green);
+    }
+    .signature-canvas {
+      border: 1.5px dashed var(--gold-3);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.5);
+      cursor: crosshair;
+      touch-action: none;
+    }
+    .signature-actions {
+      display: flex;
+      gap: 4px;
+    }
+    .signature-actions button {
+      background: rgba(7,63,58,0.08);
+      border: 1px solid rgba(7,63,58,0.15);
+      color: var(--green);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* === ختم الغرفة التجارية === */
+    .stamp-inline {
+      display: inline-block;
+      width: 130px;
+      height: 130px;
+      vertical-align: middle;
+      margin: 6px;
+      opacity: 0.92;
+      cursor: move;
+      user-select: none;
+      transform: rotate(-6deg);
+    }
+    .stamp-inline svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* === تذييل فاخر === */
+    .footer-zone {
+      position: absolute;
+      left: 9mm;
+      right: 9mm;
+      bottom: 5mm;
+      z-index: 4;
+    }
+    .footer-rule {
+      width: 100%;
+      padding-top: 2mm;
+      border-top: 2.5px solid var(--gold);
+      box-shadow: 0 -1px 0 0 var(--green);
+    }
+    .footer-line {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4mm;
+      flex-wrap: wrap;
+      padding: 2mm 0 0.5mm;
+    }
+    .footer-contacts-inline {
+      flex: 1 1 auto;
+      min-width: 0;
+      text-align: center;
+      font-family: "Noto Naskh Arabic", "Segoe UI", system-ui, sans-serif;
+      font-size: 8.2pt;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.02em;
+      direction: rtl;
+      line-height: 1.4;
+    }
+    .footer-contacts-inline .footer-name-ar {
+      font-weight: 700;
+      color: var(--green-2);
+      font-family: "Noto Naskh Arabic", "Tahoma", sans-serif;
+    }
+    .footer-contacts-inline a {
+      color: var(--green-2);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .footer-contacts-inline .dot {
+      margin: 0 0.4em;
+      color: var(--gold);
+      opacity: 0.9;
+    }
+    .footer-qr-inline {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+    }
+    .footer-qr-inline img {
+      width: 12mm;
+      height: 12mm;
+      display: block;
+      border-radius: 5px;
+      border: 2px solid var(--green);
+      background: #fff;
+      box-shadow: 0 1px 5px rgba(18,36,58,0.08);
+    }
+
+    .page-number {
+      position: absolute;
+      bottom: 2.5mm;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 7.5pt;
+      color: var(--muted);
+      font-family: system-ui, sans-serif;
+      z-index: 5;
+      direction: ltr;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f1a2e;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-family: system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(189,145,68,0.5);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+      z-index: 9999;
+      direction: rtl;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; }
+
+    @media print {
+      body { background: #fff; }
+      .toolbar { display: none !important; }
+      .sheet {
+        margin: 0 auto;
+        page-break-after: always;
+        break-after: page;
+        border-radius: 0;
+        box-shadow: none;
+        border: 1pt solid var(--gold);
+        height: 297mm;
+        min-height: 297mm;
+      }
+      .sheet:last-child { page-break-after: auto; break-after: auto; }
+      .sheet-inner { padding: 14mm 16mm 18mm; }
+      .doc-content { min-height: auto; padding: 2mm 0; }
+      .signature-canvas { background: transparent; }
+      .stamp { opacity: 0.85; }
+    }
+
+    .sig-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(3px);
+    }
+    .sig-modal-overlay.open { display: flex; }
+    .sig-modal {
+      background: #fff;
+      border-radius: 12px;
+      padding: 22px;
+      max-width: 460px;
+      width: 92%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.28);
+      direction: rtl;
+      text-align: right;
+      font-family: system-ui, sans-serif;
+      color: #12243a;
+    }
+    .sig-modal h3 { margin: 0 0 14px; font-size: 16px; }
+    .sig-modal-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-start;
+      margin-top: 18px;
+    }
+    .sig-modal-actions button { padding: 8px 16px; border-radius: 8px; border: none; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .btn-primary { background: linear-gradient(135deg,#0a665d,#1a5276); color: #fff; }
+    .btn-secondary { background: #e2e8f0; color: #12243a; }
+
+    @page { size: A4; margin: 0; }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar" id="letterhead-toolbar">
+    <span class="toolbar-title">🖨️ نسخة موظفين</span>
+    <button onclick="toggleWrite()" id="btn-write">✏️ كتابة</button>
+    <button onclick="copyText()" id="btn-copy">📋 نسخ</button>
+    <button onclick="insertDateTime()">📅 تاريخ</button>
+    <button onclick="insertSubject()">📌 الموضوع</button>
+    <button onclick="generateRef()">🔢 رقم صادر</button>
+    <div class="dropdown-wrap" id="archive-dropdown">
+      <button onclick="toggleDropdown('archive-dropdown')">📁 أرشيف ▾</button>
+      <div class="dropdown-menu" id="archive-menu">
+        <button onclick="loadArchive()" style="font-weight:700;color:var(--green);">↻ تحديث الأرشيف</button>
+      </div>
+    </div>
+    <button onclick="insertTable()">▦ جدول</button>
+    <button onclick="addNewPage()">➕ صفحة</button>
+    <button onclick="toggleLines()">📏 خطوط</button>
+    <button onclick="toggleDark()">🌙 داكن</button>
+    <div class="dropdown-wrap" id="color-dropdown">
+      <button onclick="toggleDropdown('color-dropdown')">🎨 لون ▾</button>
+      <div class="dropdown-menu">
+        <button onclick="changeTextColor('#12243a')" style="color:#12243a;font-weight:700;">⬤ أسود</button>
+        <button onclick="changeTextColor('#c0392b')" style="color:#c0392b;font-weight:700;">⬤ أحمر</button>
+        <button onclick="changeTextColor('#073f3a')" style="color:#073f3a;font-weight:700;">⬤ أخضر</button>
+        <button onclick="changeTextColor('#bd9144')" style="color:#bd9144;font-weight:700;">⬤ ذهبي</button>
+        <button onclick="changeTextColor('#1a5276')" style="color:#1a5276;font-weight:700;">⬤ أزرق</button>
+        <button onclick="changeTextColor('#7d3c98')" style="color:#7d3c98;font-weight:700;">⬤ بنفسجي</button>
+      </div>
+    </div>
+    <button onclick="insertTemplate()">📄 قالب</button>
+    <button onclick="undoDoc()">↩️ تراجع</button>
+    <button onclick="redoDoc()">↪️ إعادة</button>
+    <button onclick="saveDoc()" id="btn-save">💾 حفظ</button>
+    <div class="toolbar-divider"></div>
+    <select id="font-select" onchange="changeFont(this.value)">
+      <option value="Noto Naskh Arabic">Noto Naskh</option>
+      <option value="El Messiri">El Messiri ★</option>
+      <option value="Kufam">Kufam</option>
+      <option value="Jomhuria">Jomhuria</option>
+      <option value="Amiri">Amiri</option>
+      <option value="Cairo">Cairo</option>
+      <option value="Tajawal">Tajawal</option>
+      <option value="Almarai">Almarai</option>
+      <option value="Scheherazade New">Scheherazade</option>
+      <option value="Reem Kufi">Reem Kufi</option>
+      <option value="Lateef">Lateef</option>
+    </select>
+    <div class="toolbar-divider"></div>
+    <div class="dropdown-wrap" id="share-dropdown">
+      <button onclick="toggleDropdown('share-dropdown')">📤 مشاركة ▾</button>
+      <div class="dropdown-menu">
+        <button onclick="shareWhatsApp()">💬 واتساب</button>
+        <button onclick="shareTelegram()">✈️ تلغرام</button>
+        <button onclick="shareEmail()">📧 بريد إلكتروني</button>
+        <button onclick="shareTwitter()">𝕏 تويتر</button>
+      </div>
+    </div>
+    <div class="dropdown-wrap" id="translate-dropdown">
+      <button onclick="toggleDropdown('translate-dropdown')">🌐 ترجمة ▾</button>
+      <div class="dropdown-menu">
+        <button onclick="translateDoc('en')">🇬🇧 English</button>
+        <button onclick="translateDoc('fr')">🇫🇷 Français</button>
+        <button onclick="translateDoc('tr')">🇹🇷 Türkçe</button>
+        <button onclick="translateDoc('ar')">🇸🇦 العربية</button>
+      </div>
+    </div>
+    <button onclick="window.print()" class="primary">🖨️ طباعة</button>
+    <button onclick="openSendModal()" class="primary" style="background:linear-gradient(135deg,#0a665d,#1a5276);">📨 إرسال للمدير</button>
+    <button onclick="toggleMyInbox()" class="primary" style="background:linear-gradient(135deg,#7d3c98,#1a5276);">📥 واردي</button>
+  </div>
+
+  <div id="pages-container">
+    <div class="sheet" data-page="1">
+      <span class="corner-ornament tr"></span>
+      <span class="corner-ornament tl"></span>
+      <span class="corner-ornament br"></span>
+      <div class="top-rule"></div>
+      <div class="sheet-inner">
+        <div class="sheet-inner-watermark"></div>
+
+        <header class="brand-ribbon">
+          <div class="brand-logo-corner">
+            <div class="brand-logo-wrap">
+              <img class="brand-logo-xl" src="assets/thiqqah-logo-full.png" alt="شعار مكتب ثقة الذهبية" width="280" height="280">
+            </div>
+          </div>
+          <div class="brand-text-columns">
+            <div class="brand-block--en" lang="en" dir="ltr">
+              <p class="name-en">Al-Thiqqah<br>Al-Dhahabiyah<br>General Services Office</p>
+              <p class="tagline-en">Commercial Registration No. 4030506321
+Kingdom of Saudi Arabia</p>
+            </div>
+            <div class="brand-block--ar" lang="ar">
+              <h1 class="name">مكتب <span class="gold">ثقة الذهبية</span><br>للخدمات العامة</h1>
+              <p class="cr"><strong>السجل التجاري:</strong> 4030506321</p>
+              <p class="city">جدة — منطقة مكة المكرمة — المملكة العربية السعودية</p>
+            </div>
+          </div>
+        </header>
+
+        <div class="meta-fields">
+          <div class="meta-row"><span class="meta-label">التاريخ:</span><span class="meta-value" id="meta-date"></span></div>
+          <div class="meta-row"><span class="meta-label">الموضوع:</span><span class="meta-value" contenteditable="true"></span></div>
+          <div class="meta-row ref-row"><span class="meta-label">الرقم المرجعي:</span><span class="meta-value" id="meta-ref" contenteditable="true"></span></div>
+        </div>
+
+        <div class="writing-surface" id="surface-1">
+          <div class="doc-content" id="doc-1" dir="rtl"></div>
+        </div>
+
+        <!-- التوقيع والختم يُدرجان ديناميكياً في النص -->
+
+        <div class="footer-zone">
+          <div class="footer-rule"></div>
+          <div class="footer-line">
+            <div class="footer-contacts-inline">
+              <span class="footer-name-ar">مكتب ثقة الذهبية للخدمات العامة</span>
+              <span class="dot">·</span>
+              <a href="https://thiqqah.live/" dir="ltr">thiqqah.live</a>
+              <span class="dot">·</span>
+              <a href="mailto:info@thiqqah.live" dir="ltr">info@thiqqah.live</a>
+              <span class="dot">·</span>
+              <a href="tel:+966567566616" dir="ltr">+966 56 756 6616</a>
+            </div>
+            <a class="footer-qr-inline" href="https://thiqqah.live/" target="_blank" rel="noopener">
+              <img src="assets/letterhead-qr.png" width="128" height="128" alt="QR">
+            </a>
+          </div>
+        </div>
+        <div class="page-number">1 / 1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="sig-modal-overlay" id="sig-modal-overlay" onclick="if(event.target===this)closeSigModal()">
+    <div class="sig-modal">
+      <h3>✍️ ارسم توقيعك</h3>
+      <canvas id="sig-modal-canvas" width="400" height="150"></canvas>
+      <div class="sig-modal-actions">
+        <button class="btn-secondary" onclick="clearSigModal()">🗑️ مسح</button>
+        <button class="btn-secondary" onclick="closeSigModal()">إلغاء</button>
+        <button class="btn-primary" onclick="confirmSigModal()">✓ إدراج</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var writingMode = false, pageCounter = 1, transSeparate = false, isDark = false, isLined = false;
+
+      function showToast(msg) {
+        var t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(function() { t.classList.remove('show'); }, 2000);
+      }
+      window.showToast = showToast;
+
+      function getActiveDoc() { return document.querySelector('.doc-content'); }
+      function getText() { var d = getActiveDoc(); return d ? d.innerText.trim() : ''; }
+      function getHtml() { var d = getActiveDoc(); return d ? d.innerHTML : ''; }
+      function ensureDoc() { var d = getActiveDoc(); if (!d) { showToast('⚠️ افتح الكتابة أولاً'); return null; } return d; }
+
+      window.toggleWrite = function() {
+        var doc = getActiveDoc(), btn = document.getElementById('btn-write');
+        if (!writingMode) {
+          writingMode = true; btn.textContent = '✅ تم';
+          if (doc) { doc.contentEditable = 'true'; doc.focus(); }
+          var saved = localStorage.getItem('thiqqah-doc-html');
+          if (saved && doc) doc.innerHTML = saved;
+        } else {
+          writingMode = false; btn.textContent = '✏️ كتابة';
+          if (doc) doc.contentEditable = 'false';
+        }
+      };
+
+      window.copyText = function() {
+        var text = getText();
+        if (!text) { showToast('⚠️ لا يوجد نص'); return; }
+        var ta = document.createElement('textarea'); ta.value = text;
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        showToast('✅ تم النسخ');
+      };
+
+      function insertAtCursor(html) {
+        var doc = ensureDoc(); if (!doc) return;
+        doc.focus();
+        var sel = window.getSelection();
+        if (!sel.rangeCount) { var r = document.createRange(); r.selectNodeContents(doc); r.collapse(false); sel.removeAllRanges(); sel.addRange(r); }
+        var range = sel.getRangeAt(0); range.deleteContents();
+        var div = document.createElement('div'); div.innerHTML = html;
+        var frag = document.createDocumentFragment(), node;
+        while ((node = div.firstChild)) frag.appendChild(node);
+        range.insertNode(frag); range.collapse(false); sel.removeAllRanges(); sel.addRange(range);
+      }
+
+      window.insertDateTime = function() {
+        if (!ensureDoc()) return;
+        var d = new Date(), dateStr = d.toLocaleDateString('ar-SA', {year:'numeric', month:'long', day:'numeric'});
+        document.getElementById('meta-date').textContent = dateStr;
+        insertAtCursor('<div>' + dateStr + '</div><div><br></div>');
+        showToast('✅ تم إدراج التاريخ');
+      };
+
+      window.insertSubject = function() {
+        if (!ensureDoc()) return;
+        insertAtCursor('<div><strong>الموضوع:</strong> </div><div><br></div>');
+        showToast('✅ تم إدراج الموضوع');
+      };
+
+      window.generateRef = function() {
+        var year = new Date().getFullYear(), num = Math.floor(1000 + Math.random() * 9000);
+        var ref = 'THQ-' + year + '-' + num;
+        localStorage.setItem('thiqqah-last-ref', ref);
+        var metaRef = document.getElementById('meta-ref');
+        if (metaRef) metaRef.textContent = ref;
+        var archive = JSON.parse(localStorage.getItem('thiqqah-archive') || '[]');
+        archive.unshift({ ref: ref, date: new Date().toLocaleDateString('ar-SA'), ts: Date.now() });
+        localStorage.setItem('thiqqah-archive', JSON.stringify(archive.slice(0, 50)));
+        showToast('✅ رقم الصادر: ' + ref);
+      };
+
+      window.loadArchive = function() {
+        var menu = document.getElementById('archive-menu');
+        var archive = JSON.parse(localStorage.getItem('thiqqah-archive') || '[]');
+        menu.innerHTML = '';
+        var refreshBtn = document.createElement('button');
+        refreshBtn.textContent = '↻ تحديث الأرشيف';
+        refreshBtn.style.fontWeight = '700';
+        refreshBtn.style.color = '#0a665d';
+        refreshBtn.onclick = function() { loadArchive(); };
+        menu.appendChild(refreshBtn);
+        if (archive.length === 0) {
+          var empty = document.createElement('button');
+          empty.textContent = '⚠️ لا يوجد أرشيف';
+          empty.disabled = true;
+          menu.appendChild(empty);
+        } else {
+          archive.forEach(function(item) {
+            var btn = document.createElement('button');
+            btn.innerHTML = '<span style="color:#c0392b;font-weight:700;">' + item.ref + '</span> <span style="color:#888;font-size:11px;">— ' + item.date + '</span>';
+            btn.onclick = function() {
+              document.getElementById('meta-ref').textContent = item.ref;
+              showToast('📁 تم استدعاء: ' + item.ref);
+              toggleDropdown('archive-dropdown');
+            };
+            menu.appendChild(btn);
+          });
+        }
+        toggleDropdown('archive-dropdown');
+      };
+
+      window.insertTable = function() {
+        if (!ensureDoc()) return;
+        var rows = prompt('عدد الصفوف:', '3'), cols = prompt('عدد الأعمدة:', '3');
+        if (!rows || !cols) return;
+        rows = parseInt(rows); cols = parseInt(cols);
+        if (isNaN(rows) || isNaN(cols) || rows < 1 || cols < 1) { showToast('⚠️ أرقام غير صحيحة'); return; }
+        var html = '<table><thead><tr>';
+        for (var c = 0; c < cols; c++) html += '<th>عنوان ' + (c+1) + '</th>';
+        html += '</tr></thead><tbody>';
+        for (var r = 0; r < rows; r++) { html += '<tr>'; for (var c = 0; c < cols; c++) html += '<td>بيان ' + (r+1) + '-' + (c+1) + '</td>'; html += '</tr>'; }
+        html += '</tbody></table><div><br></div>';
+        insertAtCursor(html); showToast('✅ تم إدراج الجدول');
+      };
+
+      window.insertTemplate = function() {
+        if (!ensureDoc()) return;
+        var tpl = '<div style="text-align:center;font-weight:700;font-size:13pt;margin-bottom:12px;">خطاب رسمي</div>' +
+          '<div>السلام عليكم ورحمة الله وبركاته،</div><div><br></div>' +
+          '<div>بالإشارة إلى الموضوع أعلاه، نفيدكم بأن مكتب ثقة الذهبية للخدمات العامة (س.ت 4030506321) يسعده تقديم خدماتنا لكم.</div><div><br></div>' +
+          '<div>ونأمل منكم التكرم بالاطلاع على المرفقات والتواصل معنا في حال استفسار.</div><div><br></div>' +
+          '<div>وتفضلوا بقبول فائق الاحترام والتقدير،</div><div><br></div>' +
+          '<div style="text-align:left;"><strong>مكتب ثقة الذهبية للخدمات العامة</strong></div>';
+        insertAtCursor(tpl); showToast('✅ تم إدراج القالب');
+      };
+
+      window.addNewPage = function() {
+        pageCounter++;
+        var container = document.getElementById('pages-container');
+        var last = container.querySelector('.sheet:last-child');
+        var clone = last.cloneNode(true);
+        clone.setAttribute('data-page', pageCounter);
+        clone.querySelector('.page-number').textContent = pageCounter + ' / ' + pageCounter;
+        var content = clone.querySelector('.doc-content');
+        content.id = 'doc-' + pageCounter; content.innerHTML = '';
+        content.contentEditable = writingMode ? 'true' : 'false';
+        content.style.fontFamily = getActiveDoc().style.fontFamily || "'Noto Naskh Arabic', Tahoma, serif";
+        if (isLined) clone.querySelector('.writing-surface').classList.add('lined');
+        document.querySelectorAll('.sheet').forEach(function(s, i) {
+          s.querySelector('.page-number').textContent = (i+1) + ' / ' + (pageCounter);
+        });
+        container.appendChild(clone);
+        showToast('✅ صفحة ' + pageCounter);
+        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+      };
+
+      var undoStack = [], redoStack = [], maxUndo = 30, isUndoing = false;
+      function pushUndo() {
+        if (isUndoing) return;
+        var doc = getActiveDoc(); if (!doc) return;
+        undoStack.push(doc.innerHTML);
+        if (undoStack.length > maxUndo) undoStack.shift();
+        redoStack = [];
+      }
+      window.undoDoc = function() {
+        var doc = getActiveDoc(); if (!doc || undoStack.length === 0) { showToast('⚠️ لا يوجد تراجع'); return; }
+        isUndoing = true;
+        redoStack.push(doc.innerHTML);
+        doc.innerHTML = undoStack.pop();
+        showToast('↩️ تم التراجع');
+        setTimeout(function() { isUndoing = false; }, 100);
+      };
+      window.redoDoc = function() {
+        var doc = getActiveDoc(); if (!doc || redoStack.length === 0) { showToast('⚠️ لا يوجد إعادة'); return; }
+        isUndoing = true;
+        undoStack.push(doc.innerHTML);
+        doc.innerHTML = redoStack.pop();
+        showToast('↪️ تم الإعادة');
+        setTimeout(function() { isUndoing = false; }, 100);
+      };
+
+      window.saveDoc = function() {
+        var html = getHtml();
+        if (html) { localStorage.setItem('thiqqah-doc-html', html); showToast('✅ تم الحفظ'); }
+        else showToast('⚠️ لا يوجد نص');
+      };
+
+      document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); undoDoc(); }
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) { e.preventDefault(); redoDoc(); }
+      });
+
+      window.exportPDF = function() {
+        showToast('📄 جاري التحضير...');
+        setTimeout(function() {
+          window.print();
+        }, 300);
+      };
+
+      window.downloadPDF = function() {
+        var original = document.querySelector('.sheet');
+        if (!original) { showToast('❌ لا يوجد محتوى'); return; }
+        showToast('⏳ جاري توليد PDF...');
+
+        // إخفاء أي نوافذ أو توستs
+        var toast = document.getElementById('toast');
+        if (toast) toast.classList.remove('show');
+        var modal = document.getElementById('sig-modal-overlay');
+        if (modal) modal.classList.remove('open');
+        document.querySelectorAll('.dropdown-wrap.open').forEach(function(el) { el.classList.remove('open'); });
+
+        // استنساخ الورقة في مكان بعيد تماماً
+        var clone = original.cloneNode(true);
+        clone.style.position = 'fixed';
+        clone.style.top = '-99999px';
+        clone.style.left = '-99999px';
+        clone.style.width = '210mm';
+        clone.style.height = '297mm';
+        clone.style.margin = '0';
+        clone.style.boxShadow = 'none';
+        clone.style.borderRadius = '0';
+        document.body.appendChild(clone);
+
+        // استخدام html2canvas مباشرة على الاستنساخ
+        html2canvas(clone, {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          width: clone.offsetWidth,
+          height: clone.offsetHeight,
+          x: 0,
+          y: 0,
+          scrollX: 0,
+          scrollY: 0
+        }).then(function(canvas) {
+          var imgData = canvas.toDataURL('image/jpeg', 0.98);
+          var pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+          pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+          pdf.save('thiqqah-letterhead-' + new Date().toISOString().slice(0,10) + '.pdf');
+          document.body.removeChild(clone);
+          showToast('✅ تم تحميل PDF');
+        }).catch(function(err) {
+          document.body.removeChild(clone);
+          showToast('❌ فشل توليد PDF');
+          console.error(err);
+        });
+      };
+
+      window.changeFont = function(font) {
+        document.querySelectorAll('.doc-content').forEach(function(d) { d.style.fontFamily = "'" + font + "', Tahoma, serif"; });
+        localStorage.setItem('thiqqah-doc-font', font); showToast('✅ الخط: ' + font);
+      };
+
+      window.changeTextColor = function(color) {
+        var sel = window.getSelection();
+        if (sel.rangeCount) {
+          document.execCommand('foreColor', false, color);
+        }
+        showToast('✅ لون الخط تغيّر');
+      };
+
+      window.toggleLines = function() {
+        isLined = !isLined;
+        document.querySelectorAll('.writing-surface').forEach(function(s) {
+          s.classList.toggle('lined', isLined);
+        });
+        showToast(isLined ? '✅ خطوط الكتابة مفعلة' : '✅ خطوط الكتابة معطلة');
+      };
+
+      window.toggleDark = function() {
+        isDark = !isDark;
+        document.body.classList.toggle('dark-mode', isDark);
+        showToast(isDark ? '🌙 الوضع الداكن' : '☀️ الوضع الفاتح');
+      };
+
+      window.toggleTransSeparate = function() {
+        transSeparate = document.getElementById('trans-separate').checked;
+        showToast(transSeparate ? '✅ ترجمة في صفحة منفصلة' : '✅ ترجمة في نفس الصفحة');
+      };
+
+      window.toggleDropdown = function(id) {
+        var wrap = document.getElementById(id);
+        var isOpen = wrap.classList.contains('open');
+        document.querySelectorAll('.dropdown-wrap.open').forEach(function(el) { el.classList.remove('open'); });
+        if (!isOpen) wrap.classList.add('open');
+      };
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown-wrap')) document.querySelectorAll('.dropdown-wrap.open').forEach(function(el) { el.classList.remove('open'); });
+      });
+
+      function shareText() { var text = getText(); if (!text) { showToast('⚠️ لا يوجد نص'); return null; } return text; }
+      window.shareWhatsApp = function() { var t = shareText(); if (!t) return; window.open('https://wa.me/?text=' + encodeURIComponent(t.substring(0,4000)), '_blank'); };
+      window.shareTelegram = function() { var t = shareText(); if (!t) return; window.open('https://t.me/share/url?url=' + encodeURIComponent('https://thiqqah.live/') + '&text=' + encodeURIComponent(t.substring(0,4096)), '_blank'); };
+      window.shareEmail = function() { var t = shareText(); if (!t) return; window.location.href = 'mailto:?subject=' + encodeURIComponent('خطاب من مكتب ثقة الذهبية') + '&body=' + encodeURIComponent(t.substring(0,8000)); };
+      window.shareTwitter = function() { var t = shareText(); if (!t) return; window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(t.substring(0,280)), '_blank'); };
+      window.shareFacebook = function() { showToast('📘 انسخ النص'); copyText(); };
+      window.shareLinkedIn = function() { showToast('💼 انسخ النص'); copyText(); };
+      window.shareChatGPT = function() { var t = shareText(); if (!t) return; window.open('https://chat.openai.com/?q=' + encodeURIComponent('حسّن هذا النص:\n\n' + t.substring(0,4000)), '_blank'); };
+
+      /* === توقيع modal === */
+      var sigModalCtx = null;
+      window.openSigModal = function() {
+        var overlay = document.getElementById('sig-modal-overlay');
+        overlay.classList.add('open');
+        var canvas = document.getElementById('sig-modal-canvas');
+        if (!sigModalCtx) {
+          sigModalCtx = canvas.getContext('2d');
+          var drawing = false;
+          var getPos = function(e) {
+            var rect = canvas.getBoundingClientRect();
+            var cx = e.touches ? e.touches[0].clientX : e.clientX;
+            var cy = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: cx - rect.left, y: cy - rect.top };
+          };
+          var start = function(e) { drawing = true; var p = getPos(e); sigModalCtx.beginPath(); sigModalCtx.moveTo(p.x, p.y); e.preventDefault(); };
+          var draw = function(e) { if (!drawing) return; var p = getPos(e); sigModalCtx.lineTo(p.x, p.y); sigModalCtx.strokeStyle = '#12243a'; sigModalCtx.lineWidth = 2; sigModalCtx.stroke(); e.preventDefault(); };
+          var stop = function() { drawing = false; };
+          canvas.addEventListener('mousedown', start);
+          canvas.addEventListener('mousemove', draw);
+          canvas.addEventListener('mouseup', stop);
+          canvas.addEventListener('mouseleave', stop);
+          canvas.addEventListener('touchstart', start, {passive:false});
+          canvas.addEventListener('touchmove', draw, {passive:false});
+          canvas.addEventListener('touchend', stop);
+        }
+        sigModalCtx.clearRect(0, 0, canvas.width, canvas.height);
+      };
+      window.closeSigModal = function() {
+        document.getElementById('sig-modal-overlay').classList.remove('open');
+      };
+      window.clearSigModal = function() {
+        var canvas = document.getElementById('sig-modal-canvas');
+        if (sigModalCtx && canvas) sigModalCtx.clearRect(0, 0, canvas.width, canvas.height);
+      };
+      window.confirmSigModal = function() {
+        var canvas = document.getElementById('sig-modal-canvas');
+        if (!canvas) return;
+        var dataUrl = canvas.toDataURL('image/png');
+        var id = 'sig-' + Date.now();
+        var html = '<div class="sig-inline" id="' + id + '"><img src="' + dataUrl + '" style="max-width:180px;height:auto;display:block;" alt="توقيع"><div class="sig-actions"><button onclick="removeInlineSig(\'' + id + '\')">🗑️ حذف</button></div></div>';
+        insertAtCursor(html);
+        closeSigModal();
+        showToast('✅ تم إدراج التوقيع');
+      };
+      window.removeInlineSig = function(id) {
+        var el = document.getElementById(id); if (el) el.remove();
+      };
+
+      /* === ختم مُدرج ديناميكياً === */
+      window.insertStampInline = function() {
+        var dateStr = new Date().toLocaleDateString('ar-SA', {year:'numeric', month:'long', day:'numeric'});
+        var id = 'stamp-' + Date.now();
+        var svg = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">' +
+          '<circle cx="100" cy="100" r="96" fill="none" stroke="#c0392b" stroke-width="3"/>' +
+          '<circle cx="100" cy="100" r="88" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,3"/>' +
+          '<path id="topArc" d="M 30,100 A 70,70 0 0,1 170,100" fill="none"/>' +
+          '<text fill="#c0392b" font-size="13" font-weight="700" font-family="Noto Naskh Arabic, Tahoma, serif">' +
+          '<textPath href="#topArc" startOffset="50%" text-anchor="middle">مكتب ثقة الذهبية للخدمات العامة</textPath></text>' +
+          '<path id="botArc" d="M 40,105 A 60,60 0 0,0 160,105" fill="none"/>' +
+          '<text fill="#c0392b" font-size="11" font-weight="700" font-family="Noto Naskh Arabic, Tahoma, serif">' +
+          '<textPath href="#botArc" startOffset="50%" text-anchor="middle">تأسيس الشركات في السعودية</textPath></text>' +
+          '<line x1="45" y1="100" x2="155" y2="100" stroke="#c0392b" stroke-width="1"/>' +
+          '<text x="100" y="92" text-anchor="middle" fill="#c0392b" font-size="10" font-weight="700" font-family="Noto Naskh Arabic, Tahoma, serif">موثق رقمياً</text>' +
+          '<text x="100" y="118" text-anchor="middle" fill="#c0392b" font-size="10" font-weight="700" font-family="Noto Naskh Arabic, Tahoma, serif">' + dateStr + '</text>' +
+          '</svg>';
+        var html = '<div class="stamp-inline" id="' + id + '" draggable="true" ondragstart="stampDragStart(event)" ondblclick="lockStamp(this)" title="انقر مرتين لتثبيت الختم" style="cursor:move;">' + svg + '</div>';
+        insertAtCursor(html + '<span>&nbsp;</span>');
+        showToast('🔴 تم إدراج الختم — اسحبه ثم انقر عليه مرتين لتثبيته');
+      };
+
+      window.lockStamp = function(el) {
+        el.setAttribute('draggable', 'false');
+        el.style.cursor = 'default';
+        el.removeAttribute('ondblclick');
+        el.removeAttribute('title');
+        showToast('🔒 تم تثبيت الختم');
+      };
+      window.stampDragStart = function(e) {
+        e.dataTransfer.setData('text/plain', e.target.id);
+        e.dataTransfer.effectAllowed = 'move';
+      };
+      document.addEventListener('dragover', function(e) { e.preventDefault(); });
+      document.addEventListener('drop', function(e) {
+        e.preventDefault();
+        var id = e.dataTransfer.getData('text/plain');
+        var stamp = document.getElementById(id);
+        if (stamp && stamp.classList.contains('stamp-inline')) {
+          var target = e.target.closest('.doc-content');
+          if (target) {
+            var range = document.caretRangeFromPoint(e.clientX, e.clientY);
+            if (range) {
+              var sel = window.getSelection();
+              sel.removeAllRanges(); sel.addRange(range);
+              range.insertNode(stamp);
+            }
+          }
+        }
+      });
+
+      /* === ترجمة === */
+      function removeTransSheet() { var ts = document.getElementById('translation-sheet'); if (ts) ts.remove(); }
+
+      function createTranslationSheet(text, lang, langName) {
+        removeTransSheet();
+        var container = document.getElementById('pages-container');
+        var sheet = document.createElement('div');
+        sheet.id = 'translation-sheet'; sheet.className = 'sheet';
+        sheet.setAttribute('data-page', 'TR');
+        var dir = lang === 'ur' || lang === 'ar' ? 'rtl' : 'ltr';
+        var font = dir === 'rtl' ? "'Noto Naskh Arabic',Tahoma,serif" : "system-ui,-apple-system,sans-serif";
+        sheet.innerHTML =
+          '<span class="corner-ornament tr"></span><span class="corner-ornament tl"></span><span class="corner-ornament br"></span><span class="corner-ornament bl"></span>' +
+          '<div class="top-rule"></div>' +
+          '<div class="sheet-inner">' +
+            '<div class="sheet-inner-watermark"></div>' +
+            '<header class="brand-ribbon">' +
+              '<div class="brand-logo-corner"><div class="brand-logo-wrap"><img class="brand-logo-xl" src="assets/thiqqah-logo-full.png" alt="شعار" width="280" height="280"></div></div>' +
+              '<div class="brand-text-columns">' +
+                '<div class="brand-block--en" lang="en" dir="ltr"><p class="name-en">Al-Thiqqah<br>Al-Dhahabiyah<br>General Services Office</p><p class="tagline-en">Commercial Registration No. 4030506321\nKingdom of Saudi Arabia</p></div>' +
+                '<div class="brand-block--ar" lang="ar"><h1 class="name">مكتب <span class="gold">ثقة الذهبية</span><br>للخدمات العامة</h1><p class="cr"><strong>السجل التجاري:</strong> 4030506321</p><p class="city">جدة — منطقة مكة المكرمة — المملكة العربية السعودية</p></div>' +
+              '</div>' +
+            '</header>' +
+            '<div class="meta-fields"><div class="meta-row"><span class="meta-label">الترجمة:</span><span class="meta-value">' + langName + '</span></div></div>' +
+            '<div class="writing-surface"><div class="doc-content" id="trans-content" dir="' + dir + '" style="font-family:' + font + ';"></div></div>' +
+            '<div class="footer-zone"><div class="footer-rule"></div><div class="footer-line"><div class="footer-contacts-inline"><span class="footer-name-ar">مكتب ثقة الذهبية للخدمات العامة</span><span class="dot">·</span><a href="https://thiqqah.live/" dir="ltr">thiqqah.live</a><span class="dot">·</span><a href="mailto:info@thiqqah.live" dir="ltr">info@thiqqah.live</a><span class="dot">·</span><a href="tel:+966567566616" dir="ltr">+966 56 756 6616</a></div><a class="footer-qr-inline" href="https://thiqqah.live/" target="_blank" rel="noopener"><img src="assets/letterhead-qr.png" width="128" height="128" alt="QR"></a></div></div>' +
+            '<div class="page-number">TR</div>' +
+          '</div>';
+        container.appendChild(sheet);
+        var content = document.getElementById('trans-content');
+        content.innerHTML = '<div>' + text.replace(/\n/g, '</div><div>') + '</div>';
+        window.scrollTo({top: sheet.offsetTop, behavior: 'smooth'});
+      }
+
+      function translateChunks(text, pair, callback, onError) {
+        var chunkSize = 450, chunks = [];
+        for (var i = 0; i < text.length; i += chunkSize) chunks.push(text.substring(i, i + chunkSize));
+        var results = [], idx = 0;
+        function next() {
+          if (idx >= chunks.length) { callback(results.join('')); return; }
+          fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(chunks[idx]) + '&langpair=' + pair)
+            .then(function(r) { return r.json(); })
+            .then(function(data) { results.push(data.responseStatus === 200 ? data.responseData.translatedText : chunks[idx]); idx++; next(); })
+            .catch(function() { onError(); });
+        }
+        next();
+      }
+
+      window.translateDoc = function(lang) {
+        var text = getText();
+        if (!text) { if (lang === 'ar') { showToast('✅ اللغة العربية'); return; } showToast('⚠️ لا يوجد نص'); return; }
+        if (lang === 'ar') { showToast('✅ العربية'); removeTransSheet(); return; }
+        var map = { en:'English', fr:'French', tr:'Turkish', zh:'Chinese', ko:'Korean', es:'Spanish', ur:'Urdu', de:'German' };
+        showToast('⏳ جاري الترجمة إلى ' + (map[lang]||lang) + '...');
+        translateChunks(text, 'ar|' + lang, function(translated) {
+          if (transSeparate) createTranslationSheet(translated, lang, map[lang]||lang);
+          else { removeTransSheet(); insertAtCursor('<div style="border-top:1px dashed rgba(7,63,58,0.15);padding-top:8px;margin-top:10px;"><strong>🌐 الترجمة — ' + (map[lang]||lang) + ':</strong></div><div><br></div><div>' + translated.replace(/\n/g, '</div><div>') + '</div><div><br></div>'); }
+          showToast('✅ تمت الترجمة');
+        }, function() { showToast('❌ فشلت الترجمة'); window.open('https://translate.google.com/?sl=auto&tl=' + encodeURIComponent(lang) + '&text=' + encodeURIComponent(text.substring(0,5000)), '_blank'); });
+      };
+
+      /* === init === */
+      document.addEventListener('DOMContentLoaded', function() {
+        var d = new Date(), dateStr = d.toLocaleDateString('ar-SA', {year:'numeric', month:'long', day:'numeric'});
+        document.getElementById('meta-date').textContent = dateStr;
+        var saved = localStorage.getItem('thiqqah-doc-html');
+        var doc = getActiveDoc();
+        if (saved && doc) { doc.innerHTML = saved; }
+        var savedFont = localStorage.getItem('thiqqah-doc-font');
+        if (savedFont) { document.getElementById('font-select').value = savedFont; changeFont(savedFont); }
+        if (doc) {
+          doc.addEventListener('input', function() { pushUndo(); });
+        }
+        // Anonymous auth + fill saved staff info
+        if (typeof firebase !== 'undefined' && firebase.auth) {
+          firebase.auth().signInAnonymously().catch(function(err) {
+            console.log('Auth:', err.code);
+          });
+        }
+        var savedName = localStorage.getItem('thiqqah-staff-name');
+        var savedEmail = localStorage.getItem('thiqqah-staff-email');
+        if (savedName) document.getElementById('send-name').value = savedName;
+        if (savedEmail) document.getElementById('send-email').value = savedEmail;
+      });
+    })();
+    /* === Firebase: إرسال مستند للمدير (في script منفصل) === */
+  </script>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="lib/firebase-config.js"></script>
+
+  <!-- Send Modal -->
+  <div class="sig-modal-overlay" id="send-modal-overlay" onclick="if(event.target===this)closeSendModal()">
+    <div class="sig-modal" style="max-width:420px;">
+      <h3>📨 إرسال المستند للمدير</h3>
+      <div style="margin:12px 0;">
+        <label style="display:block;font-size:12px;font-weight:700;margin-bottom:4px;color:var(--muted);">الاسم *</label>
+        <input type="text" id="send-name" placeholder="اسم الموظف" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;font-family:inherit;">
+      </div>
+      <div style="margin:12px 0;">
+        <label style="display:block;font-size:12px;font-weight:700;margin-bottom:4px;color:var(--muted);">البريد الإلكتروني</label>
+        <input type="email" id="send-email" placeholder="email@example.com" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;font-family:inherit;direction:ltr;text-align:left;">
+      </div>
+      <div style="margin:12px 0;">
+        <label style="display:block;font-size:12px;font-weight:700;margin-bottom:4px;color:var(--muted);">ملاحظة</label>
+        <textarea id="send-note" placeholder="ملاحظة للمدير..." rows="3" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;font-family:inherit;resize:vertical;"></textarea>
+      </div>
+      <div class="sig-modal-actions" style="margin-top:16px;">
+        <button class="btn-secondary" onclick="closeSendModal()">إلغاء</button>
+        <button class="btn-primary" onclick="submitDocToManager()">📨 إرسال</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- My Inbox Panel (Staff) -->
+  <div id="my-inbox-panel" style="position:fixed;top:0;left:0;height:100%;width:320px;max-width:90vw;background:#fff;box-shadow:4px 0 24px rgba(0,0,0,0.18);z-index:9999;transform:translateX(-110%);transition:transform 0.3s ease;direction:rtl;font-family:system-ui,sans-serif;font-size:12px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:linear-gradient(135deg,#7d3c98,#1a5276);color:#fff;">
+      <strong style="font-size:14px;">📥 واردي — مستندات موثقة</strong>
+      <button onclick="toggleMyInbox()" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;line-height:1;">×</button>
+    </div>
+    <div id="my-inbox-list" style="overflow-y:auto;height:calc(100% - 60px);"></div>
+  </div>
+  <style>
+    #my-inbox-panel.open { transform: translateX(0) !important; }
+    @media (max-width: 480px) { #my-inbox-panel { width: 100vw; } }
+  </style>
+
+  <script>
+    window.openSendModal = function() {
+      var overlay = document.getElementById('send-modal-overlay');
+      if (overlay) overlay.classList.add('open');
+    };
+    window.closeSendModal = function() {
+      var overlay = document.getElementById('send-modal-overlay');
+      if (overlay) overlay.classList.remove('open');
+    };
+    window.submitDocToManager = function() {
+      var name = document.getElementById('send-name').value.trim();
+      var email = document.getElementById('send-email').value.trim();
+      var note = document.getElementById('send-note').value.trim();
+      var docHtml = '';
+      var sheets = document.querySelectorAll('.sheet[data-page]');
+      sheets.forEach(function(s) { docHtml += s.outerHTML; });
+      var subject = document.getElementById('meta-subject') ? document.getElementById('meta-subject').textContent.trim() : '';
+      var ref = document.getElementById('meta-ref') ? document.getElementById('meta-ref').textContent.trim() : '';
+      if (!name) { showToast('⚠️ أدخل اسمك'); return; }
+      if (!docHtml) { showToast('⚠️ لا يوجد محتوى'); return; }
+      if (typeof firebase === 'undefined' || !db) { showToast('❌ Firebase غير متصل'); return; }
+      localStorage.setItem('thiqqah-staff-name', name);
+      localStorage.setItem('thiqqah-staff-email', email);
+      showToast('⏳ جاري الإرسال...');
+      db.collection('documents').add({
+        html: docHtml,
+        subject: subject,
+        ref: ref,
+        senderName: name,
+        senderEmail: email,
+        note: note,
+        status: 'pending',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(function() {
+        showToast('✅ تم إرسال المستند للمدير');
+        closeSendModal();
+      }).catch(function(err) {
+        showToast('❌ فشل الإرسال: ' + (err.message || err));
+      });
+    };
+    window.toggleMyInbox = function() {
+      var panel = document.getElementById('my-inbox-panel');
+      if (!panel) return;
+      panel.classList.toggle('open');
+      if (panel.classList.contains('open')) loadMyInbox();
+    };
+    window.loadMyInbox = function() {
+      var list = document.getElementById('my-inbox-list');
+      if (!list) return;
+      if (typeof firebase === 'undefined' || !db) { list.innerHTML = '<div style="padding:12px;color:#c0392b;font-size:12px;">❌ Firebase غير متصل</div>'; return; }
+      list.innerHTML = '<div style="padding:12px;font-size:12px;color:var(--muted);">⏳ جاري التحميل...</div>';
+      if (window._myInboxUnsub) window._myInboxUnsub();
+      window._myInboxUnsub = db.collection('documents').where('status', '==', 'stamped').limit(50).onSnapshot(function(snap) {
+        if (snap.empty) { list.innerHTML = '<div style="padding:12px;font-size:12px;color:var(--muted);">📭 لا توجد مستندات موثقة</div>'; return; }
+        var html = '';
+        snap.forEach(function(doc) {
+          var d = doc.data();
+          var date = d.updatedAt ? new Date(d.updatedAt.seconds*1000).toLocaleDateString('ar-SA') : '-';
+          html += '<div style="padding:10px 12px;border-bottom:1px solid rgba(0,0,0,0.06);cursor:pointer;" onclick="loadStampedDoc(\'' + doc.id + '\')">' +
+            '<div style="font-weight:700;font-size:12px;margin-bottom:3px;">' + (d.subject || 'بدون موضوع') + '</div>' +
+            '<div style="font-size:11px;color:var(--muted);">👤 ' + (d.senderName || '—') + ' · 📅 ' + date + '</div>' +
+          '</div>';
+        });
+        list.innerHTML = html;
+      }, function(err) {
+        list.innerHTML = '<div style="padding:12px;color:#c0392b;font-size:12px;">❌ ' + (err.message || err) + '</div>';
+      });
+    };
+    window.loadStampedDoc = function(docId) {
+      if (!db) return;
+      db.collection('documents').doc(docId).get().then(function(doc) {
+        if (!doc.exists) return;
+        var d = doc.data();
+        var container = document.getElementById('pages-container');
+        container.innerHTML = d.html || '<div class="sheet" data-page="1"><div class="sheet-inner"><div class="doc-content" contenteditable="true">لا يوجد محتوى</div></div></div>';
+        if (d.subject) { var ms = document.getElementById('meta-subject'); if (ms) ms.textContent = d.subject; }
+        if (d.ref) { var mr = document.getElementById('meta-ref'); if (mr) mr.textContent = d.ref; }
+        showToast('✅ تم فتح المستند الموثّق');
+        toggleMyInbox();
+      });
+    };
+  </script>
+</body>
+</html>

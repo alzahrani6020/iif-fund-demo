@@ -39,26 +39,7 @@
   </section>
 
   <section class="sov-section" style="background:var(--sov-navy-900);">
-    <div class="sov-container">
-      <div class="sov-job sov-reveal">
-        <div class="sov-job__title"><span class="lang-en">Senior Investment Analyst — Infrastructure</span><span class="lang-ar">محلل استثمار أول — البنية التحتية</span></div>
-        <div class="sov-job__meta">Paris · Full-time</div>
-        <div class="sov-job__desc"><span class="lang-en">Lead due diligence and financial modeling for transport and energy projects across Africa and Asia.</span><span class="lang-ar">قيادة العناية الواجبة والنمذجة المالية لمشاريع النقل والطاقة عبر أفريقيا وآسيا.</span></div>
-        <a href="apply" class="sov-btn sov-btn--outline-gold sov-btn--sm"><span class="lang-en">Apply</span><span class="lang-ar">تقدم</span></a>
-      </div>
-      <div class="sov-job sov-reveal sov-reveal-delay-1">
-        <div class="sov-job__title"><span class="lang-en">Partnerships Manager — MEA Region</span><span class="lang-ar">مدير شراكات — منطقة الشرق الأوسط وأفريقيا</span></div>
-        <div class="sov-job__meta">Riyadh · Full-time</div>
-        <div class="sov-job__desc"><span class="lang-en">Develop and manage sovereign relationships across the Middle East and North Africa.</span><span class="lang-ar">تطوير وإدارة العلاقات السيادية عبر الشرق الأوسط وشمال أفريقيا.</span></div>
-        <a href="apply" class="sov-btn sov-btn--outline-gold sov-btn--sm"><span class="lang-en">Apply</span><span class="lang-ar">تقدم</span></a>
-      </div>
-      <div class="sov-job sov-reveal sov-reveal-delay-2">
-        <div class="sov-job__title"><span class="lang-en">Legal Counsel — Cross-Border Finance</span><span class="lang-ar">مستشار قانوني — التمويل العابر للحدود</span></div>
-        <div class="sov-job__meta">London · Full-time</div>
-        <div class="sov-job__desc"><span class="lang-en">Structure and negotiate BOT, PPP, and sovereign framework agreements.</span><span class="lang-ar">هيكلة والتفاوض على اتفاقيات البناء والتشغيل والنقل والشراكة بين القطاعين والإطارات السيادية.</span></div>
-        <a href="apply" class="sov-btn sov-btn--outline-gold sov-btn--sm"><span class="lang-en">Apply</span><span class="lang-ar">تقدم</span></a>
-      </div>
-    </div>
+    <div class="sov-container" id="jobs-container"></div>
   </section>
 
   <div id="shared-footer"></div>
@@ -67,6 +48,30 @@
   <script src="src/sov-reveal.js"></script>
   <script>
     (function(){ const lang = localStorage.getItem('iif-lang') || 'ar'; document.documentElement.setAttribute('data-lang', lang); document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr'); document.documentElement.setAttribute('lang', lang); })();
+
+    fetch('data/careers.json')
+      .then(r => r.json())
+      .then(data => {
+        const container = document.getElementById('jobs-container');
+        if (!data.items) return;
+        const lang = localStorage.getItem('iif-lang') || 'ar';
+        container.innerHTML = data.items.map(item =>
+          '<div class="sov-job sov-reveal">' +
+            '<div class="sov-job__title">' +
+              '<span class="lang-en">' + item.title.en + '</span>' +
+              '<span class="lang-ar">' + item.title.ar + '</span>' +
+            '</div>' +
+            '<div class="sov-job__meta">' + item.location + ' · ' + item.type + '</div>' +
+            '<div class="sov-job__desc">' +
+              '<span class="lang-en">' + item.desc.en + '</span>' +
+              '<span class="lang-ar">' + item.desc.ar + '</span>' +
+            '</div>' +
+            '<a href="apply" class="sov-btn sov-btn--outline-gold sov-btn--sm">' +
+              '<span class="lang-en">Apply</span><span class="lang-ar">تقدم</span>' +
+            '</a>' +
+          '</div>'
+        ).join('');
+      });
   </script>
 </body>
 </html>

@@ -220,3 +220,102 @@ body {
     min-width: 44px;
   }
 }
+
+/* ============================================
+   NEW: Reduced motion for accessibility
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   NEW: Enhanced micro-interactions
+   ============================================ */
+
+/* Card lift with gold glow */
+.card-modern {
+  position: relative;
+  overflow: hidden;
+}
+.card-modern::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(212, 160, 23, 0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.card-modern:hover::before {
+  opacity: 1;
+}
+
+/* Button ripple effect */
+.btn-primary,
+.btn-outline,
+.btn-ghost {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after,
+.btn-outline::after,
+.btn-ghost::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
+  pointer-events: none;
+}
+.btn-primary:active::after,
+.btn-outline:active::after,
+.btn-ghost:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Link underline animation */
+a[href^="#"]:not(.btn-primary):not(.btn-outline):not(.btn-ghost) {
+  position: relative;
+}
+a[href^="#"]:not(.btn-primary):not(.btn-outline):not(.btn-ghost)::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #d4a017, #b8860b);
+  transition: width 0.3s ease;
+}
+a[href^="#"]:not(.btn-primary):not(.btn-outline):not(.btn-ghost):hover::after {
+  width: 100%;
+}
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #d4a017;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Image hover zoom */
+img {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.group:hover img,
+[class*="group"]:hover img {
+  transform: scale(1.03);
+}

@@ -1,0 +1,31 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "type": "press-release",
+      "date": "2026-05-15",
+      "tag": { "en": "Press Release", "ar": "بيان صحفي" },
+      "title": { "en": "IIF Expands Infrastructure Portfolio into North Africa", "ar": "الصندوق يوسع محفظة البنية التحتية إلى شمال أفريقيا" },
+      "excerpt": { "en": "New BOT agreements signed with three governments for transport and energy projects valued at $400M.", "ar": "اتفاقيات بناء وتشغيل ونقل جديدة موقعة مع ثلاث حكومات لمشاريع نقل وطاقة بقيمة 400 مليون دولار." },
+      "link": "#"
+    },
+    {
+      "id": "2",
+      "type": "report",
+      "date": "2025-12-20",
+      "tag": { "en": "Annual Report", "ar": "التقرير السنوي" },
+      "title": { "en": "Annual Sovereign Investment Report 2025", "ar": "التقرير السنوي للاستثمار السيادي 2025" },
+      "excerpt": { "en": "Comprehensive review of portfolio performance, ESG metrics, and strategic outlook for 2026–2028.", "ar": "مراجعة شاملة لأداء المحفظة ومعايير البيئة والمجتمع والحوكمة والنظرة الاستراتيجية 2026–2028." },
+      "link": "#"
+    },
+    {
+      "id": "3",
+      "type": "press-release",
+      "date": "2025-09-10",
+      "tag": { "en": "Press Release", "ar": "بيان صحفي" },
+      "title": { "en": "Strategic Partnership with Asian Development Corridor", "ar": "شراكة استراتيجية مع ممر التنمية الآسيوي" },
+      "excerpt": { "en": "Co-investment framework established for technology and renewable energy projects across Southeast Asia.", "ar": "إنشاء إطار استثمار مشترك لمشاريع التقنية والطاقة المتجددة عبر جنوب شرق آسيا." },
+      "link": "#"
+    }
+  ]
+}

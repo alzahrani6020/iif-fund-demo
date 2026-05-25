@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: is the user authenticated?
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    // Helper: check role from /roles/{uid}
+    function getRole() {
+      return get(/databases/$(database)/documents/roles/$(request.auth.uid)).data.role;
+    }
+
+    function isAdmin() {
+      return isAuth() && getRole() == 'admin';
+    }
+
+    function isStaff() {
+      return isAuth() && getRole() == 'staff';
+    }
+
+    // Documents collection
+    match /documents/{docId} {
+      // Anyone authenticated can create (staff sends)
+      allow create: if isAuth();
+
+      // Staff: read-only (can read their own + all)
+      // Admin: full control
+      allow read: if isAuth();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Roles collection (managed manually in Firebase Console)
+    match /roles/{uid} {
+      allow read: if isAuth() && request.auth.uid == uid;
+      allow write: if false; // Only admin via Console
+    }
+
+  }
+}

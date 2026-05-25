@@ -50,6 +50,22 @@
 
   <section class="sov-section" style="background:var(--sov-navy-900);">
     <div class="sov-container">
+      <form class="sov-form sov-reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="max-width:600px;margin:0 auto var(--space-10);padding:var(--space-6);background:var(--color-surface-elevated);border:1px solid var(--color-glass-border);border-radius:var(--radius-lg);">
+        <div class="sov-form__group">
+          <label class="sov-form__label"><span class="lang-en">Name</span><span class="lang-ar">الاسم</span></label>
+          <input type="text" name="name" class="sov-form__input" required style="width:100%;padding:var(--space-3);background:var(--color-glass);border:1px solid var(--color-glass-border);border-radius:var(--radius-md);color:var(--color-text-main);" />
+        </div>
+        <div class="sov-form__group">
+          <label class="sov-form__label"><span class="lang-en">Email</span><span class="lang-ar">البريد الإلكتروني</span></label>
+          <input type="email" name="email" class="sov-form__input" required style="width:100%;padding:var(--space-3);background:var(--color-glass);border:1px solid var(--color-glass-border);border-radius:var(--radius-md);color:var(--color-text-main);" />
+        </div>
+        <div class="sov-form__group">
+          <label class="sov-form__label"><span class="lang-en">Message</span><span class="lang-ar">الرسالة</span></label>
+          <textarea name="message" class="sov-form__input" required rows="4" style="width:100%;padding:var(--space-3);background:var(--color-glass);border:1px solid var(--color-glass-border);border-radius:var(--radius-md);color:var(--color-text-main);"></textarea>
+        </div>
+        <button type="submit" class="sov-btn sov-btn--primary" style="width:100%;"><span class="lang-en">Send Message</span><span class="lang-ar">إرسال الرسالة</span></button>
+      </form>
+
       <div class="sov-grid-2 sov-stagger">
         <div class="sov-card sov-reveal">
           <div class="sov-card__icon">&#9993;</div>

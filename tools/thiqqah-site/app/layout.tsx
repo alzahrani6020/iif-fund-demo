@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ScrollProgress } from '@/components/ScrollProgress';
 import './globals.css';
 import { siteConfig } from '@/lib/data';
 
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="antialiased bg-[#0A1628] text-cream">
         {children}
+        <ScrollProgress />
       </body>
     </html>
   );

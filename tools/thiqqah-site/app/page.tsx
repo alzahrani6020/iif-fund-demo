@@ -21,6 +21,9 @@ import { WhatsAppFloat } from '@/components/WhatsAppFloat';
 import { About } from '@/components/About';
 import { Agencies } from '@/components/Agencies';
 import { TrustSignals } from '@/components/TrustSignals';
+import { Testimonials } from '@/components/Testimonials';
+import { CostCalculator } from '@/components/CostCalculator';
+import { BlogPreview } from '@/components/BlogPreview';
 import { Lang } from '@/lib/i18n';
 
 export default function Home() {
@@ -67,10 +70,13 @@ export default function Home() {
         <Sectors lang={lang} />
         <About lang={lang} />
         <Agencies lang={lang} />
+        <Testimonials lang={lang} />
         <Process lang={lang} />
+        <CostCalculator lang={lang} />
         <Documents lang={lang} />
         <FAQ lang={lang} />
         <RequestForm lang={lang} />
+        <BlogPreview lang={lang} />
         <Contact lang={lang} />
         <Privacy lang={lang} />
       </main>
