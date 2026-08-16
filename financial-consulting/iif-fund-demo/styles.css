@@ -3781,7 +3781,7 @@
       background: linear-gradient(270deg, var(--color-bg) 70%, transparent);
     }
 
-    /* Headlines widget (from RSS via Netlify function) */
+    /* Headlines widget (from RSS) */
 
     /* Dashboard overlay - ملء الشاشة */
     .dashboard-overlay {

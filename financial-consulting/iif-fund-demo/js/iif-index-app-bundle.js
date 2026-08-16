@@ -2167,11 +2167,11 @@
           if (b) {
             try {
               var hostname = new URL(b).hostname.replace(/^www\./i, '') || '';
-              if (/\.vercel\.app$/i.test(hostname) || hostname === 'iiffund.com') return '/api';
+              if (/\.vercel\.app$/i.test(hostname) || hostname === 'iiffund.com' || /\.github\.io$/i.test(hostname)) return '/api';
             } catch (eHost) {
               if (/vercel\.app$/i.test(b)) return '/api';
             }
-            return '/.netlify/functions';
+            return '/api';
           }
           return '/api';
         } catch (e) { return '/api'; }
@@ -5917,7 +5917,7 @@
         if (showBannerAgain) {
           showBannerAgain.addEventListener('click', function () {
             if (typeof window.iifIsStaticPublicHost === 'function' && !window.iifIsStaticPublicHost()) {
-              setStatus('الشريط يظهر على github.io و netlify فقط / Banner: GitHub Pages & Netlify only.', true);
+              setStatus('الشريط يظهر على github.io فقط / Banner: GitHub Pages only.', true);
               return;
             }
             if (typeof window.IIF_showStaticHostBannerAgain === 'function') {

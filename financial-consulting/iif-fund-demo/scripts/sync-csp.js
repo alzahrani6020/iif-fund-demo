@@ -1,6 +1,6 @@
 /**
  * Single source: config/content-security-policy.txt (one line).
- * Updates vercel.json, netlify.toml, and CSP <meta> in listed HTML (after <meta charset="utf-8" />).
+ * Updates vercel.json and CSP <meta> in listed HTML (after <meta charset="utf-8" />).
  *
  *   npm run csp:sync
  */
@@ -37,18 +37,6 @@ if (!cspHeader) {
 cspHeader.value = policy;
 fs.writeFileSync(vercelPath, JSON.stringify(vercel, null, 2) + '\n', 'utf8');
 
-/* netlify.toml */
-const netlifyPath = path.join(root, 'netlify.toml');
-let netlify = fs.readFileSync(netlifyPath, 'utf8');
-const lines = netlify.split(/\r?\n/);
-const cspIdx = lines.findIndex((l) => /^\s*Content-Security-Policy\s*=/.test(l));
-if (cspIdx < 0) {
-  console.warn('[csp:sync] netlify.toml: no Content-Security-Policy line');
-} else {
-  lines[cspIdx] = `    Content-Security-Policy = "${policy.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
-  fs.writeFileSync(netlifyPath, lines.join('\n'), 'utf8');
-}
-
 /* HTML */
 const htmlFiles = ['index.html', 'admin-standalone.html', 'privacy.html', 'transparency.html', 'about-institution.html'];
 const metaLine = htmlMetaLine();
@@ -70,4 +58,4 @@ for (const name of htmlFiles) {
   fs.writeFileSync(p, html, 'utf8');
 }
 
-console.log('[csp:sync] OK — vercel.json, netlify.toml,', htmlFiles.join(', '));
+console.log('[csp:sync] OK — vercel.json,', htmlFiles.join(', '));

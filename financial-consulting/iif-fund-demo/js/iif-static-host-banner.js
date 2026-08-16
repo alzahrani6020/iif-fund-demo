@@ -1,5 +1,5 @@
 /**
- * Static hosting notice (GitHub Pages, Netlify): local-only data + JSON export tip.
+ * Static hosting notice (GitHub Pages): local-only data + JSON export tip.
  * - index.html: include markup #iif-static-host-banner (optional)
  * - leaf pages: script creates the bar if missing
  * Sync stub: set window.iifIsStaticPublicHost in index <head> or body before auth if needed.
@@ -11,7 +11,6 @@
     try {
       var h = (location.hostname || '').toLowerCase();
       if (h.endsWith('.github.io')) return true;
-      if (h.endsWith('.netlify.app')) return true;
       return false;
     } catch (e) {
       return false;
