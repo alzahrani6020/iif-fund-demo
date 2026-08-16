@@ -88,7 +88,7 @@ const ROOT_SHORT_PATHS = {
 function isVirtualSpaPath(pathname) {
   if (!pathname || pathname === '/') return false;
   if (pathname === '/dashboard' || pathname === '/cp' || pathname === '/admin') return true;
-  // JSON/صحة: خادم التطوير (`npm start`) أو دوال Netlify — ليس ملفاً ثابتاً تحت الجذر دائماً
+  // JSON/صحة: خادم التطوير (`npm start`) فقط — ليس ملفاً ثابتاً تحت الجذر دائماً
   if (pathname === '/healthz' || pathname === '/diagnostics.json') return true;
   if (/^\/(about|sectors|team|careers|register|profile|terms|cookies|compliance)(\/|$)/.test(pathname)) return true;
   if (/^\/services(\/|$)/.test(pathname)) return true;

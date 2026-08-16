@@ -26,7 +26,7 @@ export default [
   },
   js.configs.recommended,
   {
-    files: ['scripts/**/*.{js,mjs,cjs}', 'netlify/**/*.{js,mjs,cjs}'],
+    files: ['scripts/**/*.{js,mjs,cjs}'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',

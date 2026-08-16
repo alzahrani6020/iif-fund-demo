@@ -1,6 +1,6 @@
 # IIF Fund Demo — المنصة الحكومية + الصندوق
 
-> **محرك البحث (SearXNG)** في `engines/searxng/` — يشغّل **Tor + SearXNG** عبر Docker؛ على **جهاز التطوير** (`npm start`) يُربَط بالمنصة عبر **`/api/searx`**. على **Netlify** يبقى **بحث الجهات محلياً** ما لم يُضف لاحقاً خادم/بروكسي للمحرك.
+> **محرك البحث (SearXNG)** في `engines/searxng/` — يشغّل **Tor + SearXNG** عبر Docker؛ على **جهاز التطوير** (`npm start`) يُربَط بالمنصة عبر **`/api/searx`**. على **GitHub Pages** يبقى **بحث الجهات محلياً** ما لم يُضف لاحقاً خادم/بروكسي للمحرك.
 
 ## الرؤية / Vision
 
@@ -10,7 +10,7 @@
 
 **ماذا تفعل أنت على جهازك وحساباتك حتى يكون كل شيء جاهزاً للبدء:** [للبدء-ما-عليك-أنت.md](./للبدء-ما-عليك-أنت.md)
 
-**للمبتدئين — رفع المشروع إلى GitHub ثم Netlify (بدون مصطلحات معقدة):** [دليل-المبتدئ-النشر.md](./دليل-المبتدئ-النشر.md)
+**للمبتدئين — رفع المشروع إلى GitHub Pages (بدون مصطلحات معقدة):** [دليل-المبتدئ-النشر.md](./دليل-المبتدئ-النشر.md)
 
 **قبل إصدار أو رابط رسمي:** [docs/PRE-RELEASE-CHECKLIST.md](./docs/PRE-RELEASE-CHECKLIST.md) · **حماية الفرع `main`:** [docs/BRANCH-PROTECTION.md](./docs/BRANCH-PROTECTION.md) · **CI وفحوصات الدمج:** [CONTRIBUTING.md#ci](./CONTRIBUTING.md#ci) · **مراقبة توفر المواقع:** سير العمل **Uptime ping** في Actions (جدول + تشغيل يدوي).
 
@@ -51,10 +51,10 @@
 | معايير الجودة بما يليق بالقيادات السيادية | [`sovereign-standards.html`](./sovereign-standards.html) و [`SOVEREIGN-STANDARDS.md`](./SOVEREIGN-STANDARDS.md) |
 | تشغيل المشروع وروابط التطوير | هذا الملف (README) — قسم **التشغيل السريع** |
 | قائمة قبل النشر (محتوى + تقنية) | [`قبل-النشر.md`](./قبل-النشر.md) |
-| **روابط الإنتاج المعتمدة** (Vercel / Netlify / GitHub Pages) | [`CANONICAL-URLS.md`](./CANONICAL-URLS.md) |
+| **روابط الإنتاج المعتمدة** (GitHub Pages) | [`CANONICAL-URLS.md`](./CANONICAL-URLS.md) |
 | **قبل الدمج** — أخطاء، ازدواجية، انسجام مع المنصات والمساعد | [`قائمة-تحقق-قبل-الدمج.md`](./قائمة-تحقق-قبل-الدمج.md) |
 | مسارات الملفات ≠ بحث Google | [`PATHS-NOT-GOOGLE.md`](./PATHS-NOT-GOOGLE.md) |
-| خطوات Netlify والاختصارات `/fund` و `/gov` | [`NETLIFY-CHECKLIST.md`](./NETLIFY-CHECKLIST.md) و [`netlify.toml`](./netlify.toml) |
+| الاختصارات `/fund` و `/gov` (محلي/خادم) | [`CANONICAL-URLS.md`](./CANONICAL-URLS.md) و `scripts/dev-server.js` |
 | ربط المنصة الحكومية بالصندوق | [`financial-consulting/government-search/README-IIF-INTEGRATION.md`](./financial-consulting/government-search/README-IIF-INTEGRATION.md) |
 | واجهة الصندوق (تفاصيل المجلد) | [`financial-consulting/iif-fund-demo/README.md`](./financial-consulting/iif-fund-demo/README.md) |
 | إطار مبسّط + iframe للمنصة الحكومية | [`financial-consulting/fund-site/index.html`](./financial-consulting/fund-site/index.html) — **للمعاينة**؛ الإنتاج يفضّل الواجهة الكاملة أعلاه |
@@ -75,7 +75,7 @@
 
 ### 1) خادم التطوير (الواجهات الثابتة)
 
-يتطلب **Node.js 22+** (انظر `.nvmrc` و`.node-version` — نفس الإصدار في CI وNetlify):
+يتطلب **Node.js 22+** (انظر `.nvmrc` و`.node-version` — نفس الإصدار في CI):
 
 ```bash
 npm run verify   # بناء + فحص صياغة السكربتات (اختياري قبل الدفع)
@@ -152,34 +152,21 @@ docker compose up -d
 
 ---
 
-## Netlify (ربط GitHub)
+## GitHub Pages (النشر الرسمي)
 
 - **قبل أول نشر عام:** راجع [قبل-النشر.md](./قبل-النشر.md) (محتوى + تقنية + توقّعات بحث الويب).
-- الإعدادات في **`netlify.toml`** (أمر البناء: `npm ci && npm run build`، النشر: **`.`**).
-- **قائمة خطوات جاهزة:** [NETLIFY-CHECKLIST.md](./NETLIFY-CHECKLIST.md)
-- لصق حقول الواجهة يدوياً: [NETLIFY-UI-SETTINGS.md](./NETLIFY-UI-SETTINGS.md)
-- **اختصارات بعد النشر:** `/fund` → واجهة الصندوق، `/gov` → المنصة الحكومية، `/legal` → الوثائق، `/privacy` / `/disclaimer` / `/contact` → صفحات قانونية (انظر `netlify.toml`)
-- نشر يدوي من GitHub: workflow **`Deploy Netlify`** (اختياري) يحتاج الأسرار `NETLIFY_AUTH_TOKEN` و `NETLIFY_SITE_ID`.
-
-> **ملاحظة:** إذا ربطت Netlify بمستودع `iif-web` على الفرع `main`، كل **push** يُعيد بناء الموقع تلقائياً — لا تحتاج أسرار Actions لذلك.
-
-**توفير الطبقة المجانية (Netlify / Actions):** [NETLIFY-FREE-TIER.md](./NETLIFY-FREE-TIER.md)
-
-**أمان (أسرار، مفاتيح):** [SECURITY.md](./SECURITY.md)
-
-### GitHub Pages (بديل عند توقف Netlify أو للمعاينة العامة)
-
 - سير العمل: [`.github/workflows/github-pages.yml`](./.github/workflows/github-pages.yml) — ينشر **`financial-consulting/iif-fund-demo/`** كموقع ثابت.
 - **تفعيل لمرة واحدة:** المستودع على GitHub → **Settings** → **Pages** → **Build and deployment** → المصدر: **GitHub Actions** (وليس Branch). إذا ظهرت صفحة 404 «لا يوجد موقع» رغم وجود الـ workflow، غالباً لم يُنشَأ موقع Pages بعد: من الطرفية مع [GitHub CLI](https://cli.github.com) بعد `gh auth login` نفّذ `gh api -X POST repos/alzahrani6020/iif-web/pages -f build_type=workflow` أو شغّل `.\scripts\enable-github-pages.ps1` من جذر المشروع.
 - بعد نجاح التشغيل: الرابط يكون `https://<user>.github.io/<repo>/` (مثال للمستودع المرتبط: [alzahrani6020/iif-web](https://github.com/alzahrani6020/iif-web)).
 - يوجد ملف [`.nojekyll`](./financial-consulting/iif-fund-demo/.nojekyll) في مجلد الواجهة لتعطيل معالج Jekyll الافتراضي.
 - **دفع التغييرات:** `git push origin main` يشغّل النشر تلقائياً عند تعديل ملفات داخل `financial-consulting/iif-fund-demo/` أو سير العمل نفسه؛ أو من تبويب **Actions** → **Deploy GitHub Pages** → **Run workflow**.
-- **ما لا يعمل على Pages وحدها (موقع ثابت):** مسارات مثل **`/healthz`** و**`/diagnostics.json`** و**`/api/*`** يوفّرها **`npm start`** (تطوير) أو **دوال Netlify** عند النشر هناك — وليست ملفاتاً ثابتة في كل البيئات.
+- **ما لا يعمل على Pages وحدها (موقع ثابت):** مسارات مثل **`/healthz`** و**`/diagnostics.json`** و**`/api/*`** يوفّرها **`npm start`** (تطوير) فقط — وليست ملفاتاً ثابتة في كل البيئات.
 
-### Vercel وNetlify من Actions
+**أمان (أسرار، مفاتيح):** [SECURITY.md](./SECURITY.md)
 
-- **Deploy Netlify** و**Deploy Vercel (optional):** تشغيل **يدوي** من تبويب **Actions** → **Run workflow** بعد إضافة الأسرار في **Settings → Secrets and variables → Actions** (انظر تعليقات ملفات الـ workflow و[VERCEL-DEPLOY.md](./VERCEL-DEPLOY.md)).
-- النشر التلقائي عند **push** يمكن ضبطه من **لوحة Netlify / Vercel** عند ربط المستودع بـ Git هناك.
+### Vercel (Actions اختياري)
+
+- **Deploy Vercel (optional):** تشغيل **يدوي** من تبويب **Actions** → **Run workflow** بعد إضافة الأسرار في **Settings → Secrets and variables → Actions** (انظر تعليقات ملف الـ workflow و[VERCEL-DEPLOY.md](./VERCEL-DEPLOY.md)).
 
 ---
 

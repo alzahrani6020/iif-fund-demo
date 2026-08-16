@@ -1,5 +1,5 @@
 /**
- * يبني مجلد gh-pages-dist/ — نسخة ثابتة كاملة لـ GitHub Pages (بديل Netlify للواجهات).
+ * يبني مجلد gh-pages-dist/ — نسخة ثابتة كاملة لـ GitHub Pages.
  * يستثني node_modules و.git وغيرها؛ يضيف .nojekyll
  */
 import fs from 'fs/promises';

@@ -23,14 +23,13 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>صندوق الاستثمار الدولي (IIF) — توجيه</title>
     <link rel="stylesheet" href="gateway.css" />
-    <!-- لا تستخدم meta refresh إلى مسار فرعي ثابت: على Vercel غالباً يُنشر مجلد iif-fund-demo كجذر فيصبح المسار الطويل 404 -->
+    <!-- لا تستخدم meta refresh إلى مسار فرعي ثابت: على بعض المنصات يُنشر مجلد iif-fund-demo كجذر فيصبح المسار الطويل 404 -->
     <script>
       (function () {
         /*
-          دومين ثقة (thiqqah.live): يُنشر كموقع Netlify منفصل — انظر NETLIFY-THIQQAH-STANDALONE.md
-          و thiqqah-site/netlify.toml (Base directory = thiqqah-site). لا توجيه هنا إلى دومين آخر.
+          دومين ثقة (thiqqah.live): يُنشر كموقع منفصل — لا توجيه هنا إلى دومين آخر.
         */
-        /** مطابقة netlify.toml + vercel.json + اختصارات التطوير المحلي — توجيه كامل حسب المسار */
+        /** توجيه كامل حسب المسار مع دعم github.io + اختصارات التطوير المحلي */
         function siteBase() {
           try {
             var h = location.hostname || '';
@@ -169,7 +168,7 @@
                 <li><a href="financial-consulting/iif-fund-demo/index.html">الواجهة الرئيسية للصندوق</a> — <span dir="ltr">/fund</span></li>
                 <li><a href="financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&amp;open_dashboard=1">لوحة التحكم (مباشرة)</a> — <span dir="ltr">/dashboard</span>، <span dir="ltr">/cp</span>، <span dir="ltr">/panel</span>، <span dir="ltr">/fund-admin</span></li>
                 <li><a href="financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html">الفهرس الحكومي المرجعي</a> — <span dir="ltr">/gov</span></li>
-                <li><a href="financial-consulting/iif-fund-demo/admin.html">لوحة الإدارة (ملف admin)</a> — <span dir="ltr">/admin</span> (عند Netlify/الخادم)</li>
+                <li><a href="financial-consulting/iif-fund-demo/admin.html">لوحة الإدارة (ملف admin)</a> — <span dir="ltr">/admin</span> (محلي/خادم فقط)</li>
                 <li><a href="financial-consulting/fund-site/index.html">بوابة fund-site</a></li>
                 <li><a href="legal/index.html">الوثائق (خصوصية · إخلاء مسؤولية · تواصل)</a> — <span dir="ltr">/legal</span></li>
                 <li><a href="legal/privacy.html">الخصوصية</a> — <span dir="ltr">/privacy</span></li>

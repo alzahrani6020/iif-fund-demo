@@ -116,9 +116,6 @@ temp/
 .cache/
 .parcel-cache/
 
-# Netlify
-.netlify/
-
 # Vercel
 .vercel/
 

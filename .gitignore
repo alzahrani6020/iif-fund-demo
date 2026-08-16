@@ -7,10 +7,13 @@ __pycache__/
 *.log
 .env
 .env.local
-.netlify/
-
 # مخرجات تجهيز GitHub Pages (يُولَّد محلياً وفي CI)
 gh-pages-dist/
+
+# مخرجات/كاش منصات قديمة أو محلية
+.netlify/
+.next/
+.vercel/
 
 # كاش SearXNG محلياً (يُبقى المجلد فقط)
 engines/searxng/data/*
@@ -26,18 +29,14 @@ playwright-report/
 # سجلات/مخرجات عرضية من الطرفية أو أدوات (لا تُرفع)
 cmdout.txt
 final-step*.txt
-netlify-deploy-log*.txt
-netlify-help.txt
-netlify-step*.txt
 _git_run_log.txt
 
-# ملفات تجريبية من جلسات Netlify/CLI (لا تُرفع)
+# ملفات تجريبية من جلسات CLI (لا تُرفع)
 argv.js
 run-build.cjs
 run-npx.cjs
 run-user.cmd
 user-run.ps1
-netlify-api-list.txt
 
 # ملفات قفل مؤقتة من Microsoft Office (~$filename.docx)
 ~$*

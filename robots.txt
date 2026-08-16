@@ -2,8 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /admin-direct/
 Disallow: /api/
-Disallow: /netlify/
-Disallow: /.netlify/
 Disallow: /node_modules/
 
-Sitemap: https://iiffund.com/sitemap.xml
+Sitemap: https://alzahrani6020.github.io/iif-web/sitemap.xml

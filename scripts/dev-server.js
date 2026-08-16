@@ -509,7 +509,7 @@ function serveStatic(req, res) {
       return;
     }
     const ownerEmail = String(process.env.IIF_OWNER_EMAIL || 'talalkenani@gmail.com').trim().toLowerCase();
-    /** نفس سلوك [[redirects]] /dashboard في netlify.toml — رابط قصير مخصّص للوحة فقط */
+    /** اختصار محلي للوحة — رابط قصير مخصّص للوحة فقط */
     const adminUrl = '/dashboard';
     const html = `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>دخول الإدارة (محلي)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -551,11 +551,11 @@ function serveStatic(req, res) {
     send(res, 200, html, { 'Content-Type': 'text/html; charset=utf-8' });
     return;
   }
-  /** مجلدات: /legal/ → /legal/index.html (مثل Netlify) */
+  /** مجلدات: /legal/ → /legal/index.html */
   if (urlPath !== '/' && urlPath.endsWith('/')) {
     urlPath = urlPath.slice(0, -1) + '/index.html';
   }
-  /** اختصارات مثل netlify.toml — للتطوير المحلي */
+  /** اختصارات محلية للتطوير */
   const shortPaths = {
     '/search': '/financial-consulting/iif-fund-demo/web-search.html',
     '/web-search': '/financial-consulting/iif-fund-demo/web-search.html',

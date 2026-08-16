@@ -2,12 +2,12 @@
  * فحص خفيف لموقع منشور — لا يُفترض تشغيله في CI بدون PROXY_BASE.
  * يتحقق من صفحة البحث الموحّدة ومن /api/searx؛ الترجمة تحذير فقط إن فشلت (الموقع يبقى صالحاً للبحث).
  *
- *   PowerShell: $env:PROXY_BASE="https://yoursite.netlify.app"; npm run smoke:live
+ *   PowerShell: $env:PROXY_BASE="https://alzahrani6020.github.io/iif-web"; npm run smoke:live
  */
 const raw = (process.env.PROXY_BASE || "").trim().replace(/\/+$/, "");
 if (!raw) {
   console.log("SKIP  smoke:live — لم يُضبط PROXY_BASE.");
-  console.log("      مثال: $env:PROXY_BASE=\"https://yoursite.netlify.app\"; npm run smoke:live");
+  console.log("      مثال: $env:PROXY_BASE=\"https://alzahrani6020.github.io/iif-web\"; npm run smoke:live");
   process.exit(0);
 }
 
