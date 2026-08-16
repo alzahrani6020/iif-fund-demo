@@ -18,8 +18,8 @@
 | `executive-brief.html`، `sovereign-standards.html` (جذر المستودع) | موجز للمستويات الرفيعة + معايير سيادية؛ اختصارات `/executive`، `/sovereign`، `/charter` |
 | `scripts/dev-server.js` | خادم التطوير (`3333`) + بروكسي `/api/searx` → SearXNG على `18080` |
 | `engines/searxng/` | **Tor + SearXNG** (Docker) — `npm start` → `/api/searx`؛ محركات `.onion` عبر حاوية `tor` |
-| [CANONICAL-URLS.md](./CANONICAL-URLS.md) | روابط **إنتاج** Vercel وNetlify المعتمدة (مرجع واحد) |
-| `thiqqah-site/` | موقع **ثقة الذهبية**؛ فصل الدومينات: [DOMINI-IIFFUND-THIQQAH.md](./DOMINI-IIFFUND-THIQQAH.md)؛ تفصيل Netlify: [NETLIFY-THIQQAH-STANDALONE.md](./NETLIFY-THIQQAH-STANDALONE.md) و`RUN-NETLIFY-THIQQAH-COMPLETE.cmd` / `npm run netlify:thiqqah:complete` |
+| [CANONICAL-URLS.md](./CANONICAL-URLS.md) | روابط **إنتاج** GitHub Pages المعتمدة (مرجع واحد) |
+| `thiqqah-site/` | موقع **ثقة الذهبية**؛ فصل الدومينات: [DOMINI-IIFFUND-THIQQAH.md](./DOMINI-IIFFUND-THIQQAH.md) |
 | [قائمة-تحقق-قبل-الدمج.md](./قائمة-تحقق-قبل-الدمج.md) | تجنّب أخطاء وازدواجية؛ انسجام الجهاز والمنصات والمساعد؛ **قسم 7:** وقاية واستعادة عند خلل في الكود أو الجهاز أو المنصات |
 
 ## الأوامر (من جذر المشروع)
@@ -42,7 +42,7 @@ npm run e2e:public    # Playwright: عرض جوال + lang=ar/Noto + privacy (ي
 npm run e2e:dashboard # Playwright: فتح اللوحة من /admin-direct
 ```
 
-- **Node:** `>=22` (`.nvmrc` / `.node-version` — مطابق لـ CI وNetlify).
+- **Node:** `>=22` (`.nvmrc` / `.node-version` — مطابق لـ CI وGitHub Actions).
 
 ### تكامل MiniMax (سطر أوامر — API السحابي)
 
@@ -67,11 +67,12 @@ npm run e2e:dashboard # Playwright: فتح اللوحة من /admin-direct
 
 ## النشر
 
-- **Netlify:** الإعداد في `netlify.toml`؛ الطبقة المجانية: راجع `NETLIFY-FREE-TIER.md` و`[skip netlify]` في رسالة الـ commit عند تعديل التوثيق فقط.
-- **`thiqqah.live` + دومين الصندوق:** [DOMINI-IIFFUND-THIQQAH.md](./DOMINI-IIFFUND-THIQQAH.md) (خطوتان Netlify + DNS لكل دومين). تفصيل ثقة: [NETLIFY-THIQQAH-STANDALONE.md](./NETLIFY-THIQQAH-STANDALONE.md) — **`npm run netlify:thiqqah:complete`** أو `netlify:thiqqah:setup`؛ **`npm run verify:production-domains`** يفحص `iiffund.com` و`thiqqah.live` معاً؛ **`npm run verify:thiqqah:live-domain`** لثقة فقط.
-- **`ERR_SSL_PROTOCOL_ERROR` على `iiffund.com`:** ليس خطأ كود — راجع **قسم 8** في [NETLIFY-CHECKLIST.md](./NETLIFY-CHECKLIST.md)؛ **`npm run verify:iiffund:https`** فحص سريع من الطرفية.
-- **الإنتاج الرسمي:** **`https://iiffund.com/`** (Netlify + نطاق مخصّص)؛ في `index.html` تُضبط **`iif-funcs-base`** و **`iif-searx-proxy-base`** على هذا النطاق. **Vercel** (`iif-fund-dr-talal.vercel.app`) يبقى معاينة/احتياط — راجع قسم **هـ** في [قبل-النشر.md](./قبل-النشر.md) و [VERCEL-DEPLOY.md](./VERCEL-DEPLOY.md).
-- لا تضف تعقيداً على Netlify بدون حاجة (لا دوال جذر إن لم تُستخدم).
+- **الإنتاج الرسمي:** GitHub Pages عبر workflow `Deploy GitHub Pages`. يُنشّر مجلد `financial-consulting/iif-fund-demo/` تلقائياً عند كل push إلى `main`.
+  - تفعيل لمرة واحدة: **Settings → Pages → Source: GitHub Actions**.
+  - الرابط الافتراضي: `https://alzahrani6020.github.io/iif-web/`.
+- **الدومين المخصّص:** إذا أُضيف `CNAME` للمستودع، يُضبط في إعدادات Pages. لا تُضبط عناوين API (`iif-funcs-base` / `iif-searx-proxy-base`) على نطاق GitHub Pages لأن **لا توجد دوال خادم** هناك.
+- **Vercel وCloudflare:** لم تعد مستخدمة كمنصات نشر للمشروع؛ الأرشيف والتوثيق القديم متاح للرجوع فقط.
+- لا تضف تعقيداً على GitHub Pages بدون حاجة (الموقع ثابت بالكامل).
 
 ## تفضيلات العمل
 
@@ -82,7 +83,6 @@ npm run e2e:dashboard # Playwright: فتح اللوحة من /admin-direct
 ## أخطاء شائعة
 
 - تعديل `government-data.js` يدوياً دائماً — المصدر هو **`government-data.json`** ثم `npm run build`.
-- خلط إعدادات Netlify بين الجذر و`financial-consulting/iif-fund-demo/netlify.toml` — النشر من الجذر يقرأ **`netlify.toml`** في الجذر.
 - في **PowerShell** على ويندوز: ربط الأوامر بـ **`&&`** قد يفشل؛ استخدم **`;`** أو سطوراً منفصلة.
 
 ## قواعد Cursor
@@ -99,4 +99,4 @@ npm run e2e:dashboard # Playwright: فتح اللوحة من /admin-direct
 
 ### عندما يقترب النشر أو يقول «المحتوى مكتمل»
 
-راجع **[قبل-النشر.md](./قبل-النشر.md)** — محتوى، `npm run verify`، توقّعات Netlify/SearXNG.
+راجع **[قبل-النشر.md](./قبل-النشر.md)** — محتوى، `npm run verify`، توقّعات GitHub Pages/SearXNG.
