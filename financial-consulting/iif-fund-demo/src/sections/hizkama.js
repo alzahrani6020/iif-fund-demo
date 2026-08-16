@@ -274,7 +274,7 @@ titleEn: 'Chairman of the Board & Fund Owner',
 titleAr: 'رئيس مجلس الإدارة والمالك',
 bioEn: 'International Investment Fund Chairman of the Board. Full authority over all 12 admin services including projects, members, staff, and diplomatic communications. Mobile: +966567566616',
 bioAr: 'رئيس مجلس إدارة صندوق الاستثمار الدولي. صلاحيات كاملة على جميع الخدمات الإدارية الـ 12 تشمل المشاريع، الأعضاء، الموظفين، والمراسلات الدبلوماسية. الجوال: +966567566616',
-imageUrl: 'assets/emblem.png',
+imageUrl: 'assets/logo.png',
 email: ownerEmail,
 phone: '+966567566616'
 };

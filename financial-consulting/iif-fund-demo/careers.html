@@ -46,9 +46,8 @@
   <script src="src/shared-nav.js"></script>
   <script src="src/shared-footer.js"></script>
   <script src="src/sov-reveal.js"></script>
+  <script src="src/lang-init.js"></script>
   <script>
-    (function(){ const lang = localStorage.getItem('iif-lang') || 'ar'; document.documentElement.setAttribute('data-lang', lang); document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr'); document.documentElement.setAttribute('lang', lang); })();
-
     fetch('data/careers.json')
       .then(r => r.json())
       .then(data => {

@@ -16,8 +16,8 @@ export function render() {
             <div class="letterhead-sheet__head">
               <div class="letterhead-sheet__head-left">
                 <picture>
-                  <source type="image/webp" srcset="assets/emblem.webp" />
-                  <img src="assets/emblem.jpg" alt="صندوق الاستثمار الدولي" class="letterhead-logo" decoding="async" />
+                  <source type="image/webp" srcset="assets/logo.webp" />
+                  <img src="assets/logo.jpg" alt="صندوق الاستثمار الدولي" class="letterhead-logo" decoding="async" />
                 </picture>
               </div>`;
 }

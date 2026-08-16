@@ -13,7 +13,7 @@ export function render(container, lang = "ar") {
       <span class="hero__status">${isAr ? 'نشط عالمياً' : 'Active globally'}</span>
     </div>
     <div class="hero__emblem" aria-hidden="true">
-      <img src="assets/emblem.jpg" alt="International Investment Fund" class="hero__emblem-img" width="120" height="120" />
+      <img src="assets/logo.jpg" alt="International Investment Fund" class="hero__emblem-img" width="120" height="120" />
     </div>
     <h1 class="hero__title hero__title--gradient">
       <span class="lang-en">International Investment Fund</span>

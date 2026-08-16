@@ -6503,7 +6503,7 @@
           var canvas = wrap.querySelector('canvas');
           if (canvas) {
             var img = document.createElement('img');
-            img.src = 'assets/emblem.jpg';
+            img.src = 'assets/logo.jpg';
             img.alt = 'IIF';
             img.className = 'qr-logo-overlay';
             wrap.appendChild(img);
@@ -12390,14 +12390,14 @@
       var IIF_VIDEO_LOGO_URL = (function () {
         try {
           var baseRef = (typeof document !== 'undefined' && document.baseURI) ? document.baseURI : (window.location && window.location.href);
-          if (baseRef) return new URL('assets/emblem.jpg', baseRef).href;
+          if (baseRef) return new URL('assets/logo.jpg', baseRef).href;
         } catch (e) { }
         try {
           if (typeof window !== 'undefined' && window.IIF_DOCUMENT_BASE && window.location && window.location.origin) {
-            return new URL('assets/emblem.jpg', window.location.origin + window.IIF_DOCUMENT_BASE).href;
+            return new URL('assets/logo.jpg', window.location.origin + window.IIF_DOCUMENT_BASE).href;
           }
         } catch (e2) { }
-        return 'https://iiffund.com/financial-consulting/iif-fund-demo/assets/emblem.jpg';
+        return 'https://iiffund.com/financial-consulting/iif-fund-demo/assets/logo.jpg';
       })();
       var videoCallJitsiApi = null;
       function createJitsiMeetingInContainer(container, iframe, roomName, jitsiUrl) {

@@ -828,7 +828,7 @@
     </div>
     <div class="sov-hero__content">
       <div class="sov-hero__emblem sov-hero__emblem--anim">
-        <img src="assets/emblem.jpg" alt="International Investment Fund" width="280" height="280" />
+        <img src="assets/logo.jpg" alt="International Investment Fund" width="280" height="280" />
       </div>
       <h1 class="sov-hero__title">
         <span class="lang-en">International Investment Fund</span>
@@ -1544,14 +1544,7 @@
   <script src="src/shared-nav.js"></script>
   <script src="src/shared-footer.js"></script>
   <script src="src/sov-reveal.js"></script>
-  <script>
-    (function() {
-      const lang = localStorage.getItem('iif-lang') || 'ar';
-      document.documentElement.setAttribute('data-lang', lang);
-      document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-      document.documentElement.setAttribute('lang', lang);
-    })();
-  </script>
+  <script src="src/lang-init.js"></script>
 
   <!-- Count-up animation for hero stats -->
   <script>

@@ -31,7 +31,7 @@ const PATHS = [
   '/legal/disclaimer.html',
   '/legal/contact.html',
   '/assets/og-cover.svg',
-  '/financial-consulting/iif-fund-demo/assets/emblem.jpg',
+  '/financial-consulting/iif-fund-demo/assets/logo.jpg',
 ];
 
 /** مسارات اختيارية: فشلها لا يوقف السكربت (مثلاً SearXNG غير مشغّل) */
