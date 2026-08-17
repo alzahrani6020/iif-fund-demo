@@ -113,8 +113,16 @@ function injectFooter() {
   document.body.appendChild(footer);
 }
 
+function scheduleInjectFooter() {
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(injectFooter, { timeout: 2000 });
+  } else {
+    setTimeout(injectFooter, 1);
+  }
+}
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', injectFooter);
+  document.addEventListener('DOMContentLoaded', scheduleInjectFooter);
 } else {
-  injectFooter();
+  scheduleInjectFooter();
 }
