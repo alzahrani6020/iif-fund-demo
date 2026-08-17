@@ -36,7 +36,6 @@ async function main() {
         'css/sovereign-system.css',
         'css/sovereign-components.css',
         'css/sovereign-animations.css',
-        'css/sections.css',
         'css/fonts-hosted.css',
         'src/shared-nav.js',
         'src/shared-footer.js',

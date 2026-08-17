@@ -47,72 +47,22 @@ function detectPage() {
   return 'home';
 }
 
-function injectNav() {
-  const lang = getStoredLang();
-  const isAr = lang === 'ar';
+function detectPageId(href) {
+  return href === './' || href === './index.html' ? 'home' : href.replace(/\/$/, '');
+}
+
+function setActiveLink(nav) {
   const currentPage = detectPage();
-
-  // Remove existing nav
-  const existing = document.getElementById('sov-nav');
-  if (existing) existing.remove();
-
-  const nav = document.createElement('nav');
-  nav.id = 'sov-nav';
-  nav.className = 'sov-nav';
-  nav.setAttribute('aria-label', isAr ? 'التنقل الرئيسي' : 'Main navigation');
-
-  const linksHtml = SOV_NAV_LINKS.map(link => {
-    const pageId = link.href === './' ? 'home' : link.href;
+  nav.querySelectorAll('.sov-nav__link').forEach(link => {
+    const pageId = detectPageId(link.getAttribute('href') || '');
     const isActive = currentPage === pageId;
-    const label = isAr ? link.labelAr : link.labelEn;
-    const href = link.href === './' ? './' : link.href;
-    return `<a href="${href}" class="sov-nav__link ${isActive ? 'sov-nav__link--active' : ''}" ${isActive ? 'aria-current="page"' : ''}>${label}</a>`;
-  }).join('');
+    link.classList.toggle('sov-nav__link--active', isActive);
+    if (isActive) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+}
 
-  const langHtml = SOV_LANGS.map(l => {
-    const isActive = lang === l.code;
-    return `<button type="button" class="lang-switcher__btn ${isActive ? 'lang-switcher__btn--active' : ''}" data-lang="${l.code}" aria-label="${l.code.toUpperCase()}">${l.label}</button>`;
-  }).join('');
-
-  const ctaLabel = isAr ? 'استفسار سيادي' : 'Sovereign Inquiry';
-  const brandTitle = isAr ? 'الصندوق الدولي للاستثمار' : (lang === 'fr' ? 'Fonds International d\'Investissement' : 'International Investment Fund');
-  const brandSubtitle = isAr ? 'FII · باريس' : 'FII · PARIS';
-
-  nav.innerHTML = `
-    <div class="sov-container">
-      <div class="sov-nav__inner">
-        <a href="./" class="sov-nav__brand" aria-label="${isAr ? 'الرئيسية' : 'Home'}">
-          <img src="assets/logo-192.png" alt="FII" class="sov-nav__logo" width="40" height="40" loading="eager" />
-          <div class="sov-nav__brand-text">
-            <span class="sov-nav__brand-title">${brandTitle}</span>
-            <span class="sov-nav__brand-subtitle">${brandSubtitle}</span>
-          </div>
-        </a>
-        <div class="sov-nav__links">
-          ${linksHtml}
-        </div>
-        <div class="sov-flex" style="gap:var(--space-3);">
-          <a href="contact" class="sov-btn sov-btn--outline-gold sov-btn--sm sov-nav__cta">${ctaLabel}</a>
-          <div class="lang-switcher">${langHtml}</div>
-        </div>
-        <button type="button" class="sov-nav__menu-btn" aria-label="${isAr ? 'فتح القائمة' : 'Open menu'}" aria-expanded="false" aria-controls="sov-nav-mobile">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-      </div>
-      <div class="sov-nav__mobile" id="sov-nav-mobile" aria-hidden="true">
-        ${linksHtml}
-        <div style="margin-top:var(--space-4); padding-top:var(--space-4); border-top:1px solid var(--color-border);">
-          <a href="contact" class="sov-btn sov-btn--outline-gold" style="width:100%;">${ctaLabel}</a>
-        </div>
-        <div class="lang-switcher" style="margin-top:var(--space-4); justify-content:center;">
-          ${langHtml}
-        </div>
-      </div>
-    </div>
-  `;
-
-  document.body.insertBefore(nav, document.body.firstChild);
-
+function attachNavBehaviors(nav) {
   // Scroll handler for nav background
   let scrolled = false;
   function onScroll() {
@@ -146,6 +96,83 @@ function injectNav() {
       }
     });
   });
+}
+
+function buildNavHtml() {
+  const lang = getStoredLang();
+  const isAr = lang === 'ar';
+  const currentPage = detectPage();
+
+  const linksHtml = SOV_NAV_LINKS.map(link => {
+    const pageId = detectPageId(link.href);
+    const isActive = currentPage === pageId;
+    const label = isAr ? link.labelAr : link.labelEn;
+    const href = link.href === './' ? './' : link.href;
+    return `<a href="${href}" class="sov-nav__link ${isActive ? 'sov-nav__link--active' : ''}" ${isActive ? 'aria-current="page"' : ''}>${label}</a>`;
+  }).join('');
+
+  const langHtml = SOV_LANGS.map(l => {
+    const isActive = lang === l.code;
+    return `<button type="button" class="lang-switcher__btn ${isActive ? 'lang-switcher__btn--active' : ''}" data-lang="${l.code}" aria-label="${l.code.toUpperCase()}">${l.label}</button>`;
+  }).join('');
+
+  const ctaLabel = isAr ? 'استفسار سيادي' : 'Sovereign Inquiry';
+  const brandTitle = isAr ? 'الصندوق الدولي للاستثمار' : (lang === 'fr' ? 'Fonds International d\'Investissement' : 'International Investment Fund');
+  const brandSubtitle = isAr ? 'FII · باريس' : 'FII · PARIS';
+  const ariaLabel = isAr ? 'الرئيسية' : 'Home';
+  const menuLabel = isAr ? 'فتح القائمة' : 'Open menu';
+
+  return `
+    <div class="sov-container">
+      <div class="sov-nav__inner">
+        <a href="./" class="sov-nav__brand" aria-label="${ariaLabel}">
+          <img src="assets/logo-192.webp" alt="FII" class="sov-nav__logo" width="40" height="40" loading="eager" decoding="async" />
+          <div class="sov-nav__brand-text">
+            <span class="sov-nav__brand-title">${brandTitle}</span>
+            <span class="sov-nav__brand-subtitle">${brandSubtitle}</span>
+          </div>
+        </a>
+        <div class="sov-nav__links">
+          ${linksHtml}
+        </div>
+        <div class="sov-flex" style="gap:var(--space-3);">
+          <a href="contact" class="sov-btn sov-btn--outline-gold sov-btn--sm sov-nav__cta">${ctaLabel}</a>
+          <div class="lang-switcher">${langHtml}</div>
+        </div>
+        <button type="button" class="sov-nav__menu-btn" aria-label="${menuLabel}" aria-expanded="false" aria-controls="sov-nav-mobile">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="sov-nav__mobile" id="sov-nav-mobile" aria-hidden="true">
+        ${linksHtml}
+        <div style="margin-top:var(--space-4); padding-top:var(--space-4); border-top:1px solid var(--color-border);">
+          <a href="contact" class="sov-btn sov-btn--outline-gold" style="width:100%;">${ctaLabel}</a>
+        </div>
+        <div class="lang-switcher" style="margin-top:var(--space-4); justify-content:center;">
+          ${langHtml}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function injectNav() {
+  const existing = document.getElementById('sov-nav');
+  if (existing) {
+    // Server-rendered nav: just wire up behaviors and active state
+    setActiveLink(existing);
+    attachNavBehaviors(existing);
+    return;
+  }
+
+  const nav = document.createElement('nav');
+  nav.id = 'sov-nav';
+  nav.className = 'sov-nav';
+  const lang = getStoredLang();
+  nav.setAttribute('aria-label', lang === 'ar' ? 'التنقل الرئيسي' : 'Main navigation');
+  nav.innerHTML = buildNavHtml();
+  document.body.insertBefore(nav, document.body.firstChild);
+  attachNavBehaviors(nav);
 }
 
 if (document.readyState === 'loading') {

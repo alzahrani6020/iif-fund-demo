@@ -84,7 +84,7 @@ function injectFooter() {
       <div class="sov-footer__grid">
         <div class="sov-footer__brand">
           <div class="sov-flex" style="gap:var(--space-3);">
-            <img src="assets/logo-192.png" alt="FII" class="sov-footer__logo" width="48" height="48" loading="lazy" />
+            <img src="assets/logo-192.webp" alt="FII" class="sov-footer__logo" width="48" height="48" loading="lazy" decoding="async" />
             <div>
               <div class="sov-nav__brand-title" style="font-size:var(--text-base);">International Investment Fund</div>
               <div class="sov-nav__brand-subtitle">FII · PARIS</div>
