@@ -44,6 +44,9 @@ user-run.ps1
 # مخرجات محلية كبيرة (عروض PPTX جاهزة) — السكربتات تحت scripts/ppt/
 exports/
 
+# تقارير Lighthouse محلية
+reports/
+
 # نتيجة فك/اختبار QR مؤقتة
 qr_decode_result.txt
 dist/

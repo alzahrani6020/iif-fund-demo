@@ -37,7 +37,7 @@ async function main() {
         'css/sovereign-components.css',
         'css/sovereign-animations.css',
         'css/sections.css',
-        'Noto+Sans+Arabic',
+        'css/fonts-hosted.css',
         'src/shared-nav.js',
         'src/shared-footer.js',
         'src/sov-reveal.js',

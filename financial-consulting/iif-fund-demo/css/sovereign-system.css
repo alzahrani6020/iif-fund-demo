@@ -51,10 +51,10 @@
 
 /* ─── Typography ─── */
 :root {
-  --font-ar-display: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+  --font-ar-display: "Noto Sans Arabic", "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
   --font-ar-body: "Noto Sans Arabic", "Segoe UI", "Tahoma", sans-serif;
   --font-en-display: "Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-en-body: "Inter", "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-en-body: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
 
   --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
   --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
