@@ -1172,12 +1172,28 @@
     </div>
   </section>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" /></noscript>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
   <script>
   (function() {
-    document.addEventListener('DOMContentLoaded', function() {
+    function loadLeaflet() {
+      return new Promise(function(resolve, reject) {
+        if (window.L) { resolve(window.L); return; }
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+        link.crossOrigin = '';
+        document.head.appendChild(link);
+        var script = document.createElement('script');
+        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+        script.crossOrigin = '';
+        script.onload = function() { resolve(window.L); };
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    function initMap() {
       var mapEl = document.getElementById('iif-world-map');
       if (!mapEl) return;
 
@@ -1239,7 +1255,23 @@
       markets.forEach(function(m) {
         L.marker([m[0], m[1]], {icon: marketIcon}).addTo(map);
       });
-    });
+    }
+
+    if ('IntersectionObserver' in window) {
+      var mapSection = document.getElementById('map');
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            observer.disconnect();
+            loadLeaflet().then(initMap).catch(function(e) { console.error('Leaflet load failed', e); });
+          }
+        });
+      }, { rootMargin: '200px' });
+      if (mapSection) observer.observe(mapSection);
+      else loadLeaflet().then(initMap).catch(function(e) { console.error('Leaflet load failed', e); });
+    } else {
+      loadLeaflet().then(initMap).catch(function(e) { console.error('Leaflet load failed', e); });
+    }
   })();
   </script>
 
