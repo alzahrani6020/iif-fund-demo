@@ -26,8 +26,11 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'npm'
 
-      - name: Emit i18n service packs
-        run: node financial-consulting/iif-fund-demo/emit-service-packs.cjs
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build generated assets
+        run: npm run build
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1

@@ -1,45 +1,29 @@
 # Cloudflare Pages redirects (must live at publish root)
 # Syntax: <from> <to> [<status>]
 
-/fund      /index.html         200
-/fund/     /index.html         200
-/gov       /government-search/SIMPLE-GOVERNMENT-PLATFORM.html  200
-/gov/      /government-search/SIMPLE-GOVERNMENT-PLATFORM.html  200
-/legal     /legal/index.html   200
-/legal/    /legal/index.html   200
-/privacy   /legal/privacy.html 200
-/privacy/  /legal/privacy.html 200
-/disclaimer /legal/disclaimer.html 200
-/disclaimer/ /legal/disclaimer.html 200
-/contact   /legal/contact.html 200
-/contact/  /legal/contact.html 200
-/executive /executive-brief.html 200
-/executive/ /executive-brief.html 200
-/brief     /executive-brief.html 200
-/brief/    /executive-brief.html 200
-/sovereign /sovereign-standards.html 200
-/sovereign/ /sovereign-standards.html 200
-/charter   /sovereign-standards.html 200
-/charter/  /sovereign-standards.html 200
-/search    /web-search.html    200
-/search/   /web-search.html    200
-/web-search /web-search.html   200
-/web-search/ /web-search.html  200
-/news-sources /news-sources.html 200
-/news-sources/ /news-sources.html 200
-/admin     /admin.html         200
-/admin/    /admin.html         200
-/dashboard /index.html?iif_admin_portal=1&open_dashboard=1 200
-/dashboard/ /index.html?iif_admin_portal=1&open_dashboard=1 200
-/panel     /index.html?iif_admin_portal=1&open_dashboard=1 200
-/panel/    /index.html?iif_admin_portal=1&open_dashboard=1 200
-/cp        /index.html?iif_admin_portal=1&open_dashboard=1 200
-/cp/       /index.html?iif_admin_portal=1&open_dashboard=1 200
-/fund-admin /index.html?iif_admin_portal=1&open_dashboard=1 200
+/fund        /index.html         200
+/fund/       /index.html         200
+
+/admin       /admin.html         200
+/admin/      /admin.html         200
+/admin/*     /admin.html         200
+
+/dashboard   /index.html?iif_admin_portal=1&open_dashboard=1 200
+/dashboard/  /index.html?iif_admin_portal=1&open_dashboard=1 200
+/panel       /index.html?iif_admin_portal=1&open_dashboard=1 200
+/panel/      /index.html?iif_admin_portal=1&open_dashboard=1 200
+/cp          /index.html?iif_admin_portal=1&open_dashboard=1 200
+/cp/         /index.html?iif_admin_portal=1&open_dashboard=1 200
+/fund-admin  /index.html?iif_admin_portal=1&open_dashboard=1 200
 /fund-admin/ /index.html?iif_admin_portal=1&open_dashboard=1 200
 
-# SPA fallback for admin dashboard routes
-/admin/*   /admin.html         200
+/news-sources  /news-sources.html 200
+/news-sources/ /news-sources.html 200
 
-# Optional: force trailing-slash consistency
+/search       /web-search.html 200
+/search/      /web-search.html 200
+/web-search   /web-search.html 200
+/web-search/  /web-search.html 200
+
+# Optional trailing-slash consistency
 /index.html / 301
