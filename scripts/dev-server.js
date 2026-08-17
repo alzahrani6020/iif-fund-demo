@@ -7,6 +7,7 @@
 
 const http = require('http');
 const https = require('https');
+const compression = require('compression');
 const fs = require('fs');
 const path = require('path');
 const { URL, pathToFileURL } = require('url');
@@ -614,7 +615,9 @@ function serveStatic(req, res) {
   });
 }
 
+const compress = compression();
 const server = http.createServer((req, res) => {
+  compress(req, res, () => {
   const urlPath = new URL(req.url, 'http://localhost').pathname;
   const method = String(req.method || 'GET').toUpperCase();
   /**
@@ -732,7 +735,8 @@ const server = http.createServer((req, res) => {
    * للملفات الثابتة في التطوير: تساهل مع طرق HTTP غير المتوقعة (إضافات/برامج)
    * حتى لا تتوقف الواجهة برسالة 405. نتعامل معها كـ GET عملياً.
    */
-  serveStatic(req, res);
+    serveStatic(req, res);
+  });
 });
 
 server.listen(PORT, () => {
