@@ -164,6 +164,8 @@
       width: 500px; height: 500px;
       background: radial-gradient(circle, var(--sov-gold-500), transparent 70%);
       top: -10%; right: -10%;
+    }
+    .sov-hero__orb--gold.sov-hero__orb--animate {
       animation: sov-orb-float-1 20s ease-in-out infinite;
     }
 
@@ -171,6 +173,8 @@
       width: 400px; height: 400px;
       background: radial-gradient(circle, var(--sov-navy-500), transparent 70%);
       bottom: -5%; left: -5%;
+    }
+    .sov-hero__orb--blue.sov-hero__orb--animate {
       animation: sov-orb-float-2 18s ease-in-out infinite;
     }
 
@@ -932,6 +936,17 @@
       <div class="sov-hero__orb sov-hero__orb--gold"></div>
       <div class="sov-hero__orb sov-hero__orb--blue"></div>
     </div>
+    <script>
+    (function() {
+      function startOrbs() {
+        document.querySelectorAll('.sov-hero__orb').forEach(function(el) {
+          el.classList.add('sov-hero__orb--animate');
+        });
+      }
+      if (document.readyState === 'complete') startOrbs();
+      else window.addEventListener('load', startOrbs);
+    })();
+    </script>
     <!-- Trust Bar -->
     <div class="trust-bar">
       <div class="sov-container">
