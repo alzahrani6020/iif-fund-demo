@@ -10,6 +10,17 @@
   <meta name="robots" content="index, follow" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
+  <!-- Set language before first paint to avoid layout recalc -->
+  <script>
+  (function() {
+    var lang = 'ar';
+    try { lang = localStorage.getItem('iif-lang') || 'ar'; } catch (e) {}
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('data-lang', lang);
+  })();
+  </script>
+
   <!-- Open Graph -->
   <meta property="og:title" content="International Investment Fund · FII · Paris" />
   <meta property="og:description" content="Financing for global prosperity through sovereign partnerships and institutional capital. / Financement pour la prospérité mondiale par des partenariats souverains et un capital institutionnel. / تمويل من أجل الازدهار العالمي عبر الشراكات السيادية ورأس المال المؤسسي." />
@@ -1771,7 +1782,6 @@
   <script src="src/shared-nav.js" defer></script>
   <script src="src/shared-footer.js" defer></script>
   <script src="src/sov-reveal.js" defer></script>
-  <script src="src/lang-init.js" defer></script>
 
   <!-- Count-up animation for hero stats -->
   <script>
