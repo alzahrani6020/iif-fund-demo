@@ -1,12 +1,12 @@
 # فحص موقع منشور بعد النشر — تشغيل يدوي فقط (لا يعطل CI على كل push).
-# أدخل عنوان الموقع الكامل، مثال: https://alzahrani6020.github.io/iif-web
+# أدخل عنوان الموقع الكامل، مثال: https://iiffund.com
 name: Smoke live site
 
 on:
   workflow_dispatch:
     inputs:
       site_url:
-        description: "Base URL (https://alzahrani6020.github.io/iif-web)"
+        description: "Base URL (https://iiffund.com)"
         required: true
         type: string
 

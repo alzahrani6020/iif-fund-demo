@@ -4,15 +4,15 @@
 
 ## الرابط الرسمي للجهات الخارجية
 
-**الرابط الرسمي الحالي للمشاركة والمراسلات:** **`https://alzahrani6020.github.io/iif-web/`** — واجهة الصندوق عند جذر الموقع المنشور (المصدر في workflow `Deploy GitHub Pages`: `financial-consulting/iif-fund-demo/`).
+**الرابط الرسمي الحالي للمشاركة والمراسلات:** **`https://iiffund.com/`** — واجهة الصندوق عند جذر الموقع المنشور (المصدر في workflow `Deploy to Cloudflare Pages`: `financial-consulting/iif-fund-demo/`).
 
-على GitHub Pages لا توجد دوال خادم (`/api/*`)؛ لذلك في `index.html` تُستخدم عناوين عامة للأخبار/SearXNG أو خدمات خارجية عند الحاجة.
+على Cloudflare Pages لا توجد دوال خادم (`/api/*`) افتراضياً؛ لذلك في `index.html` تُستخدم عناوين عامة للأخبار/SearXNG أو خدمات خارجية عند الحاجة.
 
 **منصات إضافية** (احتياط أو معاينة):
 
 | إن كان الإنتاج الفعلي على… | الرابط المقترح للجهات |
 |----------------------------|-------------------------|
-| **GitHub Pages** | `https://alzahrani6020.github.io/iif-web/` — المنصة الإنتاجية الحالية |
+| **Cloudflare Pages** | `https://iiffund.com/` — المنصة الإنتاجية الحالية |
 
 قبل إرسال رابط رسمي: [قائمة ما قبل الإصدار](docs/PRE-RELEASE-CHECKLIST.md).
 
@@ -27,7 +27,7 @@
   `http://127.0.0.1:3333/financial-consulting/iif-fund-demo/index.html?iif_admin_portal=1&open_dashboard=1`
 
 - **اختصار محلي (لا يحتوي `#`):** `http://127.0.0.1:3333/cp` أو `/dashboard` أو `/admin` (خادم التطوير فقط — **أعد تشغيل `npm start`** بعد التحديث).
-- **GitHub Pages:** اللوحة تُفتح عبر `https://alzahrani6020.github.io/iif-web/index.html?iif_admin_portal=1&open_dashboard=1`.
+- **Cloudflare Pages:** اللوحة تُفتح عبر `https://iiffund.com/index.html?iif_admin_portal=1&open_dashboard=1`.
 - **بدون جلسة:** تظهر **نافذة تسجيل الدخول** أولاً؛ بعد النجاح تُفتح اللوحة عند استخدام `open_dashboard=1` أو عند بقاء `#dashboard` / الهاش السري في `IIF_CONFIG`.
 - **بديل قديم يعتمد على الهاش:** `…?iif_admin_portal=1#dashboard` أو `#dashboard` فقط — يعمل في المتصفح عند لصق الرابط يدوياً.
 - **إن بقي الموقع الرئيسي فقط:** حدّث قوياً (**Ctrl+F5**) أو نافذة خاصة؛ على الإنتاج انتظر نشراً ناجحاً ثم أعد المحاولة.
@@ -49,8 +49,8 @@
 
 | المنصة | الرابط المعتمد |
 |--------|----------------|
-| **GitHub Pages (إنتاج)** | **`https://alzahrani6020.github.io/iif-web/`** — الصندوق عند جذر الموقع المنشور — اللوحة: `…/index.html#dashboard` أو معاملات الاستعلام كما في الأعلى |
-| **GitHub Pages** (سير عمل `Deploy GitHub Pages`) | `https://alzahrani6020.github.io/iif-web/` — واجهة الصندوق عند جذر الموقع المنشور (المصدر في الـ workflow: `financial-consulting/iif-fund-demo/`)؛ اللوحة: `…/index.html#dashboard` أو معاملات الاستعلام كما في الأعلى. **لا** توجد دوال `/api/*` على Pages (موقع ثابت). **لا** يوجد **`/healthz`** JSON ثابت هناك (يُخدم محلياً فقط). **localStorage** خاص بكل نطاق — صورة الملف على `localhost` لا تظهر تلقائياً على `github.io`؛ أعد رفع الصورة على النطاق الذي تستخدمه أو استخدم نفس الموقع دائماً. رابط **SearXNG** في الهيدر على Pages يوجّه إلى واجهة عامة (ميتا `iif-searx-public-url` في `index.html`) وليس خادمك المحلي. |
+| **Cloudflare Pages (إنتاج)** | **`https://iiffund.com/`** — الصندوق عند جذر الموقع المنشور — اللوحة: `…/index.html#dashboard` أو معاملات الاستعلام كما في الأعلى |
+| **Cloudflare Pages** (سير عمل `Deploy to Cloudflare Pages`) | `https://iiffund.com/` — واجهة الصندوق عند جذر الموقع المنشور (المصدر في الـ workflow: `financial-consulting/iif-fund-demo/`)؛ اللوحة: `…/index.html#dashboard` أو معاملات الاستعلام كما في الأعلى. **لا** توجد دوال `/api/*` افتراضياً (موقع ثابت). **لا** يوجد **`/healthz`** JSON ثابت هناك (يُخدم محلياً فقط). **localStorage** خاص بكل نطاق — صورة الملف على `localhost` لا تظهر تلقائياً على `iiffund.com`؛ أعد رفع الصورة على النطاق الذي تستخدمه أو استخدم نفس الموقع دائماً. رابط **SearXNG** في الهيدر يوجّه إلى واجهة عامة (ميتا `iif-searx-public-url` في `index.html`) وليس خادمك المحلي. |
 
 ## ملاحظات
 

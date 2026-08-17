@@ -18,7 +18,7 @@
 | `executive-brief.html`، `sovereign-standards.html` (جذر المستودع) | موجز للمستويات الرفيعة + معايير سيادية؛ اختصارات `/executive`، `/sovereign`، `/charter` |
 | `scripts/dev-server.js` | خادم التطوير (`3333`) + بروكسي `/api/searx` → SearXNG على `18080` |
 | `engines/searxng/` | **Tor + SearXNG** (Docker) — `npm start` → `/api/searx`؛ محركات `.onion` عبر حاوية `tor` |
-| [CANONICAL-URLS.md](./CANONICAL-URLS.md) | روابط **إنتاج** GitHub Pages المعتمدة (مرجع واحد) |
+| [CANONICAL-URLS.md](./CANONICAL-URLS.md) | روابط **إنتاج** Cloudflare Pages المعتمدة (مرجع واحد) |
 | `thiqqah-site/` | موقع **ثقة الذهبية**؛ فصل الدومينات: [DOMINI-IIFFUND-THIQQAH.md](./DOMINI-IIFFUND-THIQQAH.md) |
 | [قائمة-تحقق-قبل-الدمج.md](./قائمة-تحقق-قبل-الدمج.md) | تجنّب أخطاء وازدواجية؛ انسجام الجهاز والمنصات والمساعد؛ **قسم 7:** وقاية واستعادة عند خلل في الكود أو الجهاز أو المنصات |
 
@@ -67,12 +67,12 @@ npm run e2e:dashboard # Playwright: فتح اللوحة من /admin-direct
 
 ## النشر
 
-- **الإنتاج الرسمي:** GitHub Pages عبر workflow `Deploy GitHub Pages`. يُنشّر مجلد `financial-consulting/iif-fund-demo/` تلقائياً عند كل push إلى `main`.
-  - تفعيل لمرة واحدة: **Settings → Pages → Source: GitHub Actions**.
-  - الرابط الافتراضي: `https://alzahrani6020.github.io/iif-web/`.
-- **الدومين المخصّص:** إذا أُضيف `CNAME` للمستودع، يُضبط في إعدادات Pages. لا تُضبط عناوين API (`iif-funcs-base` / `iif-searx-proxy-base`) على نطاق GitHub Pages لأن **لا توجد دوال خادم** هناك.
-- **Vercel وCloudflare:** لم تعد مستخدمة كمنصات نشر للمشروع؛ الأرشيف والتوثيق القديم متاح للرجوع فقط.
-- لا تضف تعقيداً على GitHub Pages بدون حاجة (الموقع ثابت بالكامل).
+- **الإنتاج الرسمي:** Cloudflare Pages عبر workflow `Deploy to Cloudflare Pages`. يُنشّر مجلد `financial-consulting/iif-fund-demo/` تلقائياً عند كل push إلى `main`.
+  - الرابط الرسمي: **`https://iiffund.com/`**.
+  - تفعيل لمرة واحدة: أنشئ مشروع Cloudflare Pages `iif-fund` واربطه بالمستودع، مع `CLOUDFLARE_ACCOUNT_ID` و`CLOUDFLARE_API_TOKEN` في GitHub Secrets.
+- **GitHub Pages:** يبقى احتياطياً/معاينة فقط على `https://alzahrani6020.github.io/iif-web/`.
+- **Vercel:** اختياري/احتياط فقط للـ API (`/api/searx`) إن أُضيف لاحقاً.
+- لا تضف تعقيداً على Cloudflare Pages بدون حاجة (الموقع ثابت بالكامل).
 
 ## تفضيلات العمل
 

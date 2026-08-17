@@ -4,4 +4,4 @@ Disallow: /admin-direct/
 Disallow: /api/
 Disallow: /node_modules/
 
-Sitemap: https://alzahrani6020.github.io/iif-web/sitemap.xml
+Sitemap: https://iiffund.com/sitemap.xml

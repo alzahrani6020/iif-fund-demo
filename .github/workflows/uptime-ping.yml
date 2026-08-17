@@ -19,7 +19,7 @@ jobs:
       - name: GitHub Pages
         run: |
           set -e
-          url="https://alzahrani6020.github.io/iif-web/"
+          url="https://iiffund.com/"
           code=$(curl -sS -o /dev/null -w "%{http_code}" -L --max-time 45 "$url")
           echo "$code <- $url"
           test "$code" = "200"
@@ -27,7 +27,7 @@ jobs:
       - name: GitHub Pages — privacy.html
         run: |
           set -e
-          url="https://alzahrani6020.github.io/iif-web/privacy.html"
+          url="https://iiffund.com/privacy.html"
           code=$(curl -sS -o /dev/null -w "%{http_code}" -L --max-time 45 "$url")
           echo "$code <- $url"
           test "$code" = "200"
@@ -35,7 +35,7 @@ jobs:
       - name: GitHub Pages — transparency.html
         run: |
           set -e
-          url="https://alzahrani6020.github.io/iif-web/transparency.html"
+          url="https://iiffund.com/transparency.html"
           code=$(curl -sS -o /dev/null -w "%{http_code}" -L --max-time 45 "$url")
           echo "$code <- $url"
           test "$code" = "200"
@@ -45,7 +45,7 @@ jobs:
     steps:
       - name: GitHub Pages — SearX proxy (JSON smoke — إعلامي)
         run: |
-          url="https://alzahrani6020.github.io/iif-web/api/searx/search?q=iif&format=json&language=en&categories=general"
+          url="https://iiffund.com/api/searx/search?q=iif&format=json&language=en&categories=general"
           code=$(curl -sS -o /dev/null -w "%{http_code}" -L --max-time 35 "$url" || echo "000")
           echo "$code <- $url"
           if [ "$code" = "200" ] || [ "$code" = "429" ]; then

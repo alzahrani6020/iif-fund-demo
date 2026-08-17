@@ -197,7 +197,7 @@ python -m http.server 8080
 المنفذ يعتمد على السكربت؛ راجع `server.js` إن وُجد.
 
 ### **الوصول عبر GitHub Pages**
-راجع [README الجذر](../../README.md) و`.github/workflows/github-pages.yml`. الرابط: `https://alzahrani6020.github.io/iif-web/`.
+راجع [README الجذر](../../README.md) و`.github/workflows/github-pages.yml`. الرابط: `https://iiffund.com/`.
 
 ### **واجهة مبسّطة (`fund-site`)**
 [`../fund-site/index.html`](../fund-site/index.html) يعرض المنصة الحكومية داخل iframe — للمعاينة السريعة. **الواجهة المعتمدة للصندوق** هي `index.html` في هذا المجلد.
@@ -296,7 +296,7 @@ git push origin main
 ### **فريق التطوير**
 - **المطور**: فريق IIF Fund
 - **البريد**: info@iif-fund.com
-- **الموقع (GitHub Pages)**: https://alzahrani6020.github.io/iif-web/
+- **الموقع (GitHub Pages)**: https://iiffund.com/
 - **GitHub**: https://github.com/your-username/iif-fund-demo
 
 ### **الدعم الفني**
