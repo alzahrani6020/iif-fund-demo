@@ -6,16 +6,16 @@
 |------|------|
 | `iif-app-base` | Optional manual base path for assets (usually empty; `index.html` computes base). |
 | `iif-searx-public-url` | Public SearXNG UI URL for the header link on GitHub Pages. |
-| `iif-searx-proxy-base` | HTTPS origin that serves **`/api/searx/search`** (production: **`https://iiffund.com`** via Netlify Functions; Vercel optional). Used by in-page **web analysis** fetch on non-localhost hosts. |
-| `iif-funcs-base` | API base for news and related calls (production: **`https://iiffund.com`** — paths under **`/api/*`** and **`/.netlify/functions/*`**). |
+| `iif-searx-proxy-base` | HTTPS origin that serves **`/api/searx/search`** (production: Vercel optional or custom server). Used by in-page **web analysis** fetch on non-localhost hosts. |
+| `iif-funcs-base` | API base for news and related calls (production: custom origin with **`/api/*`** paths). |
 | `iif-build` | Deployment fingerprint for support / debugging. |
 
-After changing hosts, update **`iif-searx-proxy-base`** and **`iif-funcs-base`** to match your live API origin (default in repo: **`https://iiffund.com`**).
+After changing hosts, update **`iif-searx-proxy-base`** and **`iif-funcs-base`** to match your live API origin.
 
 ### موجز الأخبار `api/news.js`
 
-- المنطق في `financial-consulting/iif-fund-demo/api/news.js`؛ على **Netlify (جذر الريبو)** تُستدعى عبر **`netlify/functions/news.js`**. بعد أي تعديل على الخلاصات أو الترجمة، **أعد نشر Netlify** حتى تطابق النسخة الحالية ما يظهر عند **`iif-funcs-base`**.
-- محلياً على `127.0.0.1:3333` الواجهة تستدعي `/api/news` من `scripts/dev-server.js` (لا تعتمد على نشر قديم).
+- المنطق في `financial-consulting/iif-fund-demo/api/news.js`؛ على GitHub Pages لا توجد دوال خادم — تُستخدم خدمات خارجية أو خادم مخصص عند الحاجة.
+- محلياً على `127.0.0.1:3333` الواجهة تستدعي `/api/news` من `scripts/dev-server.js`.
 - متغيرات اختيارية (Vercel / `.env`): `IIF_NEWS_CACHE_MS`, `IIF_TICKER_TRANSLATE_URL`, `IIF_TICKER_TRANSLATE_MAX` — راجع `.env.example`.
 - فحص الخلاصات: من جذر المستودع `npm run check:news-feeds`.
 
@@ -152,9 +152,8 @@ npx lighthouse@11 "https://YOUR_SITE.github.io/REPO/" --only-categories=performa
 
 ## Content-Security-Policy
 
-- **مصدر واحد للنص:** `config/content-security-policy.txt` — ثم شغّل `npm run csp:sync` لتحديث `vercel.json` و`netlify.toml` ووسم `<meta http-equiv="Content-Security-Policy">` في `index.html` و`admin-standalone.html` و`privacy.html` و`transparency.html` و`about-institution.html`.
+- **مصدر واحد للنص:** `config/content-security-policy.txt` — ثم شغّل `npm run csp:sync` لتحديث `vercel.json` ووسم `<meta http-equiv="Content-Security-Policy">` في `index.html` و`admin-standalone.html` و`privacy.html` و`transparency.html` و`about-institution.html`.
 - **Vercel:** ترويسة CSP في `vercel.json` (Translate، `translate-pa.googleapis.com`، `gstatic.com`، اتصال `https:`، خطوط ذاتية).
-- **Netlify:** نفس السياسة في `netlify.toml` ضمن `[[headers]]`.
 - **GitHub Pages:** وسوم `<meta>` في HTML تُفعّل CSP حتى بدون ترويسات الخادم.
 
 ## npm audit
@@ -171,7 +170,7 @@ npx lighthouse@11 "https://YOUR_SITE.github.io/REPO/" --only-categories=performa
 6. **لوحة التحكم:** فتح من الهيدر ثم إغلاقها يعيد التركيز إلى زر اللوحة؛ التمرير داخل اللوحة لروابط `#dashboard-…`.
 7. **وضع embed/portal:** `?iif_admin_embed=1` أو `?iif_admin_portal=1` على `admin-standalone.html` — لا يظهر شريط التحميل العام؛ تحقق أن لوحة التحكم تفتح/تغلق والتركيز يعود.
 8. **صفحات فرعية:** `privacy.html` / `transparency.html` / `about-institution.html` — الروابط تفتح في تاب جديد مع بقاء المقال؛ الخطوط تُحمَّل محلياً.
-9. **ترجمة Google (إن مفعّلة):** تظهر الويدجت دون أخطاء CSP في وحدة التحكم على نشر Vercel/Netlify.
+9. **ترجمة Google (إن مفعّلة):** تظهر الويدجت دون أخطاء CSP في وحدة التحكم على نشر GitHub Pages/Vercel.
 10. **لوحة مفاتيح:** Tab إلى «تخطي إلى المحتوى» — يظهر حلقة تركيز واضحة (`:focus-visible`).
 11. **تقليل الحركة:** في إعدادات النظام/المتصفح فعّل «تقليل الحركة» — يجب أن يتوقف تمرير التيكر ويصبح التمرير بين الأقسام فورياً (بدون `smooth`).
 

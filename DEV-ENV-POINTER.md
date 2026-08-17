@@ -7,7 +7,7 @@
 ## بيئة عامة (Docker + أدوات)
 
 - Docker Desktop يجب أن يكون شغّالاً لتشغيل **SearXNG** من `engines/searxng/`.
-- **Node.js 22** (انظر `.nvmrc` / `.node-version`) — نفس خط الإصدار في **GitHub Actions** و**Netlify**؛ `engines` في `package.json` يطلب `>=22`.
+- **Node.js 22** (انظر `.nvmrc` / `.node-version`) — نفس خط الإصدار في **GitHub Actions**؛ `engines` في `package.json` يطلب `>=22`.
 
 ## عناوين سريعة
 

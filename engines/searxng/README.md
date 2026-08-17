@@ -52,7 +52,7 @@ docker compose down
 ## الإنتاج (عام)
 
 - **نشر VPS (Docker + HTTPS):** مجلد [deploy](./deploy/) وملف [deploy/README-VPS.md](./deploy/README-VPS.md).
-- بروكسي Netlify/خادم خارجي لـ SearXNG — راجع [README-IIF-INTEGRATION.md](../../financial-consulting/government-search/README-IIF-INTEGRATION.md).
+- بروكسي خادم خارجي لـ SearXNG — راجع [README-IIF-INTEGRATION.md](../../financial-consulting/government-search/README-IIF-INTEGRATION.md).
 
 ## قائمة المحركات وحالاتها
 

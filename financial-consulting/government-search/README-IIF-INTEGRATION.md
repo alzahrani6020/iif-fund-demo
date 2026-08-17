@@ -17,7 +17,7 @@
 | الموضوع | الحالة |
 |---------|--------|
 | **محرك SearXNG** | مشروع تحت **`engines/searxng/`** — Docker؛ الإعدادات في **`config/settings.yml`**. |
-| **`iif-config.js`** | **يُحمَّل** من `SIMPLE-GOVERNMENT-PLATFORM.html` — يفعّل **`searxngEnabled`** تلقائياً على **`localhost` / `127.0.0.1`** فقط؛ يُعطّل على أي نطاق آخر (Netlify، GitHub Pages، إلخ). يمكن التجاوز بـ `window.__IIF_CONFIG__`. |
+| **`iif-config.js`** | **يُحمَّل** من `SIMPLE-GOVERNMENT-PLATFORM.html` — يفعّل **`searxngEnabled`** تلقائياً على **`localhost` / `127.0.0.1`** فقط؛ يُعطّل على أي نطاق آخر (GitHub Pages، إلخ). يمكن التجاوز بـ `window.__IIF_CONFIG__`. |
 | **المنصة** | بحث محلي دائماً؛ **بحث ويب** عبر المحرك عند التوفر (افتراضياً على الجهاز المحلي) + **`npm start`** (بروكسي `/api/searx`). في الرابط: `?web=1` يفرض التضمين، `?web=0` يعطّله. |
 | **خادم التطوير** | **`npm start`** — بروكسي **`/api/searx`** → `127.0.0.1:18080`. |
 
@@ -34,9 +34,9 @@ docker compose up -d
 
 → [http://127.0.0.1:18080](http://127.0.0.1:18080)
 
-## الإنتاج (GitHub Pages / Netlify الثابت / ما شابه)
+## الإنتاج (GitHub Pages / استضافة ثابتة / ما شابه)
 
-- لا يوجد بروكسي SearXNG افتراضياً على الاستضافة الثابتة — **بحث الويب عبر المحرك يبقى معطّلاً** ما لم تُضف **دوال Netlify** (إن وُجدت) أو **خادماً** (VPS، إلخ) يوجّه إلى مثيل SearXNG.
+- لا يوجد بروكسي SearXNG افتراضياً على الاستضافة الثابتة — **بحث الويب عبر المحرك يبقى معطّلاً** ما لم تُضف **خادماً** (VPS، Vercel function، إلخ) يوجّه إلى مثيل SearXNG.
 - راجع [قبل-النشر.md](../../قبل-النشر.md) و [README.md](../../README.md) (قسم النشر) و [engines/searxng/deploy/README-VPS.md](../../engines/searxng/deploy/README-VPS.md).
 
 ## مراجع

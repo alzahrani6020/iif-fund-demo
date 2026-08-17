@@ -154,10 +154,9 @@
 - **Export Tools** - أدوات التصدير
 
 ### **البنية التحتية**
-- **Netlify** - الاستضافة والتوزيع
-- **Vercel** - الخوادم الخلفية
+- **GitHub Pages** - الاستضافة والتوزيع
 - **GitHub** - إدارة الإصدارات
-- **API Integration** - تكامل واجهات برمجية
+- **API Integration** - تكامل واجهات برمجية (محلي/خارجي)
 
 ## 📁 **هيكل المشروع**
 
@@ -175,8 +174,7 @@ iif-fund-demo/
 ├── 📁 api/                         # واجهات برمجية
 ├── 📁 functions/                   # دوال الخادم
 ├── 📄 package.json                 # إعدادات المشروع
-├── 📄 netlify.toml                 # إعدادات Netlify
-└── 📄 vercel.json                  # إعدادات Vercel
+└── 📄 vercel.json                  # إعدادات Vercel (اختياري/احتياط)
 ```
 
 ## 🎯 **الاستخدام**
@@ -198,8 +196,8 @@ python -m http.server 8080
 ```
 المنفذ يعتمد على السكربت؛ راجع `server.js` إن وُجد.
 
-### **الوصول عبر Netlify (إن وُجد النشر)**
-راجع **[netlify.toml](../../netlify.toml)** في الجذر واختصارات مثل `/fund` و`/gov` في [README الجذر](../../README.md).
+### **الوصول عبر GitHub Pages**
+راجع [README الجذر](../../README.md) و`.github/workflows/github-pages.yml`. الرابط: `https://alzahrani6020.github.io/iif-web/`.
 
 ### **واجهة مبسّطة (`fund-site`)**
 [`../fund-site/index.html`](../fund-site/index.html) يعرض المنصة الحكومية داخل iframe — للمعاينة السريعة. **الواجهة المعتمدة للصندوق** هي `index.html` في هذا المجلد.
@@ -256,22 +254,11 @@ const newFund = {
 
 ## 🌐 **النشر والتوزيع**
 
-### **Netlify**
+### **GitHub Pages (الرسمي)**
 ```bash
-# بناء ونشر
-netlify build
-netlify deploy --prod
-```
-
-### **Vercel**
-```bash
-# نشر تلقائي
+npm run build:github-pages
+# أو دفع مباشرة — workflow GitHub Pages ينشر تلقائياً
 git push origin main
-```
-
-### **GitHub Pages**
-```bash
-gh-pages -d dist
 ```
 
 ## 📈 **الأداء والتحسين**
@@ -309,7 +296,7 @@ gh-pages -d dist
 ### **فريق التطوير**
 - **المطور**: فريق IIF Fund
 - **البريد**: info@iif-fund.com
-- **الموقع (Netlify)**: https://fluffy-meerkat-eff966.netlify.app
+- **الموقع (GitHub Pages)**: https://alzahrani6020.github.io/iif-web/
 - **GitHub**: https://github.com/your-username/iif-fund-demo
 
 ### **الدعم الفني**
@@ -325,8 +312,7 @@ gh-pages -d dist
 
 - **Chart.js** - للرسوم البيانية
 - **Bootstrap** - لإطار التصميم
-- **Netlify** - للاستضافة
-- **Vercel** - للخوادم
+- **GitHub Pages** - للاستضافة
 
 ## 📝 **سجل التغييرات**
 
@@ -335,7 +321,7 @@ gh-pages -d dist
 - ✨ **تحسينات في الأداء** - سرعة واستجابة أفضل
 - 🎨 **تصميم محسّن** - واجهة عصرية احترافية
 - 📊 **تحليلات متقدمة** - مؤشرات وتقارير جديدة
-- 🌐 **نشر متعدد** - Netlify و Vercel
+- 🌐 **نشر على GitHub Pages**
 
 ### **الإصدار 1.0.0 (2024-03-12)**
 - 🚀 **الإصدار الأول** - منصة أساسية

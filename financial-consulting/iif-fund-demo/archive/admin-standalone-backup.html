@@ -83,7 +83,7 @@
   </script>
   <script>
     /**
-     * حل محلي صريح — لا يعمل على Netlify/الإنترنت (hostname ليس 127.0.0.1).
+     * حل محلي صريح — لا يعمل على الإنترنت (hostname ليس 127.0.0.1).
      * افتح: ...?local_dashboard=1 بعد npm start — أو استخدم OPEN-LOCAL-DASHBOARD.bat
      * يضبط جلسة المالك ثم يستبدل الاستعلام بـ iif_admin_portal + open_dashboard حتى يمر باقي الصفحة كالمعتاد.
      */
@@ -4946,7 +4946,7 @@
       background: linear-gradient(270deg, var(--color-bg) 70%, transparent);
     }
 
-    /* Headlines widget (from RSS via Netlify function) */
+    /* Headlines widget (from RSS) */
     .headlines-wrap {
       max-width: 1200px;
       margin: 0 auto;
@@ -13348,7 +13348,7 @@
             } catch (eHost) {
               if (/vercel\.app$/i.test(b)) return '/api';
             }
-            return '/.netlify/functions';
+            return '/api';
           }
           return '/api';
         } catch (e) { return '/api'; }

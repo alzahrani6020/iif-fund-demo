@@ -153,10 +153,10 @@ python -m http.server 8000
 2. من Settings → Pages، اختر GitHub Actions
 3. الموقع سينشر تلقائياً
 
-### على Netlify
-1. اسحب وأفلت مجلد `poet-website` على Netlify
-2. الموقع سينشر فوراً مع رابط مؤقت
-3. يمكنك ربط نطاق خاص لاحقاً
+### على GitHub Pages
+1. ارفع مجلد `poet-website` إلى مستودع GitHub.
+2. فعّل GitHub Pages مع مصدر GitHub Actions أو فرع `gh-pages`.
+3. يمكنك ربط نطاق خاص لاحقاً من إعدادات Pages.
 
 ### على Vercel
 1. استخدم Vercel CLI أو الواجهة الويب
