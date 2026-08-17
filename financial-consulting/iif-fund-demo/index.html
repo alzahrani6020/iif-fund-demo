@@ -111,11 +111,11 @@
   <style>
     /* Language visibility */
     .lang-en, .lang-fr, .lang-zh { display: none; }
-    html[data-lang="en"] .lang-en { display: block; }
+    html[data-lang="en"] .lang-en { display: inline; }
     html[data-lang="en"] .lang-ar { display: none; }
-    html[data-lang="fr"] .lang-fr { display: block; }
+    html[data-lang="fr"] .lang-fr { display: inline; }
     html[data-lang="fr"] .lang-ar { display: none; }
-    html[data-lang="zh"] .lang-zh { display: block; }
+    html[data-lang="zh"] .lang-zh { display: inline; }
     html[data-lang="zh"] .lang-ar { display: none; }
     html[data-lang="ar"] .lang-en,
     html[data-lang="ar"] .lang-fr,
@@ -803,13 +803,6 @@
       max-width: 680px;
       margin-inline: auto;
     }
-  </style>
-  <style id="inline-lang-style">
-    .lang-ar, [data-i18n] { display: none !important; }
-    [data-lang="ar"] .lang-en { display: none !important; }
-    [data-lang="ar"] .lang-ar { display: inline !important; }
-    [data-lang="en"] .lang-ar { display: none !important; }
-    [data-lang="en"] .lang-en { display: inline !important; }
   </style>
 </head>
 <body>
