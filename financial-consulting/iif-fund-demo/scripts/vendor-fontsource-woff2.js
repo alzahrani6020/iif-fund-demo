@@ -24,17 +24,31 @@ const root = path.join(__dirname, '..');
 const out = path.join(root, 'assets', 'fonts');
 fs.mkdirSync(out, { recursive: true });
 
-const plus = '@fontsource/plus-jakarta-sans';
-const noto = '@fontsource/noto-sans-arabic';
 const weights = [400, 500, 600, 700];
 
 let ok = 0;
 let fail = 0;
+
+const plus = '@fontsource/plus-jakarta-sans';
+const notoSans = '@fontsource/noto-sans-arabic';
 for (const w of weights) {
   if (copyPair(plus, `plus-jakarta-sans-latin-${w}-normal.woff2`, `plus-jakarta-sans-${w}.woff2`, out)) ok++;
   else fail++;
-  /* Arabic script subset; Latin in UI comes from Plus Jakarta via font stack */
-  if (copyPair(noto, `noto-sans-arabic-arabic-${w}-normal.woff2`, `noto-sans-arabic-${w}.woff2`, out)) ok++;
+  if (copyPair(notoSans, `noto-sans-arabic-arabic-${w}-normal.woff2`, `noto-sans-arabic-${w}.woff2`, out)) ok++;
+  else fail++;
+}
+
+const cormorant = '@fontsource/cormorant-garamond';
+for (const w of weights) {
+  for (const style of ['normal', 'italic']) {
+    if (copyPair(cormorant, `cormorant-garamond-latin-${w}-${style}.woff2`, `cormorant-garamond-${w}-${style}.woff2`, out)) ok++;
+    else fail++;
+  }
+}
+
+const naskh = '@fontsource/noto-naskh-arabic';
+for (const w of weights) {
+  if (copyPair(naskh, `noto-naskh-arabic-arabic-${w}-normal.woff2`, `noto-naskh-arabic-${w}.woff2`, out)) ok++;
   else fail++;
 }
 
