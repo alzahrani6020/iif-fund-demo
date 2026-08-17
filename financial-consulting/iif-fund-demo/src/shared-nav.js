@@ -75,6 +75,8 @@ function injectNav() {
   }).join('');
 
   const ctaLabel = isAr ? 'استفسار سيادي' : 'Sovereign Inquiry';
+  const brandTitle = isAr ? 'الصندوق الدولي للاستثمار' : (lang === 'fr' ? 'Fonds International d\'Investissement' : 'International Investment Fund');
+  const brandSubtitle = isAr ? 'FII · باريس' : 'FII · PARIS';
 
   nav.innerHTML = `
     <div class="sov-container">
@@ -82,8 +84,8 @@ function injectNav() {
         <a href="./" class="sov-nav__brand" aria-label="${isAr ? 'الرئيسية' : 'Home'}">
           <img src="assets/logo-192.png" alt="FII" class="sov-nav__logo" width="40" height="40" loading="eager" />
           <div class="sov-nav__brand-text">
-            <span class="sov-nav__brand-title">International Investment Fund</span>
-            <span class="sov-nav__brand-subtitle">FII · PARIS</span>
+            <span class="sov-nav__brand-title">${brandTitle}</span>
+            <span class="sov-nav__brand-subtitle">${brandSubtitle}</span>
           </div>
         </a>
         <div class="sov-nav__links">

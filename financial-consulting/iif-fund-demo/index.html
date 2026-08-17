@@ -182,6 +182,11 @@
       margin-bottom: var(--space-8);
     }
 
+    @media (max-width: 640px) {
+      .trust-bar__item:nth-child(n+3) { display: none; }
+      .trust-bar__inner { gap: var(--space-4); }
+    }
+
     .sov-hero__emblem {
       width: 140px; height: 140px;
       margin: 0 auto var(--space-6);
@@ -809,35 +814,34 @@
 </head>
 <body>
 
-  <!-- Trust Bar -->
-  <div class="trust-bar">
-    <div class="sov-container">
-      <div class="trust-bar__inner">
-        <span class="trust-bar__item">
-          <span class="lang-ar">السجل الشفاف للاتحاد الأوروبي</span>
-          <span class="lang-en">EU Transparency Register</span>
-        </span>
-        <span class="trust-bar__item">
-          <span class="lang-ar">مرخص في فرنسا والاتحاد الأوروبي</span>
-          <span class="lang-en">Licensed in France & EU</span>
-        </span>
-        <span class="trust-bar__item">
-          <span class="lang-ar">الالتزام بمعايير مكافحة غسل الأموال</span>
-          <span class="lang-en">AML/CFT Compliant</span>
-        </span>
-        <span class="trust-bar__item">
-          <span class="lang-ar">باريس · الرياض · لندن</span>
-          <span class="lang-en">Paris · Riyadh · London</span>
-        </span>
-      </div>
-    </div>
-  </div>
-
   <!-- Hero -->
   <section class="sov-hero" id="hero">
     <div class="sov-hero__bg" aria-hidden="true">
       <div class="sov-hero__orb sov-hero__orb--gold"></div>
       <div class="sov-hero__orb sov-hero__orb--blue"></div>
+    </div>
+    <!-- Trust Bar -->
+    <div class="trust-bar">
+      <div class="sov-container">
+        <div class="trust-bar__inner">
+          <span class="trust-bar__item">
+            <span class="lang-ar">السجل الشفاف للاتحاد الأوروبي</span>
+            <span class="lang-en">EU Transparency Register</span>
+          </span>
+          <span class="trust-bar__item">
+            <span class="lang-ar">مرخص في فرنسا والاتحاد الأوروبي</span>
+            <span class="lang-en">Licensed in France & EU</span>
+          </span>
+          <span class="trust-bar__item">
+            <span class="lang-ar">الالتزام بمعايير مكافحة غسل الأموال</span>
+            <span class="lang-en">AML/CFT Compliant</span>
+          </span>
+          <span class="trust-bar__item">
+            <span class="lang-ar">باريس · الرياض · لندن</span>
+            <span class="lang-en">Paris · Riyadh · London</span>
+          </span>
+        </div>
+      </div>
     </div>
     <div class="sov-hero__content">
       <div class="sov-hero__emblem sov-hero__emblem--anim">
