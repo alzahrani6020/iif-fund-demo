@@ -1,0 +1,127 @@
+<!-- Leadership Section Template -->
+<template id="leadership-template">
+  <div class="leadership-section">
+    <h3 class="leadership-title" data-i18n="leadershipTitle">Government Leadership</h3>
+    
+    <!-- Head of State -->
+    <div class="leadership-card" id="head-of-state-card">
+      <div class="leadership-header">
+        <div class="leadership-photo">
+          <img src="{{headOfState.photo}}" alt="{{headOfState.name}}" class="leader-photo">
+          <div class="leader-badge">{{headOfState.title}}</div>
+        </div>
+        <div class="leadership-info">
+          <h4 class="leader-name">{{headOfState.name}}</h4>
+          <p class="leader-role">{{headOfState.role}}</p>
+          <p class="leader-since" data-i18n="since">Since:</p>
+          <span class="leader-date">{{headOfState.since}}</span>
+          <p class="leader-party" data-i18n="party">Party:</p>
+          <span class="leader-party-name">{{headOfState.party}}</span>
+        </div>
+      </div>
+      <div class="leadership-description">
+        <p>{{headOfState.description}}</p>
+      </div>
+      <div class="leadership-actions">
+        <button class="btn btn--ghost btn-sm leader-contact-btn" data-leader="{{headOfState.name}}">
+          <span class="leader-contact-icon">📧</span>
+          <span data-i18n="contact">Contact</span>
+        </button>
+        <button class="btn btn--ghost btn-sm leader-bio-btn" data-leader="{{headOfState.name}}">
+          <span class="leader-bio-icon">📖</span>
+          <span data-i18n="biography">Biography</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Head of Government -->
+    <div class="leadership-card" id="head-of-government-card">
+      <div class="leadership-header">
+        <div class="leadership-photo">
+          <img src="{{headOfGovernment.photo}}" alt="{{headOfGovernment.name}}" class="leader-photo">
+          <div class="leader-badge">{{headOfGovernment.title}}</div>
+        </div>
+        <div class="leadership-info">
+          <h4 class="leader-name">{{headOfGovernment.name}}</h4>
+          <p class="leader-role">{{headOfGovernment.role}}</p>
+          <p class="leader-since" data-i18n="since">Since:</p>
+          <span class="leader-date">{{headOfGovernment.since}}</span>
+          <p class="leader-party" data-i18n="party">Party:</p>
+          <span class="leader-party-name">{{headOfGovernment.party}}</span>
+        </div>
+      </div>
+      <div class="leadership-description">
+        <p>{{headOfGovernment.description}}</p>
+      </div>
+      <div class="leadership-actions">
+        <button class="btn btn--ghost btn-sm leader-contact-btn" data-leader="{{headOfGovernment.name}}">
+          <span class="leader-contact-icon">📧</span>
+          <span data-i18n="contact">Contact</span>
+        </button>
+        <button class="btn btn--ghost btn-sm leader-bio-btn" data-leader="{{headOfGovernment.name}}">
+          <span class="leader-bio-icon">📖</span>
+          <span data-i18n="biography">Biography</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Government Structure -->
+    <div class="government-structure">
+      <h4 class="structure-title" data-i18n="governmentStructure">Government Structure</h4>
+      <div class="structure-info">
+        <div class="structure-type">
+          <span class="structure-label" data-i18n="type">Type:</span>
+          <span class="structure-value">{{governmentStructure.type}}</span>
+        </div>
+        <p class="structure-description">{{governmentStructure.description}}</p>
+        
+        <div class="structure-powers">
+          <div class="power-item">
+            <h5 class="power-title" data-i18n="executivePower">Executive Power</h5>
+            <p class="power-description">{{governmentStructure.executivePower}}</p>
+          </div>
+          <div class="power-item">
+            <h5 class="power-title" data-i18n="legislativePower">Legislative Power</h5>
+            <p class="power-description">{{governmentStructure.legislativePower}}</p>
+          </div>
+          <div class="power-item">
+            <h5 class="power-title" data-i18n="judicialPower">Judicial Power</h5>
+            <p class="power-description">{{governmentStructure.judicialPower}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other Leaders -->
+    {{#if otherLeaders.length}}
+    <div class="other-leaders">
+      <h4 class="other-leaders-title" data-i18n="otherLeaders">Other Notable Leaders</h4>
+      <div class="other-leaders-grid">
+        {{#each otherLeaders}}
+        <div class="other-leader-card">
+          <div class="other-leader-photo">
+            <img src="{{photo}}" alt="{{name}}" class="other-leader-img">
+          </div>
+          <div class="other-leader-info">
+            <h5 class="other-leader-name">{{name}}</h5>
+            <p class="other-leader-title">{{title}}</p>
+            <p class="other-leader-role">{{role}}</p>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- Data Source -->
+    <div class="leadership-source">
+      <p class="source-info" data-i18n="dataSource">Data Source:</p>
+      <span class="source-value">{{source}}</span>
+      <span class="reliability reliability-{{reliability}}" data-i18n="reliability">Reliability: {{reliability}}</span>
+      <p class="last-updated">
+        <span data-i18n="lastUpdated">Last updated:</span>
+        <span class="update-time">{{lastUpdated}}</span>
+      </p>
+    </div>
+  </div>
+</template>

@@ -5,6 +5,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import CleanCSS from 'clean-css';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -28,4 +29,23 @@ async function copyTree(from, to, rel = '') {
 
 await fs.rm(OUT, { recursive: true, force: true });
 await copyTree(SRC, OUT);
+
+// Minify CSS for production
+const cleanCss = new CleanCSS({ level: 2 });
+async function minifyCss(dir) {
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+  for (const e of entries) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) await minifyCss(p);
+    else if (e.name.endsWith('.css')) {
+      const original = await fs.readFile(p, 'utf8');
+      const result = cleanCss.minify(original);
+      if (result.errors.length) {
+        console.warn('clean-css errors for', p, result.errors);
+      }
+      await fs.writeFile(p, result.styles, 'utf8');
+    }
+  }
+}
+await minifyCss(OUT);
 console.log('prepare-cloudflare-site: wrote', OUT);

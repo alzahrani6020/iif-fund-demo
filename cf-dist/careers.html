@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <title>Careers · IIF · International Investment Fund</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#060a12" />
+  <meta name="description" content="Career opportunities at the International Investment Fund." />
+  <link rel="icon" type="image/svg+xml" href="assets/logo-v2.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/sovereign-system.css" />
+  <link rel="stylesheet" href="css/sovereign-components.css" />
+  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/public-shell.css" />
+  <link rel="stylesheet" href="css/public-components.css" />
+  <style>
+    .sov-job { padding: var(--space-5); background: var(--color-surface-elevated); border: 1px solid var(--color-glass-border); border-radius: var(--radius-lg); margin-bottom: var(--space-4); transition: all var(--transition-normal); }
+    .sov-job:hover { border-color: var(--color-border-strong); }
+    .sov-job__title { font-size: var(--text-lg); font-weight: 600; color: var(--color-text-main); margin-bottom: var(--space-1); }
+    .sov-job__meta { font-size: var(--text-sm); color: var(--color-text-dim); margin-bottom: var(--space-3); }
+    .sov-job__desc { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-4); }
+  </style>
+</head>
+<body>
+  <div id="shared-header"></div>
+
+  <section class="sov-section" style="padding-top: calc(var(--space-24) + 80px); text-align:center;">
+    <div class="sov-container">
+      <span class="sov-section-header__label"><span class="lang-en">Careers</span><span class="lang-ar">الوظائف</span></span>
+      <h1 class="sov-section-header__title" style="font-size:var(--text-4xl);margin-bottom:var(--space-6);">
+        <span class="lang-en">Join IIF</span>
+        <span class="lang-ar">انضم إلى IIF</span>
+      </h1>
+      <p class="sov-section-header__desc" style="max-width:720px;margin-inline:auto;">
+        <span class="lang-en">Build your career at the intersection of sovereign finance, global investment, and institutional impact.</span>
+        <span class="lang-ar">ابنِ مسارك المهني عند تقاطع التمويل السيادي والاستثمار العالمي والتأثير المؤسسي.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="sov-section" style="background:var(--sov-navy-900);">
+    <div class="sov-container" id="jobs-container"></div>
+  </section>
+
+  <div id="shared-footer"></div>
+  <script src="src/shared-nav.js"></script>
+  <script src="src/shared-footer.js"></script>
+  <script src="src/sov-reveal.js"></script>
+  <script src="src/lang-init.js"></script>
+  <script>
+    fetch('data/careers.json')
+      .then(r => r.json())
+      .then(data => {
+        const container = document.getElementById('jobs-container');
+        if (!data.items) return;
+        const lang = localStorage.getItem('iif-lang') || 'ar';
+        container.innerHTML = data.items.map(item =>
+          '<div class="sov-job sov-reveal">' +
+            '<div class="sov-job__title">' +
+              '<span class="lang-en">' + item.title.en + '</span>' +
+              '<span class="lang-ar">' + item.title.ar + '</span>' +
+            '</div>' +
+            '<div class="sov-job__meta">' + item.location + ' · ' + item.type + '</div>' +
+            '<div class="sov-job__desc">' +
+              '<span class="lang-en">' + item.desc.en + '</span>' +
+              '<span class="lang-ar">' + item.desc.ar + '</span>' +
+            '</div>' +
+            '<a href="apply" class="sov-btn sov-btn--outline-gold sov-btn--sm">' +
+              '<span class="lang-en">Apply</span><span class="lang-ar">تقدم</span>' +
+            '</a>' +
+          '</div>'
+        ).join('');
+      });
+  </script>
+</body>
+</html>

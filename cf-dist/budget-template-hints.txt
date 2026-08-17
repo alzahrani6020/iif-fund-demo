@@ -1,0 +1,27 @@
+Budget CSV / Excel template — quick guide
+دليل سريع لقالب الميزانية (شركات ناشئة، SME، استثمار، تعدد دول وعملات)
+================================================================
+
+Required columns (row 1 = headers):
+  category  — line label (e.g. Rent, Sales, Payroll)
+  type      — revenue OR expense (also: إيراد / مصروف)
+  amount    — number (dot as decimal)
+
+Recommended:
+  category  — always fill for charts and deep tables
+
+Optional (budget platforms / multi-country):
+  period    — e.g. Q1, 2026-01, Jan-2026, FY2026 (any text you use consistently)
+  scenario  — approved | actual | forecast
+              (Arabic hints: معتمد، فعلي، متوقع)
+  currency  — ISO code e.g. USD, EUR, SAR (warns if mixed without FX)
+
+Tips:
+  • One row per budget line per period × scenario (duplicate lines as needed).
+  • Main totals use the “primary” slice: actual rows if present, else approved, else forecast.
+  • The report also shows a matrix of all scenarios when at least two have data.
+  • With backend running (see meta iif-budget-api-base), CSV/XLSX is validated server-side;
+    otherwise the browser parser is used.
+  • Excel: same columns on the first sheet.
+
+This file is for humans only; it is not imported by the analyzer.

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin-direct/
+Disallow: /api/
+Disallow: /node_modules/
+
+Sitemap: https://iiffund.com/sitemap.xml

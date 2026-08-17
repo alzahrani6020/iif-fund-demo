@@ -1,0 +1,21 @@
+# Cloudflare Worker — بروكسي SearXNG (بديل عن Vercel)
+#
+# الملف الرئيسي: cloudflare-searx-proxy.js (نفس المجلد)
+#
+# النشر الأولي:
+#   cd financial-consulting/iif-fund-demo/ops
+#   npx wrangler@3 deploy
+#
+# سر اختياري لـ SEARX_UPSTREAM:
+#   npx wrangler secret put SEARX_UPSTREAM
+#   (الصق https://searx.tiekoetter.com أو مثيلكم)
+#
+# ربط مسار على نطاقكم: لوحة Cloudflare → Workers → هذا الـ Worker → Triggers → Routes
+#   مثال: api.yourdomain.com/api/searx/*
+#
+name = "iif-searx-proxy"
+main = "cloudflare-searx-proxy.js"
+compatibility_date = "2024-12-01"
+
+# [vars]
+# SEARX_UPSTREAM = "https://searx.tiekoetter.com"

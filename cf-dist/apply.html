@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <style>
+    .lang-en, .lang-fr, .lang-zh { display: none; }
+    html[data-lang="en"] .lang-en { display: block; }
+    html[data-lang="en"] .lang-ar { display: none; }
+    html[data-lang="ar"] .lang-en,
+    html[data-lang="ar"] .lang-fr,
+    html[data-lang="ar"] .lang-zh { display: none; }
+    html[data-lang="ar"] .lang-ar { display: block; }
+  </style>
+  <meta charset="utf-8" />
+  <title>Apply for Membership · IIF · International Investment Fund</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#060a12" />
+  <meta name="description" content="Apply for membership or partnership with the International Investment Fund." />
+  <link rel="icon" type="image/svg+xml" href="assets/logo-v2.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/sovereign-system.css" />
+  <link rel="stylesheet" href="css/sovereign-components.css" />
+  <link rel="stylesheet" href="css/design-system.css" />
+  <link rel="stylesheet" href="css/public-shell.css" />
+  <link rel="stylesheet" href="css/public-components.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+  <style>
+    .sov-form { max-width: 640px; margin: 0 auto; }
+    .sov-form__group { margin-bottom: var(--space-6); }
+    .sov-form__label { display: block; font-size: var(--text-sm); font-weight: 500; color: var(--color-text-muted); margin-bottom: var(--space-2); }
+    .sov-form__input, .sov-form__select, .sov-form__textarea {
+      width: 100%; padding: var(--space-3) var(--space-4);
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-glass-border);
+      border-radius: var(--radius-md);
+      color: var(--color-text-main);
+      font-family: inherit;
+      font-size: var(--text-base);
+      transition: border-color var(--transition-fast);
+    }
+    .sov-form__input:focus, .sov-form__select:focus, .sov-form__textarea:focus {
+      outline: none;
+      border-color: var(--sov-gold-500);
+    }
+    .sov-form__textarea { min-height: 120px; resize: vertical; }
+    .sov-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media (max-width: 640px) { .sov-form__row { grid-template-columns: 1fr; } }
+  </style>
+  <style id="inline-lang-style">
+    .lang-ar, [data-i18n] { display: none !important; }
+    [data-lang="ar"] .lang-en { display: none !important; }
+    [data-lang="ar"] .lang-ar { display: inline !important; }
+    [data-lang="en"] .lang-ar { display: none !important; }
+    [data-lang="en"] .lang-en { display: inline !important; }
+  </style>
+</head>
+<body>
+  <div id="shared-header"></div>
+
+  <section class="sov-section" style="padding-top: calc(var(--space-24) + 80px); text-align:center;">
+    <div class="sov-container">
+      <span class="sov-section-header__label"><span class="lang-en">Membership</span><span class="lang-ar">العضوية</span></span>
+      <h1 class="sov-section-header__title" style="font-size:var(--text-4xl);margin-bottom:var(--space-6);">
+        <span class="lang-en">Apply for Membership</span>
+        <span class="lang-ar">طلب عضوية</span>
+      </h1>
+      <p class="sov-section-header__desc" style="max-width:720px;margin-inline:auto;">
+        <span class="lang-en">Join our network of sovereign partners, institutional investors, and strategic allies.</span>
+        <span class="lang-ar">انضم لشبكة شركائنا السياديين والمستثمرين المؤسسيين والحلفاء الاستراتيجيين.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="sov-section" style="background:var(--sov-navy-900);">
+    <div class="sov-container">
+      <form class="sov-form sov-reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="sov-form__row">
+          <div class="sov-form__group">
+            <label class="sov-form__label"><span class="lang-en">First Name</span><span class="lang-ar">الاسم الأول</span></label>
+            <input type="text" class="sov-form__input" name="firstName" required />
+          </div>
+          <div class="sov-form__group">
+            <label class="sov-form__label"><span class="lang-en">Last Name</span><span class="lang-ar">اسم العائلة</span></label>
+            <input type="text" class="sov-form__input" name="lastName" required />
+          </div>
+        </div>
+        <div class="sov-form__row">
+          <div class="sov-form__group">
+            <label class="sov-form__label"><span class="lang-en">Email</span><span class="lang-ar">البريد الإلكتروني</span></label>
+            <input type="email" class="sov-form__input" name="email" required />
+          </div>
+          <div class="sov-form__group">
+            <label class="sov-form__label"><span class="lang-en">Organization</span><span class="lang-ar">الجهة</span></label>
+            <input type="text" class="sov-form__input" name="organization" />
+          </div>
+        </div>
+        <div class="sov-form__group">
+          <label class="sov-form__label"><span class="lang-en">Membership Type</span><span class="lang-ar">نوع العضوية</span></label>
+          <select class="sov-form__select" name="type" required>
+            <option value=""><span class="lang-en">Select...</span><span class="lang-ar">اختر...</span></option>
+            <option value="government"><span class="lang-en">Government / Sovereign Entity</span><span class="lang-ar">حكومة / جهة سيادية</span></option>
+            <option value="institutional"><span class="lang-en">Institutional Investor</span><span class="lang-ar">مستثمر مؤسسي</span></option>
+            <option value="corporate"><span class="lang-en">Corporate Partner</span><span class="lang-ar">شريك corporat</span></option>
+            <option value="individual"><span class="lang-en">Individual / Family Office</span><span class="lang-ar">فرد / مكتب عائلي</span></option>
+          </select>
+        </div>
+        <div class="sov-form__group">
+          <label class="sov-form__label"><span class="lang-en">Message / Inquiry</span><span class="lang-ar">الرسالة / الاستفسار</span></label>
+          <textarea class="sov-form__textarea" name="message" placeholder="" required></textarea>
+        </div>
+        <div style="text-align:center;">
+          <button type="submit" class="sov-btn sov-btn--primary sov-btn--lg">
+            <span class="lang-en">Submit Application</span>
+            <span class="lang-ar">إرسال الطلب</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <div id="shared-footer"></div>
+  <script src="src/shared-nav.js"></script>
+  <script src="src/shared-footer.js"></script>
+  <script src="src/sov-reveal.js"></script>
+  <script src="src/lang-init.js"></script>
+</body>
+</html>

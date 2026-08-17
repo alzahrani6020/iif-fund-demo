@@ -1,0 +1,10 @@
+category,type,amount,period,scenario,currency
+Product sales,revenue,125000,Q1,approved,USD
+Product sales,revenue,118000,Q1,actual,USD
+Services,revenue,48000,Q1,approved,USD
+Services,revenue,52000,Q1,forecast,USD
+Rent,expense,24000,Q1,approved,USD
+Rent,expense,23500,Q1,actual,USD
+Payroll,expense,62000,Q1,approved,USD
+Payroll,expense,64000,Q1,actual,USD
+Utilities,expense,8500,Q1,approved,USD

@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "icon": "&#9874;",
+      "region": "North Africa",
+      "value": "$400M",
+      "title": { "en": "Transport & Energy Corridor", "ar": "ممر النقل والطاقة" },
+      "desc": { "en": "BOT agreements for rail and renewable energy infrastructure across three nations.", "ar": "اتفاقيات BOT للسكك الحديدية والبنية التحتية للطاقة المتجددة عبر ثلاث دول." }
+    },
+    {
+      "id": "2",
+      "icon": "&#9889;",
+      "region": "Southeast Asia",
+      "value": "$250M",
+      "title": { "en": "Smart Grid Initiative", "ar": "مبادرة الشبكة الذكية" },
+      "desc": { "en": "Technology transfer and co-investment in modernizing national power distribution.", "ar": "نقل التقنية والاستثمار المشترك في تحديث توزيع الطاقة الوطني." }
+    },
+    {
+      "id": "3",
+      "icon": "&#127970;",
+      "region": "Middle East",
+      "value": "$180M",
+      "title": { "en": "Urban Development Zone", "ar": "منطقة التنمية الحضرية" },
+      "desc": { "en": "Mixed-use sovereign development with residential, commercial, and logistics hubs.", "ar": "تنمية سيادية متعددة الاستخدامات مع مراكز سكنية وتجارية ولوجستية." }
+    }
+  ]
+}
