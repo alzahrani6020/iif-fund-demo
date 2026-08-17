@@ -50,3 +50,4 @@ reports/
 # نتيجة فك/اختبار QR مؤقتة
 qr_decode_result.txt
 dist/
+cf-dist/
