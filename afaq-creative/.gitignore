@@ -23,3 +23,20 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+/lib/generated/prisma
+
+# database
+*.db
+*.db-journal
+
+# uploads
+public/uploads/
+
+# backups
+backups/
+prisma/migrations-sqlite-backup/
+.admin_credentials
+.admin_reset_password
+
+.env*

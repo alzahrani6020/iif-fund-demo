@@ -5,7 +5,7 @@ export const translations = {
     nav: {
       home: 'الرئيسية',
       services: 'خدماتنا',
-      talents: 'نبني المواهب',
+      talents: 'تبنّي المواهب والخبرات',
       clients: 'عملاؤنا',
       licenses: 'تراخيصنا',
       contact: 'تواصل',
@@ -35,7 +35,7 @@ export const translations = {
     nav: {
       home: 'Home',
       services: 'Services',
-      talents: 'Talent Hub',
+      talents: 'Adopt Talents & Expertise',
       clients: 'Clients',
       licenses: 'Licenses',
       contact: 'Contact',

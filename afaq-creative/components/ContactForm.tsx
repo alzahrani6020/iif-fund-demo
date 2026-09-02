@@ -65,7 +65,7 @@ export function ContactForm() {
                 </div>
                 <div>
                   <div className="text-white/40 text-xs">البريد</div>
-                  <div className="text-white font-semibold">hello@afaqcreative.com</div>
+                  <div className="text-white font-semibold">info@bonds-global.com</div>
                 </div>
               </div>
               <div className="flex items-center gap-3">

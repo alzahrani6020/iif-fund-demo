@@ -1,10 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, Sparkles, Shield, Award, FileCheck, Star } from 'lucide-react';
 import { ParticlesBackground } from './Particles';
-import { TalentModal } from './TalentModal';
 
 const badges = [
   { icon: FileCheck, label: 'سجل تجاري', sub: 'مصر 98066 / السعودية 4030498014' },
@@ -12,8 +10,17 @@ const badges = [
   { icon: Award, label: 'ترخيص ترفيه', sub: 'GEA 2302080106' },
 ];
 
+function scrollToTalents() {
+  if (typeof window === 'undefined') return;
+  const el = document.getElementById('talents');
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    window.location.href = '/#talents';
+  }
+}
+
 export function Hero() {
-  const [talentModalOpen, setTalentModalOpen] = useState(false);
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <ParticlesBackground />
@@ -65,7 +72,7 @@ export function Hero() {
             استكشف خدماتنا
           </a>
           <button
-            onClick={() => setTalentModalOpen(true)}
+            onClick={scrollToTalents}
             className="px-8 py-4 rounded-full bg-gradient-to-r from-afaq-gold to-afaq-gold2 text-afaq-bg font-bold text-lg hover:shadow-xl hover:shadow-afaq-gold/30 transition-all hover:scale-105 flex items-center gap-2 animate-pulse"
           >
             <Star size={20} fill="currentColor" />
@@ -97,7 +104,6 @@ export function Hero() {
         </a>
       </motion.div>
 
-      <TalentModal open={talentModalOpen} onClose={() => setTalentModalOpen(false)} />
     </section>
   );
 }

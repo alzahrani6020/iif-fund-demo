@@ -64,8 +64,8 @@ export function Footer() {
           <div>
             <h4 className="text-white font-bold mb-4">{t.footer.contact}</h4>
             <div className="space-y-3">
-              <a href="mailto:hello@afaqcreative.com" className="flex items-center gap-2 text-white/40 hover:text-afaq-gold transition-colors text-sm">
-                <Mail size={16} /> hello@afaqcreative.com
+              <a href="mailto:info@bonds-global.com" className="flex items-center gap-2 text-white/40 hover:text-afaq-gold transition-colors text-sm">
+                <Mail size={16} /> info@bonds-global.com
               </a>
               <a href="tel:+966567566616" className="flex items-center gap-2 text-white/40 hover:text-afaq-gold transition-colors text-sm">
                 <Phone size={16} /> +966 56 756 6616

@@ -16,8 +16,9 @@ const linkKeys = [
 ];
 
 function useDateTime() {
-  const [now, setNow] = useState(new Date());
+  const [now, setNow] = useState<Date | null>(null);
   useEffect(() => {
+    setNow(new Date());
     const timer = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
@@ -59,11 +60,11 @@ export function Navbar() {
             <div className="flex items-center gap-3 mt-1">
               <span className="flex items-center gap-1 text-[10px] text-white/30">
                 <Calendar size={9} className="text-afaq-gold" />
-                {formatArabicDate(now)}
+                {now ? formatArabicDate(now) : '—'}
               </span>
               <span className="flex items-center gap-1 text-[10px] text-white/30">
                 <Clock size={9} className="text-afaq-teal" />
-                {formatArabicTime(now)}
+                {now ? formatArabicTime(now) : '—'}
               </span>
             </div>
           </div>

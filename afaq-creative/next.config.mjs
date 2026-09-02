@@ -1,8 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  distDir: 'dist',
+  distDir: '.next',
   images: { unoptimized: true },
+  async rewrites() {
+    return [
+      {
+        source: '/uploads/:path*',
+        destination: '/api/uploads/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;
