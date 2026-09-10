@@ -31,7 +31,7 @@ def demo() -> None:
 
     task = AgentTask(
         instruction="Review an admin workflow",
-        context=AgentContext(tenant_id="afaq", project_id="afaq-creative-site"),
+        context=AgentContext(tenant_id="afaq", project_id="afaq-creative"),
     )
     run = agent.run(task)
     print(run)

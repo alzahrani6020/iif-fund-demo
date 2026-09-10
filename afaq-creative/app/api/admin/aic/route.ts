@@ -9,7 +9,7 @@ import { requireAdmin, UnauthorizedError } from '@/lib/admin-auth';
 
 const execFileAsync = promisify(execFile);
 
-// AIC nucleus lives in the sibling afaq-creative-site repo and is invoked
+// AIC nucleus lives inside this afaq-creative project and is invoked
 // in place (never copied into the web app). Override via env for other hosts.
 const AIC_HOME = process.env.AIC_HOME
   ? path.resolve(process.env.AIC_HOME)

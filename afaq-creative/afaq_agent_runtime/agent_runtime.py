@@ -51,7 +51,7 @@ from .task_store import TaskStore
 
 RUNTIME_VERSION = "1.0.0"
 DEFAULT_TENANT = "afaq"
-DEFAULT_PROJECT = "afaq-creative-site"
+DEFAULT_PROJECT = "afaq-creative"
 DEFAULT_AGENT = "afaq-learning-agent"
 
 PACKAGE_DIR = Path(__file__).resolve().parent

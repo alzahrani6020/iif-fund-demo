@@ -1873,7 +1873,7 @@ class DeveloperAgent:
     def _scope(self) -> MemoryScope:
         return MemoryScope(
             tenant_id="afaq",
-            project_id="afaq-creative-site",
+            project_id="afaq-creative",
             agent_id=DEVELOPER_AGENT_ID,
             environment=self.config.environment,
         )

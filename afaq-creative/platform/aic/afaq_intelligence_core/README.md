@@ -68,7 +68,7 @@ hits = service.search(MemoryQuery(
 ## التشغيل والاختبار
 
 ```bash
-cd afaq-creative-site
+cd afaq-creative
 python -m unittest afaq_intelligence_core.test_aic_memory -v
 ```
 

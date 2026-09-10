@@ -455,7 +455,7 @@ class _Handler(BaseHTTPRequestHandler):
             task_id = self.runtime.submit(
                 instruction,
                 tenant_id=body.get("tenant_id") or "afaq",
-                project_id=body.get("project_id") or "afaq-creative-site",
+                project_id=body.get("project_id") or "afaq-creative",
             )
             self._send_json(202, {"success": True, "task_id": task_id})
             return

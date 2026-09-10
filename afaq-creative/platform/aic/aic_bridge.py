@@ -30,7 +30,7 @@ DB_PATH = AIC_HOME / "var" / "aic_memory.db"
 
 # Canonical control-center scope: primary tenant/project the dashboard tracks.
 PRIMARY_TENANT = "afaq"
-PRIMARY_PROJECT = "afaq-creative-site"
+PRIMARY_PROJECT = "afaq-creative"
 PRIMARY_AGENT = "afaq-learning-agent"
 
 
