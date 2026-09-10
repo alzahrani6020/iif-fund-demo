@@ -23,6 +23,8 @@ export type {
   TraceContext,
 } from "./types.js";
 
+import type { ExecutionEnvelope } from "./types.js";
+
 export { kernelError, KernelErrors } from "./errors.js";
 
 export function makeEnvelope(

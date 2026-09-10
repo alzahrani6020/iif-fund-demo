@@ -1,4 +1,6 @@
-import { prisma } from '../lib/prisma';
+import { getPrisma } from '../lib/prisma';
+
+const prisma = getPrisma();
 
 async function main() {
   const email = process.argv[2];

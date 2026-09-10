@@ -1,7 +1,9 @@
 import 'dotenv/config';
 import readline from 'readline';
 import bcrypt from 'bcryptjs';
-import { prisma } from '../lib/prisma';
+import { getPrisma } from '../lib/prisma';
+
+const prisma = getPrisma();
 
 function ask(question: string): Promise<string> {
   const rl = readline.createInterface({

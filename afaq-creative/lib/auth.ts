@@ -1,9 +1,17 @@
-import bcrypt from 'bcryptjs';
-import { prisma } from './prisma';
+﻿import bcrypt from 'bcryptjs';
+import { getPrisma } from './prisma';
 import { AdminSession, getAdminSession } from './session';
 
-export async function verifyAdminCredentials(email: string, password: string): Promise<AdminSession | null> {
-  const admin = await prisma.adminUser.findUnique({ where: { email: email.toLowerCase().trim() } });
+export async function verifyAdminCredentials(
+  email: string,
+  password: string
+): Promise<AdminSession | null> {
+  const prisma = getPrisma();
+
+  const admin = await prisma.adminUser.findUnique({
+    where: { email: email.toLowerCase().trim() },
+  });
+
   if (!admin || !admin.isActive) return null;
 
   const valid = await bcrypt.compare(password, admin.passwordHash);
@@ -43,14 +51,23 @@ export async function changeAdminPassword(
   currentPassword: string,
   newPassword: string
 ): Promise<{ success: boolean; message: string }> {
-  const admin = await prisma.adminUser.findUnique({ where: { id: adminId } });
+  const prisma = getPrisma();
+
+  const admin = await prisma.adminUser.findUnique({
+    where: { id: adminId },
+  });
+
   if (!admin || !admin.isActive) {
     return { success: false, message: 'غير مصرح' };
   }
 
   const valid = await bcrypt.compare(currentPassword, admin.passwordHash);
+
   if (!valid) {
-    return { success: false, message: 'كلمة المرور الحالية غير صحيحة.' };
+    return {
+      success: false,
+      message: 'كلمة المرور الحالية غير صحيحة.',
+    };
   }
 
   const passwordHash = await bcrypt.hash(newPassword, 12);
@@ -69,5 +86,8 @@ export async function changeAdminPassword(
     }),
   ]);
 
-  return { success: true, message: 'تم تغيير كلمة المرور بنجاح.' };
+  return {
+    success: true,
+    message: 'تم تغيير كلمة المرور بنجاح.',
+  };
 }

@@ -3,7 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import crypto from 'crypto';
 import { z } from 'zod';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { getStorage, extractStorageKey, isStorageUrl } from '@/lib/storage';
 import { countryDialCodes } from '@/lib/catalog/locations';
 import {
@@ -228,7 +228,7 @@ const registerSchema = z.object({
   sanaieeConsent: z.string().optional(),
 });
 
-async function generateApplicationNumber(): Promise<string> {
+async function generateApplicationNumber(prisma: ReturnType<typeof getPrisma>): Promise<string> {
   const year = new Date().getFullYear();
   const prefix = `AFQ-${year}-`;
   const last = await prisma.talentApplication.findFirst({
@@ -264,6 +264,7 @@ function checkRateLimit(ip: string): boolean {
 }
 
 export default async function handler(req: MulterRequest, res: NextApiResponse) {
+  const prisma = getPrisma();
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, message: 'الطريقة غير مسموحة' });
   }
@@ -299,7 +300,7 @@ export default async function handler(req: MulterRequest, res: NextApiResponse) 
       });
     }
 
-    const applicationNumber = await generateApplicationNumber();
+    const applicationNumber = await generateApplicationNumber(prisma);
 
     const files = req.files;
     const attachments: Record<string, string | string[]> = {};

@@ -1,16 +1,27 @@
-import { PrismaClient } from '@prisma/client';
+﻿import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const globalForPrisma = globalThis as unknown as {
+  prisma?: PrismaClient;
+};
 
-const createPrismaClient = () => {
+let productionPrisma: PrismaClient | undefined;
+
+function createPrismaClient(): PrismaClient {
   const connectionString = process.env.DATABASE_URL;
+
   if (!connectionString) {
     throw new Error('DATABASE_URL is not defined');
   }
+
+  if (!/^postgres(ql)?:\/\//i.test(connectionString)) {
+    throw new Error('DATABASE_URL must use postgresql:// or postgres://');
+  }
+
   const pool = new pg.Pool({ connectionString });
   const adapter = new PrismaPg(pool);
+
   return new PrismaClient({
     adapter,
     log:
@@ -18,8 +29,19 @@ const createPrismaClient = () => {
         ? ['query', 'error', 'warn']
         : ['error'],
   });
-};
+}
 
-export const prisma = globalForPrisma.prisma || createPrismaClient();
+export function getPrisma(): PrismaClient {
+  if (process.env.NODE_ENV !== 'production') {
+    if (!globalForPrisma.prisma) {
+      globalForPrisma.prisma = createPrismaClient();
+    }
+    return globalForPrisma.prisma;
+  }
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+  if (!productionPrisma) {
+    productionPrisma = createPrismaClient();
+  }
+
+  return productionPrisma;
+}

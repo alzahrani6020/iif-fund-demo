@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { prisma } from './prisma';
+import { getPrisma } from './prisma';
 import { AdminSession, getAdminSession } from './session';
 
 export class UnauthorizedError extends Error {
@@ -19,6 +19,7 @@ export function getClientIp(req: NextRequest): string {
 }
 
 export async function getCurrentAdmin(req: NextRequest): Promise<AdminSession | null> {
+  const prisma = getPrisma();
   const session = await getAdminSession(req);
   if (!session.isLoggedIn || !session.id) return null;
 

@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { buildVerificationSuccessHtml, buildVerificationErrorHtml } from '@/lib/email';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
+  const prisma = getPrisma();
   try {
     const { searchParams } = new URL(req.url);
     const token = searchParams.get('token');

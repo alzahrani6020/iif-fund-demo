@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 type ApplicationStatus = 'new' | 'under_review' | 'qualified' | 'need_information' | 'contacted' | 'accepted' | 'rejected';
 const ApplicationStatusValues = ['new', 'under_review', 'qualified', 'need_information', 'contacted', 'accepted', 'rejected'] as const;
 import { requireAdmin, UnauthorizedError } from '@/lib/admin-auth';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 
 const FORMULA_TRIGGERS = /^[=+\-@\r\n'"]/;
 
@@ -30,6 +30,7 @@ function formatPhone(value: string): string {
 }
 
 export async function GET(req: NextRequest) {
+  const prisma = getPrisma();
   try {
     await requireAdmin(req);
 

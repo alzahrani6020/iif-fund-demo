@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 const ApplicationStatus = ['new', 'under_review', 'qualified', 'need_information', 'contacted', 'accepted', 'rejected'] as const;
 import { requireAdmin, UnauthorizedError, isAuthorizedRole } from '@/lib/admin-auth';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { getStorage, isStorageUrl, extractStorageKey } from '@/lib/storage';
 
 const updateSchema = z.object({
@@ -32,6 +32,7 @@ function safeJsonStringify(value: any): string {
 }
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+  const prisma = getPrisma();
   try {
     await requireAdmin(req);
     const { id } = params;
@@ -68,6 +69,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+  const prisma = getPrisma();
   try {
     const admin = await requireAdmin(req);
     const { id } = params;
@@ -254,6 +256,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  const prisma = getPrisma();
   try {
     const admin = await requireAdmin(req);
     const { id } = params;

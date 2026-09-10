@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { requireAdmin, UnauthorizedError } from '@/lib/admin-auth';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 
 const createSchema = z.object({
   action: z.string().min(1).max(1000),
@@ -12,6 +12,7 @@ const createSchema = z.object({
 });
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+  const prisma = getPrisma();
   try {
     await requireAdmin(req);
     const { id } = params;
@@ -37,6 +38,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 }
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+  const prisma = getPrisma();
   try {
     const admin = await requireAdmin(req);
     const { id } = params;

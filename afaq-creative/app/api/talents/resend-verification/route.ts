@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
-import { prisma } from '@/lib/prisma';
+import { getPrisma } from '@/lib/prisma';
 import { sendTransactionalEmail, buildApplicationReceivedEmail, buildBaseUrl } from '@/lib/email';
 import { getClientIp } from '@/lib/admin-auth';
 
@@ -23,6 +23,7 @@ function checkRateLimit(ip: string): boolean {
 }
 
 export async function POST(req: NextRequest) {
+  const prisma = getPrisma();
   try {
     const ip = getClientIp(req);
     if (!checkRateLimit(ip)) {
