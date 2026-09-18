@@ -10,6 +10,13 @@
       "maxDuration": 15
     }
   },
+  "redirects": [
+    {
+      "source": "/thiqqah",
+      "destination": "https://thiqqah.live/",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",
