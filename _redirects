@@ -4,7 +4,7 @@
 # Executive brief shortcuts
 /executive /executive-brief.html 301
 /sovereign /sovereign-standards.html 301
-/charter /charter.html 301
+/charter /sovereign-standards.html 301
 
 # Fund interface shortcuts
 /fund /financial-consulting/iif-fund-demo/index.html 301
@@ -17,4 +17,4 @@
 /gov /financial-consulting/government-search/SIMPLE-GOVERNMENT-PLATFORM.html 301
 
 # Thiqqah
-/thiqqah /tools/thiqqah-site/index.html 301
+/thiqqah https://thiqqah.live/ 302
