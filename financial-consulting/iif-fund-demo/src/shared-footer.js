@@ -20,8 +20,8 @@ const SOV_FOOTER_COLS = [
     links: [
       { href: 'sovereign-standards.html', ar: 'معايير سيادية', en: 'Sovereign Standards' },
       { href: 'executive-brief.html', ar: 'موجز تنفيذي', en: 'Executive Brief' },
-      { href: '#', ar: 'التقارير السنوية', en: 'Annual Reports' },
-      { href: '#', ar: 'الامتثال', en: 'Compliance' },
+      { href: 'reports', ar: 'التقارير السنوية', en: 'Annual Reports' },
+      { href: 'transparency.html', ar: 'الامتثال', en: 'Compliance' },
     ],
   },
   {
@@ -104,7 +104,7 @@ function injectFooter() {
           <a href="legal/privacy.html">${legalPrivacy}</a>
           <a href="legal/disclaimer.html">${legalTerms}</a>
           <a href="legal/disclaimer.html">${legalDisclaimer}</a>
-          <a href="#">${legalCookies}</a>
+          <a href="privacy.html">${legalCookies}</a>
         </div>
       </div>
     </div>

@@ -37,13 +37,29 @@ function setStoredLang(lang) {
 }
 
 function detectPage() {
-  const path = window.location.pathname;
-  if (path.endsWith('/')) return 'home';
-  if (path.includes('about')) return 'about';
-  if (path.includes('strategy')) return 'strategy';
-  if (path.includes('partnerships')) return 'partnerships';
-  if (path.includes('press')) return 'press';
-  if (path.includes('contact')) return 'contact';
+  const path = window.location.pathname.toLowerCase();
+  if (path.endsWith('/') || path.endsWith('/index.html')) return 'home';
+
+  const pages = [
+    'about',
+    'strategy',
+    'services',
+    'portfolio',
+    'partnerships',
+    'press',
+    'reports',
+    'careers',
+    'faq',
+    'contact',
+    'apply'
+  ];
+
+  for (const page of pages) {
+    if (path.includes('/' + page) || path.endsWith(page) || path.endsWith(page + '.html')) {
+      return page;
+    }
+  }
+
   return 'home';
 }
 
