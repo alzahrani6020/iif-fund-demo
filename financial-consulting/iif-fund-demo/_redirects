@@ -1,12 +1,11 @@
 # Cloudflare Pages redirects (must live at publish root)
 # Syntax: <from> <to> [<status>]
+# ملاحظة: لا قواعد rewrite إلى ملفات .html — Pages يحوّل /x.html تلقائيًا بـ 308 إلى /x
+# فينشأ حلقة لا نهائية. المسارات مثل /admin و/news-sources تُقدَّم تلقائيًا من ملفات HTML
+# عبر clean URLs دون أي قاعدة.
 
 /fund        /index.html         200
 /fund/       /index.html         200
-
-/admin       /admin.html         200
-/admin/      /admin.html         200
-/admin/*     /admin.html         200
 
 /dashboard   /index.html?iif_admin_portal=1&open_dashboard=1 200
 /dashboard/  /index.html?iif_admin_portal=1&open_dashboard=1 200
@@ -16,14 +15,6 @@
 /cp/         /index.html?iif_admin_portal=1&open_dashboard=1 200
 /fund-admin  /index.html?iif_admin_portal=1&open_dashboard=1 200
 /fund-admin/ /index.html?iif_admin_portal=1&open_dashboard=1 200
-
-/news-sources  /news-sources.html 200
-/news-sources/ /news-sources.html 200
-
-/search       /web-search.html 200
-/search/      /web-search.html 200
-/web-search   /web-search.html 200
-/web-search/  /web-search.html 200
 
 # Optional trailing-slash consistency
 /index.html / 301

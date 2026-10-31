@@ -36,7 +36,7 @@ async function getOk(path) {
 }
 
 try {
-  const page = await getOk("/financial-consulting/iif-fund-demo/web-search.html");
+  const page = await getOk("/web-search");
   if (page.res.status !== 200) {
     console.error("FAIL  صفحة البحث الموحّدة:", page.res.status, page.u.href);
     process.exit(1);
@@ -46,7 +46,7 @@ try {
     console.error("FAIL  محتوى صفحة البحث يبدو غير كامل أو غير متوقع.");
     process.exit(1);
   }
-  console.log("OK  صفحة web-search.html — HTTP", page.res.status);
+  console.log("OK  صفحة web-search — HTTP", page.res.status);
 
   const searxUrl = new URL("/api/searx/search?q=smoke-test&format=json", base);
   const sres = await fetch(searxUrl, {
