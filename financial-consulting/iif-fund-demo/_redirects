@@ -18,6 +18,7 @@
 
 # Executive brief + sovereign standards + legal (محتوى من جذر المستودع نُقل إلى مجلد النشر)
 /executive  /executive-brief  301
+/brief      /executive-brief  301
 /sovereign  /sovereign-standards  301
 /charter    /sovereign-standards  301
 /legal      /legal/  301
