@@ -16,5 +16,12 @@
 /fund-admin  /index.html?iif_admin_portal=1&open_dashboard=1 200
 /fund-admin/ /index.html?iif_admin_portal=1&open_dashboard=1 200
 
+# Executive brief + sovereign standards + legal (محتوى من جذر المستودع نُقل إلى مجلد النشر)
+/executive  /executive-brief  301
+/sovereign  /sovereign-standards  301
+/charter    /sovereign-standards  301
+/legal      /legal/  301
+/disclaimer /legal/disclaimer  301
+
 # Optional trailing-slash consistency
 /index.html / 301
