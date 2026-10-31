@@ -24,5 +24,8 @@
 /legal      /legal/  301
 /disclaimer /legal/disclaimer  301
 
+/gov        /gov/  301
+/fund-site  /fund-site/  301
+
 # Optional trailing-slash consistency
 /index.html / 301
