@@ -51,3 +51,9 @@ reports/
 qr_decode_result.txt
 dist/
 cf-dist/
+
+# أرشيف محلي لملفات مشاريع مجمعة من خارج جذر المشروع (لا تُرفع)
+archive-afaq/
+archive-saudi-saas/
+archive-iif-fund/
+archive-file-audits/
