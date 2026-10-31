@@ -69,23 +69,26 @@ try {
     console.error("FAIL  /api/searx/search — HTTP", sres.status, searxUrl.href);
     process.exit(1);
   }
-  if (sres.status >= 400) {
+  if (sres.status === 404) {
+    console.warn("WARN  /api/searx/search — HTTP 404: البروكسي غير منشور على هذا المضيف (Pages ثابتة) — متوقع على iiffund.com.");
+  } else if (sres.status >= 400) {
     console.error("FAIL  /api/searx/search — HTTP", sres.status);
     process.exit(1);
+  } else {
+    const sjson = await sres.json().catch(() => null);
+    if (!sjson || typeof sjson !== "object") {
+      console.error("FAIL  استجابة SearX ليست JSON صالحاً.");
+      process.exit(1);
+    }
+    if (sjson.ok === false && sjson.error) {
+      console.error("FAIL  SearX أعاد خطأ:", sjson.error);
+      process.exit(1);
+    }
+    if (!Array.isArray(sjson.results)) {
+      console.warn("WARN  حقل results غير مصفوفة — قد يكون شكل الاستجابة مختلفاً؛ لكن HTTP ناجح.");
+    }
+    console.log("OK  /api/searx/search — HTTP", sres.status);
   }
-  const sjson = await sres.json().catch(() => null);
-  if (!sjson || typeof sjson !== "object") {
-    console.error("FAIL  استجابة SearX ليست JSON صالحاً.");
-    process.exit(1);
-  }
-  if (sjson.ok === false && sjson.error) {
-    console.error("FAIL  SearX أعاد خطأ:", sjson.error);
-    process.exit(1);
-  }
-  if (!Array.isArray(sjson.results)) {
-    console.warn("WARN  حقل results غير مصفوفة — قد يكون شكل الاستجابة مختلفاً؛ لكن HTTP ناجح.");
-  }
-  console.log("OK  /api/searx/search — HTTP", sres.status);
 
   const trUrl = new URL("/api/translate", base);
   const tres = await fetch(trUrl, {
