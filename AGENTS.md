@@ -20,6 +20,7 @@
 | `engines/searxng/` | **Tor + SearXNG** (Docker) — `npm start` → `/api/searx`؛ محركات `.onion` عبر حاوية `tor` |
 | [CANONICAL-URLS.md](./CANONICAL-URLS.md) | روابط **إنتاج** Cloudflare Pages المعتمدة (مرجع واحد) |
 | `thiqqah-site/` | موقع **ثقة الذهبية**؛ فصل الدومينات: [DOMINI-IIFFUND-THIQQAH.md](./DOMINI-IIFFUND-THIQQAH.md) |
+| `archive-afaq/`، `archive-saudi-saas/`، `archive-iif-fund/`، `archive-file-audits/` | أرشيفات محلية **مُتجاهلة في Git** لملفات مشاريع جُمعت من خارج جذر المشروع (نسخ احتياطية، تدقيقات، مفاتيح) — لا تُرفع ولا تُعدّل محتوياتها إلا بطلب |
 | [قائمة-تحقق-قبل-الدمج.md](./قائمة-تحقق-قبل-الدمج.md) | تجنّب أخطاء وازدواجية؛ انسجام الجهاز والمنصات والمساعد؛ **قسم 7:** وقاية واستعادة عند خلل في الكود أو الجهاز أو المنصات |
 
 ## الأوامر (من جذر المشروع)
