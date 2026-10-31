@@ -12397,7 +12397,7 @@
             return new URL('assets/logo.jpg', window.location.origin + window.IIF_DOCUMENT_BASE).href;
           }
         } catch (e2) { }
-        return 'https://iiffund.com/financial-consulting/iif-fund-demo/assets/logo.jpg';
+        return new URL('assets/logo.jpg', window.location.origin + '/').href;
       })();
       var videoCallJitsiApi = null;
       function createJitsiMeetingInContainer(container, iframe, roomName, jitsiUrl) {

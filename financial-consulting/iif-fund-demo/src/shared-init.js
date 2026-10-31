@@ -4,7 +4,7 @@
 import { loadLang } from './i18n/loader.js';
 
 const DEFAULT_LANG = 'ar';
-const LANG_STORAGE_KEY = 'iif-lang';
+var LANG_STORAGE_KEY = 'iif-lang';
 
 function getStoredLang() {
   try { return localStorage.getItem(LANG_STORAGE_KEY) || DEFAULT_LANG; } catch (e) { return DEFAULT_LANG; }

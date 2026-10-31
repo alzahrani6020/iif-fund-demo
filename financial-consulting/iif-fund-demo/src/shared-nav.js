@@ -25,7 +25,7 @@ const SOV_LANGS = [
   { code: 'zh', label: 'ZH' },
 ];
 
-const LANG_STORAGE_KEY = 'iif-lang';
+var LANG_STORAGE_KEY = 'iif-lang';
 
 function getStoredLang() {
   try { return localStorage.getItem(LANG_STORAGE_KEY) || 'ar'; }

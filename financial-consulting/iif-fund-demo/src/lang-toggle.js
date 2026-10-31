@@ -1,5 +1,5 @@
 // Language toggle widget — injects a floating button for homepage SPA
-const LANG_STORAGE_KEY = 'iif-lang';
+var LANG_STORAGE_KEY = 'iif-lang';
 const DEFAULT_LANG = 'ar';
 
 function getLang() {
