@@ -7861,3 +7861,48 @@
       font-size: 0.8rem;
       color: #64748b;
     }
+
+/* لوحة تنقل لوحة التحكم — أضيفت عند إعادة التأهيل */
+.dashboard-nav {
+  background: rgba(15, 23, 42, 0.72);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.dashboard-nav__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.45rem 1rem;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.dashboard-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 0.55rem;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.dashboard-nav__link:hover {
+  background: rgba(148, 163, 184, 0.14);
+  color: #f8fafc;
+}
+.dashboard-nav__link.is-active {
+  background: rgba(201, 162, 39, 0.18);
+  color: #e9c860;
+}
+.dashboard-nav__icon { font-size: 1rem; }
+.dashboard-nav__label { white-space: nowrap; }
+
+.dashboard-view {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 3rem;
+}
