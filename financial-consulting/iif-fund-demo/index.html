@@ -57,7 +57,9 @@
   <!-- Local body fonts: no external request, optional display prevents CLS -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/plus-jakarta-sans-400.woff2" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/noto-sans-arabic-400.woff2" />
-  <link rel="stylesheet" href="css/fonts-hosted.css" />
+  <link rel="stylesheet" href="css/fonts-hosted.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="css/fonts-hosted.css" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="css/fonts-hosted.css" /></noscript></noscript>
 
   <!-- Display fonts self-hosted and loaded asynchronously -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/cormorant-garamond-600-normal.woff2" />
@@ -71,7 +73,9 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/sovereign-system.css" />
-  <link rel="stylesheet" href="css/sovereign-components.css" />
+  <link rel="stylesheet" href="css/sovereign-components.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="css/sovereign-components.css" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="css/sovereign-components.css" /></noscript></noscript>
   <link rel="stylesheet" href="css/sovereign-animations.css" media="print" onload="this.media='all'" />
   <noscript>
     <link rel="stylesheet" href="css/sovereign-animations.css" />
