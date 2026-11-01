@@ -76,6 +76,9 @@ export class I18nManager {
         footerLinkCompliance: 'Compliance',
         footerLinkDisclaimer: 'Disclaimer',
         footerLinkVerification: 'Institutional Verification',
+        footerLinkRegulatory: 'Regulatory Status',
+        footerLinkRisk: 'Risk Disclosure',
+        footerLinkAml: 'AML & KYC',
         
         // Auth
         signInTitle: 'Sign In',
@@ -292,6 +295,9 @@ export class I18nManager {
         footerLinkCompliance: 'الامتثال',
         footerLinkDisclaimer: 'إخلاء المسؤولية',
         footerLinkVerification: 'التحقق المؤسسي',
+        footerLinkRegulatory: 'الحالة التنظيمية',
+        footerLinkRisk: 'إفصاح المخاطر',
+        footerLinkAml: 'مكافحة غسل الأموال وKYC',
         
         // Auth
         signInTitle: 'تسجيل الدخول',

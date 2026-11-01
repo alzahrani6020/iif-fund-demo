@@ -73,6 +73,13 @@
 
   <section class="sov-section" style="background:var(--sov-navy-900);">
     <div class="sov-container">
+      <div style="padding:var(--space-5);border:1px solid var(--color-glass-border);border-radius:var(--radius-lg);background:var(--color-surface-elevated);margin-bottom:var(--space-6);font-size:var(--text-sm);line-height:2;color:var(--color-text-main);">
+        <h2 style="font-size:var(--text-xl);margin-bottom:var(--space-3);"><span class="lang-en">Membership Overview</span><span class="lang-ar">نظرة عامة على العضوية</span></h2>
+        <p><b><span class="lang-en">Who may apply:</span><span class="lang-ar">من يمكنه التقديم:</span></b> <span class="lang-en">Governments and sovereign entities, institutional investors, corporate partners, and individuals/family offices — subject to eligibility review and membership committee approval.</span><span class="lang-ar">الحكومات والجهات السيادية، والمستثمرون المؤسسيون، وشركاء القطاع الخاص، والأفراد/المكاتب العائلية — خاضعون لمراجعة الأهلية وموافقة لجنة العضوية.</span></p>
+        <p><b><span class="lang-en">Eligibility &amp; KYC:</span><span class="lang-ar">الأهلية وإجراءات KYC:</span></b> <span class="lang-en">Applications are assessed based on legal identity, purpose of membership, and due diligence. Identity documents, beneficial ownership, and source of funds may be requested in line with AML/CFT procedures.</span><span class="lang-ar">تُقيَّم الطلبات بناءً على الهوية القانونية والغرض من العضوية والعناية الواجبة، وقد تُطلب مستندات إثبات الهوية والملكية الحقيقية ومصدر الأموال وفق إجراءات مكافحة غسل الأموال وتمويل الإرهاب.</span></p>
+        <p><b><span class="lang-en">Process:</span><span class="lang-ar">الخطوات:</span></b> <span class="lang-en">1) Submit the form → 2) Compliance and eligibility review → 3) Direct contact to complete documentation → 4) Admission decision.</span><span class="lang-ar">1) تقديم النموذج ← 2) مراجعة الامتثال والأهلية ← 3) تواصل مباشر لاستكمال المستندات ← 4) قرار القبول.</span></p>
+        <p style="color:var(--sov-gold-300);"><b><span class="lang-en">Note:</span><span class="lang-ar">تنبيه:</span></b> <span class="lang-en">Submitting an application does not imply acceptance; IIF reserves the right to decline any application without stating reasons.</span><span class="lang-ar">تقديم الطلب لا يعني القبول؛ ويحتفظ الصندوق بحق رفض أي طلب دون إبداء أسباب.</span></p>
+      </div>
       <form class="sov-form sov-reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
         <div class="sov-form__row">
           <div class="sov-form__group">
@@ -97,11 +104,11 @@
         <div class="sov-form__group">
           <label class="sov-form__label"><span class="lang-en">Membership Type</span><span class="lang-ar">نوع العضوية</span></label>
           <select class="sov-form__select" name="type" required>
-            <option value=""><span class="lang-en">Select...</span><span class="lang-ar">اختر...</span></option>
-            <option value="government"><span class="lang-en">Government / Sovereign Entity</span><span class="lang-ar">حكومة / جهة سيادية</span></option>
-            <option value="institutional"><span class="lang-en">Institutional Investor</span><span class="lang-ar">مستثمر مؤسسي</span></option>
-            <option value="corporate"><span class="lang-en">Corporate Partner</span><span class="lang-ar">شريك corporat</span></option>
-            <option value="individual"><span class="lang-en">Individual / Family Office</span><span class="lang-ar">فرد / مكتب عائلي</span></option>
+            <option value="" selected>اختر...</option>
+            <option value="government">حكومة / جهة سيادية</option>
+            <option value="institutional">مستثمر مؤسسي</option>
+            <option value="corporate">شريك مؤسسي</option>
+            <option value="individual">فرد / مكتب عائلي</option>
           </select>
         </div>
         <div class="sov-form__group">
