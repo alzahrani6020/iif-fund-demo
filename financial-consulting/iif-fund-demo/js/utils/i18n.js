@@ -75,6 +75,7 @@ export class I18nManager {
         footerLinkCookies: 'Cookie Policy',
         footerLinkCompliance: 'Compliance',
         footerLinkDisclaimer: 'Disclaimer',
+        footerLinkVerification: 'Institutional Verification',
         
         // Auth
         signInTitle: 'Sign In',
@@ -290,6 +291,7 @@ export class I18nManager {
         footerLinkCookies: 'سياسة ملفات تعريف الارتباط',
         footerLinkCompliance: 'الامتثال',
         footerLinkDisclaimer: 'إخلاء المسؤولية',
+        footerLinkVerification: 'التحقق المؤسسي',
         
         // Auth
         signInTitle: 'تسجيل الدخول',

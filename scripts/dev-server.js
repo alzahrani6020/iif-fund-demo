@@ -572,6 +572,7 @@ function serveStatic(req, res) {
     '/sovereign': '/sovereign-standards.html',
     '/charter': '/sovereign-standards.html',
     '/news-sources': '/financial-consulting/iif-fund-demo/news-sources.html',
+    '/verification': '/financial-consulting/iif-fund-demo/verification.html',
   };
   if (shortPaths[urlPath]) {
     urlPath = shortPaths[urlPath];
