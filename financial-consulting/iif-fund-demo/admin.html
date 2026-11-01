@@ -87,13 +87,13 @@
         title="IIF administration"
         allow="clipboard-read; clipboard-write"
         referrerpolicy="no-referrer"
-        src="./index.html?iif_admin_portal=1&open_dashboard=1"
+        src="./admin-dashboard/"
       ></iframe>
     </div>
     <div class="fallback" id="fallback">
       <div>
         <p data-i18n="adminFallbackLead">If the administration panel does not appear in the frame, open the link directly:</p>
-        <p><a href="./index.html?iif_admin_portal=1&open_dashboard=1" data-i18n="adminFallbackLink">Open administration panel</a></p>
+        <p><a href="./admin-dashboard/" data-i18n="adminFallbackLink">Open administration panel</a></p>
       </div>
     </div>
     <script>
@@ -132,14 +132,14 @@
       const openSameTab = document.getElementById('open-same-tab');
       if (openSameTab) {
         openSameTab.addEventListener('click', () => {
-          window.location.href = './index.html?iif_admin_portal=1&open_dashboard=1';
+          window.location.href = './admin-dashboard/';
         });
       }
       const reloadIframe = document.getElementById('reload-iframe');
       if (reloadIframe && frame) {
         reloadIframe.addEventListener('click', () => {
           try { loaded = false; } catch (e) {}
-          frame.src = './index.html?iif_admin_portal=1&open_dashboard=1';
+          frame.src = './admin-dashboard/';
           setTimeout(() => {
             if (!loaded && fb) fb.style.display = 'flex';
           }, 3000);

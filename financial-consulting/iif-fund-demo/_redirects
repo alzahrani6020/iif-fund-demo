@@ -7,14 +7,14 @@
 /fund        /index.html         200
 /fund/       /index.html         200
 
-/dashboard   /index.html?iif_admin_portal=1&open_dashboard=1 200
-/dashboard/  /index.html?iif_admin_portal=1&open_dashboard=1 200
-/panel       /index.html?iif_admin_portal=1&open_dashboard=1 200
-/panel/      /index.html?iif_admin_portal=1&open_dashboard=1 200
-/cp          /index.html?iif_admin_portal=1&open_dashboard=1 200
-/cp/         /index.html?iif_admin_portal=1&open_dashboard=1 200
-/fund-admin  /index.html?iif_admin_portal=1&open_dashboard=1 200
-/fund-admin/ /index.html?iif_admin_portal=1&open_dashboard=1 200
+/dashboard   /admin-dashboard/  301
+/dashboard/  /admin-dashboard/  301
+/panel       /admin-dashboard/  301
+/panel/      /admin-dashboard/  301
+/cp          /admin-dashboard/  301
+/cp/         /admin-dashboard/  301
+/fund-admin  /admin-dashboard/  301
+/fund-admin/ /admin-dashboard/  301
 
 # Executive brief + sovereign standards + legal (محتوى من جذر المستودع نُقل إلى مجلد النشر)
 /executive  /executive-brief  301

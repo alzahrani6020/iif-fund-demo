@@ -172,8 +172,8 @@
       content: "";
       position: fixed;
       inset: 0;
-      background: url('assets/logo.jpg') center center no-repeat;
-      background: image-set(url('assets/logo.webp') type('image/webp'), url('assets/logo.jpg') type('image/jpeg')) center center no-repeat;
+      background: url('../../assets/logo.jpg') center center no-repeat;
+      background: image-set(url('../../assets/logo-300.webp') type('image/webp'), url('../../assets/logo.jpg') type('image/jpeg')) center center no-repeat;
       background-size: min(70vw, 520px) auto;
       opacity: 0.06;
       pointer-events: none;
@@ -6164,8 +6164,8 @@
       bottom: 15%;
       width: 180px;
       height: 180px;
-      background: url('assets/logo.jpg') center center no-repeat;
-      background: image-set(url('assets/logo.webp') type('image/webp'), url('assets/logo.jpg') type('image/jpeg')) center center no-repeat;
+      background: url('../../assets/logo.jpg') center center no-repeat;
+      background: image-set(url('../../assets/logo-300.webp') type('image/webp'), url('../../assets/logo.jpg') type('image/jpeg')) center center no-repeat;
       background-size: contain;
       opacity: 0.07;
       pointer-events: none;
