@@ -596,6 +596,15 @@ function serveStatic(req, res) {
   }
   fs.stat(filePath, (err, st) => {
     if (err) {
+      /** روابط بلا امتداد — مطابقة سلوك Cloudflare Pages (clean URLs): /apply ← apply.html */
+      if (!path.extname(filePath)) {
+        const htmlCandidate = `${filePath}.html`;
+        fs.stat(htmlCandidate, (e2, st2) => {
+          if (!e2 && st2.isFile()) pipeFile(htmlCandidate);
+          else send(res, 404, 'Not found', { 'Content-Type': 'text/plain; charset=utf-8' });
+        });
+        return;
+      }
       send(res, 404, 'Not found', { 'Content-Type': 'text/plain; charset=utf-8' });
       return;
     }
@@ -603,6 +612,14 @@ function serveStatic(req, res) {
       const indexInDir = path.join(filePath, 'index.html');
       fs.stat(indexInDir, (e2, st2) => {
         if (!e2 && st2.isFile()) pipeFile(indexInDir);
+        /** مجلد بنفس اسم الصفحة (reports/ يحجب reports.html) — النسخة .html أولوية */
+        else if (!path.extname(filePath)) {
+          const htmlCandidate = `${filePath}.html`;
+          fs.stat(htmlCandidate, (e3, st3) => {
+            if (!e3 && st3.isFile()) pipeFile(htmlCandidate);
+            else send(res, 404, 'Not found', { 'Content-Type': 'text/plain; charset=utf-8' });
+          });
+        }
         else send(res, 404, 'Not found', { 'Content-Type': 'text/plain; charset=utf-8' });
       });
       return;

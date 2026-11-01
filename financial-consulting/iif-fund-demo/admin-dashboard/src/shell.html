@@ -47,7 +47,7 @@
         var isLocal = host === '127.0.0.1' || host === 'localhost' || host === '[::1]';
         /**
          * scripts/dev-server.js يقدّم / و /index.html من financial-consulting/iif-fund-demo/index.html
-         * بينما pathname يبقى / — فيجب جذر المشروع وليس جذر النطاق حتى تُحمّل assets/emblem.jpg
+         * بينما pathname يبقى / — فيجب جذر المشروع وليس جذر النطاق حتى تُحمّل ../../assets/logo.jpg
          */
         if (
           isLocal &&
@@ -120,14 +120,14 @@
   <meta name="description"
     content="صندوق الاستثمار الدولي (FII) — International Investment Fund — Financing for global prosperity. Registered in the EU Transparency Register. Licensed in France & USA. European & African Parliament recognition. Sovereign & institutional capital." />
   <meta name="iif-funcs-base" content="https://iiffund.com" />
-  <link rel="icon" href="assets/emblem.webp" type="image/webp" />
-  <link rel="icon" href="assets/emblem.jpg" type="image/jpeg" />
-  <link rel="apple-touch-icon" href="assets/emblem.jpg" />
-  <link rel="preload" as="image" href="assets/emblem.webp" type="image/webp" fetchpriority="high" />
+  <link rel="icon" href="../../assets/logo.webp" type="image/webp" />
+  <link rel="icon" href="../../assets/logo.jpg" type="image/jpeg" />
+  <link rel="apple-touch-icon" href="../../assets/logo.jpg" />
+  <link rel="preload" as="image" href="../../assets/logo.webp" type="image/webp" fetchpriority="high" />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
   <link rel="preconnect" href="https://cdn.sheetjs.com" crossorigin />
-  <link rel="stylesheet" href="css/fonts-hosted.css" />
-  <link rel="stylesheet" href="css/public-components.css" />
+  <link rel="stylesheet" href="../../css/fonts-hosted.css" />
+  <link rel="stylesheet" href="../../css/public-components.css" />
   <!-- تحقق-النشر: iif-dashboard-fullpage-v3 — إن لم يظهر هذا التعليق في Ctrl+U على Vercel فالنشر قديم -->
   <style id="iif-dashboard-fullpage-critical-head">
     /* لوحة التحكم: ملء الشاشة — نسخة مبكّرة في <head> (تُكمّلها iif-dashboard-fullpage-lock في آخر body) */
@@ -360,8 +360,8 @@
       content: "";
       position: fixed;
       inset: 0;
-      background: url('assets/emblem.jpg') center center no-repeat;
-      background: image-set(url('assets/emblem.webp') type('image/webp'), url('assets/emblem.jpg') type('image/jpeg')) center center no-repeat;
+      background: url('../../assets/logo.jpg') center center no-repeat;
+      background: image-set(url('../../assets/logo.webp') type('image/webp'), url('../../assets/logo.jpg') type('image/jpeg')) center center no-repeat;
       background-size: min(70vw, 520px) auto;
       opacity: 0.06;
       pointer-events: none;
@@ -1877,8 +1877,8 @@
     .members-card__tier-emblem {
       width: 20px;
       height: 20px;
-      background: url('assets/emblem.jpg') center/contain no-repeat;
-      background: image-set(url('assets/emblem.webp') type('image/webp'), url('assets/emblem.jpg') type('image/jpeg')) center/contain no-repeat;
+      background: url('../../assets/logo.jpg') center/contain no-repeat;
+      background: image-set(url('../../assets/logo.webp') type('image/webp'), url('../../assets/logo.jpg') type('image/jpeg')) center/contain no-repeat;
       opacity: 0.9;
       flex-shrink: 0;
     }
@@ -2049,8 +2049,8 @@
       content: '';
       width: 28px;
       height: 28px;
-      background: url('assets/emblem.jpg') center/contain no-repeat;
-      background: image-set(url('assets/emblem.webp') type('image/webp'), url('assets/emblem.jpg') type('image/jpeg')) center/contain no-repeat;
+      background: url('../../assets/logo.jpg') center/contain no-repeat;
+      background: image-set(url('../../assets/logo.webp') type('image/webp'), url('../../assets/logo.jpg') type('image/jpeg')) center/contain no-repeat;
       opacity: 0.9;
       flex-shrink: 0;
     }
@@ -6352,8 +6352,8 @@
       bottom: 15%;
       width: 180px;
       height: 180px;
-      background: url('assets/emblem.jpg') center center no-repeat;
-      background: image-set(url('assets/emblem.webp') type('image/webp'), url('assets/emblem.jpg') type('image/jpeg')) center center no-repeat;
+      background: url('../../assets/logo.jpg') center center no-repeat;
+      background: image-set(url('../../assets/logo.webp') type('image/webp'), url('../../assets/logo.jpg') type('image/jpeg')) center center no-repeat;
       background-size: contain;
       opacity: 0.07;
       pointer-events: none;
@@ -8316,8 +8316,8 @@
         <a href="#" class="site-logo">
           <span class="site-logo__emblem site-logo__emblem--crest" aria-hidden="true">
             <picture>
-              <source type="image/webp" srcset="assets/emblem.webp" />
-              <img src="assets/emblem.jpg" alt="صندوق الاستثمار الدولي — International Investment Fund — شعار الصندوق الرسمي"
+              <source type="image/webp" srcset="../../assets/logo.webp" />
+              <img src="../../assets/logo.jpg" alt="صندوق الاستثمار الدولي — International Investment Fund — شعار الصندوق الرسمي"
                 class="site-logo__img" width="56" height="56" loading="eager" fetchpriority="high" decoding="async" />
             </picture>
           </span>
@@ -9001,8 +9001,8 @@
       <div class="video-call-modal__head">
         <span class="video-call-modal__brand" aria-hidden="true">
           <picture>
-            <source type="image/webp" srcset="assets/emblem.webp" />
-            <img src="assets/emblem.jpg" alt="" class="video-call-modal__logo" width="36" height="36" decoding="async" />
+            <source type="image/webp" srcset="../../assets/logo.webp" />
+            <img src="../../assets/logo.jpg" alt="" class="video-call-modal__logo" width="36" height="36" decoding="async" />
           </picture>
         </span>
         <div class="video-call-modal__titles">
@@ -9342,8 +9342,8 @@
   <div class="certificate-overlay" id="certificate-overlay" aria-hidden="true">
     <div class="certificate-card" id="certificate-card">
       <picture>
-        <source type="image/webp" srcset="assets/emblem.webp" />
-        <img src="assets/emblem.jpg" alt="" class="cert-emblem" id="certificate-emblem"
+        <source type="image/webp" srcset="../../assets/logo.webp" />
+        <img src="../../assets/logo.jpg" alt="" class="cert-emblem" id="certificate-emblem"
           decoding="async" onerror="this.style.display='none'" />
       </picture>
       <h2 class="cert-title lang-en" id="certificate-title-en">Digital membership card</h2>

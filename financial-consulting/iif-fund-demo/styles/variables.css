@@ -98,3 +98,5 @@
       background: #03060c;
       background-image:
         radial-gradient(ellipse 120% 80% at 50% -20%, var(--color-accent-blue-soft), transparent 50%),
+        radial-gradient(ellipse 120% 80% at 50% 120%, var(--color-accent-gold-soft), transparent 55%);
+    }

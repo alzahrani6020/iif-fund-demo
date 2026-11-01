@@ -1689,8 +1689,8 @@
     .members-card__tier-emblem {
       width: 20px;
       height: 20px;
-      background: url('assets/logo.jpg') center/contain no-repeat;
-      background: image-set(url('assets/logo.webp') type('image/webp'), url('assets/logo.jpg') type('image/jpeg')) center/contain no-repeat;
+      background: url('../../assets/logo.jpg') center/contain no-repeat;
+      background: image-set(url('../../assets/logo.webp') type('image/webp'), url('../../assets/logo.jpg') type('image/jpeg')) center/contain no-repeat;
       opacity: 0.9;
       flex-shrink: 0;
     }
@@ -1861,8 +1861,8 @@
       content: '';
       width: 28px;
       height: 28px;
-      background: url('assets/logo.jpg') center/contain no-repeat;
-      background: image-set(url('assets/logo.webp') type('image/webp'), url('assets/logo.jpg') type('image/jpeg')) center/contain no-repeat;
+      background: url('../../assets/logo.jpg') center/contain no-repeat;
+      background: image-set(url('../../assets/logo.webp') type('image/webp'), url('../../assets/logo.jpg') type('image/jpeg')) center/contain no-repeat;
       opacity: 0.9;
       flex-shrink: 0;
     }
