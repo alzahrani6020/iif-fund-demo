@@ -1,0 +1,78 @@
+# نشر تطبيق SCC API على نفس VPS الـ SearXNG عبر SSH (الأسرار موجودة مسبقاً)
+name: Deploy SCC API to VPS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout scc380
+        uses: actions/checkout@v4
+        with:
+          repository: alzahrani6020/scc380
+          path: scc380
+
+      - name: Build API image
+        run: |
+          cd scc380
+          docker build -f apps/api/Dockerfile -t scc-api:latest .
+          docker save scc-api:latest -o /tmp/scc-api.tar
+
+      - name: Prepare SSH
+        env:
+          KEY: ${{ secrets.SEARXNG_VPS_SSH_PRIVATE_KEY }}
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$KEY" > ~/.ssh/vps_key && chmod 600 ~/.ssh/vps_key
+          ssh-keyscan -p "$P" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Ship image and env to VPS
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          RSYNC_SSH="ssh -i ~/.ssh/vps_key -p $P -o StrictHostKeyChecking=accept-new"
+          rsync -e "$RSYNC_SSH" -az /tmp/scc-api.tar "${USER_}@${HOST}:~/scc-api.tar"
+          # ملف البيئة (قيم حساسة تصل من أسرار GitHub — لا تُطبع)
+          ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" 'cat > ~/scc-api.env' << 'EOF'
+          NODE_ENV=production
+          PORT=3001
+          DATABASE_URL=${{ secrets.SCC_API_DATABASE_URL }}
+          DIRECT_URL=${{ secrets.SCC_API_DIRECT_URL }}
+          JWT_SECRET=${{ secrets.SCC_API_JWT_SECRET }}
+          REDIS_URL=redis://scc-redis:6379
+          CORS_ORIGINS=https://dr-talal-h-alzahrani.com,https://www.dr-talal-h-alzahrani.com
+          EOF
+
+      - name: Run stack on VPS
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
+            set -e
+            docker load -i ~/scc-api.tar
+            docker network create scc-net 2>/dev/null || true
+            docker rm -f scc-api scc-redis scc-caddy 2>/dev/null || true
+            docker run -d --name scc-redis --network scc-net --restart unless-stopped redis:7-alpine
+            docker run -d --name scc-api --network scc-net --restart unless-stopped \
+              -p 127.0.0.1:3001:3001 --env-file ~/scc-api.env scc-api:latest
+            mkdir -p ~/scc-caddy
+            cat > ~/scc-caddy/Caddyfile << "CADDY"
+            api.dr-talal-h-alzahrani.com {
+                reverse_proxy scc-api:3001
+            }
+            CADDY
+            docker run -d --name scc-caddy --network scc-net --restart unless-stopped \
+              -p 80:80 -p 443:443 -v ~/scc-caddy/Caddyfile:/etc/caddy/Caddyfile caddy:2
+            sleep 25
+            echo "--- health ---"
+            curl -s -o /dev/null -w "local api: %{http_code}\n" http://127.0.0.1:3001 || true
+            docker ps --filter name=scc- --format "{{.Names}} {{.Status}}"
+          '
