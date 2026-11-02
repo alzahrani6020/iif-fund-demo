@@ -1,0 +1,35 @@
+# تطهير كاش Cloudflare لدومين محدد عبر workflow يستخدم أسرار المستودع
+name: Purge Cloudflare Cache
+
+on:
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: "الدومين المطلوب تطهير كاشه"
+        required: true
+        default: "dr-talal-h-alzahrani.com"
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find zone and purge cache
+        run: |
+          set -e
+          DOMAIN="${{ github.event.inputs.domain }}"
+          echo "Looking up zone: $DOMAIN"
+          ZONES=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=$DOMAIN" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json")
+          ZONE_ID=$(echo "$ZONES" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['result'][0]['id'] if d.get('result') else '')")
+          if [ -z "$ZONE_ID" ]; then
+            echo "Zone not found or token lacks zone:list — API said:"
+            echo "$ZONES" | head -c 500
+            exit 1
+          fi
+          echo "Zone ID: $ZONE_ID"
+          RESULT=$(curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"purge_everything":true}')
+          echo "$RESULT" | python3 -c "import sys,json; d=json.load(sys.stdin); print('SUCCESS' if d.get('success') else 'FAILED: '+json.dumps(d.get('errors'),ensure_ascii=False))"
