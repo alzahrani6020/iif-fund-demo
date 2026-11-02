@@ -17,7 +17,7 @@ jobs:
       - name: Build API image
         run: |
           cd scc380
-          docker build -f apps/api/Dockerfile -t scc-api:latest .
+          docker build --build-arg NODE_MAX_HEAP=3072 -f apps/api/Dockerfile -t scc-api:latest .
           docker save scc-api:latest -o /tmp/scc-api.tar
 
       - name: Prepare SSH
