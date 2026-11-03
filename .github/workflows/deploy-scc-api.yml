@@ -38,16 +38,8 @@ jobs:
         run: |
           RSYNC_SSH="ssh -i ~/.ssh/vps_key -p $P -o StrictHostKeyChecking=accept-new"
           rsync -e "$RSYNC_SSH" -az /tmp/scc-api.tar "${USER_}@${HOST}:~/scc-api.tar"
-          # ملف البيئة (قيم حساسة تصل من أسرار GitHub — لا تُطبع)
-          ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" 'cat > ~/scc-api.env' << 'EOF'
-          NODE_ENV=production
-          PORT=3001
-          DATABASE_URL=${{ secrets.SCC_API_DATABASE_URL }}
-          DIRECT_URL=${{ secrets.SCC_API_DIRECT_URL }}
-          JWT_SECRET=${{ secrets.SCC_API_JWT_SECRET }}
-          REDIS_URL=redis://scc-redis:6379
-          CORS_ORIGINS=https://dr-talal-h-alzahrani.com,https://www.dr-talal-h-alzahrani.com
-          EOF
+          # ملف البيئة (القيم تُحقن من أسرار GitHub — لا تُطبع)
+          ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" "printf '%s\n' 'NODE_ENV=production' 'PORT=3001' 'DATABASE_URL=${{ secrets.SCC_API_DATABASE_URL }}' 'DIRECT_URL=${{ secrets.SCC_API_DIRECT_URL }}' 'JWT_SECRET=${{ secrets.SCC_API_JWT_SECRET }}' 'REDIS_URL=redis://scc-redis:6379' 'CORS_ORIGINS=https://dr-talal-h-alzahrani.com,https://www.dr-talal-h-alzahrani.com' > ~/scc-api.env"
 
       - name: Run stack on VPS
         env:
