@@ -577,12 +577,20 @@ function serveStatic(req, res) {
   if (shortPaths[urlPath]) {
     urlPath = shortPaths[urlPath];
   }
-  /** الصفحة الرئيسية للموقع (الزوار والأعضاء والمستخدمون): نفس الملف بدون معاملات لوحة — لوحة التحكم من /dashboard فقط */
+  /**
+   * الصفحة الرئيسية: توجيه نسبي إلى مجلد الواجهة — بنفس فكرة نشر Cloudflare Pages
+   * الذي يجعل مجلد iif-fund-demo جذر الموقع — حتى تعمل الروابط النسبية للأصول
+   * (css/assets/خطوط) عند فتح / محليًا وعبر الـ tunnel. لوحة التحكم من /dashboard فقط.
+   */
   if (urlPath === '/' || urlPath === '/index.html') {
     const primary = path.join(ROOT, 'financial-consulting', 'iif-fund-demo', 'index.html');
-    urlPath = fs.existsSync(primary)
-      ? '/financial-consulting/iif-fund-demo/index.html'
-      : '/financial-consulting/fund-site/index.html';
+    const targetDir = fs.existsSync(primary)
+      ? '/financial-consulting/iif-fund-demo/'
+      : '/financial-consulting/fund-site/';
+    const qs = (req.url || '').includes('?') ? (req.url || '').slice((req.url || '').indexOf('?')) : '';
+    res.writeHead(302, { Location: targetDir + qs });
+    res.end();
+    return;
   }
   let filePath = safeJoin(ROOT, urlPath);
   if (!filePath) {

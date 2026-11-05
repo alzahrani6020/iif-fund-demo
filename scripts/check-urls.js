@@ -38,12 +38,19 @@ const PATHS = [
 const SOFT_PATHS = [{ path: '/api/searx/', note: 'بروكسي → SearXNG على 127.0.0.1:18080 (Docker من engines/searxng)' }];
 const CHECK_OPTIONAL = process.env.CHECK_OPTIONAL === '1';
 
-function get(path) {
+function get(path, redirects = 0) {
   return new Promise((resolve, reject) => {
     const req = http.request(
       { hostname: HOST, port: PORT, path, method: 'GET', timeout: 10000 },
       (res) => {
+        const loc = res.headers.location;
         res.resume();
+        if (res.statusCode >= 300 && res.statusCode < 400 && loc && redirects < 3) {
+          /** اتباع إعادة التوجيه النسبية (مثل / → مجلد الواجهة) */
+          const next = new URL(loc, `http://${HOST}:${PORT}${path}`);
+          resolve(get(next.pathname + next.search, redirects + 1));
+          return;
+        }
         resolve({ path, status: res.statusCode });
       }
     );
