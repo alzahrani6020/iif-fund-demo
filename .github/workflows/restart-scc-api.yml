@@ -39,7 +39,7 @@ jobs:
               -p 80:80 -p 443:443 -v ~/scc-caddy/Caddyfile:/etc/caddy/Caddyfile caddy:2
             sleep 20
             echo "--- health ---"
-            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://127.0.0.1:3001 || echo 000)
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://127.0.0.1:3001 || true); code=${code:-000}
             echo "local api: $code"
             if [ "$code" = "000" ]; then exit 1; fi
             docker ps --filter name=scc- --format "{{.Names}} {{.Status}}"

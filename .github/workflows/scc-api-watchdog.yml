@@ -21,7 +21,8 @@ jobs:
         run: |
           code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 20 \
             -X POST "https://api.dr-talal-h-alzahrani.com/auth/login" \
-            -H "Content-Type: application/json" -d '{}' || echo 000)
+            -H "Content-Type: application/json" -d '{}' || true)
+          code=${code:-000}
           echo "api: $code"
           case "$code" in
             000|5*) echo "down=true" >> "$GITHUB_OUTPUT" ;;
@@ -61,7 +62,7 @@ jobs:
             docker run -d --name scc-api --network scc-net --restart unless-stopped \
               -p 127.0.0.1:3001:3001 --env-file ~/scc-api.env scc-api:latest
             sleep 20
-            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://127.0.0.1:3001 || echo 000)
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://127.0.0.1:3001 || true); code=${code:-000}
             echo "after-heal: $code"
             docker image prune -f || true
             if [ "$code" = "000" ]; then exit 1; fi
