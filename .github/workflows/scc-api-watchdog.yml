@@ -1,0 +1,68 @@
+# مراقب تلقائي لـ SCC API: يفحص كل 10 دقائق، ويعيد تشغيل حاويات الـ VPS عند السقوط.
+# يغطي: إعادة إقلاع الخادم، انهيار الحاويات، وأي توقف مستقبلي — دون تدخل يدوي.
+# ملاحظة: يفترض وجود صورة scc-api:latest وملف ~/scc-api.env على الـ VPS (من deploy-scc-api.yml).
+name: SCC API Watchdog
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: scc-watchdog
+  cancel-in-progress: false
+
+jobs:
+  probe-and-heal:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe API (login route must answer, any 4xx/2xx = alive)
+        id: probe
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 20 \
+            -X POST "https://api.dr-talal-h-alzahrani.com/auth/login" \
+            -H "Content-Type: application/json" -d '{}' || echo 000)
+          echo "api: $code"
+          case "$code" in
+            000|5*) echo "down=true" >> "$GITHUB_OUTPUT" ;;
+            *)      echo "down=false" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Prepare SSH
+        if: steps.probe.outputs.down == 'true'
+        env:
+          KEY: ${{ secrets.SEARXNG_VPS_SSH_PRIVATE_KEY }}
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$KEY" > ~/.ssh/vps_key && chmod 600 ~/.ssh/vps_key
+          ssh-keyscan -p "$P" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Restart stack on VPS
+        if: steps.probe.outputs.down == 'true'
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=15 \
+            -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
+            set -e
+            docker network create scc-net 2>/dev/null || true
+            mkdir -p ~/scc-caddy
+            printf "%s\n" "api.dr-talal-h-alzahrani.com {" "    reverse_proxy scc-api:3001" "}" > ~/scc-caddy/Caddyfile
+            docker rm -f scc-caddy 2>/dev/null || true
+            docker run -d --name scc-caddy --network scc-net --restart unless-stopped \
+              -p 80:80 -p 443:443 -v ~/scc-caddy/Caddyfile:/etc/caddy/Caddyfile caddy:2
+            docker rm -f scc-redis 2>/dev/null || true
+            docker run -d --name scc-redis --network scc-net --restart unless-stopped redis:7-alpine
+            docker rm -f scc-api 2>/dev/null || true
+            docker run -d --name scc-api --network scc-net --restart unless-stopped \
+              -p 127.0.0.1:3001:3001 --env-file ~/scc-api.env scc-api:latest
+            sleep 20
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://127.0.0.1:3001 || echo 000)
+            echo "after-heal: $code"
+            docker image prune -f || true
+            if [ "$code" = "000" ]; then exit 1; fi
+          '

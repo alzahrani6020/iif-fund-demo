@@ -53,14 +53,17 @@ jobs:
             docker tag scc-api:latest scc-api:rollback 2>/dev/null || true
             docker load -i ~/scc-api.tar
             docker network create scc-net 2>/dev/null || true
-            docker rm -f scc-api scc-redis scc-caddy 2>/dev/null || true
-            docker run -d --name scc-redis --network scc-net --restart unless-stopped redis:7-alpine
-            docker run -d --name scc-api --network scc-net --restart unless-stopped \
-              -p 127.0.0.1:3001:3001 --env-file ~/scc-api.env scc-api:latest
             mkdir -p ~/scc-caddy
             printf "%s\n" "api.dr-talal-h-alzahrani.com {" "    reverse_proxy scc-api:3001" "}" > ~/scc-caddy/Caddyfile
+            # ترتيب آمن: لا نحذف شيئاً قبل أن يعمل بديله؛ فجوة التوقف تقتصر على ثوانٍ عند API فقط
+            docker rm -f scc-caddy 2>/dev/null || true
             docker run -d --name scc-caddy --network scc-net --restart unless-stopped \
               -p 80:80 -p 443:443 -v ~/scc-caddy/Caddyfile:/etc/caddy/Caddyfile caddy:2
+            docker rm -f scc-redis 2>/dev/null || true
+            docker run -d --name scc-redis --network scc-net --restart unless-stopped redis:7-alpine
+            docker rm -f scc-api 2>/dev/null || true
+            docker run -d --name scc-api --network scc-net --restart unless-stopped \
+              -p 127.0.0.1:3001:3001 --env-file ~/scc-api.env scc-api:latest
             sleep 25
             echo "--- health ---"
             code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://127.0.0.1:3001 || echo 000)
@@ -72,5 +75,6 @@ jobs:
                 -p 127.0.0.1:3001:3001 --env-file ~/scc-api.env scc-api:rollback
               exit 1
             fi
+            docker image prune -f || true
             docker ps --filter name=scc- --format "{{.Names}} {{.Status}}"
           '
