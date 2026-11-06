@@ -47,7 +47,8 @@ jobs:
           HOST: ${{ secrets.SEARXNG_VPS_HOST }}
           USER_: ${{ secrets.SEARXNG_VPS_USER }}
         run: |
-          ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
+          ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=15 \
+            -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
             set -e
             docker tag scc-api:latest scc-api:rollback 2>/dev/null || true
             docker load -i ~/scc-api.tar

@@ -1,0 +1,46 @@
+# استعادة سريعة لحاويات SCC API على الـ VPS — تفترض أن ~/scc-api.tar (محمّلة كـ scc-api:latest) و ~/scc-api.env موجودتان مسبقاً.
+# تُستخدم عند سقوط الحاويات أو انقطاع SSH أثناء deploy-scc-api.yml دون إعادة بناء الصورة.
+name: Restart SCC API Stack
+
+on:
+  workflow_dispatch:
+
+jobs:
+  restart:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare SSH
+        env:
+          KEY: ${{ secrets.SEARXNG_VPS_SSH_PRIVATE_KEY }}
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$KEY" > ~/.ssh/vps_key && chmod 600 ~/.ssh/vps_key
+          ssh-keyscan -p "$P" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Restart stack on VPS
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=15 \
+            -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
+            set -e
+            docker network create scc-net 2>/dev/null || true
+            docker rm -f scc-api scc-redis scc-caddy 2>/dev/null || true
+            docker run -d --name scc-redis --network scc-net --restart unless-stopped redis:7-alpine
+            docker run -d --name scc-api --network scc-net --restart unless-stopped \
+              -p 127.0.0.1:3001:3001 --env-file ~/scc-api.env scc-api:latest
+            mkdir -p ~/scc-caddy
+            printf "%s\n" "api.dr-talal-h-alzahrani.com {" "    reverse_proxy scc-api:3001" "}" > ~/scc-caddy/Caddyfile
+            docker run -d --name scc-caddy --network scc-net --restart unless-stopped \
+              -p 80:80 -p 443:443 -v ~/scc-caddy/Caddyfile:/etc/caddy/Caddyfile caddy:2
+            sleep 20
+            echo "--- health ---"
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://127.0.0.1:3001 || echo 000)
+            echo "local api: $code"
+            if [ "$code" = "000" ]; then exit 1; fi
+            docker ps --filter name=scc- --format "{{.Names}} {{.Status}}"
+          '
