@@ -1,0 +1,50 @@
+# إصلاح tenantWhere(req) → tenantWhere(req.user?.tenantId) داخل الحاوية الحية مباشرة (بلا نقل ملفات).
+# يعمل sed على dist داخل الحاوية ثم يعيد التشغيل مع فحص صحة وتراجع عكسي عند الفشل.
+name: Fix tenantWhere inline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare SSH
+        env:
+          KEY: ${{ secrets.SEARXNG_VPS_SSH_PRIVATE_KEY }}
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$KEY" > ~/.ssh/vps_key && chmod 600 ~/.ssh/vps_key
+          ssh-keyscan -p "$P" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Patch dist inside container and restart
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=15 \
+            -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
+            set -e
+            docker exec scc-api sh -c "grep -rl \"tenantWhere)(req)\" /app/apps/api/dist | xargs -r sed -i \"s/tenantWhere)(req)/tenantWhere)(req.user?.tenantId)/g\""
+            docker exec scc-api sh -c "grep -rl \"tenantWhere(req)\" /app/apps/api/dist | xargs -r sed -i \"s/tenantWhere(req)/tenantWhere(req.user?.tenantId)/g\""
+            echo "patched files: $(docker exec scc-api sh -c "grep -rl \"tenantWhere)(req.user\" /app/apps/api/dist | wc -l")"
+            docker restart scc-api
+            echo "--- health (up to ~3min) ---"
+            code=000
+            for i in $(seq 1 18); do
+              sleep 10
+              code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 8 http://127.0.0.1:3001 || true); code=${code:-000}
+              echo "try $i: $code"
+              if [ "$code" != "000" ]; then break; fi
+            done
+            if [ "$code" = "000" ]; then
+              echo "HEALTH FAILED — reverting sed"
+              docker exec scc-api sh -c "grep -rl \"tenantWhere)(req.user?.tenantId)\" /app/apps/api/dist | xargs -r sed -i \"s/tenantWhere)(req.user?.tenantId)/tenantWhere)(req)/g\""
+              docker restart scc-api
+              exit 1
+            fi
+            echo "inline fix OK: $code"
+          '
