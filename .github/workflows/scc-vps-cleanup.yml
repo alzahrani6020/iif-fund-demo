@@ -1,0 +1,38 @@
+# فحص موارد VPS وتنظيف آمن: عرض القرص/الذاكرة، حذف ملفات الترحيل المتراكمة، prune للصور الميتة.
+name: SCC VPS Cleanup
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare SSH
+        env:
+          KEY: ${{ secrets.SEARXNG_VPS_SSH_PRIVATE_KEY }}
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$KEY" > ~/.ssh/vps_key && chmod 600 ~/.ssh/vps_key
+          ssh-keyscan -p "$P" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Inspect and clean
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=15 \
+            -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
+            echo "=== BEFORE: disk ==="; df -h / | tail -1
+            echo "=== BEFORE: memory ==="; free -m | head -2
+            echo "=== big files in home ==="; du -sh ~/* 2>/dev/null | sort -rh | head -8
+            rm -f ~/scc-api.tar ~/scc-api.tar.gz ~/api-dist.tar.gz
+            rm -rf ~/api-dist-new
+            docker image prune -f
+            echo "=== AFTER: disk ==="; df -h / | tail -1
+            echo "=== docker images ==="; docker images --format "{{.Repository}}:{{.Tag}} {{.Size}}"
+            echo "=== containers ==="; docker ps --filter name=scc- --format "{{.Names}} {{.Status}}"
+          '
