@@ -72,9 +72,15 @@ jobs:
             docker rm -f scc-api 2>/dev/null || true
             docker run -d --name scc-api --network scc-net --restart unless-stopped \
               -p 127.0.0.1:3001:3001 --env-file ~/scc-api.env scc-api:latest
-            sleep 25
-            echo "--- health ---"
-            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://127.0.0.1:3001 || true); code=${code:-000}
+            # انتظار صحي متدرج: أول إقلاع يشغّل prisma db push وقد يأخذ دقائق على مخطط موسّع
+            echo "--- health (up to ~3min) ---"
+            code=000
+            for i in $(seq 1 18); do
+              sleep 10
+              code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 8 http://127.0.0.1:3001 || true); code=${code:-000}
+              echo "try $i: $code"
+              if [ "$code" != "000" ]; then break; fi
+            done
             echo "local api: $code"
             if [ "$code" = "000" ]; then
               echo "HEALTH CHECK FAILED — rolling back to previous image"
