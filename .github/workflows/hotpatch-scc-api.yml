@@ -1,0 +1,85 @@
+# ترقيع سريع لكود الـ API دون إعادة بناء صورة Docker كاملة:
+# يبني dist من scc380 main، يرسله للـ VPS، يستبدله داخل الحاوية الحية، ويعيد تشغيلها مع فحص صحة وتراجع.
+# يُستخدم للإصلاحات التي لا تمس المخطط/الاعتماديات. للتغييرات الأعمق استخدم deploy-scc-api.yml.
+name: Hotpatch SCC API dist
+
+on:
+  workflow_dispatch:
+
+jobs:
+  hotpatch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: alzahrani6020/scc380
+          path: scc380
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: scc380/pnpm-lock.yaml
+
+      - name: Build API dist
+        run: |
+          cd scc380
+          pnpm install --frozen-lockfile
+          pnpm --filter @scc/types build
+          pnpm --filter @scc/utils build
+          pnpm --filter @scc/ui build
+          pnpm --filter @scc/auth build
+          pnpm --filter @scc/database build || (cd packages/database && npx prisma generate && cd ../.. && pnpm --filter @scc/database build)
+          pnpm --filter @scc/api build
+          tar -czf /tmp/api-dist.tar.gz -C apps/api dist
+
+      - name: Prepare SSH
+        env:
+          KEY: ${{ secrets.SEARXNG_VPS_SSH_PRIVATE_KEY }}
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$KEY" > ~/.ssh/vps_key && chmod 600 ~/.ssh/vps_key
+          ssh-keyscan -p "$P" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Ship dist and hotpatch container
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          RSYNC_SSH="ssh -i ~/.ssh/vps_key -p $P -o StrictHostKeyChecking=accept-new -o ServerAliveInterval=15 -o ServerAliveCountMax=4"
+          for i in 1 2 3; do
+            if rsync -e "$RSYNC_SSH" -az --partial --append-verify /tmp/api-dist.tar.gz "${USER_}@${HOST}:~/api-dist.tar.gz"; then
+              echo "transfer ok on attempt $i"; break
+            fi
+            echo "attempt $i failed — resuming"; sleep 15
+            [ "$i" = "3" ] && exit 1
+          done
+          ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=15 \
+            -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
+            set -e
+            docker cp scc-api:/app/apps/api/dist ~/api-dist-backup 2>/dev/null || true
+            mkdir -p ~/api-dist-new && tar -xzf ~/api-dist.tar.gz -C ~/api-dist-new
+            docker cp ~/api-dist-new/dist scc-api:/app/apps/api/dist
+            docker restart scc-api
+            echo "--- health (up to ~3min) ---"
+            code=000
+            for i in $(seq 1 18); do
+              sleep 10
+              code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 8 http://127.0.0.1:3001 || true); code=${code:-000}
+              echo "try $i: $code"
+              if [ "$code" != "000" ]; then break; fi
+            done
+            if [ "$code" = "000" ]; then
+              echo "HEALTH FAILED — restoring previous dist"
+              docker cp ~/api-dist-backup scc-api:/app/apps/api/dist 2>/dev/null || true
+              docker restart scc-api
+              exit 1
+            fi
+            echo "hotpatch OK: $code"
+          '
