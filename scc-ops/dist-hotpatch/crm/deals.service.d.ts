@@ -1,0 +1,101 @@
+export declare class DealsService {
+    findAll(req: any, query: any): Promise<{
+        data: {
+            id: string;
+            tenantId: string;
+            title: string;
+            description: string | null;
+            contactId: string;
+            value: import("@prisma/client/runtime/library").Decimal | null;
+            currency: string | null;
+            stage: import("@scc/database").$Enums.DealStage;
+            probability: number | null;
+            expectedClose: Date | null;
+            actualClose: Date | null;
+            assignedToId: string | null;
+            pipelineId: string | null;
+            stageOrder: number | null;
+            customFields: import("@prisma/client/runtime/library").JsonValue | null;
+            createdAt: Date;
+            updatedAt: Date;
+        }[];
+        count: number;
+    }>;
+    findOne(req: any, id: string): Promise<{
+        id: string;
+        tenantId: string;
+        title: string;
+        description: string | null;
+        contactId: string;
+        value: import("@prisma/client/runtime/library").Decimal | null;
+        currency: string | null;
+        stage: import("@scc/database").$Enums.DealStage;
+        probability: number | null;
+        expectedClose: Date | null;
+        actualClose: Date | null;
+        assignedToId: string | null;
+        pipelineId: string | null;
+        stageOrder: number | null;
+        customFields: import("@prisma/client/runtime/library").JsonValue | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    create(req: any, dto: any): Promise<{
+        id: string;
+        tenantId: string;
+        title: string;
+        description: string | null;
+        contactId: string;
+        value: import("@prisma/client/runtime/library").Decimal | null;
+        currency: string | null;
+        stage: import("@scc/database").$Enums.DealStage;
+        probability: number | null;
+        expectedClose: Date | null;
+        actualClose: Date | null;
+        assignedToId: string | null;
+        pipelineId: string | null;
+        stageOrder: number | null;
+        customFields: import("@prisma/client/runtime/library").JsonValue | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    update(req: any, id: string, dto: any): Promise<{
+        id: string;
+        tenantId: string;
+        title: string;
+        description: string | null;
+        contactId: string;
+        value: import("@prisma/client/runtime/library").Decimal | null;
+        currency: string | null;
+        stage: import("@scc/database").$Enums.DealStage;
+        probability: number | null;
+        expectedClose: Date | null;
+        actualClose: Date | null;
+        assignedToId: string | null;
+        pipelineId: string | null;
+        stageOrder: number | null;
+        customFields: import("@prisma/client/runtime/library").JsonValue | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    remove(req: any, id: string): Promise<{
+        id: string;
+        tenantId: string;
+        title: string;
+        description: string | null;
+        contactId: string;
+        value: import("@prisma/client/runtime/library").Decimal | null;
+        currency: string | null;
+        stage: import("@scc/database").$Enums.DealStage;
+        probability: number | null;
+        expectedClose: Date | null;
+        actualClose: Date | null;
+        assignedToId: string | null;
+        pipelineId: string | null;
+        stageOrder: number | null;
+        customFields: import("@prisma/client/runtime/library").JsonValue | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+}
+//# sourceMappingURL=deals.service.d.ts.map

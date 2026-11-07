@@ -1,0 +1,63 @@
+# ترقيع مصغّر: ينسخ مجلدات dist/crm و dist/common فقط (مئات الكيلوبايت) داخل حاوية scc-api.
+# مصمم لتجنب انهيار OOM الموثق على VPS بذاكرة 878MB — ممنوع منه أي نقل كبير.
+name: Hotpatch SCC API minimal (CRM dist)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  minimal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare SSH
+        env:
+          KEY: ${{ secrets.SEARXNG_VPS_SSH_PRIVATE_KEY }}
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$KEY" > ~/.ssh/vps_key && chmod 600 ~/.ssh/vps_key
+          ssh-keyscan -p "$P" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Ship minimal dist and hotpatch
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          RSYNC_SSH="ssh -i ~/.ssh/vps_key -p $P -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20 -o ServerAliveInterval=10 -o ServerAliveCountMax=3"
+          ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
+            set -e
+            docker cp scc-api:/app/apps/api/dist/crm /tmp/dist-crm-backup 2>/dev/null || true
+            docker cp scc-api:/app/apps/api/dist/common /tmp/dist-common-backup 2>/dev/null || true
+            mkdir -p /tmp/dist-hotpatch
+          '
+          for i in 1 2 3; do
+            if rsync -e "$RSYNC_SSH" -az --partial scc-ops/dist-hotpatch/crm scc-ops/dist-hotpatch/common "${USER_}@${HOST}:/tmp/dist-hotpatch/"; then
+              echo "minimal ship ok (attempt $i)"; break
+            fi
+            echo "attempt $i failed"; sleep 8; [ "$i" = "3" ] && exit 1
+          done
+          ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
+            set -e
+            docker cp /tmp/dist-hotpatch/crm scc-api:/app/apps/api/dist/crm
+            docker cp /tmp/dist-hotpatch/common scc-api:/app/apps/api/dist/common
+            docker restart scc-api
+            code=000
+            for i in $(seq 1 18); do
+              sleep 10
+              code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 8 http://127.0.0.1:3001 || true); code=${code:-000}
+              echo "try $i: $code"
+              if [ "$code" != "000" ]; then break; fi
+            done
+            if [ "$code" = "000" ]; then
+              echo "HEALTH FAILED — restoring backups"
+              docker cp /tmp/dist-crm-backup scc-api:/app/apps/api/dist/crm 2>/dev/null || true
+              docker cp /tmp/dist-common-backup scc-api:/app/apps/api/dist/common 2>/dev/null || true
+              docker restart scc-api
+              exit 1
+            fi
+            echo "MINIMAL HOTPATCH OK: $code"
+          '
