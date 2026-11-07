@@ -68,6 +68,18 @@ jobs:
           ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" \
             "CANDIDATE_SHA='$CANDIDATE_SHA' BASELINE_SHA='$BASELINE_SHA' CANDIDATE_COMMIT='$CANDIDATE_COMMIT' BASELINE_COMMIT='$BASELINE_COMMIT' bash /opt/afaq-wave13/bin/vps_verify.sh"
 
+      - name: Prepare host runtime dependencies (artifact-declared)
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
+            set -e
+            pip3 install --no-input defusedxml==0.7.1 pypdf==6.21.4 2>&1 | tail -2
+            python3 -c "import defusedxml, pypdf; print(\"deps OK: defusedxml\", defusedxml.__version__ if hasattr(defusedxml,\"__version__\") else \"?\", \"| pypdf\", pypdf.__version__)"
+          '
+
       - name: Canary cycle (fail-closed)
         env:
           P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
