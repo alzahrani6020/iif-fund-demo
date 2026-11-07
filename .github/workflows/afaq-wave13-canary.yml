@@ -20,6 +20,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/checkout@v4
+        with:
+          repository: alzahrani6020/AFAQ-GIE
+          ref: 0cc17a9ae4c6871dbdab6e01c4574f834a581fe9
+          path: afaq-gie
+
       - name: Prepare SSH
         env:
           KEY: ${{ secrets.SEARXNG_VPS_SSH_PRIVATE_KEY }}
@@ -48,8 +54,8 @@ jobs:
         run: |
           RSYNC_SSH="ssh -i ~/.ssh/vps_key -p $P -o StrictHostKeyChecking=accept-new -o ServerAliveInterval=15 -o ServerAliveCountMax=4"
           mkdir -p ship && cp afaq-wave13/*.zip afaq-wave13/vps_*.sh ship/
-          curl -sL "https://raw.githubusercontent.com/alzahrani6020/AFAQ-GIE/0cc17a9ae4c6871dbdab6e01c4574f834a581fe9/scripts/wave13_canary_host.py" -o ship/wave13_canary_host.py
-          head -3 ship/wave13_canary_host.py
+          cp afaq-gie/scripts/wave13_canary_host.py ship/wave13_canary_host.py
+          wc -l ship/wave13_canary_host.py
           for i in 1 2 3; do
             if rsync -e "$RSYNC_SSH" -az --partial --append-verify ship/wave12-candidate-6062635d.zip ship/wave11-baseline-af0aa367.zip "${USER_}@${HOST}:/opt/afaq-wave13/source/"; then
               echo "bundles shipped (attempt $i)"; break
