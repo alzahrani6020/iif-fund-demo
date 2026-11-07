@@ -1,0 +1,101 @@
+# تشغيل Wave13 live runtime canary على VPS الـ SCC الحالي (8.213.86.231) دون المساس بحاويات SCC.
+# preflight تصوير ← نقل باقات مثبتة البصمة ← تحقق على الخادم (SHA256 + source_commit) ← cycle مغلق الفشل ←
+# postflight يثبت سلامة SCC ← جلب JSON الدليل. PRODUCTION_ACTIVE يبقى false دائماً.
+name: AFAQ Wave13 VPS Canary
+
+on:
+  workflow_dispatch:
+
+env:
+  CANDIDATE_SHA: 13f4af2be257bc9539c2edb071e729fb18b88452dafcee2f7c441e79e6667939
+  BASELINE_SHA: 08c703ba805a00af6415c6c75ee3933c1f0866282ff5383483dad801084a2e5e
+  CANDIDATE_COMMIT: 6062635d61abb1106d5f72ea56e5dc0074f280a2
+  BASELINE_COMMIT: af0aa3678e900bd1d2437b902cd25ba30d0dea96
+  OBS_SECONDS: "120"
+  INTERVAL: "5"
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare SSH
+        env:
+          KEY: ${{ secrets.SEARXNG_VPS_SSH_PRIVATE_KEY }}
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$KEY" > ~/.ssh/vps_key && chmod 600 ~/.ssh/vps_key
+          ssh-keyscan -p "$P" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Preflight snapshot on VPS
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          RSYNC_SSH="ssh -i ~/.ssh/vps_key -p $P -o StrictHostKeyChecking=accept-new -o ServerAliveInterval=15 -o ServerAliveCountMax=4"
+          rsync -e "$RSYNC_SSH" -az afaq-wave13/vps_preflight.sh "${USER_}@${HOST}:/tmp/vps_preflight.sh"
+          $RSYNC_SSH "${USER_}@${HOST}" 'bash /tmp/vps_preflight.sh'
+
+      - name: Ship artifacts + harness
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          RSYNC_SSH="ssh -i ~/.ssh/vps_key -p $P -o StrictHostKeyChecking=accept-new -o ServerAliveInterval=15 -o ServerAliveCountMax=4"
+          mkdir -p ship && cp afaq-wave13/*.zip afaq-wave13/vps_*.sh ship/
+          curl -sL "https://raw.githubusercontent.com/alzahrani6020/AFAQ-GIE/0cc17a9ae4c6871dbdab6e01c4574f834a581fe9/scripts/wave13_canary_host.py" -o ship/wave13_canary_host.py
+          head -3 ship/wave13_canary_host.py
+          for i in 1 2 3; do
+            if rsync -e "$RSYNC_SSH" -az --partial --append-verify ship/wave12-candidate-6062635d.zip ship/wave11-baseline-af0aa367.zip "${USER_}@${HOST}:/opt/afaq-wave13/source/"; then
+              echo "bundles shipped (attempt $i)"; break
+            fi
+            echo "ship attempt $i failed"; sleep 10; [ "$i" = "3" ] && exit 1
+          done
+          rsync -e "$RSYNC_SSH" -az ship/wave13_canary_host.py "${USER_}@${HOST}:/opt/afaq-wave13/bin/wave13_canary_host.py"
+          rsync -e "$RSYNC_SSH" -az ship/vps_verify.sh ship/vps_cycle.sh ship/vps_postflight.sh "${USER_}@${HOST}:/opt/afaq-wave13/bin/"
+
+      - name: Verify on VPS (hard gate)
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" \
+            "CANDIDATE_SHA='$CANDIDATE_SHA' BASELINE_SHA='$BASELINE_SHA' CANDIDATE_COMMIT='$CANDIDATE_COMMIT' BASELINE_COMMIT='$BASELINE_COMMIT' bash /opt/afaq-wave13/bin/vps_verify.sh"
+
+      - name: Canary cycle (fail-closed)
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=10 -o ConnectTimeout=15 \
+            -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" \
+            "CANDIDATE_SHA='$CANDIDATE_SHA' BASELINE_SHA='$BASELINE_SHA' CANDIDATE_COMMIT='$CANDIDATE_COMMIT' BASELINE_COMMIT='$BASELINE_COMMIT' OBS_SECONDS='$OBS_SECONDS' INTERVAL='$INTERVAL' bash /opt/afaq-wave13/bin/vps_cycle.sh"
+
+      - name: Postflight + fetch evidence
+        if: always()
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          mkdir -p evidence
+          RSYNC_SSH="ssh -i ~/.ssh/vps_key -p $P -o StrictHostKeyChecking=accept-new"
+          ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" 'bash /opt/afaq-wave13/bin/vps_postflight.sh' | tee evidence/postflight.txt
+          rsync -e "$RSYNC_SSH" -az "${USER_}@${HOST}:/opt/afaq-wave13/evidence/" evidence/ 2>/dev/null || true
+          rsync -e "$RSYNC_SSH" -az "${USER_}@${HOST}:/opt/afaq-wave13/preflight.json" evidence/ 2>/dev/null || true
+          rsync -e "$RSYNC_SSH" -az "${USER_}@${HOST}:/opt/afaq-wave13/cycle-output.json" evidence/ 2>/dev/null || true
+          ls -la evidence/
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wave13-canary-evidence
+          path: evidence/
+          retention-days: 90
