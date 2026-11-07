@@ -32,6 +32,7 @@ jobs:
             set -e
             docker cp scc-api:/app/apps/api/dist/crm /tmp/dist-crm-backup 2>/dev/null || true
             docker cp scc-api:/app/apps/api/dist/common /tmp/dist-common-backup 2>/dev/null || true
+            docker exec scc-api sh -c "rm -rf /app/apps/api/dist/crm /app/apps/api/dist/common" 2>/dev/null || true
             mkdir -p /tmp/dist-hotpatch
           '
           for i in 1 2 3; do
@@ -42,8 +43,8 @@ jobs:
           done
           ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
             set -e
-            docker cp /tmp/dist-hotpatch/crm scc-api:/app/apps/api/dist/crm
-            docker cp /tmp/dist-hotpatch/common scc-api:/app/apps/api/dist/common
+            docker cp /tmp/dist-hotpatch/crm scc-api:/app/apps/api/dist/
+            docker cp /tmp/dist-hotpatch/common scc-api:/app/apps/api/dist/
             docker restart scc-api
             code=000
             for i in $(seq 1 18); do
