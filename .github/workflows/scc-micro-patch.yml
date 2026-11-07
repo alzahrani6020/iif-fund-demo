@@ -1,0 +1,95 @@
+# Micro-patch معتمَد: dist كامل (332KB) + Express 4 داخل الحاوية، ببوابة حالة إلزامية قبل أي تعديل.
+# الترتيب آمن بالكامل: تثبيت Express4 على القرص والعملية القديمة تعمل (لا crash-loop) ← إيقاف ← نسخ ← إقلاع.
+name: SCC Micro Patch (dist + express4)
+
+on:
+  workflow_dispatch:
+
+env:
+  ARTIFACT_SHA: 700ed0561d4c7c4f9de764850b910da3553caf3271bc3e1ee031ddcb2b742a99
+
+jobs:
+  micropatch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare SSH
+        env:
+          KEY: ${{ secrets.SEARXNG_VPS_SSH_PRIVATE_KEY }}
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$KEY" > ~/.ssh/vps_key && chmod 600 ~/.ssh/vps_key
+          ssh-keyscan -p "$P" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Ship 332KB artifact
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          RSYNC_SSH="ssh -i ~/.ssh/vps_key -p $P -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20 -o ServerAliveInterval=10 -o ServerAliveCountMax=3"
+          ssh -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" 'mkdir -p /tmp/scc-micro'
+          for i in 1 2 3; do
+            if rsync -e "$RSYNC_SSH" -az --partial scc-ops/micro/api-dist-8ce52de.tar.gz "${USER_}@${HOST}:/tmp/scc-micro/"; then
+              echo "artifact shipped (attempt $i)"; break
+            fi
+            echo "attempt $i failed"; sleep 8; [ "$i" = "3" ] && exit 1
+          done
+
+      - name: Gated micro-patch (gate → express4 → stop → patch → start → verify)
+        env:
+          P: ${{ secrets.SEARXNG_VPS_SSH_PORT }}
+          HOST: ${{ secrets.SEARXNG_VPS_HOST }}
+          USER_: ${{ secrets.SEARXNG_VPS_USER }}
+        run: |
+          ssh -o ServerAliveInterval=10 -o ServerAliveCountMax=6 -o ConnectTimeout=20 \
+            -i ~/.ssh/vps_key -p "$P" "${USER_}@${HOST}" '
+            set -e
+            echo "=== GATE: memory ==="; free -h
+            echo "=== GATE: container ==="; docker ps -a --filter name=scc-api
+            echo "=== GATE: inspect ==="; docker inspect scc-api --format "Status={{.State.Status}} OOM={{.State.OOMKilled}} Exit={{.State.ExitCode}} Restart={{.RestartCount}}"
+            avail=$(free -m | awk "/Mem:/{print \$7}")
+            echo "GATE available_memory_mb=$avail"
+            if [ "$avail" -lt 150 ]; then echo "GATE FAIL: available ${avail}MB < 150MB — aborting before any change"; exit 1; fi
+            if ! docker ps --format "{{.Names}}" | grep -q "^scc-api$"; then echo "GATE FAIL: scc-api not running — unknown state, aborting"; exit 1; fi
+
+            echo "=== STEP 1: install express@4 on disk (old process keeps running) ==="
+            docker exec -w /app/apps/api scc-api npm i --no-save --package-lock=false express@4.22.1 2>&1 | tail -2
+            docker exec -w /app/apps/api scc-api node -e "console.log(\"express on disk:\", require(\"express/package.json\").version)"
+
+            echo "=== STEP 2: stop + backup + patch dist ==="
+            docker update --restart=no scc-api
+            docker stop scc-api
+            docker cp scc-api:/app/apps/api/dist /tmp/scc-micro/dist-backup
+            sha=$(sha256sum /tmp/scc-micro/api-dist-8ce52de.tar.gz | awk "{print \$1}")
+            echo "artifact sha256=$sha"
+            [ "$sha" = "$ARTIFACT_SHA_ENV" ] || { echo "SHA MISMATCH — aborting with container stopped; run restart-scc-api to recover"; exit 1; }
+            mkdir -p /tmp/scc-micro/x && tar -xzf /tmp/scc-micro/api-dist-8ce52de.tar.gz -C /tmp/scc-micro/x
+            docker cp /tmp/scc-micro/x/dist/. scc-api:/app/apps/api/dist/
+
+            echo "=== STEP 3: start + health ==="
+            docker start scc-api
+            code=000
+            for i in $(seq 1 18); do
+              sleep 10
+              code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 8 http://127.0.0.1:3001 || true); code=${code:-000}
+              echo "try $i: $code"
+              if [ "$code" != "000" ]; then break; fi
+            done
+            if [ "$code" = "000" ]; then
+              echo "HEALTH FAIL — restoring backup dist"
+              docker cp /tmp/scc-micro/dist-backup/. scc-api:/app/apps/api/dist/
+              docker start scc-api || true
+              exit 1
+            fi
+            docker update --restart=always scc-api
+            echo "=== STEP 4: logs tail ==="
+            docker logs --tail 60 scc-api 2>&1 | tail -25
+            echo "=== STEP 5: smoke ==="
+            login=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 -X POST http://127.0.0.1:3001/auth/login -H "Content-Type: application/json" -d "{}")
+            echo "auth_login=$login"
+            echo "MICRO PATCH OK"
+          ' ARTIFACT_SHA_ENV="$ARTIFACT_SHA"
