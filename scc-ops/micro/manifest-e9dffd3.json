@@ -1,0 +1,7 @@
+{
+  "schema": "scc.micro-artifact/v2",
+  "source_sha": "e9dffd391aaaa068825d973381cc5cf275c5c34b",
+  "dist_sha256": "700ed0561d4c7c4f9de764850b910da3553caf3271bc3e1ee031ddcb2b742a99",
+  "express4": "installed in-container: npm i --no-save --package-lock=false express@4.22.1 (after dist start)",
+  "rollback": "recreate container from image"
+}
