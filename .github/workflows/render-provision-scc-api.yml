@@ -55,9 +55,9 @@ jobs:
             type:'web_service',
             name:'scc380-api',
             ownerId:'$OWNER',
+            image:{url:'$IMAGE'},
             serviceDetails:{
               runtime:'image',
-              image:{url:'$IMAGE'},
               region:'frankfurt',
               plan:'free',
               healthCheckPath:'/',
