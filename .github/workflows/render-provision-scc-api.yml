@@ -55,19 +55,21 @@ jobs:
             type:'web_service',
             name:'scc380-api',
             ownerId:'$OWNER',
-            image:{url:'$IMAGE'},
-            region:'frankfurt',
-            plan:'free',
-            healthCheckPath:'/',
-            envVars:[
-              {key:'NODE_ENV',value:'production'},
-              {key:'DATABASE_URL',value:'$DB_URL'},
-              {key:'DIRECT_URL',value:'$DIRECT_URL'},
-              {key:'JWT_SECRET',value:'$JWT'},
-              {key:'JWT_EXPIRES_IN',value:'1h'},
-              {key:'CORS_ORIGINS',value:'https://scc380-web.vercel.app,https://dr-talal-h-alzahrani.com'},
-              {key:'WEB_URL',value:'https://dr-talal-h-alzahrani.com'}
-            ]
+            serviceDetails:{
+              image:{url:'$IMAGE'},
+              region:'frankfurt',
+              plan:'free',
+              healthCheckPath:'/',
+              envVars:[
+                {key:'NODE_ENV',value:'production'},
+                {key:'DATABASE_URL',value:'$DB_URL'},
+                {key:'DIRECT_URL',value:'$DIRECT_URL'},
+                {key:'JWT_SECRET',value:'$JWT'},
+                {key:'JWT_EXPIRES_IN',value:'1h'},
+                {key:'CORS_ORIGINS',value:'https://scc380-web.vercel.app,https://dr-talal-h-alzahrani.com'},
+                {key:'WEB_URL',value:'https://dr-talal-h-alzahrani.com'}
+              ]
+            }
           };
           require('fs').writeFileSync('svc.json',JSON.stringify(body));
           "
