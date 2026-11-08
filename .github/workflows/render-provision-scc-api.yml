@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE: ghcr.io/alzahrani6020/scc380-api:latest
+  IMAGE: ghcr.io/alzahrani6020/scc380-api@sha256:1112426b0fa42ff67a6a7939f09e89ae0e83f5b75774da65bc519a4ec5d9f36e
 
 jobs:
   provision:
