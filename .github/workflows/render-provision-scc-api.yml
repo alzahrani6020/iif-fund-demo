@@ -73,7 +73,7 @@ jobs:
             }
           };
           require('fs').writeFileSync('svc.json',JSON.stringify(body));
-          console.log('REQUEST BODY:', JSON.stringify(body).replace(/"(DATABASE_URL|DIRECT_URL)":"[^"]+"/g, '"$1":"***"'));
+          console.log('IMAGE_FIELD:'+body.image.url);
           "
           curl -s -X POST -H "Authorization: Bearer $RENDER_API_KEY" -H "Content-Type: application/json" \
             -d @svc.json https://api.render.com/v1/services | tee created.json | node -e "
