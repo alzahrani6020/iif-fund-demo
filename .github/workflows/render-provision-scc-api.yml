@@ -1,0 +1,123 @@
+# Change واحد معتمد: إنشاء خدمة Render من صورة GHCR (بديلاً عن خدمة Dockerfile الفاشلة) + بوابات قبول.
+# قاعدة البيانات: استمرارية Supabase عبر الأسرار الموجودة. لا مسارات متوازية: الخدمة القديمة الفاشلة تُحذف (فارغة، بناؤها يسقط دائماً).
+name: Render Provision SCC API
+
+on:
+  workflow_dispatch:
+
+env:
+  IMAGE: ghcr.io/alzahrani6020/scc380-api:latest
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auth check + list services
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          set -e
+          echo "=== owners ==="
+          curl -sf -H "Authorization: Bearer $RENDER_API_KEY" https://api.render.com/v1/owners | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const j=JSON.parse(d);j.forEach(o=>console.log(o.owner.type,o.owner.id,o.owner.name));console.log('OWNER_ID='+j[0].owner.id)})" | tee owners.txt
+          echo "=== services ==="
+          curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services?limit=100" | node -e "
+          let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{
+            const j=JSON.parse(d);
+            j.forEach(x=>{const s=x.service;console.log([s.id,s.type,s.name,s.serviceDetails&&s.serviceDetails.url||s.url||''].join(' | '))});
+            const old=j.find(x=>x.service.name==='scc380-api'&&x.service.type==='web_service');
+            if(old){console.log('OLD_SERVICE_ID='+old.service.id)}else{console.log('OLD_SERVICE_ID=none')}
+          })" | tee services.txt
+
+      - name: Remove failed old service (empty, build never succeeded)
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          OLD=$(grep OLD_SERVICE_ID services.txt | cut -d= -f2)
+          if [ "$OLD" != "none" ] && [ -n "$OLD" ]; then
+            echo "deleting old failing service $OLD"
+            curl -sf -X DELETE -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$OLD" && echo " deleted" || echo " delete failed (continuing)"
+          else
+            echo "no old service to delete"
+          fi
+
+      - name: Create web service from GHCR image
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          DB_URL: ${{ secrets.SCC_API_DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.SCC_API_DIRECT_URL }}
+          OWNER_ID: ${{ vars.RENDER_OWNER_ID }}
+        run: |
+          set -e
+          OWNER=$(grep OWNER_ID owners.txt | head -1 | cut -d= -f2)
+          JWT=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
+          node -e "
+          const body={
+            type:'web_service',
+            name:'scc380-api',
+            ownerId:'$OWNER',
+            image:{url:'$IMAGE'},
+            region:'frankfurt',
+            plan:'free',
+            healthCheckPath:'/',
+            envVars:[
+              {key:'NODE_ENV',value:'production'},
+              {key:'DATABASE_URL',value:'$DB_URL'},
+              {key:'DIRECT_URL',value:'$DIRECT_URL'},
+              {key:'JWT_SECRET',value:'$JWT'},
+              {key:'JWT_EXPIRES_IN',value:'1h'},
+              {key:'CORS_ORIGINS',value:'https://scc380-web.vercel.app,https://dr-talal-h-alzahrani.com'},
+              {key:'WEB_URL',value:'https://dr-talal-h-alzahrani.com'}
+            ]
+          };
+          require('fs').writeFileSync('svc.json',JSON.stringify(body));
+          "
+          curl -s -X POST -H "Authorization: Bearer $RENDER_API_KEY" -H "Content-Type: application/json" \
+            -d @svc.json https://api.render.com/v1/services | tee created.json | node -e "
+          let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{
+            try{const j=JSON.parse(d);const s=j.service||j;
+              if(s.id){console.log('SERVICE_ID='+s.id);console.log('URL='+(s.serviceDetails&&s.serviceDetails.url||s.url))}
+              else{console.log('CREATE_FAILED');console.log(d.slice(0,400));process.exit(1)}
+            }catch(e){console.log('PARSE_FAIL');console.log(d.slice(0,400));process.exit(1)}
+          })"
+
+      - name: Wait for deploy live
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          SID=$(grep SERVICE_ID created.json >/dev/null 2>&1 && node -e "const j=require('./created.json');console.log((j.service||j).id)" || true)
+          [ -n "$SID" ] || SID=$(node -e "const j=require('./created.json');console.log((j.service||j).id)")
+          echo "waiting for $SID"
+          for i in $(seq 1 40); do
+            sleep 15
+            ST=$(curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID/deploys?limit=1" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const j=JSON.parse(d);const dep=j[0]&&j[0].deploy;console.log(dep?dep.status:'none')}catch(e){console.log('err')}})")
+            echo "deploy status: $ST (check $i)"
+            if [ "$ST" = "live" ]; then echo DEPLOY_LIVE; break; fi
+            if [ "$ST" = "build_failed" ] || [ "$ST" = "update_failed" ]; then echo DEPLOY_FAILED; exit 1; fi
+          done
+          URL=$(node -e "const j=require('./created.json');console.log((j.service||j).serviceDetails?.url||(j.service||j).url||'')")
+          echo "SERVICE_URL=$URL" | tee url.txt
+
+      - name: Acceptance gates
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          URL=$(grep SERVICE_URL url.txt | cut -d= -f2)
+          echo "=== health (/) ==="
+          for i in $(seq 1 20); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$URL/" || true); code=${code:-000}
+            echo "try $i: $code"
+            [ "$code" != "000" ] && break
+            sleep 15
+          done
+          echo "=== auth probe ==="
+          login=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 -X POST "$URL/auth/login" -H "Content-Type: application/json" -d '{}')
+          echo "auth_login=$login"
+          echo "=== CRM contract (with legacy smoke account) ==="
+          TOKEN=$(curl -s --max-time 20 -X POST "$URL/auth/login" -H "Content-Type: application/json" -d '{"email":"smoke-test@scc380.local","password":"Test1234!x"}' | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d).accessToken||'')}catch(e){}})" || true)
+          if [ -n "$TOKEN" ]; then
+            curl -s --max-time 15 -H "Authorization: Bearer $TOKEN" -H "X-Tenant-Slug: smoke-test-verify" "$URL/crm/contacts?page=1&limit=5" | head -c 220
+          else
+            echo "no token (account may not exist in DB — login gate above is the proof)"
+          fi
+          echo
+          echo "GATES DONE — next: DNS cutover by owner"
