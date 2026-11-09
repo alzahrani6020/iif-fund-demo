@@ -18,3 +18,5 @@ jobs:
           curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID" | node scc-ops/render_list.cjs
           echo "=== deploys ==="
           curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID/deploys?limit=3" | node scc-ops/render_deploys.cjs
+          echo "=== recent logs ==="
+          curl -s -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID/logs?limit=100" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const j=JSON.parse(d);(j.logs||[]).slice(-30).forEach(l=>console.log(l.message||l))}catch(e){console.log(d.slice(0,300))}})"
