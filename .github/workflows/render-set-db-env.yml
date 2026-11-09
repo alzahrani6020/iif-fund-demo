@@ -1,0 +1,55 @@
+name: Render Set DB Env
+on:
+  workflow_dispatch:
+jobs:
+  set:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upsert env vars (POST create with PUT fallback) + verify
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          DB_URL: ${{ secrets.SCC_API_DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.SCC_API_DIRECT_URL }}
+        run: |
+          SID=$(curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services?limit=100" | node scc-ops/render_list.cjs | grep "scc380-api-image" | head -1 | cut -d'|' -f1 | tr -d ' ')
+          echo "SID=$SID"
+          node -e "require('fs').writeFileSync('env.json', JSON.stringify([
+            {key:'DATABASE_URL', value:'$DB_URL'},
+            {key:'DIRECT_URL', value:'$DIRECT_URL'},
+            {key:'CORS_ORIGINS', value:'https://scc380-web.vercel.app,https://dr-talal-h-alzahrani.com'}
+          ]))"
+          echo "--- POST create ---"
+          curl -s -X POST -H "Authorization: Bearer $RENDER_API_KEY" -H "Content-Type: application/json" -d @env.json "https://api.render.com/v1/services/$SID/env-vars" | head -c 300
+          echo
+          echo "--- GET verify (keys) ---"
+          curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID/env-vars" > envvars.json
+          node -e "
+          const j=require('./envvars.json');
+          const list=Array.isArray(j)?j:(j.envVars||[]);
+          list.forEach(x=>{const v=x.envVar||x;console.log('VAR',v.key, v.value?('len='+String(v.value).length):'EMPTY')});
+          "
+
+      - name: Deploy and test register
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          SID=$(curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services?limit=100" | node scc-ops/render_list.cjs | grep "scc380-api-image" | head -1 | cut -d'|' -f1 | tr -d ' ')
+          curl -s -X POST -H "Authorization: Bearer $RENDER_API_KEY" -H "Content-Type: application/json" -d '{"clearCache":"do_not_clear"}' "https://api.render.com/v1/services/$SID/deploys" > /dev/null
+          for i in $(seq 1 30); do
+            sleep 20
+            ST=$(curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID/deploys?limit=1" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const j=JSON.parse(d);console.log((j[0]&&j[0].deploy&&j[0].deploy.status)||'none')}catch(e){console.log('err')}})")
+            echo "deploy: $ST ($i)"
+            [ "$ST" = "live" ] && break
+            if [ "$ST" = "build_failed" ] || [ "$ST" = "update_failed" ]; then echo FAILED; exit 1; fi
+          done
+          URL="https://scc380-api-image.onrender.com"
+          for i in $(seq 1 15); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 12 "$URL/" || true); code=${code:-000}
+            echo "health: $code ($i)"
+            [ "$code" != "000" ] && break
+            sleep 10
+          done
+          S=$(date +%s)
+          curl -s --max-time 30 -X POST "$URL/auth/register" -H "Content-Type: application/json" -d "{\"email\":\"dbtest-$S@scc380.local\",\"password\":\"DbTest1234!x\",\"firstName\":\"D\",\"lastName\":\"B\"}" -w "\nregister=%{http_code}\n" | head -c 300
