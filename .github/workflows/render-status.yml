@@ -1,0 +1,22 @@
+name: render-status
+on:
+  workflow_dispatch:
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Get scc380-api service + deploys
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          set -e
+          SVC=srv-dboi563l550s739qj6q0
+          AUTH="Authorization: Bearer $RENDER_API_KEY"
+          echo "== service =="
+          curl -s -H "$AUTH" "https://api.render.com/v1/services/$SVC" \
+            | jq '{id, name, updatedAt, suspended: .serviceDetails.suspended, image: .serviceDetails.imageDetails, url: .serviceDetails.url}'
+          echo "== recent deploys =="
+          curl -s -H "$AUTH" "https://api.render.com/v1/services/$SVC/deploys?limit=5" \
+            | jq '[.[] | {id: .deploy.id, status: .deploy.status, createdAt: .deploy.createdAt, finishedAt: .deploy.finishedAt, commit: .deploy.commit.message}]'
