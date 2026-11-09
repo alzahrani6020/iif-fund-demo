@@ -1,0 +1,28 @@
+name: render-redeploy-api
+# Trigger a fresh deploy of scc380-api so it pulls the latest ghcr image
+on:
+  workflow_dispatch:
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Trigger deploy and wait for live
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          set -e
+          SVC=srv-dboi563l550s739qj6q0
+          AUTH="Authorization: Bearer $RENDER_API_KEY"
+          DEP=$(curl -s -X POST -H "$AUTH" "https://api.render.com/v1/services/$SVC/deploys" | grep -oE 'dep-[a-z0-9]+' | head -1)
+          echo "deploy triggered: $DEP"
+          for i in $(seq 1 24); do
+            sleep 10
+            STATUS=$(curl -s -H "$AUTH" "https://api.render.com/v1/services/$SVC/deploys/$DEP" | grep -oE '"status":"[a-z_]+"' | head -1)
+            echo "poll $i: $STATUS"
+            case "$STATUS" in
+              *live*|*build_failed*|*update_failed*|*deactivated*) break ;;
+            esac
+          done
+          echo "final: $STATUS"
