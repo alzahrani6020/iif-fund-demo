@@ -1,0 +1,18 @@
+name: render-logs
+on:
+  workflow_dispatch:
+
+jobs:
+  logs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Fetch recent scc380-api logs
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          SVC=srv-dboi563l550s739qj6q0
+          curl -s -H "Authorization: Bearer $RENDER_API_KEY" \
+            "https://api.render.com/v1/services/$SVC/logs?limit=200" \
+            | jq -r '.[].message' \
+            | grep -iE 'insight|llm|ai|error|failed' | tail -30
