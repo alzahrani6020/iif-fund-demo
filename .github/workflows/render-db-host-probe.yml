@@ -1,0 +1,22 @@
+name: Render DB Host Probe
+on:
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show DATABASE_URL host only (secret-safe)
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          SID=$(curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services?limit=100" | node scc-ops/render_list.cjs | grep "scc380-api-image" | head -1 | cut -d'|' -f1 | tr -d ' ')
+          curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID/env-vars" > ev.json
+          node -e "
+          const j=require('./ev.json');
+          const list=Array.isArray(j)?j:(j.envVars||[]);
+          list.forEach(x=>{const v=x.envVar||x;
+            if(v.key==='DATABASE_URL'||v.key==='DIRECT_URL'){
+              try{const u=new URL(v.value);console.log(v.key,'→ host:',u.hostname,'| port:',u.port,'| user:',u.username);}catch(e){console.log(v.key,'→ unparseable');}
+            }});
+          "
