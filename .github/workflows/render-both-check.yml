@@ -1,0 +1,28 @@
+name: Render Both Services Check
+on:
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect both API services
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services?limit=100" > svcs.json
+          node -e "
+          const j=require('./svcs.json');
+          j.filter(x=>/scc380-api/.test(x.service.name)).forEach(x=>{const s=x.service;
+            console.log('=== '+s.name+' ('+s.id+') type='+s.type+' suspended='+s.suspended);
+            console.log('url:', s.serviceDetails&&s.serviceDetails.url);
+          });
+          "
+          for NAME in scc380-api scc380-api-image; do
+            SID=$(node -e "const j=require('./svcs.json');const s=j.find(x=>x.service.name==='$NAME');console.log(s?s.service.id:'')")
+            [ -z "$SID" ] && continue
+            echo "--- $NAME deploys ---"
+            curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID/deploys?limit=2" | node scc-ops/render_deploys.cjs
+            echo "--- $NAME db host ---"
+            curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID/env-vars" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const j=JSON.parse(d);const list=Array.isArray(j)?j:(j.envVars||[]);list.forEach(x=>{const v=x.envVar||x;if(v.key==='DATABASE_URL'){try{const u=new URL(v.value);console.log('host:',u.hostname)}catch(e){console.log('unparseable')}}});}catch(e){}})"
+          done
