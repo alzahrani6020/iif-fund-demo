@@ -1,0 +1,20 @@
+name: Render Logs Probe
+on:
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Try log endpoint variants
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          SID=$(curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services?limit=100" | node scc-ops/render_list.cjs | grep "scc380-api-image" | head -1 | cut -d'|' -f1 | tr -d ' ')
+          DID=$(curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID/deploys?limit=1" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(d)[0].deploy.id)}catch(e){console.log('')}})")
+          echo "SID=$SID DID=$DID"
+          for path in "services/$SID/logs" "services/$SID/log" "services/$SID/deploys/$DID" "services/$SID/deploys/$DID/logs" "logs?serviceId=$SID"; do
+            echo "=== GET /v1/$path ==="
+            curl -s -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/$path" | head -c 400
+            echo
+          done
