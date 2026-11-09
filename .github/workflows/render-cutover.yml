@@ -1,0 +1,67 @@
+name: render-cutover
+# One-shot cutover helper for scc380-api:
+#  1) Point CORS_ORIGINS at the real web origins
+#  2) Attach custom domain api.dr-talal-h-alzahrani.com so Render can issue TLS
+# Manual step that remains: Cloudflare CNAME api -> scc380-api.onrender.com
+on:
+  workflow_dispatch:
+
+jobs:
+  cutover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fix CORS_ORIGINS on scc380-api
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          set -e
+          SVC=srv-dboi563l550s739qj6q0
+          BASE="https://api.render.com/v1/services/$SVC"
+          AUTH="Authorization: Bearer $RENDER_API_KEY"
+          CT="Content-Type: application/json"
+          VALUE="https://scc380-web.vercel.app,https://dr-talal-h-alzahrani.com,https://www.dr-talal-h-alzahrani.com"
+
+          EV=$(curl -s -H "$AUTH" "$BASE/env-vars" \
+            | jq -r '.[] | select(.envVar.key=="CORS_ORIGINS") | .envVar.id')
+          if [ -z "$EV" ] || [ "$EV" = "null" ]; then
+            echo "CORS_ORIGINS not found; creating it"
+            curl -s -X POST -H "$AUTH" -H "$CT" \
+              -d "{\"key\":\"CORS_ORIGINS\",\"value\":\"$VALUE\"}" \
+              "$BASE/env-vars" | jq '{key:.key, value:.value}'
+          else
+            echo "CORS_ORIGINS id=$EV -> PUT new value"
+            curl -s -X PUT -H "$AUTH" -H "$CT" \
+              -d "{\"value\":\"$VALUE\"}" \
+              "$BASE/env-vars/$EV" | jq '{key:.key, value:.value}'
+          fi
+
+      - name: Attach custom domain to scc380-api
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          set -e
+          SVC=srv-dboi563l550s739qj6q0
+          BASE="https://api.render.com/v1/services/$SVC"
+          AUTH="Authorization: Bearer $RENDER_API_KEY"
+          CT="Content-Type: application/json"
+
+          echo "== custom domains BEFORE =="
+          curl -s -H "$AUTH" "$BASE/custom-domains" | jq '.' || true
+
+          echo "== adding api.dr-talal-h-alzahrani.com =="
+          curl -s -X POST -H "$AUTH" -H "$CT" \
+            -d '{"name":"api.dr-talal-h-alzahrani.com"}' \
+            "$BASE/custom-domains" | jq '.' || true
+
+          echo "== custom domains AFTER =="
+          curl -s -H "$AUTH" "$BASE/custom-domains" | jq '.' || true
+
+      - name: Show service summary
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          SVC=srv-dboi563l550s739qj6q0
+          curl -s -H "Authorization: Bearer $RENDER_API_KEY" \
+            "https://api.render.com/v1/services/$SVC" \
+            | jq '{id, name, type, serviceDetails: (.serviceDetails | {url, plan, env: (.env | length)}}'
