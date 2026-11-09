@@ -1,0 +1,16 @@
+name: Render Check
+on:
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect scc380-api-image
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          SID=$(curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services?limit=100" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const j=JSON.parse(d);const s=j.find(x=>x.service.name==='scc380-api-image');console.log(s?s.service.id:'NOT_FOUND')}")
+          echo "service id: $SID"
+          [ "$SID" = "NOT_FOUND" ] && exit 0
+          curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const s=JSON.parse(d).service;console.log('suspended:',s.suspended,'| url:',s.serviceDetails&&s.serviceDetails.url,'| details:',JSON.stringify(s.serviceDetails).slice(0,300))})"
+          curl -sf -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$SID/deploys?limit=3" | node -e "let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{JSON.parse(d).forEach(x=>console.log('deploy:',x.deploy.status,x.deploy.createdAt,x.deploy.errorMessage||''))})"
