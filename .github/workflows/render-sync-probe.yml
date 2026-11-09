@@ -1,0 +1,18 @@
+name: Render Sync Cancel Probe
+on:
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Discover and cancel stuck sync
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          EXE: exe-dboi4r5g1s2s73f96a70
+        run: |
+          BASE="https://api.render.com/v1"
+          for path in "blueprint-executions/$EXE" "blueprints/executions/$EXE" "blueprint-syncs/$EXE" "executions/$EXE" "blueprints/syncs/$EXE"; do
+            echo "=== GET $path ==="
+            curl -s -H "Authorization: Bearer $RENDER_API_KEY" "$BASE/$path" | head -c 220
+            echo
+          done
