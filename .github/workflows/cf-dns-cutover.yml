@@ -1,0 +1,67 @@
+name: cf-dns-cutover
+# Move dr-talal-h-alzahrani.com DNS from Vercel/Cloudflare-proxy to Render.
+# Touches ONLY: apex A record (and any apex AAAA), www CNAME. Reversible.
+on:
+  workflow_dispatch:
+
+jobs:
+  cutover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Read current records, then cut over to Render (DNS only)
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          API="https://api.cloudflare.com/client/v4"
+          AUTH="Authorization: Bearer $CF_TOKEN"
+          CT="Content-Type: application/json"
+
+          ZONE=$(curl -s -H "$AUTH" "$API/zones?name=dr-talal-h-alzahrani.com" \
+            | jq -r '.result[0].id // empty')
+          if [ -z "$ZONE" ]; then echo "ZONE NOT FOUND or token lacks access"; exit 1; fi
+          echo "zone: $ZONE"
+
+          echo "== records BEFORE =="
+          curl -s -H "$AUTH" "$API/zones/$ZONE/dns_records?per_page=100" \
+            | jq -r '.result[] | select(.name=="dr-talal-h-alzahrani.com" or .name=="www.dr-talal-h-alzahrani.com") | "\(.id) \(.type) \(.name) -> \(.content) proxied=\(.proxied)"'
+
+          # --- apex A record -> Render anycast, DNS only ---
+          APEX_A=$(curl -s -H "$AUTH" "$API/zones/$ZONE/dns_records?type=A&name=dr-talal-h-alzahrani.com" | jq -r '.result[0].id // empty')
+          if [ -n "$APEX_A" ]; then
+            curl -s -X PATCH -H "$AUTH" -H "$CT" \
+              -d '{"content":"216.24.57.22","proxied":false,"ttl":1}' \
+              "$API/zones/$ZONE/dns_records/$APEX_A" | jq -r '.success'
+            echo "apex A updated"
+          else
+            curl -s -X POST -H "$AUTH" -H "$CT" \
+              -d '{"type":"A","name":"dr-talal-h-alzahrani.com","content":"216.24.57.22","proxied":false,"ttl":1,"comment":"Render web (scc380-web-render3)"}' \
+              "$API/zones/$ZONE/dns_records" | jq -r '.success'
+            echo "apex A created"
+          fi
+
+          # --- apex AAAA records conflict with Render apex verification: remove ---
+          for ID in $(curl -s -H "$AUTH" "$API/zones/$ZONE/dns_records?type=AAAA&name=dr-talal-h-alzahrani.com" | jq -r '.result[].id'); do
+            curl -s -X DELETE -H "$AUTH" "$API/zones/$ZONE/dns_records/$ID" | jq -r '.success'
+            echo "apex AAAA removed: $ID"
+          done
+
+          # --- www CNAME -> Render web, DNS only ---
+          WWW_C=$(curl -s -H "$AUTH" "$API/zones/$ZONE/dns_records?type=CNAME&name=www.dr-talal-h-alzahrani.com" | jq -r '.result[0].id // empty')
+          if [ -n "$WWW_C" ]; then
+            curl -s -X PATCH -H "$AUTH" -H "$CT" \
+              -d '{"content":"scc380-web-render3.onrender.com","proxied":false,"ttl":1}' \
+              "$API/zones/$ZONE/dns_records/$WWW_C" | jq -r '.success'
+            echo "www CNAME updated"
+          else
+            curl -s -X POST -H "$AUTH" -H "$CT" \
+              -d '{"type":"CNAME","name":"www.dr-talal-h-alzahrani.com","content":"scc380-web-render3.onrender.com","proxied":false,"ttl":1,"comment":"Render web (scc380-web-render3)"}' \
+              "$API/zones/$ZONE/dns_records" | jq -r '.success'
+            echo "www CNAME created"
+          fi
+
+          echo "== records AFTER =="
+          curl -s -H "$AUTH" "$API/zones/$ZONE/dns_records?per_page=100" \
+            | jq -r '.result[] | select(.name=="dr-talal-h-alzahrani.com" or .name=="www.dr-talal-h-alzahrani.com") | "\(.id) \(.type) \(.name) -> \(.content) proxied=\(.proxied)"'
