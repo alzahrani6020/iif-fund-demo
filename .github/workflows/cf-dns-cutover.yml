@@ -25,8 +25,9 @@ jobs:
           echo "zone: $ZONE"
 
           echo "== records BEFORE =="
-          curl -s -H "$AUTH" "$API/zones/$ZONE/dns_records?per_page=100" \
-            | jq -r '.result[] | select(.name=="dr-talal-h-alzahrani.com" or .name=="www.dr-talal-h-alzahrani.com") | "\(.id) \(.type) \(.name) -> \(.content) proxied=\(.proxied)"'
+          RESP=$(curl -s -H "$AUTH" "$API/zones/$ZONE/dns_records?per_page=100")
+          echo "$RESP" | jq -r '.result[]? | select(.name=="dr-talal-h-alzahrani.com" or .name=="www.dr-talal-h-alzahrani.com") | "\(.id) \(.type) \(.name) -> \(.content) proxied=\(.proxied)"' \
+            || { echo "RAW RESPONSE / errors:"; echo "$RESP" | jq -c '{success, errors}'; exit 1; }
 
           # --- apex A record -> Render anycast, DNS only ---
           APEX_A=$(curl -s -H "$AUTH" "$API/zones/$ZONE/dns_records?type=A&name=dr-talal-h-alzahrani.com" | jq -r '.result[0].id // empty')
