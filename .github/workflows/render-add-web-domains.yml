@@ -1,0 +1,29 @@
+name: render-add-web-domains
+# Adds dr-talal-h-alzahrani.com + www to the Render web service.
+# DNS-only change — no builds, no deploys, no quota consumption.
+on:
+  workflow_dispatch:
+
+jobs:
+  add-domains:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Attach apex + www custom domains to scc380-web-render3
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          set -e
+          SVC=srv-dbp5p68n74is73cusvbg
+          BASE="https://api.render.com/v1/services/$SVC"
+          AUTH="Authorization: Bearer $RENDER_API_KEY"
+          CT="Content-Type: application/json"
+
+          for D in "dr-talal-h-alzahrani.com" "www.dr-talal-h-alzahrani.com"; do
+            echo "== adding $D =="
+            curl -s -X POST -H "$AUTH" -H "$CT" -d "{\"name\":\"$D\"}" "$BASE/custom-domains" | jq '.' || true
+            echo
+          done
+
+          echo "== current custom domains =="
+          curl -s -H "$AUTH" "$BASE/custom-domains" | jq '.'
