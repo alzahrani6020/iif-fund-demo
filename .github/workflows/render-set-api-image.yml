@@ -1,0 +1,43 @@
+name: render-set-api-image
+# The blueprint pin commits did not update the running service's image ref.
+# This workflow sets the service image to the pinned immutable tag directly,
+# verifies the accepted value, and redeploys. Renders the redeploy observable.
+on:
+  workflow_dispatch:
+
+jobs:
+  set-image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Point scc380-api at the pinned image and redeploy
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          set -e
+          SVC=srv-dboi563l550s739qj6q0
+          AUTH="Authorization: Bearer $RENDER_API_KEY"
+          CT="Content-Type: application/json"
+          IMAGE="ghcr.io/alzahrani6020/scc380-api-prod:ccb0a6afb2e3f48bdd2a6cda24f31436713624d4"
+
+          echo "== PATCH service image =="
+          curl -s -X PATCH -H "$AUTH" -H "$CT" \
+            -d "{\"image\":{\"url\":\"$IMAGE\"}}" \
+            "https://api.render.com/v1/services/$SVC" | jq '{id, name, image: (.serviceDetails.image // .serviceDetails.imageDetails // "see-raw"), message}' || true
+
+          echo "== GET service (verify image field) =="
+          curl -s -H "$AUTH" "https://api.render.com/v1/services/$SVC" \
+            | jq '.serviceDetails | {image, imageDetails, url}'
+
+          echo "== trigger redeploy =="
+          DEP=$(curl -s -X POST -H "$AUTH" "https://api.render.com/v1/services/$SVC/deploys" | grep -oE 'dep-[a-z0-9]+' | head -1)
+          echo "deploy: $DEP"
+          for i in $(seq 1 30); do
+            sleep 10
+            STATUS=$(curl -s -H "$AUTH" "https://api.render.com/v1/services/$SVC/deploys/$DEP" | grep -oE '"status":"[a-z_]+"' | head -1)
+            echo "poll $i: $STATUS"
+            case "$STATUS" in
+              *live*|*build_failed*|*update_failed*) break ;;
+            esac
+          done
+          echo "final: $STATUS"
